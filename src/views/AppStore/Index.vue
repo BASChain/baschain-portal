@@ -377,9 +377,9 @@ export default {
           title:"BPasswordPro",
           intro:"Password Management Using Blockchain Tech",
           labels:[
-            'ios',
-            'android',
-            'other'
+            'chrome',
+            'firefox',
+            'opera'
           ],
           type:"app",
           id: 1

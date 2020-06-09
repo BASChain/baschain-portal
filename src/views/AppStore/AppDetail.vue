@@ -137,22 +137,15 @@
 .bas-head-top {
 	width: 100%;
 	height: 144px;
-	/* background: lightsalmon; */
 	display: flex;
 }
 .bas-app-header--right {
 	width: 88%;
-	/* height: 248px; */
-	/* background: lightcyan; */
 }
 .bas-app-header--left {
 	width: 12%;
-	/* height: 248px; */
-	/* background: lightcoral; */
 }
 .bas-app-header--left > img {
-	/* position: absolute; */
-	/* display: block; */
 	margin: 0 auto;
 	width: 100%;
 	padding-top: 65px;
@@ -160,13 +153,11 @@
 .bas-app-header {
 	width: 100%;
 	height: 248px;
-	/* background:darksalmon; */
 	display: flex;
 }
 .bas-app-img {
 	width: 100%;
 	height: 402px;
-	/* background:honeydew; */
 	display: flex;
 	margin-bottom: 43px;
 }
@@ -182,7 +173,6 @@
 	color:rgba(4,6,46,1);
 	line-height:25px;
 	letter-spacing:1px;
-	/* word-break:break-all; */
 }
 .bas-app-intro > h1 {
 	font-size:18px;
@@ -195,8 +185,6 @@
 }
 .bas-app-intro {
 	width: 100%;
-	/* height: 290px; */
-	/* background:lightcoral; */
 	margin-bottom: 24px;
 }
 .bas-app-detail {
@@ -204,7 +192,6 @@
 	height: 940px;
 	height: auto;
 	margin: 0 auto;
-	/* background: lemonchiffon; */
 }
 .agent-body-wrapper {
 	position: relative;
@@ -226,7 +213,6 @@
 .row {
 	display: -ms-flexbox;
 	display: -webkit-box;
-	/* display: flex; */
 	-ms-flex-wrap: wrap;
 	flex-wrap: wrap;
 	margin-right: -15px;
@@ -248,52 +234,60 @@ export default {
 	},
 	data() {
 		return {
-			appName: "BPassword",
-			appIntro: "intro",
-			iconUrl: "/static/icons/",
-			imgUrls: [
-				'/static/img/pir-home.png',
-				'/static/img/pir.png'
-			],
-			downloadButtons: [
+			apps: [
 				{
-					id: 'mac',
-					info: 'download BPassword for Iphone'
-				},
-				{
-					id: 'android',
-					info: 'download BPassword for Android'
-				}
-			],
-			details: [
-				{
-					osTitle: "已开发的功能:",
-					styleType: "done",
-					osLabels:[
-						'# 去中心化',
-						'# 安全加密',
-						'# 安全加密'
+					appid: 1,
+					appName: "BPassword",
+					appIntro: "intro",
+					iconUrl: "/static/icons/",
+					imgUrls: [
+						'/static/img/pir-home.png',
+						'/static/img/pir.png'
+					],
+					downloadButtons: [
+						{
+							id: 'mac',
+							info: 'download BPassword for Iphone'
+						},
+						{
+							id: 'android',
+							info: 'download BPassword for Android'
+						}
+					],
+					details: [
+						{
+							osTitle: "已开发的功能:",
+							styleType: "done",
+							osLabels:[
+								'# 去中心化',
+								'# 安全加密',
+								'# 安全加密'
+							]
+						},
+						{
+							osTitle: "正在完善的功能:",
+							styleType: "undo",
+							osLabels:[
+								'# 正在完善的功能',
+								'# 正在完善的功能'
+							]
+						}
+					],
+					intros: [
+						{
+							introTitle: "Explore your creations in full screen.",
+							introInfo: "Immerse yourself by using the vivid Retina displays of iPad or Mac. Simply tap the center divider, then drag to view your code or live project on the full screen. You can also customize built-in games like Battleship and Brick Breaker, then immerse yourself by letting them take up the whole screen."
+						},
+						{
+							introTitle: "Explore your creations in full screen.",
+							introInfo: "Immerse yourself by using the vivid Retina displays of iPad or Mac. Simply tap the center divider, then drag to view your code or live project on the full screen. You can also customize built-in games like Battleship and Brick Breaker, then immerse yourself by letting them take up the whole screen."
+						}
 					]
 				},
 				{
-					osTitle: "正在完善的功能:",
-					styleType: "undo",
-					osLabels:[
-						'# 正在完善的功能',
-						'# 正在完善的功能'
-					]
+					appid: 2
 				}
 			],
-			intros: [
-				{
-					introTitle: "Explore your creations in full screen.",
-					introInfo: "Immerse yourself by using the vivid Retina displays of iPad or Mac. Simply tap the center divider, then drag to view your code or live project on the full screen. You can also customize built-in games like Battleship and Brick Breaker, then immerse yourself by letting them take up the whole screen."
-				},
-				{
-					introTitle: "Explore your creations in full screen.",
-					introInfo: "Immerse yourself by using the vivid Retina displays of iPad or Mac. Simply tap the center divider, then drag to view your code or live project on the full screen. You can also customize built-in games like Battleship and Brick Breaker, then immerse yourself by letting them take up the whole screen."
-				}
-			]
 		}
 	},
 	methods: {
