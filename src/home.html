@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/vendor/font-awesome-4.7.0/css/font-awesome.min.css" />
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha256-YLGeXaapI0/5IgZopewRJcFXomhRMlYYjugPLSyNjTY=" crossorigin="anonymous" /> -->
+  <link rel="stylesheet" href="/static/vendor/bootstrap/css/bootstrap.min.css" />
+
+
+
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-vue/2.15.0/bootstrap-vue.min.css"
+      integrity="undefined" crossorigin="anonymous" /> -->
+  <link rel="stylesheet" href="/static/vendor/bootstrap-vue/bootstrap-vue.min.css" />
+  <link rel="stylesheet" href="/static/vendor/bootstrap-vue/bootstrap-vue-icons.min.css" />
+
+  <!--Element UI -->
+  <link rel="stylesheet" href="/static/vendor/elemnet-ui/theme-chalk/index.css" />
+  <title>BAS Chain</title>
+</head>
+<body>
+<div id="home">
+  <div>
+    <nav class="navbar navbar-expand-lg fixed-top header-wrap header-warp-black">
+      <div id="TopBar" class="container"><a href="index.html#/home"
+          class="navbar-brand router-link-exact-active router-link-active"><img src="/static/icons/logo_header.png"
+            alt="BAS Exchange" class="header-logo"></a> <button type="button" class="navbar-toggler"><i
+            class="fa fa-bars" style="color: rgb(255, 255, 255);"></i></button>
+        <div id="navContainer" class="collapse navbar-collapse">
+          <ul role="menubar" class="mx-auto basnav-el--wrapper el-menu--horizontal el-menu">
+            <li role="menuitem" tabindex="0" class="el-menu-item bas-elnav-item is-active"
+              style="color: rgb(255, 255, 255); border-bottom-color: transparent;"><a href="index.html#/home"
+                class="router-link-exact-active active">
+                首页
+              </a></li>
+            <!---->
+            <li role="menuitem" tabindex="0" class="el-menu-item bas-elnav-item"
+              style="color: rgb(255, 255, 255); border-bottom-color: transparent;"><a href="#/apply" class="">
+                域名申请
+              </a></li>
+            <!---->
+            <li role="menuitem" tabindex="0" class="el-menu-item bas-elnav-item"
+              style="color: rgb(255, 255, 255); border-bottom-color: transparent;"><a href="#/market/index" class="">
+                域名市场
+              </a></li>
+            <!---->
+            <li role="menuitem" tabindex="0" class="el-menu-item bas-elnav-item"
+              style="color: rgb(255, 255, 255); border-bottom-color: transparent;"><a href="#/agent" class="">
+                超级节点/域名代理
+              </a></li>
+            <!---->
+            <li role="menuitem" tabindex="0" class="el-menu-item bas-elnav-item"
+              style="color: rgb(255, 255, 255); border-bottom-color: transparent;"><a href="#/mail" class="">
+                邮箱注册
+              </a></li>
+            <!---->
+            <li role="menuitem" tabindex="0" class="el-menu-item bas-elnav-item"
+              style="color: rgb(255, 255, 255); border-bottom-color: transparent;"><a href="#/appstore" class="">
+                应用商店
+              </a></li>
+            <!---->
+            <li role="menuitem" tabindex="0" class="el-menu-item bas-elnav-item"
+              style="color: rgb(255, 255, 255); border-bottom-color: transparent;"><a href="#/help" class="">
+                帮助
+              </a></li>
+            <!---->
+          </ul>
+          <div class="avatar-wrap">
+            <div>
+              <div class="bas-mine-wallet"><button class="bas-avatar-btn">
+                  我的钱包
+                </button></div>
+            </div>
+          </div>
+          <div class="mine-wrap d-none">
+            <div class="el-dropdown"><span class="basel-dropdown-link el-dropdown-selfdefine" aria-haspopup="list"
+                aria-controls="dropdown-menu-2473" role="button" tabindex="0"><i
+                  class="el-icon-arrow-down el-icon--right"></i></span>
+              <ul class="el-dropdown-menu el-popper" id="dropdown-menu-2473" style="display: none;">
+                <li tabindex="-1" class="el-dropdown-menu__item">
+                  <!---->Action 1</li>
+                <li tabindex="-1" class="el-dropdown-menu__item">
+                  <!---->Action 2</li>
+                <li tabindex="-1" class="el-dropdown-menu__item">
+                  <!---->Action 3</li>
+                <li aria-disabled="true" class="el-dropdown-menu__item is-disabled">
+                  <!---->Action 4</li>
+                <li tabindex="-1" class="el-dropdown-menu__item el-dropdown-menu__item--divided">
+                  <!---->Action 5</li>
+              </ul>
+            </div>
+          </div>
+          <div class="i18n-wrapper">
+            <div class="el-select bas-i18n-select-top el-select--mini">
+              <!---->
+              <div class="el-input el-input--mini el-input--suffix">
+                <!----><input type="text" readonly="readonly" autocomplete="off" placeholder="请选择"
+                  class="el-input__inner">
+                <!----><span class="el-input__suffix"><span class="el-input__suffix-inner"><i
+                      class="el-select__caret el-input__icon el-icon-arrow-up"></i>
+                    <!---->
+                    <!---->
+                    <!---->
+                    <!---->
+                    <!----></span>
+                  <!----></span>
+                <!---->
+                <!---->
+              </div>
+              <div class="el-select-dropdown el-popper" style="display: none; min-width: 0px;">
+                <div class="el-scrollbar" style="">
+                  <div class="el-select-dropdown__wrap el-scrollbar__wrap"
+                    style="margin-bottom: -6px; margin-right: -6px;">
+                    <ul class="el-scrollbar__view el-select-dropdown__list">
+                      <!---->
+                      <li class="el-select-dropdown__item selected" size="mini"><span>中文</span></li>
+                      <li class="el-select-dropdown__item" size="mini"><span>English</span></li>
+                      <li class="el-select-dropdown__item" size="mini"><span>日本語</span></li>
+                    </ul>
+                  </div>
+                  <div class="el-scrollbar__bar is-horizontal">
+                    <div class="el-scrollbar__thumb" style="transform: translateX(0%);"></div>
+                  </div>
+                  <div class="el-scrollbar__bar is-vertical">
+                    <div class="el-scrollbar__thumb" style="transform: translateY(0%);"></div>
+                  </div>
+                </div>
+                <!---->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="">
+      <header>
+        <div>
+          <div class="el-carousel el-carousel--horizontal" id="HomeCarousel">
+            <div class="el-carousel__container" style="height: 66.67vh;"><button type="button"
+                class="el-carousel__arrow el-carousel__arrow--left" style="display: none;"><i
+                  class="el-icon-arrow-left"></i></button><button type="button"
+                class="el-carousel__arrow el-carousel__arrow--right" style="display: none;"><i
+                  class="el-icon-arrow-right"></i></button>
+              <div class="el-carousel__item is-active is-animating" style="transform: translateX(0px) scale(1);">
+                <!---->
+                <div class="bas-carousel--inner"><img src="/static/img/banner_670_0.png" alt="FirstBanner"
+                    class="header-carousel">
+                  <div class="bas-carsouel-float d-none d-md-block">
+                    <div class="bas-carsouel-inner--container">
+                      <div class="bas-carsouel-inner--block">
+                        <h1 class="text-center" style="font-size: 4.75rem;">
+                          免费领取BAS测试币
+                        </h1>
+                        <p style="margin: 0.75rem auto; font-size: 1.2rem;">
+                          仅限在Ropsten测试网络使用
+                        </p>
+                        <div class="bas-carsouel-inner--block"><button class="carsouel-btn">免费获取ETH</button> <button
+                            class="carsouel-btn" style="margin-left: 1.5rem;">免费获取BAS</button></div>
+                      </div>
+                    </div>
+                  </div>
+                  <!---->
+                  <!---->
+                </div>
+              </div>
+              <div class="el-carousel__item is-animating" style="transform: translateX(664px) scale(1);">
+                <!---->
+                <div class="bas-carousel--inner"><img src="/static/img/banner_670_1.png" alt="Second"
+                    class="header-carousel">
+                  <!---->
+                  <div class="bas-carsouel-float d-none d-md-block">
+                    <div class="bas-carsouel-inner--block">
+                      <div class="slogan-inner-flex">
+                        <div class="bas-slogan-block"><span class="bas-slogan yellow-cn">
+                            区块
+                          </span> <span class="bas-slogan">
+                            存续
+                          </span> <span class="bas-slogan mr-1">
+                            历史
+                          </span> <span class="bas-slogan ml-1">
+                            科技
+                          </span> <span class="bas-slogan green-cn">
+                            链接
+                          </span> <span class="bas-slogan">
+                            未来
+                          </span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <!---->
+                </div>
+              </div>
+            </div>
+            <ul class="el-carousel__indicators el-carousel__indicators--horizontal">
+              <li class="el-carousel__indicator el-carousel__indicator--horizontal is-active"><button
+                  class="el-carousel__button">
+                  <!----></button></li>
+              <li class="el-carousel__indicator el-carousel__indicator--horizontal"><button class="el-carousel__button">
+                  <!----></button></li>
+            </ul>
+          </div>
+          <div class="bas-declare-wrapper">
+            <h6>声明：BAS官网发行的Token只应用于BAS系统内部交易，不具有任何金融属性，也不支持任何交易所交易</h6>
+          </div>
+        </div>
+      </header>
+      <div class="body-wrap fixed">
+        <div style="margin-bottom: 2.5rem;">
+          <div>
+            <div class="container mb-5">
+              <h1 class="section-title bas-pt-100">命名一切</h1>
+              <p class="about-desc text-center">支持世界任意国家语言以及emoji</p>
+              <p class="about-demo">你好/hello/こんにちは/Γειάσου/Здравствулте/Alô/안녕하세요</p>
+              <p class="about-demo-emoji"> 😌/❤️/😂/❤️.👪...</p>
+            </div>
+          </div>
+          <div class="mile-stone-container">
+            <div class="milestaone-prefix left-zh-cn"></div>
+            <div class="milestone-phase ms-panku"></div>
+            <div class="milestaone-suffix right-zh-cn"></div>
+          </div>
+          <div class="container d-none">
+            <div class="row">
+              <div class="col-6">
+                <h5 class="section-title text-left">
+                  最受欢迎的域名
+                </h5>
+              </div>
+              <div class="col-6">
+                <h5 class="section-title text-left">
+                  已成交最贵的域名
+                </h5>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <div class="domain-combox-wrapper"></div>
+              </div>
+              <div class="col-6">
+                <div class="domain-combox-wrapper"></div>
+              </div>
+            </div>
+          </div>
+          <div class="container d-none d-md-block">
+            <h1 class="section-title bas-pt-100">完全去中心化</h1>
+            <div class="bas-double-wrapper el-row" style="margin-left: -12px; margin-right: -12px;">
+              <div class="bas-double--nav">
+                <div disabled="disabled" class="bas-double--navl-icon"><img src="/static/icons/arrow_left.png"></div>
+                <div class="bas-double--navr-icon"><img src="/static/icons/arrow_right.png"></div>
+              </div>
+              <div class="bas-double">
+                <div class="bas-double--overflow-container">
+                  <div class="bas-double--cards" style="transform: translateX(0px);">
+                    <div class="col-6 bas-double--card">
+                      <div><img src="/static/icons/home_decenter_wf1_zh-cn.png" class="img-fluid"></div>
+                      <div class="bas-double--card-body">
+                        <h5 class="inner-top">域名注册</h5>
+                        <p>Bas chain可直接注册域名，以实时的记账形式消耗BAS数字货币，并有效避免了传统域名 注册的多层级操作以及时间长、费用高等问题</p>
+                      </div>
+                      <div class="bas-double--card-footer"><a class="bas-text-green">
+                          去注册 <i class="fa fa-long-arrow-right"></i></a></div>
+                    </div>
+                    <div class="col-6 bas-double--card">
+                      <div><img src="/static/icons/home_decenter_wf2_zh-cn.png" class="img-fluid"></div>
+                      <div class="bas-double--card-body">
+                        <h5 class="inner-top">域名交易</h5>
+                        <p>bas使交易信息更透明化、公开化；域名所有权归秘钥所有者，不必担心被强制变更的风 险；bas更加智能可自动执行合约，无需值守，有效的避免中间商赚取差价的行为；命名
+                          支持任何语言，无法抢注，采用区块链交易，像比特币一样安全</p>
+                      </div>
+                      <div class="bas-double--card-footer"><a class="bas-text-green">
+                          去交易 <i class="fa fa-long-arrow-right"></i></a></div>
+                    </div>
+                    <div class="col-6 bas-double--card">
+                      <div><img src="/static/icons/home_decenter_wf3_zh-cn.png" class="img-fluid"></div>
+                      <div class="bas-double--card-body">
+                        <h5 class="inner-top">加入矿池</h5>
+                        <p>bas使交易信息更透明化、公开化；域名所有权归秘钥所有者，不必担心被强制变更的风 险；bas更加智能可自动执行合约，无需值守，有效的避免中间商赚取差价的行为；命名
+                          支持任何语言，无法抢注，采用区块链交易，像比特币一样安全</p>
+                      </div>
+                      <div class="bas-double--card-footer"><a class="bas-text-green">
+                          去申请 <i class="fa fa-long-arrow-right"></i></a></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="home-crit-container mt-5">
+            <div class="container">
+              <div class="row justify-content-center align-items-center">
+                <div class="col-8"><img src="/static/img/crit_bg.png" class="img-fluid"></div>
+                <div class="col-md-4 col-sm-8">
+                  <div class="crit-tipbox">
+                    <ul class="home-crit-ul">
+                      <li class="home-crit-li-red">
+                        传统节点
+                        <p class="home-li-content">
+                          根节点1个，辅根节点12个， 集中在少数国家手中形成技术霸权 多次利用技术霸权攻击主权国家 仅仅支持英文根域名服务 根域名范围是固定范围选中，无法自定义
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="crit-tipbox">
+                    <ul class="home-crit-ul">
+                      <li class="home-crit-li-green">
+                        Bas节点
+                        <p class="home-li-content">
+                          64个主根节点，128个辅助节点 所有权归不同国家不同机构所有 掌握秘钥即掌握数据所有权 通过区块链共识算法，所有节点公平对待， 公开数据，共同治理， 根域名不限制语言与数量。
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container bas-section">
+            <h1 class="section-title">全新协议,新世界入口</h1>
+            <div class="el-row" style="margin-left: -12px; margin-right: -12px;">
+              <div class="el-col el-col-24" style="padding-left: 12px; padding-right: 12px;">
+                <div class="bas-home--seenew--twobox"><img src="/static/icons/httpb.png">
+                  <p>
+                    升级TLS1.3到TLS1.5 支持区块链公钥与签名的安全通 讯协议http + TLS1.5 + bas = httpb,全新的RFC标准。
+                  </p>
+                </div>
+              </div>
+              <div class="el-col el-col-24" style="padding-left: 12px; padding-right: 12px;">
+                <div class="bas-home--seenew--twobox"><img src="/static/icons/ca_service_zh.png">
+                  <p>
+                    被完全颠覆的Ca中心
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-center align-items-center pt-5">
+              <div class="col-lg-4 col-md-12">
+                <div class="home-prod-rect prod-rect-bg-0">
+                  <div class="home-prod-rect--left"><img src="/static/icons/browser_icon.png" class="home-prod-icon">
+                  </div>
+                  <div class="home-prod-rect--right">
+                    <p class="home-click">
+                      Get BAS Explorer for mac
+                      <i class="fa fa-download"></i></p>
+                    <p>
+                      全新的浏览器，支持全新的httpb协议＋区块 链区块数据浏览
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-12">
+                <div class="home-prod-rect prod-rect-bg-1">
+                  <div class="home-prod-rect--left"><img src="/static/icons/exte_icon.png" class="home-prod-icon"></div>
+                  <div class="home-prod-rect--right">
+                    <p class="home-click">
+                      Get BAS Extensions
+                      <i class="fa fa-plug"></i></p>
+                    <p>
+                      浏览器插件支持区块链域名解析
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-12">
+                <div class="home-prod-rect prod-rect-bg-2">
+                  <div class="home-prod-rect--left"><img src="/static/icons/wallet_icon.png" class="home-prod-icon">
+                  </div>
+                  <div class="home-prod-rect--right">
+                    <p class="home-click">
+                      增强的数字货币钱包
+                      <i class="fa fa-external-link"></i></p>
+                    <p>
+                      浏览器插件支持区块链域名解析
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="el-row">
+              <h1 class="section-title">
+                未来已来
+              </h1>
+            </div>
+            <div class="row justify-content-center align-items-center  el-row"
+              style="margin-left: -12px; margin-right: -12px; margin-bottom: 1.5rem;">
+              <div class="el-col el-col-12" style="padding-left: 12px; padding-right: 12px;"><img
+                  src="/static/icons/bas_app_sences_zh-cn.png" class="img-fluid"></div>
+              <div class="el-col el-col-12" style="padding-left: 12px; padding-right: 12px;">
+                <h4>
+                  BAS系统可以满足不同场景
+                </h4>
+                <p class="mt-4 w-75">BAS系统不仅可以获取IP地址映射、区块链地址这些基础功能，还可以让物联网设备间不依赖于中心网关
+                  也能相互发现，同时能进行更安全的身份认证和加密通讯，免于信道劫持的风险； 帮助用户生成和管理包括互联网应用之内的众多账号，并免于泄露密码的风险；
+                  帮助企业和机构管理用户身份，例如征信信息，BAS能使这些信息更加完整，难以伪造，方便获取。</p>
+              </div>
+            </div>
+            <div class="row justify-content-start align-items-center el-row"
+              style="margin-left: -12px; margin-right: -12px;">
+              <div class="el-col el-col-24 el-col-xs-12 el-col-sm-12 el-col-md-8 el-col-lg-8"
+                style="padding-left: 12px; padding-right: 12px;">
+                <div class="bas-app-sence--box"><img src="/static/icons/tickets_icon.png" class="bas-app-sences--icon">
+                  <p class="bas-app-sences--text">
+                    飞机/火车身份认证
+                  </p>
+                </div>
+              </div>
+              <div class="el-col el-col-24 el-col-xs-12 el-col-sm-12 el-col-md-8 el-col-lg-8"
+                style="padding-left: 12px; padding-right: 12px;">
+                <div class="bas-app-sence--box"><img src="/static/icons/medical_icon.png" class="bas-app-sences--icon">
+                  <p class="bas-app-sences--text">
+                    医疗就诊挂号
+                  </p>
+                </div>
+              </div>
+              <div class="el-col el-col-24 el-col-xs-12 el-col-sm-12 el-col-md-8 el-col-lg-8"
+                style="padding-left: 12px; padding-right: 12px;">
+                <div class="bas-app-sence--box"><img src="/static/icons/web_icon.png" class="bas-app-sences--icon">
+                  <p class="bas-app-sences--text">
+                    网站登录认证
+                  </p>
+                </div>
+              </div>
+              <div class="el-col el-col-24 el-col-xs-12 el-col-sm-12 el-col-md-8 el-col-lg-8"
+                style="padding-left: 12px; padding-right: 12px;">
+                <div class="bas-app-sence--box"><img src="/static/icons/credit_icon.png" class="bas-app-sences--icon">
+                  <p class="bas-app-sences--text">
+                    征信身份认证
+                  </p>
+                </div>
+              </div>
+              <div class="el-col el-col-24 el-col-xs-12 el-col-sm-12 el-col-md-8 el-col-lg-8"
+                style="padding-left: 12px; padding-right: 12px;">
+                <div class="bas-app-sence--box"><img src="/static/icons/travel_icon.png" class="bas-app-sences--icon">
+                  <p class="bas-app-sences--text">
+                    酒店/会务认证
+                  </p>
+                </div>
+              </div>
+              <div class="el-col el-col-24 el-col-xs-12 el-col-sm-12 el-col-md-8 el-col-lg-8"
+                style="padding-left: 12px; padding-right: 12px;">
+                <div class="bas-app-sence--box"><img src="/static/icons/other_icon.png" class="bas-app-sences--icon">
+                  <p class="bas-app-sences--text">
+                    其他任何认证场景
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-warp">
+        <div class="container">
+          <div class="nav-foot-row row">
+            <ul class="col-md-3 col-sm-6">
+              <li class="foot-item router-link-exact-active active"><img src="/static/icons/logo_btm.png"
+                  alt="BAS Exchange" class="foot-logo"></li>
+              <li class="foot-item"><a target="BASChain" href="https://github.com/BASChain"
+                  class="nav-link fa-socail-icon"><i class="fa fa-github-square"></i>
+                  Github
+                </a></li>
+              <li class="foot-item"><a target="facebook"
+                  href="https://www.facebook.com/groups/145932483508371/?ref=bookmarks"
+                  class="nav-link fa-socail-icon"><i class="fa fa-facebook-square"></i>
+                  Facebook
+                </a></li>
+            </ul>
+            <ul class="col-md-3 col-sm-6">
+              <li class="foot-item router-link-exact-active active"><a href="#/home" class="nav-link">首页</a></li>
+              <li class="foot-item"><a href="#/market/index" class="nav-link">域名市场</a></li>
+              <li class="foot-item"><a href="#/apply" class="nav-link">域名申请</a></li>
+              <li class="foot-item"><a href="#/mail/regist" class="nav-link">邮箱注册</a></li>
+              <li class="foot-item"><a href="#/agent" class="nav-link">超级节点/域名代理</a></li>
+              <li class="foot-item"><a href="#/appstore/index" class="nav-link">应用商店</a></li>
+            </ul>
+            <ul class="col-md-3 foot-ul col-sm-5">
+              <li class="foot-item"><a href="#/help/issue?activeId=" class="nav-link">
+                  如何注册域名
+                </a></li>
+              <li class="foot-item"><a href="#/help/issue?activeId=" class="nav-link">
+                  如何购买超级节点
+                </a></li>
+              <li class="foot-item"><a href="#/help/bmail?activeId=GetBMailAccount" class="nav-link">
+                  如何注册邮箱
+                </a></li>
+              <li class="foot-item"><a href="#/help/bmail?activeId=JoinBMailMiner" class="nav-link">
+                  如何成为BMail邮箱服务提供者
+                </a></li>
+              <li class="foot-item"><a href="#/help/issue?activeId=" class="nav-link">
+                  帮助中心
+                </a></li>
+            </ul>
+            <ul class="col-md-3 foot-ul col-sm-6">
+              <li class="foot-item"><a class="nav-link">
+                  插件下载
+                </a></li>
+              <li class="foot-item"><a href="/apps/Uranium.app.zip" class="nav-link">
+                  浏览器下载
+                </a></li>
+              <li class="foot-item"><a href="#" class="nav-link">
+                  邮箱APP下载
+                </a></li>
+            </ul>
+          </div>
+          <div id="foot-copyright" class="row justify-content-between align-content-between">
+            <div class="bas-copyrigth">
+              Copyright © 2020 All rights reserved.
+            </div>
+            <div class="d-none"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    console.log('>>>>>>>>>>>>>>>Body>>',new Date())
+  </script>
+</div>
+</body>
+  <!-- JS -->
+  <script src="/static/js/idb.js"></script>
+  <!--ABIS -->
+  <script src="/static/js/abis/BasToken.js"></script>
+  <script src="/static/js/abis/BasView.js"></script>
+  <!-- <script src="/static/js/abis/BasRelations.js"></script> -->
+  <script src="/static/js/abis/BasExpiredOwnership.js"></script>
+  <script src="/static/js/abis/BasTradableOwnership.js"></script>
+
+  <script src="/static/js/abis/BasMail.js"></script>
+  <script src="/static/js/abis/BasMailManager.js"></script>
+  <script src="/static/js/abis/BasMarket.js"></script>
+  <script src="/static/js/abis/BasMiner.js"></script>
+  <script src="/static/js/abis/BasOANN.js"></script>
+  <script src="/static/js/abis/BasRootDomain.js"></script>
+  <script src="/static/js/abis/BasSubDomain.js"></script>
+  <script src="/static/js/abis/BasDomainConf.js"></script>
+  <script src="/static/js/abis/BasAccountant.js"></script>
+  <script src="/static/js/abis/BasRootDomain.js"></script>
+
+  <script src="/static/vendor/jquery.min.js"></script>
+  <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="/static/vendor/lodash.min.js"></script>
+  <script src="/static/vendor/numeral/numeral.min.js"></script>
+  <script src="/static/vendor/numeral/locales.min.js"></script>
+
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"
+      integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script> -->
+  <script src="/static/vendor/clipboard.js-2.0.6/clipboard.min.js"></script>
+
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"
+      integrity="sha256-oE03O+I6Pzff4fiMqwEGHbdfcW7a3GRRxlL+U49L5sA=" crossorigin="anonymous"></script> -->
+  <script src="/static/vendor/js.cookie.js"></script>
+
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"
+      integrity="sha256-5oApc/wMda1ntIEK4qoWJ4YItnV4fBHMwywunj8gPqc=" crossorigin="anonymous"></script> -->
+  <!-- <script src="/static/vendor/moment/moment.js"></script>
+    <script src="/static/vendor/moment/local/zh-cn.js"></script> -->
+
+
+
+  <!-- Vue,Vue-i18n,Vuex -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"
+      integrity="sha256-T/f7Sju1ZfNNfBh7skWn0idlCBcI3RwdLSS4/I7NQKQ=" crossorigin="anonymous"></script> -->
+  <script src="/static/vendor/axios/axios.min.js"></script>
+
+
+  <!-- <script src="//cdn.bootcss.com/vue/2.6.11/vue.min.js"></script> -->
+
+
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vuex/3.1.3/vuex.min.js"
+      integrity="sha256-FRU9P9NftDIPZJdSnb3SaUNLNoymsH+ZjSyknLfCstk=" crossorigin="anonymous"></script> -->
+  <script src="/static/vendor/vue/vue.min.js"></script>
+
+  <script src="/static/vendor/vuex/vuex.min.js"></script>
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vuejs-logger@1.5.4/dist/index.min.js"></script> -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-i18n/8.15.7/vue-i18n.min.js"
+      integrity="sha256-qBHAQDMK1DW98yP4BFoK26gaIM5qijmkzKaqeZdpfCo=" crossorigin="anonymous"></script> -->
+  <script src="/static/vendor/vue-i18n/vue-i18n.min.js"></script>
+
+  <!-- <script src="//cdn.bootcss.com/vue-router/3.1.3/vue-router.min.js"></script> -->
+  <script src="/static/vendor/vue-router/vue-router.min.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vuex-router-sync@5.0.0/index.min.js"></script> -->
+
+  <!-- elementUI -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/element-ui/2.13.2/index.js"
+      integrity="sha256-m+uYo63FCIIAqY7qmxzXewAzPvoXoHUTmildiyYWMsc=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/element-ui/2.13.2/locale/zh-CN.min.js"
+      integrity="sha256-qXwXnuFwr6qLHgyFmC+yP0Kdx8RhuGzYVBRjnoXfMnY=" crossorigin="anonymous"></script> -->
+
+  <!-- <script src="://cdn.jsdelivr.net/npm/element-ui@2.13.2/lib/element-ui.common.min.js"></script> -->
+
+  <script src="/static/vendor/elemnet-ui/index.js"></script>
+
+
+
+  <!-- bootstrap-vue -->
+  <!--   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-vue/2.15.0/bootstrap-vue.min.js"
+      integrity="sha256-y9Vp8fMtXILjsWZ2gqOIjf7cJBQ60GEplO+bhzXrXJg=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-vue/2.15.0/bootstrap-vue-icons.min.js"
+      integrity="sha256-k3dtVPFwdWsKtquU5bezjd7cCt0ggGk6M6DrVm/x65g=" crossorigin="anonymous"></script> -->
+
+  <script src="/static/vendor/bootstrap-vue/bootstrap-vue-icons.min.js"></script>
+  <script src="/static/vendor/bootstrap-vue/bootstrap-vue.min.js"></script>
+
+
+
+  <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/web3/1.2.7/web3.min.js"
+      integrity="sha256-9rSwSMn4GDjf9FcHmJSvdiKGrk+mNIUmM4ltFDu3MUU=" crossorigin="anonymous"></script> -->
+  <!-- <script src="//cdn.jsdelivr.net/npm/web3@1.2.8/src/index.min.js"></script> -->
+  <script src="/static/js/web3.min.js"></script>
+  <script type="text/javascript">
+    console.log('>>>>>>>>>>>>>>>>>lazy load', new Date())
+  </script>
+</html>
