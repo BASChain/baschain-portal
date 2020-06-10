@@ -73,7 +73,7 @@
               </div>
             </div>
             <div class="bas-app-detail--right">
-              <div class="bas-btn-get">Get</div>
+              <div class="bas-btn-get" @click="toDetail(item.id)">Get</div>
             </div>
           </div>
         </div>
@@ -117,9 +117,9 @@
 }
 .dropdown-toggle::after {
   color: white;
+  border-bottom: 0;
   border-top: 0.3em solid;
   border-right: 0.2em solid transparent;
-  border-bottom: 0;
   border-left: 0.2em solid transparent;
 }
 .abs-btn-group > .bas-btn-group--left {
@@ -160,14 +160,19 @@
   -ms-transform: scale(1,1); /* IE 9 */
   -webkit-transform: scale(1,1); /* Safari and Chrome */
 }
-.bas-inner-intro > {
+.bas-inner-intro > p {
   margin-bottom: 0rem !important;
+  font-size:12px;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(91,92,117,1);
+  line-height:22px;
+  letter-spacing:1px;
 }
 .bas-inner-intro {
   width: 100%;
-  /* height: 66px; */
+  height: 58px;
   padding-top: 8px;
-  /* background-color: darkgray; */
 }
 .bas-inner-title {
   width: 100%;
@@ -176,17 +181,12 @@
 }
 .bas-inner-title > p {
   font-size: 20px;
-  /* font-size: 1.2rem; */
   line-height: 1.4;
-
-  /* width:70px;
-  height:30px; */
-  /* font-size:22px; */
   font-family:PingFangSC-Medium,PingFang SC;
   font-weight:500;
   color:rgba(4,6,46,1);
   line-height:30px;
-  letter-spacing:1px;
+  letter-spacing:0.26px;
 }
 .bas-inner-lable--min {
   width: auto;
@@ -238,7 +238,6 @@
 }
 .bas-type-title > p {
   font-size: 1.8rem;
-  /* font-size:36px; */
   font-family:PingFangSC-Medium,PingFang SC;
   font-weight:500;
   color:rgba(4,6,46,1);
@@ -254,34 +253,26 @@
 }
 .bas-app-detail {
   width: 100%;
-  /* min-height: 142px; */
   background:rgba(255,255,255,1);
   border-radius:8px;
-  /* padding: 10px 20px; */
-  /* padding: 4% 5%; */
   justify-content: space-between;
   display: flex;
-  justify-content: space-between;
 }
 .bas-app-detail > p {
   text-align: right;
 }
+.app-exporer-zh-cn, .app-exporer-en {
+  height: 420px;
+  width: 100%;
+  background-size: cover;
+  background-position: 50%;
+}
 .app-exporer-zh-cn {
-  height: 420px;
-  width: 100%;
   background-image: url('./assets/app_explorer_bg_cn.png');
-  background-size: cover;
-  background-position: 50%;
 }
-
 .app-exporer-en {
-  height: 420px;
-  width: 100%;
   background-image: url('./assets/app_explorer_bg_en.png');
-  background-size: cover;
-  background-position: 50%;
 }
-
 .app-explorer--left {
   top:0;
   left: 20px;
@@ -302,7 +293,6 @@
   margin: 1rem auto;
   background: rgba(0, 202, 155, 1);
   padding: auto .25rem;
-  /* display: inline-flex; */
   justify-content: space-between;
   align-items: center;
   text-align: center;
@@ -312,7 +302,6 @@
 .bas-explorer-select {
   width: 80px;
   background: rgba(0, 202, 155, 1);
-  /* background: #00AB83; */
   align-items: center;
 }
 .bas-explorer-select .el-input__inner {
@@ -322,7 +311,6 @@
 }
 
 .inner-center {
-  /* display: inline-flex; */
   direction: column;
   width: 60%;
   color:#fff;
@@ -334,7 +322,6 @@
 
 .bas-explorer-content {
   width: 22%;
-  /* left: 248px; */
   justify-self: start;
   display: inline-flex;
   direction: column;
@@ -345,7 +332,7 @@
 }
 </style>
 <script>
-import {getDownloadAppsPath,MacBrowserApp,ExtChromeOffline} from '@/bizlib/apps'
+import { getDownloadAppsPath,MacBrowserApp,ExtChromeOffline } from '@/bizlib/apps'
 export default {
   name:"AppStoreIndex",
   computed: {
@@ -382,7 +369,7 @@ export default {
             'opera'
           ],
           type:"app",
-          id: 1
+          id: 0
         },
         {
           icon:"/static/icons/bas_bmail.png",
@@ -394,32 +381,20 @@ export default {
             'other'
           ],
           type:"app",
+          id: 1
+        },
+        {
+          icon:"/static/icons/bas-mail-server.png",
+          title:"BMail server",
+          intro:"intro",
+          labels:[
+            'mac',
+            'linux',
+            'windows'
+          ],
+          type:"app",
           id: 2
         },
-        // {
-        //   icon:"/static/icons/bas_bmail.png",
-        //   title:"Bzoom",
-        //   intro:"intro",
-        //   labels:[
-        //     'ios',
-        //     'android',
-        //     'other'
-        //   ],
-        //   type:"app",
-        //   id: 3
-        // },
-        // {
-        //   icon:"/static/icons/bas_bmail.png",
-        //   title:"Bchat",
-        //   intro:"intro",
-        //   labels:[
-        //     'ios',
-        //     'android',
-        //     'other'
-        //   ],
-        //   type:"app",
-        //   id: 4
-        // },chrome firefox ,opera
         {
           icon:"/static/icons/bas-browser.png",
           title:"BAS Extension",
@@ -430,19 +405,19 @@ export default {
             'opera'
           ],
           type:"browser",
-          id: 5
+          id: 3
         },
         {
           icon:"/static/icons/meta.png",
           title:"MetaMask",
-          intro:"intro",
+          intro:"Extension for accessing Ethereum enabled distributed applications",
           labels:[
             'chrome',
             'firefox',
             'opera'
           ],
           type:"browser",
-          id: 6
+          id: 4
         }
       ]
     }
@@ -463,17 +438,18 @@ export default {
     DownloadExplorerHanle(){
       let fileType = this.os
       let url = getDownloadAppsPath(MacBrowserApp)
-      console.log('>>>>>>',url)
+      // console.log('>>>>>>',url)
       window.open(url)
     },
     toDetail(id) {
-      if (id===0) {
-        this.$router.push('/appstore/appdetail')
+      if(id < 3) {
+        this.$router.push({path: '/appstore/appdetail', query: {id: id}})
+      } else if(id === 3) {
+        this.$router.push({path: '/appstore/extension', query: {id: id}})
+      } else if(id === 4) {
+        window.location.href = 'https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?utm_source=chrome-ntp-icon'
       }
     }
-  },
-  mounted() {
-
   },
   computed: {
     apps: function() {

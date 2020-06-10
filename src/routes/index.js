@@ -348,6 +348,14 @@ export default [
         meta:{
           guest:true
         }
+      },
+      {
+        path:'extension',
+        name:'extension.index',
+        component:()=> import('@/views/AppStore/Extension.vue'),
+        meta:{
+          guest:true
+        }
       }
     ]
   },
