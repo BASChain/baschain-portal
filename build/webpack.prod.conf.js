@@ -16,6 +16,8 @@ const env = require('../config/prod.env')
 const PrerenderSPAPlugin = require("prerender-spa-plugin");
 const Renderer = PrerenderSPAPlugin.PuppeteerRenderer;
 
+const SpritesmithPlugin = require('webpack-spritesmith')
+
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({
@@ -74,6 +76,22 @@ const webpackConfig = merge(baseWebpackConfig, {
       // It's currently set to `true` because we are seeing that sourcemaps are included in the codesplit bundle as well when it's `false`,
       // increasing file size: https://github.com/vuejs-templates/webpack/issues/1110
       allChunks: true
+    }),
+    new SpritesmithPlugin({
+      src:{
+        cwd: path.resolve(__dirname, './src/assets/icons'),
+        glob: '*.png'
+      },
+      target: {
+        image:utils.assetsPath("sprites/sprite.png"),
+        css: utils.assetsPath("sprites/sprites.css")
+      },
+      apiOptions:{
+        cssImageRef:'../sprites/sprite.png'
+      },
+      spritesmithOptions:{
+        algorithm: 'top-down'
+      }
     }),
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.

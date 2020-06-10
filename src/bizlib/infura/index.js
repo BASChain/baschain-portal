@@ -36,7 +36,7 @@ export function BindInfura(obj){
     }
   }
   $infura.prototype.getWeb3 = getInfuraWeb3
-  obj.$infura = new $infura();
+  if(typeof obj === 'object' )obj.$infura = new $infura();
 }
 
 export default {

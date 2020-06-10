@@ -45,10 +45,6 @@ import DomainSearcher from './components/DomainSearcher.vue'
 import BasCarousel from '@/components/carousel/BasCarousel.vue'
 import TripleCards from '@/components/triple/TripleCards.vue'
 
-import { rootDomainItem } from '@/mock/data'
-
-import DomainProxy from '@/proxies/DomainProxy'
-
 export default {
   name:"ApplyIndex",
   computed:{

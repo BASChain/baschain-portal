@@ -5,7 +5,7 @@
       <div slot="body" style="margin-bottom:2.5rem;">
         <about-section />
         <mile-stone-line />
-        <Top10DomainCombox />
+        <!-- <Top10DomainCombox /> -->
         <!-- <FavoriteSection /> -->
         <decenter-section />
         <crit-section />
@@ -22,7 +22,7 @@ import PageContainer from '@/components/PageContainer.vue'
 import HeaderCarousel from './components/Carousel.vue'
 import AboutSection from './AboutSection.vue'
 import MileStoneLine from './MileStoneLine.vue'
-import Top10DomainCombox from './Top10DomainCombox'
+// import Top10DomainCombox from './Top10DomainCombox'
 import FavoriteSection from './FavoriteSection'
 import DecenterSection from './DecenterSection.vue'
 import CritSection from './CritSection.vue'
@@ -43,7 +43,7 @@ export default {
     HeaderCarousel,
     AboutSection,
     MileStoneLine,
-    Top10DomainCombox,
+   // Top10DomainCombox,
     FavoriteSection,
     DecenterSection,
     CritSection,

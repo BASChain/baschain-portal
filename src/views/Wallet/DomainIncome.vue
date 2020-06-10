@@ -78,8 +78,7 @@
 </template>
 
 <script>
-//mock
-import { SearchList } from '@/mock/domain'
+
 export default {
   name:"WalletDomainIncome",
   data(){
