@@ -1,4 +1,4 @@
-const BasToken = {
+const BasTokenJson = {
   contractName: "BasToken",
   abi: [
     {

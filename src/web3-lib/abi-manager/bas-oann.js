@@ -1,5 +1,5 @@
 //import BasOANNJson from "./contracts/BasOANN.json";
-import { assembleAddresses } from "./addrutils.js";
+import { mergeGanacheAddress } from "./addrutils.js";
 import ContractNames from "./name-enums";
 
 /**
@@ -7,9 +7,8 @@ import ContractNames from "./name-enums";
  * s-r:
  */
 export default {
-  BasOANNAddresses: assembleAddresses(
-    ContractNames.BasOANN,
-    BasOANNJson.networks
+  BasOANNAddresses: mergeGanacheAddress(
+    ContractNames.BasOANN
   ),
-  BasOANNABI: BasOANNJson.abi
+  BasOANNABI: BasOANNJson
 };

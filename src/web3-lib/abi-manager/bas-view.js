@@ -1,6 +1,6 @@
 //import BasViewJson  from './contracts/BasView.json'
 
-import { assembleAddresses } from "./addrutils.js";
+import { mergeGanacheAddress } from "./addrutils.js";
 import ContractNames from "./name-enums";
 
 /**
@@ -10,6 +10,6 @@ import ContractNames from "./name-enums";
 //const BasViewABI = BasView.abi;
 
 export default {
-  BasViewAddresses: assembleAddresses(ContractNames.BasView, BasView.networks),
-  BasViewABI: BasView.abi
+  BasViewAddresses: mergeGanacheAddress(ContractNames.BasView),
+  BasViewABI: BasViewJson
 };
