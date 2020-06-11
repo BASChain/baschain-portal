@@ -267,7 +267,9 @@
                   <span>{{$t(`l.RechargeY${it.y}`)}}</span>
                 </div>
                 <div class="year-box-inline">
-                  <span class="bas-unit">{{it.total}}</span>
+                  <span class="bas-unit">
+                    {{it.total ? Math.round(parseFloat(it.total) * 100)/100 : it.total }}
+                  </span>
                 </div>
               </div>
             </div>
