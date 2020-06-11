@@ -193,17 +193,14 @@ export async function setCustomPrice(hash, customPrice, costwei,chainId,wallet) 
  * @param {*} chainId
  * @param {*} wallet
  */
-export async function closeCustomPrice(hash,chainId,wallet) {
+export async function closeCustomPriceByRoot(hash,chainId,wallet) {
+  //console.log(hash,chainId,wallet)
   if (!hash || !wallet ) throw ApiErrors.PARAM_ILLEGAL
   if (!checkSupport(chainId)) throw ApiErrors.UNSUPPORT_NETWORK
   const web3js = winWeb3()
   const rootInst = basRootDomainInstance(web3js, chainId, { from: wallet })
-
-
-  const rootbase = await rootInst.methods.Root(hash).call()
-  if (!rootbase.rootName) throw ApiErrors.DOMAIN_NOT_EXIST
-
-  const receipt = await rootInst.methods.closeCustomPrice(hash)
+  const receipt = await rootInst.methods.closeCustomPrice(hash).send({from:wallet})
+  return receipt
 }
 
 /**
@@ -215,7 +212,7 @@ export async function closeCustomPrice(hash,chainId,wallet) {
  */
 export async function validRecharge4Domain(domainhash,year,chainId,wallet) {
 
-  //console.log("closeCustomPrice",domainhash,year)
+  //console.log("",domainhash,year)
   if (!domainhash || !year || !Web3.utils.isAddress(wallet) )throw apiErrors.PARAM_ILLEGAL
 
   if(!checkSupport(chainId))throw apiErrors.UNSUPPORT_NETWORK
@@ -280,22 +277,18 @@ export async function validRecharge4Domain(domainhash,year,chainId,wallet) {
 
 /**
  *
- * @param {*} rBytes
- * @param {*} sBytes
  * @param {*} year
  * @param {*} chainId
  * @param {*} wallet
  */
-export async function rechargeSubDomain(domaintext,year,chainId,wallet) {
-  if (!domaintext || !year || !Web3.utils.isAddress(wallet)) throw apiErrors.PARAM_ILLEGAL
+export async function rechargeSubDomain(domainhash,year,chainId,wallet) {
+  if (!domainhash || !year || !Web3.utils.isAddress(wallet)) throw apiErrors.PARAM_ILLEGAL
   if (!checkSupport(chainId)) throw apiErrors.UNSUPPORT_NETWORK
-  const domainStruct = splitSubDomain(domaintext)
-  const rName = domainStruct.topBytes
-  const sName = domainStruct.subBytes
+
 
   const web3js = winWeb3()
   const oann = basOANNInstance(web3js, chainId, { from: wallet })
-  return await oann.methods.rechargeSub(rName, sName,year).send( { from : wallet })
+  return await oann.methods.rechargeSub(domainhash,year).send( { from : wallet })
 }
 
 /**
@@ -321,6 +314,6 @@ export default {
   registSubEmitter,
   closeRootDomainPublic,
   setCustomPrice,
-  closeCustomPrice,
+  closeCustomPriceByRoot,
   rechargeSubDomain,
 }

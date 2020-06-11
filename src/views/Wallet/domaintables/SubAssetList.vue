@@ -712,10 +712,12 @@ export default {
       if(rootResp.state){
         const rootInfo = rootResp.assetinfo
         if(rootInfo.openApplied && rootInfo.isCustomed){
-          unitbas = Web3.utils.toWei(rootInfo.customPrice,'ether')
+          unitbas = Web3.utils.fromWei(rootInfo.customPrice,'ether')
         }
       }
       const items = getYearItems(canRegMaxYear,unitbas)
+
+      console.log(items)
 
       this.recharge = Object.assign({},this.recharge,{
         visible:true,
@@ -790,7 +792,7 @@ export default {
         }).on('receipt',async (receipt)=> {
           try{
             console.log("Approve",receipt)
-            const receipt = await rechargeSubDomain(domaintext,year,chainId,wallet)
+            const receipt = await rechargeSubDomain(domainhash,year,chainId,wallet)
             that.$store.dispatch('ewallet/updateMyAsset',{hash:domainhash})
 
             //this.$store.dispatch('ewallet/updateEWalletAssetsIndexedDB',assetpart)

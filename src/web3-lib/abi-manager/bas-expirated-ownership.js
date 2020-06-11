@@ -1,6 +1,6 @@
 //import ContractsJson from './contracts'
 
-import { assembleAddresses } from "./addrutils.js";
+import { mergeGanacheAddress } from "./addrutils.js";
 import ContractNames from "./name-enums";
 
 /**
@@ -11,9 +11,8 @@ import ContractNames from "./name-enums";
 //export const BasExpiredOwnershipABI = ContractsJson.BasExpiredOwnership.abi
 
 export default {
-  BasExpiredOwnershipAddresses: assembleAddresses(
-    ContractNames.BasExpireOwnership,
-    BasExpiredOwnershipJson.networks
+  BasExpiredOwnershipAddresses: mergeGanacheAddress(
+    ContractNames.BasExpireOwnership
   ),
-  BasExpiredOwnershipABI: BasExpiredOwnershipJson.abi
+  BasExpiredOwnershipABI: BasExpiredOwnershipJson
 };

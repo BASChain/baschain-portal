@@ -1,6 +1,6 @@
 //import ContractsJson from "./contracts";
 
-import { assembleAddresses } from "./addrutils.js";
+import { mergeGanacheAddress } from "./addrutils.js";
 import ContractNames from "./name-enums";
 
 /**
@@ -10,9 +10,8 @@ import ContractNames from "./name-enums";
 //export const BasMinerABI = ContractsJson.BasMiner.abi;
 
 export default {
-  BasMinerAddresses: assembleAddresses(
-    ContractNames.BasMiner,
-    BasMinerJson.networks
+  BasMinerAddresses: mergeGanacheAddress(
+    ContractNames.BasMiner
   ),
-  BasMinerABI: BasMinerJson.abi
+  BasMinerABI: BasMinerJson
 };

@@ -1,6 +1,6 @@
 
 
-import { assembleAddresses } from "./addrutils.js";
+import { mergeGanacheAddress } from "./addrutils.js";
 import ContractNames from "./name-enums";
 
 /**
@@ -10,9 +10,8 @@ import ContractNames from "./name-enums";
 //export const BasTradableOwnershipABI = ContractsJson.BasTradableOwnership.abi;
 
 export default {
-  BasTradableOwnershipAddresses: assembleAddresses(
-    ContractNames.BasTradableOwnership,
-    BasTradableOwnershipJson.networks
+  BasTradableOwnershipAddresses: mergeGanacheAddress(
+    ContractNames.BasTradableOwnership
   ),
-  BasTradableOwnershipABI: BasTradableOwnershipJson.abi
+  BasTradableOwnershipABI: BasTradableOwnershipJson
 };
