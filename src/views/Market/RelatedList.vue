@@ -23,8 +23,6 @@
 </style>
 <script>
 import RowCardItem from '@/components/RowCardItem.vue'
-//mock data
-import { SearchList } from '@/mock/domain'
 
 export default {
   name:"MarketRelatedList",
@@ -49,7 +47,7 @@ export default {
     }
   },
   mounted(){
-    this.list = SearchList;
+    //this.list = SearchList;
     //console.log(JSON.stringify(this.latestList))
   },
   components:{

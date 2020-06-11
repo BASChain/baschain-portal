@@ -25,8 +25,6 @@
 </style>
 <script>
 import RowCardItem from '@/components/RowCardItem.vue'
-//mock data
-import { Top10List } from '@/mock/domain'
 
 export default {
   name:"MarketLatestTransaction",
@@ -36,8 +34,7 @@ export default {
     }
   },
   mounted(){
-    this.latestList = Top10List;
-    //console.log(JSON.stringify(this.latestList))
+
   },
   components:{
     RowCardItem,

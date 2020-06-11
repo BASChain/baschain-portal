@@ -6,7 +6,7 @@
       <router-link
         :to="{ name: 'home.index' }"
         class="navbar-brand">
-        <img :src="topLogo" alt="BAS Exchange" class="header-logo">
+        <img :src="isBlack ? colorfulLogo : blackLogo " alt="BAS Exchange" class="header-logo">
       </router-link>
       <button
         class="navbar-toggler"
@@ -189,6 +189,10 @@ a.basnav-route-actived {
 import  {navMenus}  from './js/nav-menu.js'
 import TopAvatar from './TopAvatar.vue'
 import TopMine from './TopMine'
+
+import LogoHeaderBlack from '@/assets/icons/logo_header_blk.png'
+import LogoHeaderColorful from '@/assets/icons/logo_header.png'
+
 export default {
   name:"topbar",
   components:{
@@ -200,6 +204,8 @@ export default {
       menuCollapsed:false,
       navMenus,
       lang:'',
+      colorfulLogo:LogoHeaderColorful,
+      blackLogo:LogoHeaderBlack,
       options:[
         {id:"zh-CN",text:"中文"},
         {id:"en",text:"English"},
@@ -267,9 +273,6 @@ export default {
     },
     topnavClass() {
       return this.isBlack ? 'top-menu-black' : 'top-menu'
-    },
-    topLogo (){
-      return this.isBlack ? '/static/icons/logo_header.png' : '/static/icons/logo_header_blk.png'
     },
     currentRoutePath(){
       return this.$route.fullpath||''

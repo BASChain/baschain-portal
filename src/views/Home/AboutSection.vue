@@ -14,21 +14,12 @@
 </template>
 
 <script>
-import TripleCards from '@/components/triple/TripleCards.vue'
+//import TripleCards from '@/components/triple/TripleCards.vue'
 
-import {
-  hasExpired,dateFormat,
-  handleDomain,
-} from '@/utils'
-import {
-  getDomainType,isSub,
-  CheckSearchLegal,getDomainTopType
-} from '@/utils/Validator.js'
-import DomainProxy from '@/proxies/DomainProxy'
 export default {
   name:"AboutBas",
   components:{
-    TripleCards,
+    //TripleCards,
   },
   data(){
     return {
@@ -50,21 +41,7 @@ export default {
 
   },
   mounted() {
-    // const proxy = new DomainProxy()
-    // const params = {
-    //   pagenumber:1,
-    //   pagesize:this.pagination.pagesize,
-    //   top:258
-    // }
-    // proxy.getLatestRegist(params).then(resp=>{
-    //   const ret = proxy.transTripleData(resp)
-    //   console.log('>>>',ret)
-    //   if(ret.state){
-    //     this.latestes = Object.assign(ret.domains)
-    //   }
-    // }).catch(ex=>{
-    //   console.log('load top 12 rootdomain error',ex)
-    // })
+
   },
 }
 </script>

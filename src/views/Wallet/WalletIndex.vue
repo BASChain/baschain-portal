@@ -177,6 +177,10 @@ export default {
     //load balance
     //console.log('load balances')
     //this.loadEWalletAssets()
+    setTimeout(() => {
+      this.$store.dispatch('dapp/loadDappBalances')
+    }, 2000);
+
   },
   beforeUpdate() {
 
@@ -222,7 +226,7 @@ export default {
       const web3State = this.$store.getters['dapp/web3State']
       const chainId = web3State.chainId;
       const wallet = web3State.wallet
-      console.log("SubListAssets>>>>>",web3State)
+      //console.log("SubListAssets>>>>>",web3State)
       if(checkSupport(chainId) && wallet){
         //fillMyAsset
         this.$store.dispatch('ewallet/syncEWalletAssets',web3State)

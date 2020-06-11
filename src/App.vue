@@ -59,15 +59,13 @@
         try{
           //this.$store.dispatch('dapp/autoLoginMetaMask');
 
-          setTimeout(() => {
-            this.$store.dispatch('dapp/loadDappBalances')
-          }, 2000);
+
 
           let that = this;
 
-          startDappListener().then(msg=>{
-            console.log(msg)
-          })
+          // startDappListener().then(msg=>{
+          //   console.log(msg)
+          // })
         }catch(ex){
           console.log('LoadDapp',ex)
         }
