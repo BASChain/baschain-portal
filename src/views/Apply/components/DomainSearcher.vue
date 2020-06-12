@@ -48,7 +48,7 @@
                 </div>
               </div>
               <button slot="append"
-                @click.prevent="searchSub" class="bas-append-serachbtn">
+                @click="searchSub" class="bas-append-serachbtn">
                 Search
               </button>
             </el-input>
@@ -63,7 +63,7 @@
                 <span>{{topType}}</span>
               </div>
               <button slot="append"
-                @click.prevent="searchTop">
+                @click="searchTop">
                 Search
               </button>
             </el-input>
@@ -806,7 +806,7 @@ export default {
 
       const rootSuggests = this.topAssets
       const searchSubText = this.subSearchText
-      //console.log(">>>>>>>>>>>>",web3State)
+      console.log(">>>>>>>>>>>>",web3State)
 
       if(!this.topSelectText ||!this.topSelectText ==='.'){
         this.$message(this.$basTip.error('请选择根域名'))

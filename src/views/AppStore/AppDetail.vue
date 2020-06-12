@@ -20,7 +20,22 @@
 									<div class="bas-head-top--right">
 										<div v-if="componentid!=2" class="bas-download-button" styble="background-position:bottom right;">
 											{{ apps[componentid].info }}
-											<button v-for="butt in apps[componentid].downloadButtons" :key="butt.hash" @click="DownloadExplorerHanle" class="bas-download-button--item">{{butt.buttInfo}}</button>
+											<div v-for="butt in apps[componentid].downloadButtons" :key="butt.hash">
+												<el-popover
+													placement="bottom"
+													width="150"
+													trigger="click">
+													<div class="bas-qr-con">
+														<WalletQrCode width="120" id="ethbal"
+														tipPlacement="left"
+														:content="butt.url" />
+													</div>
+													<button slot="reference" class="bas-download-button--item">
+													{{butt.buttInfo}}
+													</button>
+												</el-popover>
+												
+											</div>
 										</div>
 										<div v-if="componentid!=0" class="bas-download-button--serve">
 											{{ apps[componentid].serveInfo }}
@@ -49,6 +64,10 @@
 	</div>
 </template>
 <style scoped>
+.bas-qr-con {
+	width: 140px;
+	height: 140px;
+}
 .bas-done {
 	font-size:16px;
 	font-family:PingFangSC-Medium,PingFang SC;
@@ -259,8 +278,12 @@
 <script>
 
 import {getDownloadAppsPath,MacBrowserApp,ExtChromeOffline} from '@/bizlib/apps'
+import WalletQrCode from '@/components/WalletQrCode.vue'
 export default {
 	name:"AppStoreDetail",
+	components: {
+		WalletQrCode
+	},
 	computed: {
 		...Vuex.mapState({
 		isCN:state => state.lang === 'zh-CN'
@@ -269,6 +292,9 @@ export default {
 	data() {
 		return {
 			componentid: 0,
+			components: {
+				WalletQrCode
+			},
 			apps: [
 				{
 					appid: 0,
@@ -285,12 +311,14 @@ export default {
 					info: 'download BPassword for ',
 					downloadButtons: [
 						{
-							id: 'mac',
-							buttInfo: 'Iphone'
+							id: 'iphone',
+							buttInfo: 'Iphone',
+							url: 'https://baidu.com'
 						},
 						{
 							id: 'android',
-							buttInfo: 'Android'
+							buttInfo: 'Android',
+							url: ''
 						}
 					],
 					details: [
@@ -351,12 +379,14 @@ export default {
 					info: 'download BMail for ',
 					downloadButtons: [
 						{
-							id: 'mac',
-							buttInfo: 'Iphone'
+							id: 'iphone',
+							buttInfo: 'Iphone',
+							url: ''
 						},
 						{
 							id: 'android',
-							buttInfo: 'Android'
+							buttInfo: 'Android',
+							url: ''
 						}
 					],
 					details: [
@@ -446,12 +476,11 @@ export default {
 		}
 	},
 	methods: {
-		DownloadExplorerHanle(){
-      let fileType = this.os
-      let url = getDownloadAppsPath(MacBrowserApp)
-      // console.log('>>>>>>',url)
-      window.open(url)
-    }
+		// DownloadExplorerHanle(){
+    //   let fileType = this.os
+    //   let url = getDownloadAppsPath(MacBrowserApp)
+    //   window.open(url)
+    // }
 	},
 	mounted: function() {
 		this.componentid = this.$route.query.id

@@ -102,7 +102,7 @@
   "DomainRegistTopClosedTip": "This root domain is not open for public sub domain registry",
   "DomainSearchNoResultTip": "No result",
   "DomainFilterTopPlaceholderTip": "Type keyword and hit enter to filter root domains",
-  "DomainSearchPlaceHolder": "Please type sub domain",
+  "DomainSearchPlaceHolder": "Please type domain",
   "MarketSearchValidDomainTip": "Invalid format, can't have space nor symbols other than '_', '-'",
   "MarketMostPopularDomainTitle": "Most Popular Domain",
   "MarketOnSaleDomainTitle": "Domain for Sale",

@@ -687,7 +687,7 @@ export default {
       },
       ruleState:{
         minSubBas:4,
-        maxPriceBas:10000000000
+        maxPriceBas:10000000000,
       },
       origin:{
         isCustomed:true,

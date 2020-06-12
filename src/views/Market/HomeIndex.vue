@@ -20,9 +20,9 @@
       </div>
     </div>
     <PopularMain />
-    <!-- <FavoriteMain /> -->
+    <FavoriteMain />
     <on-sale-main />
-    <!-- <BuyingMain /> -->
+    <BuyingMain />
   </div>
 </template>
 

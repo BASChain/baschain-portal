@@ -94,7 +94,7 @@ export default {
 
     QRCode.toDataURL(''+id,opts,function(err,url){
       if(!err){
-       // console.log(url)
+       console.log(url)
         that.imgSrc = url;
       }else{
         console.log("QRCODE>>>>",err)

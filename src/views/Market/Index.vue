@@ -55,16 +55,12 @@
 .bas-market--header {
   padding-left:226px;
 }
-
-
-
 button.bas-el-append--green{
   color: aliceblue !important;
   background:rgba(0,202,155,1) !important;
   border-top-left-radius: 0px !important;
   border-bottom-left-radius: 0px !important;
 }
-
 .bas-market--search-result {
   width: 100%;
   padding: 10px;
