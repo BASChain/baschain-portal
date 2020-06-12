@@ -46,9 +46,6 @@
 import { isMetaMask, getMetamaskExtensionHref } from '@/bizlib/metamask'
 import { checkSupport } from '@/web3-lib/networks'
 
-//TODO depared
-import { loginMetaMask} from '@/bizlib/web3'
-
 import {enableMetaMask} from '@/web3-lib'
 
 export default {

@@ -582,7 +582,9 @@ import {
 } from '@/utils/Validator.js'
 
 import {checkFetchDappState} from '@/bizlib/web3'
+
 import DomainProxy from '@/proxies/DomainProxy.js'
+
 import { handleTopDomainList } from './search-utils'
 
 import {getDomainDetail} from '@/web3-lib/apis/domain-api'

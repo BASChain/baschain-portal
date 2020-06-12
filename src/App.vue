@@ -5,15 +5,8 @@
 </template>
 
 <script>
-
-  import { reloadChainAndWallet,DappMetaMaskListener,loadDappState } from '@/bizlib/web3'
-  import { getNewBalance } from '@/bizlib/web3/token-api'
-  import InitialProxy from '@/proxies/InitialProxy.js'
-  import {getNetwork,getSupportNetworks} from '@/bizlib/networks'
-
   import { startDappListener } from './bascore/web3-eventhandler'
   import {checkSupport} from '@/web3-lib/networks'
-
 
   export default {
     //Application Name
@@ -127,11 +120,7 @@
 
         //let
         if(val){
-          const nw = getNetwork(val)
-
           let msgHtml = ''
-
-          //console.log(nw,msgHtml)
           let NoticeOPT = {
             position:'top-left',
             title:'Notice',

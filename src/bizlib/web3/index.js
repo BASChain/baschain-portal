@@ -20,7 +20,9 @@ export const checkMetaMaskInject = ()=>{
  */
 export const checkMetaMask = new Promise((resolve,reject)=>{
   if(window.web3 === undefined){
-    reject(new Error('Metamask unfound in your browser'))
+    //reject(new Error('Metamask unfound in your browser'))
+    console.log('Metamask unfound in your browser')
+    resolve({ isInjected:false})
   }
   window.ethereum.autoRefreshOnNetworkChange = false;
   let flag = !!(window.web3 && window.ethereum && window.ethereum.isMetaMask)
