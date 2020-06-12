@@ -589,7 +589,7 @@ img.bas-bingo {
 
 /* bas loading dot */
 .bas-loading {
-  /* float: left; */
+  float: left;
   text-align: center;
 }
 

@@ -1,6 +1,6 @@
 //import ContractsJson from "./contracts";
 
-import { assembleAddresses } from "./addrutils.js";
+import { mergeGanacheAddress } from "./addrutils.js";
 import ContractNames from "./name-enums";
 
 /**
@@ -10,9 +10,8 @@ import ContractNames from "./name-enums";
 //export const BasMailABI = ContractsJson.BasMail.abi;
 
 export default {
-  BasMailAddresses: assembleAddresses(
-    ContractNames.BasMail,
-    BasMailJson.networks
+  BasMailAddresses: mergeGanacheAddress(
+    ContractNames.BasMail
   ),
-  BasMailABI: BasMailJson.abi
+  BasMailABI: BasMailJson
 };

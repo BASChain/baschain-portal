@@ -32,9 +32,9 @@
 
             <el-form-item :label="PurchaseYearsLabel">
               <el-input-number v-model="years" name="years"
-                :controls="false"
-                controls-position="right"
-                :min="1" :max="maxRegYears">
+                :controls="true"
+                controls-position=""
+                :min="1" :max="ruleState.maxRegYears">
               </el-input-number>
               <span>Year</span>
             </el-form-item>
@@ -118,10 +118,6 @@ import {
 import {globalWebState} from '@/web3-lib'
 import { findDomainInfo,hasTaken } from '@/web3-lib/apis/domain-api.js'
 import {preCheck4Sub} from '@/web3-lib/apis/domains-apply.js'
-
-
-
-import DomainProxy from '@/proxies/DomainProxy.js'
 
 
 export default {

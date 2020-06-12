@@ -1,0 +1,44 @@
+{
+  "BasToken": {
+    "1337": "0x5e442B2Cc84c5060348FA8F60C0Ac2F7b1d9e534"
+  },
+  "BasRelations": {
+    "1337": "0x43f07Fb1B26B0b891055f8d68509E17E8581B92c"
+  },
+  "BasExpiredOwnership": {
+    "1337": "0xDEeF52e1c6Da66Fd2E78FFC03fBD86bfB6b4bE76"
+  },
+  "BasTradableOwnership": {
+    "1337": "0x9C5ac4FE6161dFEb887993ef07acE0eF72466D34"
+  },
+  "BasRootDomain": {
+    "1337": "0x6f2267FBD84E94b083b83b2DdcE993E2df4aB460"
+  },
+  "BasSubDomain": {
+    "1337": "0xb1305e836CA0DF69c66a025cF86dFDF64714A0D1"
+  },
+  "BasDomainConf": {
+    "1337": "0x789B6786a86a342F17bdAf42E004bb8C9704d632"
+  },
+  "BasAccountant": {
+    "1337": "0xF29e50B9dc65d9D6323A53d505F6Bd22D6A36AD6"
+  },
+  "BasMiner": {
+    "1337": "0xD6BDE17565d73f3d6eD25077473bb5044ea43ee4"
+  },
+  "BasOANN": {
+    "1337": "0xB4cA6AEB68E9E67b7d936FA05aD23AC2337BEcB3"
+  },
+  "BasMarket": {
+    "1337": "0xbfc3Bb272DB541Bd2F8484c4021217Dee9841193"
+  },
+  "BasMail": {
+    "1337": "0x069C5fE891c8E4EFeCf1Fcb1A58CE0a55F741158"
+  },
+  "BasMailManager": {
+    "1337": "0x32caCE85584881002433147FA66a05453FF90880"
+  },
+  "BasView": {
+    "1337": "0x9427E156101478b24af9637A8ab5Cbe92Aa04dB2"
+  }
+}

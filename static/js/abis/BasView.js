@@ -1,4 +1,4 @@
-const BasView = {
+const BasViewJson = {
   contractName: "BasView",
   abi: [
     {

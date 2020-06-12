@@ -1,6 +1,6 @@
 //import ContractsJson from "./contracts";
 
-import { assembleAddresses } from "./addrutils.js";
+import { mergeGanacheAddress } from "./addrutils.js";
 import ContractNames from "./name-enums";
 
 /**
@@ -10,9 +10,8 @@ import ContractNames from "./name-enums";
 //export const BasMailManagerABI = ContractsJson.BasMailManager.abi;
 
 export default {
-  BasMailManagerAddresses: assembleAddresses(
-    ContractNames.BasMailManager,
-    BasMailManagerJson.networks
+  BasMailManagerAddresses: mergeGanacheAddress(
+    ContractNames.BasMailManager
   ),
-  BasMailManagerABI: BasMailManagerJson.abi
+  BasMailManagerABI: BasMailManagerJson
 };

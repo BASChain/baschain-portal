@@ -70,7 +70,7 @@
             <el-form-item :label="$t('l.PurchaseYears')">
               <el-input-number v-model="years" name="years"
                 controls-position=""
-                :min="1" :max="ruleState.maxYearReg">
+                :min="1" :max="ruleState.maxRegYears">
               </el-input-number>
               <span>Year</span>
             </el-form-item>
@@ -182,8 +182,8 @@ export default {
     },
     ...Vuex.mapGetters({
       ruleState:'dapp/ruleState',
-      minsubBas:state => parseFloat(wei2Bas(state.dapp.subGas))
-
+      minsubBas:state => parseFloat(wei2Bas(state.dapp.subGas)),
+      maxYears:state => state.dapp.maxRegYears
     }),
     ...Vuex.mapState({
       dappState:state =>state.dapp

@@ -604,7 +604,7 @@ import {
   closeRootDomainPublic,
   openRootDomainPublic,
   setCustomPrice,
-  closeCustomPrice
+  closeCustomPriceByRoot
 } from '@/web3-lib/apis/oann-api'
 
 import LoadingDot from '@/components/LoadingDot.vue'
@@ -863,10 +863,12 @@ export default {
           this.ctrl.inprogress = false
           this.toggleMaskDialog(false)
         }else{//close
-          const receipt = await closeCustomPrice(hash,chainId,wallet)
-          this.origin.isCustomed = false
-          this.ctrl.inprogress = false
-          this.toggleMaskDialog(false)
+          const receipt = await closeCustomPriceByRoot(hash,chainId,wallet)
+          if(receipt){
+            this.origin.isCustomed = false
+            this.ctrl.inprogress = false
+            this.toggleMaskDialog(false)
+          }
         }
       }catch(ex){
         this.ctrl.inprogress = false

@@ -7,20 +7,8 @@
     content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=0.5,user-scalable=no">
 
   <link rel="shortcut icon" href="/static/favicon.ico">
-  <!-- <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" /> -->
-
-  <!-- <link rel="stylesheet" href="/static/vendor/font-awesome-4.7.0/css/font-awesome.min.css" /> -->
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha256-YLGeXaapI0/5IgZopewRJcFXomhRMlYYjugPLSyNjTY=" crossorigin="anonymous" /> -->
   <link rel="stylesheet" href="/static/vendor/bootstrap/css/bootstrap.min.css"/>
 
-
-
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-vue/2.15.0/bootstrap-vue.min.css"
-    integrity="undefined" crossorigin="anonymous" /> -->
-  <!-- <link rel="stylesheet" href="/static/vendor/bootstrap-vue/bootstrap-vue.min.css" /> -->
   <link rel="preload" as="style" href="/static/vendor/bootstrap-vue/bootstrap-vue.min.css" />
   <link rel="stylesheet" href="/static/vendor/bootstrap-vue/bootstrap-vue-icons.min.css" />
 
@@ -31,65 +19,44 @@
   <title><%= webpackConfig.name %></title>
 
   <!-- JS -->
-  <script src="/static/js/idb.js"></script>
+  <script src="/static/vendor/idb.js"></script>
   <!--ABIS -->
-  <script src="/static/js/abis/BasToken.js"></script>
-  <script src="/static/js/abis/BasView.js"></script>
-  <!-- <script src="/static/js/abis/BasRelations.js"></script> -->
-  <script src="/static/js/abis/BasExpiredOwnership.js"></script>
-  <script src="/static/js/abis/BasTradableOwnership.js"></script>
+  <script src="/static/js/abis/all.js"></script>
 
-  <script src="/static/js/abis/BasMail.js"></script>
-  <script src="/static/js/abis/BasMailManager.js"></script>
-  <script src="/static/js/abis/BasMarket.js"></script>
-  <script src="/static/js/abis/BasMiner.js"></script>
-  <script src="/static/js/abis/BasOANN.js"></script>
-  <script src="/static/js/abis/BasRootDomain.js"></script>
-  <script src="/static/js/abis/BasSubDomain.js"></script>
-  <script src="/static/js/abis/BasDomainConf.js"></script>
-  <script src="/static/js/abis/BasAccountant.js"></script>
-  <script src="/static/js/abis/BasRootDomain.js"></script>
 
+  <!-- Vendor Ali -->
+  <script src="/static/js/web3.min.js"></script>
+  <script>
+    if (typeof Web3 == 'undefined') {
+      document.write(unescape("%3Cscript src='/static/js/web3.min.js' type='text/javascript'%3E%3C/script%3E"));
+    }
+  </script>
   <script src="/static/vendor/numeral/numeral.min.js"></script>
   <script src="/static/vendor/numeral/locales.min.js"></script>
-
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"
-      integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script> -->
   <script src="/static/vendor/clipboard.js-2.0.6/clipboard.min.js"></script>
-
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"
-      integrity="sha256-oE03O+I6Pzff4fiMqwEGHbdfcW7a3GRRxlL+U49L5sA=" crossorigin="anonymous"></script> -->
   <script src="/static/vendor/js.cookie.js"></script>
-
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
-        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script> -->
-  <!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"
-    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script> -->
-
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="/static/vendor/axios/axios.min.js"></script>
-
   <!-- <script src="/static/vendor/jquery.min.js"></script> -->
-  <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+  <script src="/static/vendor/axios/axios.min.js"></script>
   <script src="/static/vendor/lodash.min.js"></script>
 
+  <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
 
 
-  <!-- <script src="//cdn.bootcss.com/vue/2.6.11/vue.min.js"></script> -->
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vuex/3.1.3/vuex.min.js"
-      integrity="sha256-FRU9P9NftDIPZJdSnb3SaUNLNoymsH+ZjSyknLfCstk=" crossorigin="anonymous"></script> -->
   <script src="/static/vendor/vue/vue.min.js"></script>
-
   <script src="/static/vendor/vuex/vuex.min.js"></script>
   <!-- no dependencies lib up -->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/vuejs-logger@1.5.4/dist/index.min.js"></script> -->
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-i18n/8.15.7/vue-i18n.min.js"
-      integrity="sha256-qBHAQDMK1DW98yP4BFoK26gaIM5qijmkzKaqeZdpfCo=" crossorigin="anonymous"></script> -->
+
   <script src="/static/vendor/vue-i18n/vue-i18n.min.js"></script>
 
   <!-- <script src="//cdn.bootcss.com/vue-router/3.1.3/vue-router.min.js"></script> -->
   <script src="/static/vendor/vue-router/vue-router.min.js"></script>
   <!-- <script src="https://cdn.jsdelivr.net/npm/vuex-router-sync@5.0.0/index.min.js"></script> -->
+
+  <!-- bootstrap-vue -->
+  <script src="/static/vendor/bootstrap-vue/bootstrap-vue-icons.min.js"></script>
+  <script src="/static/vendor/bootstrap-vue/bootstrap-vue.min.js"></script>
 
   <script src="https://cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/index.js"></script>
 
@@ -100,22 +67,9 @@
   </script>
 
 
-  <!-- bootstrap-vue -->
-  <!--   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-vue/2.15.0/bootstrap-vue.min.js"
-      integrity="sha256-y9Vp8fMtXILjsWZ2gqOIjf7cJBQ60GEplO+bhzXrXJg=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-vue/2.15.0/bootstrap-vue-icons.min.js"
-      integrity="sha256-k3dtVPFwdWsKtquU5bezjd7cCt0ggGk6M6DrVm/x65g=" crossorigin="anonymous"></script> -->
 
-  <script src="/static/vendor/bootstrap-vue/bootstrap-vue-icons.min.js"></script>
-  <script src="/static/vendor/bootstrap-vue/bootstrap-vue.min.js"></script>
 
-  <script src="https://cdn.bootcdn.net/ajax/libs/web3/1.2.7/web3.min.js"></script>
-  <!-- <script src="/static/js/web3.min.js"></script> -->
-  <script>
-    if (typeof Web3 == 'undefined') {
-      document.write(unescape("%3Cscript src='/static/js/web3.min.js' type='text/javascript'%3E%3C/script%3E"));
-    }
-  </script>
+
 </head>
 
 <body>
