@@ -43,12 +43,9 @@ import { router } from './plugins/vue-router';
 //import './plugins/vuex-router-sync'
 
 
-//make window.web3 new version and Injected =true
-store.dispatch("dapp/checkInjected");
 
-store.dispatch('dapp/autoLoginMetaMask');
-
-store.dispatch('dapp/loadDAppConfiguration');
+//build need recomment
+global.punycode = require('punycode')
 
 
 /**
@@ -56,6 +53,14 @@ store.dispatch('dapp/loadDAppConfiguration');
  */
 import './assets/css/element-#00CA9B/index.css'
 
+
+
+//make window.web3 new version and Injected =true
+store.dispatch("dapp/checkInjected");
+
+store.dispatch('dapp/autoLoginMetaMask');
+
+//store.dispatch('dapp/loadDAppConfiguration');
 /* eslint-disable no-new */
 global.basvue = new Vue({
   el: "#app",

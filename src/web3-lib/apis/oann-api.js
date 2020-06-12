@@ -6,7 +6,7 @@ import * as ApiErrors from '../api-errors.js'
 import ContractJsons from '../abi-manager'
 import {
   prehandleDomain, domain2Ascii, compareWei2Wei,
-  canMaxRechargeYears, splitSubDomain, notNullHash,
+  canMaxRechargeYears, notNullHash,
   isOwner,
 } from "../utils";
 
