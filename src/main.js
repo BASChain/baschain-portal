@@ -67,5 +67,8 @@ global.basvue = new Vue({
   i18n,
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
+  mounted() {
+    document.dispatchEvent(new Event('render-event'))
+  },
 });

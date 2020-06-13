@@ -15,6 +15,7 @@ Vue.use(VueRouter)
 Vue.prototype.$metamask = metamask.install
 
 export const router = new VueRouter({
+  mode: "history",
   routes,
   scrollBehavior (to, from, savedPosition) {
     if (savedPosition) {
