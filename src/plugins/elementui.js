@@ -1,11 +1,11 @@
 // import Vue from 'vue'
-import ElementUI from 'element-ui'
 //import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css';
+//import ElementUI from 'element-ui'
+//import 'element-ui/lib/theme-chalk/index.css';
 
 
-//Vue.use(ELEMENT)
-Vue.use(ElementUI);
+Vue.use(ELEMENT)
+//Vue.use(ElementUI);
 const offset =260,center = false;
 Vue.prototype.$basTip = {
   warn(text){

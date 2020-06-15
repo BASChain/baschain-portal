@@ -40,7 +40,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     lodash: "lodash",
     axios: "axios",
     web3: "Web3",
-    //"element-ui": "ELEMENT",
+    "element-ui": "ELEMENT",
     jquery: "Jquery",
     "bootstrap-vue": "BootstrapVue",
     // "punycode": "punycode",
