@@ -15,6 +15,14 @@
   <!--Element UI -->
   <!-- <link rel="stylesheet" href="/static/vendor/elemnet-ui/theme-chalk/index.css" /> -->
 <title><%= webpackConfig.name %></title>
+
+
+
+</head>
+
+<body>
+  <div id="app"></div>
+
 <script type="text/javascript" charset="utf-8" src="/static/js/vendor-manager.js" id="vendorManager"></script>
 
 <script src="/static/vendor/vue/vue.min.js"></script>
@@ -49,38 +57,31 @@
 <!-- bootstrap-vue -->
 <script src="/static/vendor/bootstrap-vue/bootstrap-vue.min.js"></script>
 <script src="/static/vendor/bootstrap-vue/bootstrap-vue-icons.min.js"></script>
-
-
-</head>
-
-<body>
-  <div id="app"></div>
-  <!-- built files will be auto injected -->
-
 <script type="text/javascript" charset="utf-8">
-  document.addEventListener("DOMContentLoaded", () => {
-    console.log('DocumentContentLoaded....')
-  })
+  // document.addEventListener("DOMContentLoaded", () => {
+  //   console.log('DocumentContentLoaded....')
+  // })
 
-  function fillJsLoader() {
-    if (BasVendorJs) {
-      const head = document.getElementsByTagName('head');
-      const vendorManager = head.querySelector('#vendorManager')
-      console.log(vendorManager)
-      var script = document.createElement('script')
-      // script.type = "text/javascript"
-      // for (let j = 0; j < BasVendorJs.length; j++) {
-      //   if (BasVendorJs[j].src) {
-      //     let scr = script.src = BasVendorJs[j].src
-      //     header.appendChild(scr);
-      //   }
-      // }
-    }
-  }
+  // function fillJsLoader() {
+  //   if (BasVendorJs) {
+  //     const head = document.getElementsByTagName('head');
+  //     const vendorManager = head.querySelector('#vendorManager')
+  //     console.log(vendorManager)
+  //     var script = document.createElement('script')
+  //     // script.type = "text/javascript"
+  //     // for (let j = 0; j < BasVendorJs.length; j++) {
+  //     //   if (BasVendorJs[j].src) {
+  //     //     let scr = script.src = BasVendorJs[j].src
+  //     //     header.appendChild(scr);
+  //     //   }
+  //     // }
+  //   }
+  // }
 
-  fillJsLoader()
+  // fillJsLoader()
 </script>
 
-</body>
+<!-- built files will be auto injected -->
 
+</body>
 </html>

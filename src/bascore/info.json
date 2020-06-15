@@ -1,7 +1,7 @@
 {
   "name": "baschain-web",
   "author": "bas-team",
-  "buildTag": "2.6.1_200614_2040",
+  "buildTag": "2.6.101_200615_1111",
   "description": "BAS Chain Exchange",
-  "version": "2.6.1"
+  "version": "2.6.101"
 }
