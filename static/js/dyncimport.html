@@ -1,0 +1,196 @@
+
+
+ <!--JS data-url -->
+  <script data-url="/static/vendor/idb.js" type="text/javascript" charset="utf-8"></script>
+  <!--ABIS -->
+  <script data-url="/static/js/abis/all.js" type="text/javascript" charset="utf-8"></script>
+
+
+  <!-- Vendor Ali -->
+  <script data-url="/static/js/web3.min.js"></script>
+  <!-- <script>
+        if (typeof Web3 == 'undefined') {
+          document.write(unescape("%3Cscript src='/static/js/web3.min.js' type='text/javascript'%3E%3C/script%3E"));
+        }
+      </script> -->
+  <script data-url="/static/vendor/numeral/numeral.min.js"></script>
+  <script data-url="/static/vendor/numeral/locales.min.js"></script>
+  <script data-url="/static/vendor/clipboard.js-2.0.6/clipboard.min.js"></script>
+  <script data-url="/static/vendor/js.cookie.js"></script>
+  <script data-url="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+  <script data-url="/static/vendor/axios/axios.min.js"></script>
+  <script data-url="/static/vendor/lodash.min.js"></script>
+
+  <script data-url="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+
+  <script data-url="/static/vendor/vue/vue.min.js"></script>
+  <script data-url="/static/vendor/vuex/vuex.min.js"></script>
+  <!-- no dependencies lib up -->
+
+  <script data-url="/static/vendor/vue-i18n/vue-i18n.min.js"></script>
+
+  <!-- <script src="//cdn.bootcss.com/vue-router/3.1.3/vue-router.min.js"></script> -->
+  <script data-url="/static/vendor/vue-router/vue-router.min.js"></script>
+
+  <!-- bootstrap-vue -->
+  <script data-url="/static/vendor/bootstrap-vue/bootstrap-vue-icons.min.js"></script>
+  <script data-url="/static/vendor/bootstrap-vue/bootstrap-vue.min.js"></script>
+
+
+<script type="text/javascript">
+    jQuery(function ($) {
+      $('script[data-url]').each(function () {
+        var _this = $(this),
+          url = _this.attr('data-url');
+        _this.attr('src', url);
+      });
+    });
+
+</script>
+
+
+<!-- prerender-spa-plugin ok cdn -->
+<script src="/static/vendor/vue/vue.min.js" defer></script>
+<script src="/static/vendor/vuex/vuex.min.js"></script>
+<script src="/static/vendor/vue-i18n/vue-i18n.min.js"></script>
+
+<!-- <script src="//cdn.bootcss.com/vue-router/3.1.3/vue-router.min.js"></script> -->
+<script src="/static/vendor/vue-router/vue-router.min.js"></script>
+
+<script src="/static/vendor/jquery.min.js"></script>
+
+<!--JS data-url -->
+<script src="/static/vendor/idb.js" charset="utf-8"></script>
+<!--ABIS -->
+<script src="/static/js/abis/all.js" charset="utf-8"></script>
+
+
+<!-- Vendor Ali -->
+<script src="/static/js/web3.min.js"></script>
+
+<script src="/static/vendor/numeral/numeral.min.js"></script>
+<script src="/static/vendor/numeral/locales.min.js"></script>
+<script src="/static/vendor/clipboard.js-2.0.6/clipboard.min.js"></script>
+<script src="/static/vendor/js.cookie.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+<script src="/static/vendor/axios/axios.min.js"></script>
+<script src="/static/vendor/lodash.min.js"></script>
+
+<script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- no dependencies lib up -->
+
+
+<!-- bootstrap-vue -->
+<script src="/static/vendor/bootstrap-vue/bootstrap-vue-icons.min.js"></script>
+<script src="/static/vendor/bootstrap-vue/bootstrap-vue.min.js"></script>
+
+<!-- <script src="https://cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/index.js"></script> -->
+<!-- <script src="/static/vendor/element-ui/2.13.2/index.js" type="text/javascript" charset="utf-8"></script> -->
+
+
+
+<!--  body load  -->
+
+<script type="text/javascript" charset="utf-8" src="/static/js/vendor-manager.js" id="vendorManager"></script>
+
+<script src="/static/vendor/vue/vue.min.js"></script>
+<script src="/static/vendor/vuex/vuex.min.js"></script>
+<script src="/static/vendor/vue-i18n/vue-i18n.min.js"></script>
+
+<!-- <script src="//cdn.bootcss.com/vue-router/3.1.3/vue-router.min.js"></script> -->
+<script src="/static/vendor/vue-router/vue-router.min.js"></script>
+
+<script src="/static/vendor/jquery.min.js"></script>
+
+<!--JS data-url -->
+<script src="/static/vendor/idb.js" charset="utf-8"></script>
+<!--ABIS -->
+<script src="/static/js/abis/all.js" charset="utf-8"></script>
+
+
+<!-- Vendor Ali -->
+<script src="/static/js/web3.min.js"></script>
+
+<script src="/static/vendor/numeral/numeral.min.js"></script>
+<script src="/static/vendor/numeral/locales.min.js"></script>
+<script src="/static/vendor/clipboard.js-2.0.6/clipboard.min.js"></script>
+<script src="/static/vendor/js.cookie.js"></script>
+
+
+<script src="/static/vendor/axios/axios.min.js"></script>
+<script src="/static/vendor/lodash.min.js"></script>
+
+<!-- no dependencies lib up -->
+
+<!-- bootstrap-vue -->
+<script src="/static/vendor/bootstrap-vue/bootstrap-vue.min.js"></script>
+<script src="/static/vendor/bootstrap-vue/bootstrap-vue-icons.min.js"></script>
+
+
+
+<script type="text/javascript" charset="utf-8">
+
+
+  document.addEventListener("DOMContentLoaded", ()=>{
+    console.log('DocumentContentLoaded....')
+
+  })
+
+  function fillJsLoader(){
+    if (BasVendorJs) {
+      const head = document.getElementsByTagName('head');
+      const vendorManager = head.querySelector('#vendorManager')
+      console.log(vendorManager)
+      var script = document.createElement('script')
+      // script.type = "text/javascript"
+      // for (let j = 0; j < BasVendorJs.length; j++) {
+      //   if (BasVendorJs[j].src) {
+      //     let scr = script.src = BasVendorJs[j].src
+      //     header.appendChild(scr);
+      //   }
+      // }
+    }
+  }
+
+  fillJsLoader()
+</script>
+
+
+<script src="/static/vendor/vue/vue.min.js"></script>
+<script src="/static/vendor/vuex/vuex.min.js"></script>
+<script src="/static/vendor/vue-i18n/vue-i18n.min.js"></script>
+
+<!-- <script src="//cdn.bootcss.com/vue-router/3.1.3/vue-router.min.js"></script> -->
+<script src="/static/vendor/vue-router/vue-router.min.js"></script>
+
+<script src="/static/vendor/jquery.min.js"></script>
+
+<!--JS data-url -->
+<script src="/static/vendor/idb.js" charset="utf-8"></script>
+<!--ABIS -->
+<script src="/static/js/abis/all.js" charset="utf-8"></script>
+
+
+<!-- Vendor Ali -->
+<script src="/static/js/web3.min.js"></script>
+
+<script src="/static/vendor/numeral/numeral.min.js"></script>
+<script src="/static/vendor/numeral/locales.min.js"></script>
+<script src="/static/vendor/clipboard.js-2.0.6/clipboard.min.js"></script>
+<script src="/static/vendor/js.cookie.js"></script>
+
+
+<script src="/static/vendor/axios/axios.min.js"></script>
+<script src="/static/vendor/lodash.min.js"></script>
+
+<!-- no dependencies lib up -->
+
+<!-- bootstrap-vue -->
+<script src="/static/vendor/bootstrap-vue/bootstrap-vue.min.js"></script>
+<script src="/static/vendor/bootstrap-vue/bootstrap-vue-icons.min.js"></script>
