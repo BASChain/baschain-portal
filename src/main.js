@@ -72,3 +72,7 @@ global.basvue = new Vue({
     document.dispatchEvent(new Event('render-event'))
   },
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+  basvue.$mount('#app')
+})

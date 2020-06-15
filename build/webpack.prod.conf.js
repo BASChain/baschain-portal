@@ -40,7 +40,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     lodash: "lodash",
     axios: "axios",
     web3: "Web3",
-    "element-ui": "ELEMENT",
+    //"element-ui": "ELEMENT",
     jquery: "Jquery",
     "bootstrap-vue": "BootstrapVue",
     // "punycode": "punycode",
@@ -176,11 +176,8 @@ const webpackConfig = merge(baseWebpackConfig, {
       // Required - The path to the webpack-outputted app to prerender.
       staticDir: path.join(__dirname, "../dist"),
       // Required - Routes to render.
-      routes: ["/", "/home", "/apply", "/help"],
+      routes: ["/", "/home","/apply","/market","/mail"],
       renderer: new Renderer({
-        inject: {
-          foo: 'bar'
-        },
         headless: false,
         // 在 main.js 中 document.dispatchEvent(new Event('render-event'))，两者的事件名称要对应上。
         renderAfterDocumentEvent: 'render-event'
