@@ -348,7 +348,7 @@
 import {
   TS_DATEFORMAT,dateFormat,
   wei2Bas,bas2Wei,isOwner,
-  numThousandsFormat,hasExpired,
+  numThousandsFormat,isDateExpired,
   maxRechageYears,getYearItems
 } from '@/utils'
 import {str2ConfDatas} from '@/web3-lib/utils'
@@ -382,6 +382,7 @@ import {
 
 
 import LoadingDot from '@/components/LoadingDot.vue'
+import dayjs from 'dayjs'
 export default {
   name:"EWalletRootAssetList",
   components:{
@@ -396,8 +397,9 @@ export default {
     },
     ...Vuex.mapState({
       items:state => state.ewallet.assets.filter( it =>{
-        it.hadExpired = hasExpired(it.expire)
-        return it.isRoot == true
+        console.log(it)
+        //it.hadExpired = isDateExpired(it.expire)
+        return it.isRoot==true
       }),
       mailServiceBas:state => wei2Bas(state.dapp.mailSeviceGas),
       domainYearItems: state => state.dapp.domainYearItems,
@@ -452,6 +454,8 @@ export default {
   },
   methods: {
     expireTime(expiretime) {
+      console.log(expiretime)
+      //return ''
       return dateFormat(expiretime, 'YYYY-MM-DD HH:mm:ss')
     },
     expireFormat(row,column,cellVal){

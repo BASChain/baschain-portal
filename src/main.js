@@ -47,6 +47,9 @@ import { router } from './plugins/vue-router';
 //build need recomment
 global.punycode = require('punycode')
 
+import dayjs from "dayjs";
+global.dayjs= dayjs
+
 
 /**
  * all at last

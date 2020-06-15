@@ -14,6 +14,7 @@
   },
   "sideEffects": false,
   "dependencies": {
+    "dayjs": "^1.8.28",
     "element-ui": "^2.13.2",
     "fast-date-format": "^2.2.4",
     "font-awesome": "^4.7.0",
