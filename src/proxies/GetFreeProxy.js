@@ -10,32 +10,9 @@ class GetFreeProxy extends BaseProxy {
   }
 
   getFreeEth(wallet) {
-    return this.submit(
-      'get',
-      `${this.endpoint}/${wpaths.GET_FREE_ETH}?account=${wallet}`,
-      { wallet }
-    )
+    const uri = `${this.endpoint}/${wpaths.GET_FREE_ETH}?account=${wallet}`;
+    return this.getApi(uri);
   }
-
-  // getFreeBas(wallet) {
-  //   return this.submit(
-  //     'post',
-  //     `${this.endpoint}/${wpaths.GET_FREE_BAS}`,
-  //     { wallet }
-  //   )
-  // }
-
-  // validFreeState(wallet,type){
-  //   return this.submit(
-  //     'post',
-  //     `${this.endpoint}/${VALID_STATE}`,
-  //     {
-  //       wallet,
-  //       type
-  //     }
-  //   )
-  // }
-
 }
 
 export default GetFreeProxy

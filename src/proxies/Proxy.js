@@ -62,6 +62,27 @@ class BaseProxy {
     })
   }
 
+  getApi(url){
+    return new Promise((resolve,reject)=>{
+      if(!axios || !axios.get) reject('No axios')
+      axios.get(url).then(response =>{
+          console.log(`url:${url}`, response.status, "<<<>>>", response.data);
+          if (response.status == 200) {
+            resolve(true);
+          } else {
+            reject(response.status);
+          }
+      }).catch(({response} )=>{
+        console.log(response, "<<<>>>", response);
+        if (response) {
+          reject(response.status);
+        } else {
+          reject("unknow");
+        }
+      });
+    })
+  }
+
   all(){
     return this.submit('get',`/${this.endpoint}`)
   }
