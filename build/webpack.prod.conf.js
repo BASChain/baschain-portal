@@ -176,7 +176,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       // Required - The path to the webpack-outputted app to prerender.
       staticDir: path.join(__dirname, "../dist"),
       // Required - Routes to render.
-      routes: ["/", "/home","/apply","/market","/mail"],
+      routes: ["/", "/home","/apply","/market","/mail","/agent","/help/issue","/appstore","/wallet"],
       renderer: new Renderer({
         headless: false,
         // 在 main.js 中 document.dispatchEvent(new Event('render-event'))，两者的事件名称要对应上。
