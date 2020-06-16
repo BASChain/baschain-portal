@@ -9,6 +9,13 @@
   </v-layout>
 </template>
 <style>
+.bas-buy-button {
+  padding-top: 3px;
+  margin-left: 24px;
+}
+.inline-btn-group {
+  display: flex;
+}
 .bas-market--layout-container {
   margin: 3rem auto;
 }
@@ -34,10 +41,10 @@
   font-size: .85rem;
 }
 
-.basel-search-append--green {
+/* .basel-search-append--green {
   width: 226px;
   background: rgba(0,202,155,.95);
-}
+} */
 
 .market-search--input >.el-input-group__append {
   color: #fff;
@@ -60,11 +67,26 @@
 .btn-group-warp .text-left button {
   margin-left: .5rem;
 }
-
+.bas-small-expire {
+  font-size:14px;
+  font-family:PingFangSC-Light,PingFang SC;
+  font-weight:300;
+  color:rgba(4,6,46,1);
+  line-height:20px;
+}
+.bas-small-owner {
+  height:17px;
+  font-size:14px;
+  font-family:Lato-Light,Lato;
+  font-weight:300;
+  color:rgba(4,6,46,1);
+  line-height:17px;
+}
 .bas-list-card {
   width: 100%;
   display: block;
   margin: .75rem auto;
+  padding: 14px 24px 9px 24px;
   justify-content: space-between;
   align-items: center;
   color: rgba(4,6,46,.6);
@@ -74,40 +96,61 @@
 
 .list-card--header {
   width: 100%;
-  padding: 24px 12px 0 12px;
   display: inline-flex;
   justify-content: space-between;
   align-items: baseline;
 }
-
-.list-card--header h4 {
+.bas-block > h4 {
+  height:34px;
+  font-size:28px;
+  font-family:Lato-Semibold,Lato;
+  font-weight:600;
+  color:rgba(4,6,46,1);
+  line-height:34px;
+  margin: 0px;
+}
+/* .list-card--header h4 {
   color: rgba(4,6,46,1);
   font-size:24px;
   font-weight: 400;
-}
+} */
 .list-card--header span.number {
-  line-height: 28px;
-  font-size: 24px;
-  font-weight: 600;
-  color: rgba(4,6,46,1);
+  font-size:26px;
+  font-family:Lato-Semibold,Lato;
+  font-weight:400;
+  color:rgba(4,6,46,1);
+  line-height:34px;
 }
 .list-card--header span.number:after {
-  content: 'BAS';
-  font-size: 1rem;
+  content: 'Bas';
+  font-size: 14px;
+  color:rgba(4,6,46,1);
+  font-family:Lato-Light,Lato;
   font-weight: 300;
 }
 
 .list-card--footer {
   width: 100%;
-  padding: 4px 12px 12px 12 px;
+  padding: 9px 0px 0px 0px;
   display: inline-flex;
   justify-content: space-between;
   align-items: center;
   border-top: 1px solid rgba(245,246,246,1);
+  position: relative;
 }
-
+.list-card--tags {
+  width: 100%;
+  padding: 4px 12px 12px 12px;
+  display: inline-flex;
+  justify-content: flex-end;
+  align-items: center;
+  border-top: 1px solid rgba(245,246,246,1);
+}
 .block-inline * {
-  margin: .25rem .5rem;
+  /* margin: .25rem .5rem; */
+}
+.block-inline > p {
+  margin: 0px;
 }
 .market-whois {
   cursor: pointer;
@@ -154,14 +197,7 @@ a.market-whois:hover {
   font-size:10px;
   color: rgba(4,6,46,.6);
 }
-.list-card--tags {
-  width: 100%;
-  padding: 4px 12px 12px 12 px;
-  display: inline-flex;
-  justify-content: flex-end;
-  align-items: center;
-  border-top: 1px solid rgba(245,246,246,1);
-}
+
 </style>
 <script>
   import VLayout from '@/layouts/Default.vue'

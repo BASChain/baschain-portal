@@ -313,12 +313,12 @@ export default {
 						{
 							id: 'iphone',
 							buttInfo: 'Iphone',
-							url: 'https://baidu.com'
+							url: 'https://apps.apple.com/cn/app/bpassword/id1504992275'
 						},
 						{
 							id: 'android',
 							buttInfo: 'Android',
-							url: ''
+							url: 'https://play.google.com/store/apps/details?id=com.nbs.bpassword'
 						}
 					],
 					details: [
@@ -381,7 +381,7 @@ export default {
 						{
 							id: 'iphone',
 							buttInfo: 'Iphone',
-							url: ''
+							url: 'https://apps.apple.com/cn/app/bmail-%E5%8C%BA%E5%9D%97%E9%93%BE%E9%82%AE%E7%AE%B1/id1508489983'
 						},
 						{
 							id: 'android',
