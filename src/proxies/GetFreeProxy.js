@@ -9,33 +9,14 @@ class GetFreeProxy extends BaseProxy {
     super(TOKEN_SVR_BASEPATH, parameters);
   }
 
+  /**
+   * http://104.238.165.23:8082/GetFreeEth?account=0xc5114B4a2D38138f7755011dbB3D72f81819Ab58
+   * @param {*} wallet
+   */
   getFreeEth(wallet) {
-    return this.submit(
-      'get',
-      `${this.endpoint}/${wpaths.GET_FREE_ETH}?account=${wallet}`,
-      { wallet }
-    )
+    const uri = `${this.endpoint}/${wpaths.GET_FREE_ETH}?account=${wallet}`;
+    return this.getApi(uri);
   }
-
-  // getFreeBas(wallet) {
-  //   return this.submit(
-  //     'post',
-  //     `${this.endpoint}/${wpaths.GET_FREE_BAS}`,
-  //     { wallet }
-  //   )
-  // }
-
-  // validFreeState(wallet,type){
-  //   return this.submit(
-  //     'post',
-  //     `${this.endpoint}/${VALID_STATE}`,
-  //     {
-  //       wallet,
-  //       type
-  //     }
-  //   )
-  // }
-
 }
 
 export default GetFreeProxy

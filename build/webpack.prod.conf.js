@@ -166,10 +166,6 @@ const webpackConfig = merge(baseWebpackConfig, {
         to: config.build.assetsSubDirectory,
         ignore: [".*"]
       },
-      // {
-      //   from: path.resolve(__dirname, "../src/home.html"),
-      //   to: path.resolve(__dirname, "../dist")
-      // }
     ]),
     //https://github.com/chrisvfritz/prerender-spa-plugin
     new PrerenderSPAPlugin({
