@@ -18,5 +18,11 @@
   "ExtensionIndex":"Extensions Download",
   "BrowserIndex":"Browser Download",
   "WalletIndex": "Wallet App Download",
-  "HelpIndex":"Help Center"
+  "HelpIndex":"Help Center",
+  "MailRegist":"BMail Apply",
+  "MailAppPage":"BMail APP download",
+  "GetMailAccountGuide":"How to register BMail",
+  "JoinBMailMinerGuide":"How to become a BMail mailbox service provider",
+  "GetBasMailGuide":"How to register a Domain Name",
+  "JoinBasMinerGuide":"How to buy a super node"
 }
