@@ -24,7 +24,14 @@ async function updateAppInfo(infoFilePath){
   const buildTag = `${ver}_${tagts}`;
 
 
-  const info = fs.readJsonSync(infoFilePath) || {}
+  let info = {
+    name:"bas-portal"
+  }
+  // try{
+  //    info = fs.readJsonSync(infoFilePath);
+  // }catch(ex){
+  //   console.log(ex)
+  // }
 
   const infoJson = Object.assign({},info,{
     "name":name,
