@@ -1,5 +1,5 @@
 import { winWeb3 } from '../index'
-import { checkSupport } from '@/bizlib/networks'
+import { checkSupport } from '../networks'
 
 import { basTokenInstance } from "./index.js";
 import apiErrors from '../api-errors';

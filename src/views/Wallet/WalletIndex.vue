@@ -142,9 +142,8 @@
 import MineDomainList from './MineDomainList.vue'
 import MineDomainTabs from './MineDomainTabs.vue'
 import WalletQrCode from '@/components/WalletQrCode.vue'
-import { refreshAccount,getNewBalance } from '@/bizlib/web3/token-api'
 import { recoverBAS } from '@/bizlib/web3/miner-api'
-import {checkSupport} from '@/bizlib/networks'
+import {checkSupport} from '@/web3-lib/networks'
 
 import {wei2BasFormat,hexBN2Ether} from '@/utils'
 export default {
@@ -155,10 +154,6 @@ export default {
     WalletQrCode,
   },
   computed:{
-    // ethBalance(){
-    //   const ethBN = this.$store.state.dapp.ethwei
-    //   return hexBN2Ether(ethBN,'0[.]0000')
-    // },
     ...Vuex.mapState({
       wallet:state=>state.dapp.wallet,
       drawBalance:state =>{
@@ -175,7 +170,6 @@ export default {
   },
   mounted(){
     //load balance
-    // console.log('load balances')
     //this.loadEWalletAssets()
     setTimeout(() => {
       this.$store.dispatch('dapp/loadDappBalances')

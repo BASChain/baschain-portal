@@ -1,5 +1,5 @@
 import BaseProxy from './Proxy'
-import { networkAPIEndpoint } from '@/bizlib/web3'
+import { networkAPIEndpoint } from "./chain-endpoint";
 
 const SELLING_LIST = "SellingDomainList"
 const SEARCH_LIST = "marketSearch"

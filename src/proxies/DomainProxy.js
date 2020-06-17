@@ -1,6 +1,6 @@
 import BaseProxy from './Proxy'
-import { dateFormat, toUnicodeDomain } from '@/utils'
-import { networkAPIEndpoint } from '@/bizlib/web3'
+import { toUnicodeDomain } from '@/utils'
+import { networkAPIEndpoint } from "./chain-endpoint";
 const DOMAIN_INFO = 'domainInfo'
 const DOMAIN_TOTAL = 'getDomainTotal'
 const DOMAIN_LIST = 'getDomainList'
