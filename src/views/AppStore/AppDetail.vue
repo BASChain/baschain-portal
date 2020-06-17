@@ -291,66 +291,66 @@ export default {
 	},
 	data() {
 		return {
-			componentid: 0,
+			componentid: 1,
 			components: {
 				WalletQrCode
 			},
 			apps: [
-				// {
-				// 	appid: 0,
-				// 	appName: "BPassword",
-				// 	appIntro: "intro",
-				// 	iconUrl: "/static/icons/bas_bp.png",
-				// 	imgUrls: [
-				// 		'/static/img/appstore/Account.png',
-				// 		'/static/img/appstore/BP_Account.png',
-				// 		'/static/img/appstore/BP_home.png'
-				// 	],
-				// 	serveInfo: '',
-				// 	serveButts: [],
-				// 	info: 'download BPassword for ',
-				// 	downloadButtons: [
-				// 		{
-				// 			id: 'iphone',
-				// 			buttInfo: 'Iphone',
-				// 			url: 'https://apps.apple.com/cn/app/bpassword/id1504992275'
-				// 		},
-				// 		{
-				// 			id: 'android',
-				// 			buttInfo: 'Android',
-				// 			url: 'https://play.google.com/store/apps/details?id=com.nbs.bpassword'
-				// 		}
-				// 	],
-				// 	details: [
-				// 		{
-				// 			osTitle: "已开发的功能:",
-				// 			styleType: "done",
-				// 			osLabels:[
-				// 				'# 去中心化',
-				// 				'# 安全加密',
-				// 				'# 安全加密'
-				// 			]
-				// 		},
-				// 		{
-				// 			osTitle: "正在完善的功能:",
-				// 			styleType: "undo",
-				// 			osLabels:[
-				// 				'# 正在完善的功能',
-				// 				'# 正在完善的功能'
-				// 			]
-				// 		}
-				// 	],
-				// 	intros: [
-				// 		{
-				// 			introTitle: "Explore your creations in full screen.",
-				// 			introInfo: "Immerse yourself by using the vivid Retina displays of iPad or Mac. Simply tap the center divider, then drag to view your code or live project on the full screen. You can also customize built-in games like Battleship and Brick Breaker, then immerse yourself by letting them take up the whole screen."
-				// 		},
-				// 		{
-				// 			introTitle: "Explore your creations in full screen.",
-				// 			introInfo: "Immerse yourself by using the vivid Retina displays of iPad or Mac. Simply tap the center divider, then drag to view your code or live project on the full screen. You can also customize built-in games like Battleship and Brick Breaker, then immerse yourself by letting them take up the whole screen."
-				// 		}
-				// 	]
-				// },
+				{
+					appid: 0,
+					appName: "BPassword",
+					appIntro: "intro",
+					iconUrl: "/static/icons/bas_bp.png",
+					imgUrls: [
+						'/static/img/appstore/Account.png',
+						'/static/img/appstore/BP_Account.png',
+						'/static/img/appstore/BP_home.png'
+					],
+					serveInfo: '',
+					serveButts: [],
+					info: 'download BPassword for ',
+					downloadButtons: [
+						{
+							id: 'iphone',
+							buttInfo: 'Iphone',
+							url: 'https://apps.apple.com/cn/app/bpassword/id1504992275'
+						},
+						{
+							id: 'android',
+							buttInfo: 'Android',
+							url: 'https://play.google.com/store/apps/details?id=com.nbs.bpassword'
+						}
+					],
+					details: [
+						{
+							osTitle: "已开发的功能:",
+							styleType: "done",
+							osLabels:[
+								'# 去中心化',
+								'# 安全加密',
+								'# 安全加密'
+							]
+						},
+						{
+							osTitle: "正在完善的功能:",
+							styleType: "undo",
+							osLabels:[
+								'# 正在完善的功能',
+								'# 正在完善的功能'
+							]
+						}
+					],
+					intros: [
+						{
+							introTitle: "Explore your creations in full screen.",
+							introInfo: "Immerse yourself by using the vivid Retina displays of iPad or Mac. Simply tap the center divider, then drag to view your code or live project on the full screen. You can also customize built-in games like Battleship and Brick Breaker, then immerse yourself by letting them take up the whole screen."
+						},
+						{
+							introTitle: "Explore your creations in full screen.",
+							introInfo: "Immerse yourself by using the vivid Retina displays of iPad or Mac. Simply tap the center divider, then drag to view your code or live project on the full screen. You can also customize built-in games like Battleship and Brick Breaker, then immerse yourself by letting them take up the whole screen."
+						}
+					]
+				},
 				{
 					appid: 1,
 					appName: "BMail",
