@@ -454,8 +454,6 @@ export default {
   },
   methods: {
     expireTime(expiretime) {
-      console.log(expiretime)
-      //return ''
       return dateFormat(expiretime, 'YYYY-MM-DD HH:mm:ss')
     },
     expireFormat(row,column,cellVal){

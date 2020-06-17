@@ -16,14 +16,14 @@
         index="domain"
         :formatter="domainMailFormat"
         :label="$t('l.EWalletDomainMailServers')"
-        width="160">
+        width="180">
       </el-table-column>
       <el-table-column
         prop="expiration"
         sortable
         :label="$t('l.ExpiredDate')"
         :formatter="expireFormat"
-        width="140">
+        width="150">
       </el-table-column>
 
       <el-table-column
