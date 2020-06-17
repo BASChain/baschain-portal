@@ -36,28 +36,23 @@ import './assets/css/main.css'
 
 //Seria WorkFlow
 import App from './App'
-
 import store from './store'
 import { router } from './plugins/vue-router';
-
 //import './plugins/vuex-router-sync'
-
-
 
 //build need recomment
 global.punycode = require('punycode')
 
+// import dayjs from "dayjs";
+// global.dayjs= dayjs
 
 /**
  * all at last
  */
 import './assets/css/element-#00CA9B/index.css'
 
-
-
 //make window.web3 new version and Injected =true
 store.dispatch("dapp/checkInjected");
-
 store.dispatch('dapp/autoLoginMetaMask');
 
 //store.dispatch('dapp/loadDAppConfiguration');
@@ -67,5 +62,13 @@ global.basvue = new Vue({
   i18n,
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
+  mounted() {
+    document.dispatchEvent(new Event('render-event'))
+  },
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+  console.log(">>>>DOMCLoaded",new Date().getTime())
+  basvue.$mount('#app')
+})

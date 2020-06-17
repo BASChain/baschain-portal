@@ -68,18 +68,9 @@
 </style>
 <script>
 
-import { checkSupport } from '@/bizlib/networks'
 import {
   enableMetaMask,
 } from '@/web3-lib'
-
-// will depared
-import {
-  connectMetamask,listenerNetwork,initOANNConfigs,
-  currentChainId,currentWallet,getCurrentWallet,
-  loadWeb3Listener
-} from '@/bizlib/web3'
-
 
 export default {
   name:"TopAvatar",

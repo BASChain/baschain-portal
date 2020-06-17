@@ -332,9 +332,6 @@
   font-weight: 400;
 }
 
-.domain-sub--poper div.bas-col-20:focus, .domain-sub--poper div.bas-col-20:hover{
-  /* background-color: #f5f7fa; */
-}
 
 .domain-sub--suffix-wrapper .toptext-show {
   display: inline;
@@ -582,7 +579,7 @@ import {
 } from '@/utils/Validator.js'
 
 import {checkFetchDappState} from '@/bizlib/web3'
-import DomainProxy from '@/proxies/DomainProxy.js'
+
 import { handleTopDomainList } from './search-utils'
 
 import {getDomainDetail} from '@/web3-lib/apis/domain-api'

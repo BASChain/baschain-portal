@@ -18,7 +18,7 @@
                 </p>
                 <div class="bas-carsouel-inner--block">
                   <button v-loading.lock="ctrl.ethLoading"
-                    @click="getETHFree" :disabled="ctrl.ethLoading"
+                    @click="getETHFreeHandle" :disabled="ctrl.ethLoading"
                     class="carsouel-btn">{{ $t('p.HomeCarouselGetEth') }}</button>
                   <button
                     :disabled="ctrl.basLoading" v-loading.lock="ctrl.basLoading"
@@ -214,12 +214,6 @@ span.green-cn {
 </style>
 <script>
 
-import {
-  getBasCheck,
-  checkGetFreeNetwork,getFreeBas,checkApplyRecord,
-  checkSendBas,
-} from '@/bizlib/web3/getfree-api'
-import {getEthBalance,checkoutMetaMaskBase} from '@/bizlib/web3'
 import GetFreeProxy from '@/proxies/GetFreeProxy.js'
 
 import {
@@ -281,9 +275,10 @@ export default {
     resizeCarousel() {
 
     },
-    async getETHFree(){
+    async getETHFreeHandle(){
       //let url= "https://faucet.metamask.io/";
       //window.open(url,'Get Ether');
+      console.log("Get Eth Free ...")
       if(this.ctrl.ethLoading){
         let tips = this.$t('g.ApplyingTestTokenOrEtn',{text:'ETH'})
         this.$message(this.$basTip.error(tips))
@@ -333,6 +328,7 @@ export default {
             return;
           }
         })
+
       }catch(ex){
         that.ctrl.ethLoading = false
         switch (ex) {
@@ -430,60 +426,6 @@ export default {
 
 
       }
-    },
-    async getBASFromServer(){
-      if(this.$store.getters['metaMaskDisabled']){
-        this.$metamask()
-        return;
-      }
-      console.log('Start GetBAS send...')
-      let dappState = this.$store.getters['web3/dappState']
-      let chainId = dappState.chainId;
-      let wallet = dappState.wallet;
-
-      if(!checkGetFreeNetwork(chainId)){
-        let errTip = "当前网络不是测试网络,请通过Metamask切换到[Ropsten]"
-        this.$message(this.$basTip.error(errTip))
-        return;
-      }
-
-      let ethBal = await getEthBalance(wallet)
-      console.log('>>>>>',ethBal)
-      if(parseFloat(ethBal) <= 0.0){
-        let checkEthMsg = '您的ETH不足以支付GAS费,请先领取ETH'
-        this.$message(this.$basTip.error(checkEthMsg))
-        return;
-      }
-      //checkSendBas
-      let sendMsg = ''
-      checkSendBas(chainId,wallet).then(ret =>{
-        console.log('Check>>>',ret)
-        if(ret){
-          sendMsg = '您已经申请过BAS(每个帐户只允许申请一次).请到点击右上角"我的钱包"查看'
-          this.$message(this.$basTip.error(sendMsg))
-          return;
-        }else{
-          let sendProxy = new GetFreeProxy()
-          sendProxy.getFreeBas(wallet).then(resp=>{
-            if(resp.state){
-              sendMsg = '您的申请已经提交,您可以到我的钱包刷新确认(区块确认时间一般10秒~60秒之间)'
-              this.$message(this.$basTip.warn(sendMsg))
-              return
-            }else{
-              sendMsg = resp.errmsg
-              console.log('>>>>Send get Error:',sendMsg)
-
-              this.$message(this.$basTip.error(sendMsg))
-              return
-            }
-          }).cath(ex=>{
-            console.log(ex)
-            sendMsg = `网络异常,请重试.:${ex.message}`
-            this.$message(this.$basTip.error(sendMsg))
-            return;
-          })
-        }
-      })
     }
   }
 }

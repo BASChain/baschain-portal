@@ -38,5 +38,17 @@
   "OperateTipSuccess": "Successful operation.",
   "OperateTipFail": "Operation failed.",
   "TransactionWaitTips":"Please wait for the transaction complete",
-  "ParameterIllegal":"Illegal parameter"
+  "ParameterIllegal":"Illegal parameter",
+  "AddOneRecord":"Add Item",
+  "DataNotExistByNetworkOrWalletChange":"The data you want to modify {text} was not found, please confirm whether you have switched the network, wallet account or refresh the page and try again.",
+  "GetBasLackOfEth":"Your current account does not have a testnet ETH, please apply for ETH first",
+  "OnlyRopstenGetBas":"Only support to apply for Ropsten testnet BAS or ETH, please confirm whether it is currently Ropsten testnet",
+  "GetBasTokenSuccess":"The application for testing BAS is successful, you can check it in my wallet later.",
+  "EnoughEthBalanceCannotApply":"Your current account ETH balance is sufficient, no need to claim",
+  "ApplyingTestTokenOrEtn":"Applying for {text}..., please do not apply again.",
+  "SenderLackOfEthTip":"The balance of the ETH test account is insufficient, please apply for another time.",
+  "GetTokenOrETHFail":"Application failed, please try again.",
+  "GetTokenOrETHSuccess":"The application is successful, please go to my wallet to view",
+  "PaymentOngoing":"payment ongoing",
+  "MetaMaskNoPopTips":"If the page is loading for a long time, please check whether MateMask is authorized"
 }

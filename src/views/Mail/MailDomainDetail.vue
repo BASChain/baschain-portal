@@ -597,7 +597,7 @@ export default {
 
 @media screen and (min-width: 1920px) {
   .mail-box-wrapper div.inner-box{
-    width: 60%;
+    width: 70%;
     margin: 24px auto;
   }
 }
@@ -657,7 +657,7 @@ export default {
 } */
 
 .refdata-container div.refdata-btns {
-  width: 280px;
+  width: 320px;
   margin-left: .25rem;
 }
 .refdata-container div.el-textarea.is-disabled>textarea.el-textarea__inner {

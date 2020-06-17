@@ -163,7 +163,9 @@
             </el-form-item>
             <el-form-item>
               <div class="transout-tips">
-                <span>{{$t('l.TransToDomainBCAPTips')}}</span>
+                <span>
+                  {{$t('l.TransToDomainBCAPTips')}}
+                </span>
               </div>
             </el-form-item>
 
@@ -346,7 +348,7 @@
 import {
   TS_DATEFORMAT,dateFormat,
   wei2Bas,bas2Wei,isOwner,
-  numThousandsFormat,hasExpired,
+  numThousandsFormat,isDateExpired,
   maxRechageYears,getYearItems
 } from '@/utils'
 import {str2ConfDatas} from '@/web3-lib/utils'
@@ -380,6 +382,7 @@ import {
 
 
 import LoadingDot from '@/components/LoadingDot.vue'
+import dayjs from 'dayjs'
 export default {
   name:"EWalletRootAssetList",
   components:{
@@ -394,8 +397,8 @@ export default {
     },
     ...Vuex.mapState({
       items:state => state.ewallet.assets.filter( it =>{
-        it.hadExpired = hasExpired(it.expire)
-        return it.isRoot == true
+        it.hadExpired = isDateExpired(it.expire)
+        return it.isRoot==true
       }),
       mailServiceBas:state => wei2Bas(state.dapp.mailSeviceGas),
       domainYearItems: state => state.dapp.domainYearItems,
@@ -1006,13 +1009,14 @@ h5 > span {
   background:rgba(255,87,47,.1);
   border-radius:2px;
   padding: .25rem .75rem;
+  line-height:initial;
 }
 
 .transout-tips * {
   font-family:PingFangSC-Light,PingFang SC;
   font-weight:300;
   color:rgba(255,87,47,1);
-  line-height:20px;
+  line-height:initial;
 }
 
 .transout-body {

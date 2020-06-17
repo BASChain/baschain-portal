@@ -1,14 +1,11 @@
 import {
   checkMetaMask,
   getBasTokenInstance,
-  initConnectMetamask
-  } from '@/bizlib/web3'
-
+} from '@/bizlib/web3'
 
 import * as types from './mutation-types'
-
 import { refreshAccount } from '@/bizlib/web3/token-api'
-import { getDappState  } from '@/bizlib/web3/oann-api'
+
 
 
 /**
@@ -17,13 +14,15 @@ import { getDappState  } from '@/bizlib/web3/oann-api'
  * @param {*} param0
  */
 export const check = ({ commit }) => {
-  checkMetaMask.then(result=>{
-    commit(types.CHECK_INJECTED,result)
+
+  checkMetaMask.then(result => {
+    commit(types.CHECK_INJECTED, result)
     return result.isInjected
-  }).catch(err=>{
-    console.log('ERROR',err)
-    commit(types.CHECK_INJECTED,{isInjected:false,error:err})
+  }).catch(err => {
+    console.log('ERROR', err)
+    commit(types.CHECK_INJECTED, { isInjected: false, error: err })
   })
+
 }
 
 export const refreshAccountBase = async({commit})=>{

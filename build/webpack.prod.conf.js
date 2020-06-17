@@ -77,22 +77,22 @@ const webpackConfig = merge(baseWebpackConfig, {
       // increasing file size: https://github.com/vuejs-templates/webpack/issues/1110
       allChunks: true
     }),
-    new SpritesmithPlugin({
-      src:{
-        cwd: path.resolve(__dirname, './src/assets/icons'),
-        glob: '*.png'
-      },
-      target: {
-        image:utils.assetsPath("sprites/sprite.png"),
-        css: utils.assetsPath("sprites/sprites.css")
-      },
-      apiOptions:{
-        cssImageRef:'../sprites/sprite.png'
-      },
-      spritesmithOptions:{
-        algorithm: 'top-down'
-      }
-    }),
+    // new SpritesmithPlugin({
+    //   src:{
+    //     cwd: path.resolve(__dirname, './src/assets/icons'),
+    //     glob: '*.png'
+    //   },
+    //   target: {
+    //     image:utils.assetsPath("sprites/sprite.png"),
+    //     css: utils.assetsPath("sprites/sprites.css")
+    //   },
+    //   apiOptions:{
+    //     cssImageRef:'../sprites/sprite.png'
+    //   },
+    //   spritesmithOptions:{
+    //     algorithm: 'top-down'
+    //   }
+    // }),
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.
     new OptimizeCSSPlugin({
@@ -114,6 +114,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         // more options:
         // https://github.com/kangax/html-minifier#options-quick-reference
       },
+      chunks:["manifest",'vendor','app'],
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       chunksSortMode: "dependency"
     }),
@@ -122,6 +123,9 @@ const webpackConfig = merge(baseWebpackConfig, {
     // enable scope hoisting
     new webpack.optimize.ModuleConcatenationPlugin(),
     // split vendor js into its own file
+    // extract webpack runtime and module manifest to its own file in order to
+    // prevent vendor hash from being updated whenever app bundle is updated
+
     new webpack.optimize.CommonsChunkPlugin({
       name: "vendor",
       minChunks(module) {
@@ -133,11 +137,17 @@ const webpackConfig = merge(baseWebpackConfig, {
         );
       }
     }),
-    // extract webpack runtime and module manifest to its own file in order to
-    // prevent vendor hash from being updated whenever app bundle is updated
     new webpack.optimize.CommonsChunkPlugin({
       name: "manifest",
       minChunks: Infinity
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: "web3-lib",
+      filename: "web3-lib.js",
+      async: false,
+      children: true,
+      deepChildren: true,
+      minChunks: 2
     }),
     // This instance extracts shared chunks from code splitted chunks and bundles them
     // in a separate chunk, similar to the vendor chunk
@@ -148,14 +158,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       children: true,
       minChunks: 2
     }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: "web3-lib",
-      filename: "web3-lib.js",
-      async: false,
-      children: true,
-      deepChildren: true,
-      minChunks: 2
-    }),
+
     // copy custom static assets
     new CopyWebpackPlugin([
       {
@@ -173,7 +176,12 @@ const webpackConfig = merge(baseWebpackConfig, {
       // Required - The path to the webpack-outputted app to prerender.
       staticDir: path.join(__dirname, "../dist"),
       // Required - Routes to render.
-      routes: ["/", "/home", "/apply", "/help"]
+      routes: ["/", "/home","/apply","/market","/mail","/agent","/help/issue","/appstore","/wallet"],
+      renderer: new Renderer({
+        headless: false,
+        // 在 main.js 中 document.dispatchEvent(new Event('render-event'))，两者的事件名称要对应上。
+        renderAfterDocumentEvent: 'render-event'
+      })
     })
   ]
 });

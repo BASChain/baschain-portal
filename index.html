@@ -10,122 +10,43 @@
   <link rel="stylesheet" href="/static/vendor/bootstrap/css/bootstrap.min.css"/>
 
   <link rel="preload" as="style" href="/static/vendor/bootstrap-vue/bootstrap-vue.min.css" />
-  <link rel="stylesheet" href="/static/vendor/bootstrap-vue/bootstrap-vue-icons.min.css" />
+  <link rel="preload" as="style" href="/static/vendor/bootstrap-vue/bootstrap-vue-icons.min.css" />
 
   <!--Element UI -->
-  <link rel="stylesheet" href="/static/vendor/elemnet-ui/theme-chalk/index.css" />
+  <!-- <link rel="preload" as="style" href="/static/vendor/elemnet-ui/theme-chalk/index.css" /> -->
 
-
-  <title><%= webpackConfig.name %></title>
-
-  <!-- JS -->
-  <script src="/static/vendor/idb.js"></script>
-  <!--ABIS -->
-  <script src="/static/js/abis/all.js"></script>
-
-
-  <!-- Vendor Ali -->
-  <script src="/static/js/web3.min.js"></script>
-  <script>
-    if (typeof Web3 == 'undefined') {
-      document.write(unescape("%3Cscript src='/static/js/web3.min.js' type='text/javascript'%3E%3C/script%3E"));
-    }
-  </script>
-  <script src="/static/vendor/numeral/numeral.min.js"></script>
-  <script src="/static/vendor/numeral/locales.min.js"></script>
-  <script src="/static/vendor/clipboard.js-2.0.6/clipboard.min.js"></script>
-  <script src="/static/vendor/js.cookie.js"></script>
-  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <!-- <script src="/static/vendor/jquery.min.js"></script> -->
-
-  <script src="/static/vendor/axios/axios.min.js"></script>
-  <script src="/static/vendor/lodash.min.js"></script>
-
-  <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
-
-
-  <script src="/static/vendor/vue/vue.min.js"></script>
-  <script src="/static/vendor/vuex/vuex.min.js"></script>
-  <!-- no dependencies lib up -->
-
-  <script src="/static/vendor/vue-i18n/vue-i18n.min.js"></script>
-
-  <!-- <script src="//cdn.bootcss.com/vue-router/3.1.3/vue-router.min.js"></script> -->
-  <script src="/static/vendor/vue-router/vue-router.min.js"></script>
-  <!-- <script src="https://cdn.jsdelivr.net/npm/vuex-router-sync@5.0.0/index.min.js"></script> -->
-
-  <!-- bootstrap-vue -->
-  <script src="/static/vendor/bootstrap-vue/bootstrap-vue-icons.min.js"></script>
-  <script src="/static/vendor/bootstrap-vue/bootstrap-vue.min.js"></script>
-
-  <script src="https://cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/index.js"></script>
-
-  <script>
-    if (typeof ELEMENT == 'undefined') {
-      document.write(unescape("%3Cscript src='/static/vendor/element-ui/index.js' type='text/javascript'%3E%3C/script%3E"));
-    }
-  </script>
-
-
-
-
+<title><%= webpackConfig.name %></title>
 
 </head>
 
 <body>
   <div id="app"></div>
-  <!-- built files will be auto injected -->
 
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha256-CjSoeELFOcH0/uxWu6mC/Vlrc1AARqbm/jiiImDGV3s=" crossorigin="anonymous"></script> -->
+<script src="//cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.min.js"></script>
 
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.10.1/polyfill.min.js"
-    integrity="sha256-025dcygmjSHGlBA5p7ahXH7XQU9g2+5y0iMdEayb2vM=" crossorigin="anonymous"></script> -->
-<!--   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"
-    integrity="sha256-VeNaFBVDhoX3H+gJ37DpT/nTuZTdjYro9yBruHjVmoQ=" crossorigin="anonymous"></script> -->
+<script src="//cdn.bootcss.com/vuex/3.1.3/vuex.min.js"></script>
+<script src="//cdn.bootcdn.net/ajax/libs/vue-i18n/8.15.3/vue-i18n.min.js"></script>
+<script src="//cdn.bootcss.com/vue-router/3.1.3/vue-router.min.js"></script>
 
-  <!-- Common Utils -->
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/punycode/1.4.1/punycode.min.js"
-    integrity="sha256-I5XOWZu6gbewMSB9UR88y0GmiJi9AsQcCzUpA/MBNnA=" crossorigin="anonymous"></script> -->
-  <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/punycode/1.4.1/punycode.min.js"
-    integrity="sha256-I5XOWZu6gbewMSB9UR88y0GmiJi9AsQcCzUpA/MBNnA=" crossorigin="anonymous"></script> -->
-  <!-- <script src="//cdn.jsdelivr.net/npm/punycode@2.1.1/punycode.min.js"></script>
+<!--ABIS -->
+<script src="/static/js/abis/all.js" charset="utf-8"></script>
+<script src="//cdn.bootcdn.net/ajax/libs/web3/1.2.7/web3.min.js"></script>
 
-  <script>
-    if (typeof jQuery == 'undefined') {
-      document.write(unescape("%3Cscript src='/static/js/punycode/punycode.js' type='text/javascript'%3E%3C/script%3E"));
-    }
-  </script> -->
-  <!-- <script src="/static/vendor/punycode.js"></script> -->
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/idb@3.0.2/build/idb.min.js"></script>
 
-<!--   <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"
-    integrity="sha256-LlHVI5rUauudM5ZcZaD6hHPHKrA7CSefHHnKgq+/AZc=" crossorigin="anonymous"></script> -->
+<script src="//cdn.jsdelivr.net/npm/numeral@2.0.6/numeral.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/js-cookie@2.2.1/src/js.cookie.min.js"></script>
+<script src="//cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/bootstrap-vue@2.4.0/dist/bootstrap-vue.min.js"></script>
+<script src="//cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/index.js"></script>
 
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"
-    integrity="sha256-5oApc/wMda1ntIEK4qoWJ4YItnV4fBHMwywunj8gPqc=" crossorigin="anonymous"></script> -->
-  <!-- <script src="/static/vendor/moment/moment.js"></script>
-  <script src="/static/vendor/moment/local/zh-cn.js"></script> -->
 
-  <!-- Vue,Vue-i18n,Vuex -->
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"
-    integrity="sha256-T/f7Sju1ZfNNfBh7skWn0idlCBcI3RwdLSS4/I7NQKQ=" crossorigin="anonymous"></script> -->
+<script type="text/javascript" charset="utf-8" src="/static/js/check-cdn.js" id="checkCDN"></script>
 
-  <!-- elementUI -->
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/element-ui/2.13.2/index.js"
-      integrity="sha256-m+uYo63FCIIAqY7qmxzXewAzPvoXoHUTmildiyYWMsc=" crossorigin="anonymous"></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/element-ui/2.13.2/locale/zh-CN.min.js"
-    integrity="sha256-qXwXnuFwr6qLHgyFmC+yP0Kdx8RhuGzYVBRjnoXfMnY=" crossorigin="anonymous"></script>
-  -->
-
-  <!-- <script src="://cdn.jsdelivr.net/npm/element-ui@2.13.2/lib/element-ui.common.min.js"></script> -->
-
-  <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/web3/1.2.7/web3.min.js"
-    integrity="sha256-9rSwSMn4GDjf9FcHmJSvdiKGrk+mNIUmM4ltFDu3MUU=" crossorigin="anonymous"></script> -->
-  <!-- <script src="//cdn.jsdelivr.net/npm/web3@1.2.8/src/index.min.js"></script> -->
-
-  <!-- <script src="/static/js/moment-with-locales.min.js"></script> -->
+<!-- built files will be auto injected -->
 
 </body>
-
 </html>

@@ -24,7 +24,7 @@ export async function canGetEthValid(chainId,wallet){
     throw apiErrors.UNSUPPORT_NETWORK
   }
 
-  if (!isAddress(wallet)) throw apiErrors.PARAM_ILLEGAL
+  if (!Web3.utils.isAddress(wallet)) throw apiErrors.PARAM_ILLEGAL
   const web3js = winWeb3()
   const ethwei = await web3js.eth.getBalance(wallet)
   if (compareWei2Wei(ethwei, Web3.utils.toWei(ETH_GOT_THRESHOLD, 'ether')) >= 0)

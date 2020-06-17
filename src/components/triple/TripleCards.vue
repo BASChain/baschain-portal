@@ -62,7 +62,7 @@
 <script>
 import BasArrow from '@/components/carousel/BasArrow.vue'
 import DomainCardBody from './DomainCardBody.vue'
-import {checkSupport4Search} from '@/bizlib/web3'
+
 
 export default {
   name:"TripleCards",
@@ -150,15 +150,7 @@ export default {
     },
     gotoWhois(domain){
       if(!domain)return;
-      // if(this.$store.getters['metaMaskDisabled']){
-      //   this.$metamask()
-      //   return;
-      // }
-      // if(!checkSupport4Search()){
-      //   let errTips = 'Current network unsupport.'
-      //   this.$message(this.$basTip.error(errTips))
-      //   return ;
-      // }
+
       this.$router.push({
         path:`/domain/detail/${domain}`
       })

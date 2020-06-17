@@ -19,6 +19,6 @@ package-lock.json
 
 # Project
 config/.env
-build/Release/**.zip
+build/Release/**.*
 
 

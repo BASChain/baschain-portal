@@ -36,6 +36,8 @@ const now = new Date();
 const APP_NAME = envArgs.APP_NAME || pkgJson.name || "demo";
 const APP_VERSION = envArgs.APP_VERSION || pkgJson.version || "1.0.0";
 
+const isPush = Boolean(envArgs.IS_PUSH === 'true');
+
 let IENV = {
   RELEASE: "build/Release",
   DIST: "dist",
@@ -77,10 +79,14 @@ const secondIP = IENV.SECOND_HOST;
 execZipFile(ZipOpts)
   .then(res => {
     console.log("ZipOut:", res);
-    pushZip2Remote(ZipOpts.destination);
+    if (isPush){
+      pushZip2Remote(ZipOpts.destination);
 
-    if (secondIP) {
-      pushZip2SeconRemot(ZipOpts.destination, secondIP);
+      if (secondIP) {
+        pushZip2SeconRemot(ZipOpts.destination, secondIP);
+      }
+    }else{
+      console.log(chalk.redBright("ZipFile:" + path.parse(ZipOpts.destination).dir));
     }
   })
   .catch(err => {

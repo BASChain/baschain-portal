@@ -1,6 +1,12 @@
 
 
-import DateFormat from "fast-date-format";
+//import DateFormat from "fast-date-format";
+
+import dayjs from "dayjs";
+import 'dayjs/locale/es'
+dayjs.locale('es')
+
+
 export const STD_DATEFORMAT = "YYYY-MM-DD"
 export const TS_DATEFORMAT = "YYYY-MM-DD HH:mm:ss"
 
@@ -31,7 +37,16 @@ export function etherToWeiStr(str){
   return Web3.utils.fromWei(str,'ether')
 }
 
+/**
+ * expired true
+ * @param {*} seconds
+ */
+export function isDateExpired(seconds) {
+  if(!seconds || seconds <=0 )return true
+  const dt = parseInt(seconds)*1000;
 
+  return dayjs(dt).isBefore(dayjs())
+}
 
 export function compressAddr(address) {
   if(!address || !address.length)return ''
@@ -95,9 +110,11 @@ export const dateFormat = (dt,format) =>{
     dt = new Date(dt*1000)
   }
 
-  let dataFormat = new DateFormat(format || STD_DATEFORMAT);
-  //return moment(dt).format(format || STD_DATEFORMAT)
-  return dataFormat.format(dt);
+  //let dataFormat = new DateFormat(format || STD_DATEFORMAT);
+  //return dataFormat.format(dt);
+  const formatExpr = format||STD_DATEFORMAT
+  return dayjs(dt).format(formatExpr);
+
 }
 
 export function transBAS2Wei(bas){
@@ -510,6 +527,7 @@ export default {
   handleDomain,
   toUnicodeDomain,
   hasExpired,
+  isDateExpired,
   getTopFromSub,
   compressAddr,
   toNonExponential,
