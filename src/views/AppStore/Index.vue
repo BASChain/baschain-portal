@@ -359,18 +359,18 @@ export default {
         }
       ],
       osApps:[
-        {
-          icon:"/static/icons/bas_bp.png",
-          title:"BPasswordPro",
-          intro:"Password Management Using Blockchain Tech",
-          labels:[
-            'chrome',
-            'firefox',
-            'opera'
-          ],
-          type:"app",
-          id: 0
-        },
+        // {
+        //   icon:"/static/icons/bas_bp.png",
+        //   title:"BPasswordPro",
+        //   intro:"Password Management Using Blockchain Tech",
+        //   labels:[
+        //     'chrome',
+        //     'firefox',
+        //     'opera'
+        //   ],
+        //   type:"app",
+        //   id: 0
+        // },
         {
           icon:"/static/icons/bas_bmail.png",
           title:"BMail",
@@ -443,6 +443,7 @@ export default {
     },
     toDetail(id) {
       if(id < 3) {
+          console.log('$$$$$$$$$', id)
         this.$router.push({path: '/appstore/appdetail', query: {id: id}})
       } else if(id === 3) {
         this.$router.push({path: '/appstore/extension', query: {id: id}})
@@ -455,6 +456,7 @@ export default {
     apps: function() {
       return this.osApps.filter(function(item) {
         if(item.type === 'app') {
+          console.log('$$$$$$$$$', item)
           return item
         }
       })

@@ -180,7 +180,6 @@ export default {
       let totals = parseFloat(this.unitPrice*this.years)
       return this.isCustomed ? totals + parseFloat(this.ruleState.externalBas) : totals
     },
-
     ...Vuex.mapGetters({
       ruleState:'dapp/ruleState',
       minsubBas:state => parseFloat(wei2Bas(state.dapp.subGas)),
@@ -344,7 +343,6 @@ export default {
             msg = `${domain} ${this.$t('l.Illegal')}`
             break;
           case 10001:
-
             msg = `${domain} ${this.$t('l.ErrorMaxLength256')}`
             break;
           case 10002:

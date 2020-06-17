@@ -96,7 +96,7 @@ export default [
       {
         path: "detail/:id",
         name: "domain.detail",
-        component: () => import("@/views/Domain/DetailInfo.vue"),
+        component: () => import("@/views/Domain/DetailInfo_.vue"),
         meta: {
           guest: true
         }
@@ -225,12 +225,12 @@ export default [
     path: "/market",
     name: "market.layout",
     redirect: "/market/index",
-    component: () => import("@/views/Market/Layout.vue"),
+    component: () => import("@/views/Market_/Layout.vue"),
     children: [
       {
         path: "index",
         name: "market.index",
-        component: () => import("@/views/Market/HomeIndex.vue"),
+        component: () => import("@/views/Market_/HomeIndex.vue"),
         meta: {
           guest: true
         }
@@ -238,7 +238,7 @@ export default [
       {
         path: "search",
         name: "market.search",
-        component: () => import("@/views/Market/search/Result.vue"),
+        component: () => import("@/views/Market_/search/Result.vue"),
         meta: {
           guest: true
         }
@@ -246,7 +246,7 @@ export default [
       {
         path: "buying/:domaintext/:pricevol",
         name: "market.buying",
-        component: () => import("@/views/Market/commit/BuyingDomain.vue"),
+        component: () => import("@/views/Market_/commit/BuyingDomain.vue"),
         meta: {
           guest: true
         }
@@ -254,30 +254,31 @@ export default [
       {
         path: "bought",
         name: "market.bought",
-        component: () => import("@/views/Market/commit/BoughtResult.vue"),
+        component: () => import("@/views/Market_/commit/BoughtResult.vue"),
         meta: {
           guest: true
         }
       },
-      {
-        path: "index1",
-        name: "market.index1",
-        redirect: "/market/index/latest",
-        component: () => import("@/views/Market/Index.vue"),
-        meta: {
-          guest: true
-        },
-        children: [
-          {
-            path: "latest",
-            name: "market.index.latest",
-            component: () => import("@/views/Market/LatestTransactions.vue"),
-            meta: {
-              guest: true
-            }
-          }
-        ]
-      }
+      //#########################
+      // {
+      //   path: "index1",
+      //   name: "market.index1",
+      //   redirect: "/market/index/latest",
+      //   component: () => import("@/views/Market/Index.vue"),
+      //   meta: {
+      //     guest: true
+      //   },
+      //   children: [
+      //     {
+      //       path: "latest",
+      //       name: "market.index.latest",
+      //       component: () => import("@/views/Market/LatestTransactions.vue"),
+      //       meta: {
+      //         guest: true
+      //       }
+      //     }
+      //   ]
+      // }
     ],
     meta: {
       guest: true

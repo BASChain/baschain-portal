@@ -175,7 +175,7 @@ export default {
   },
   mounted(){
     //load balance
-    //console.log('load balances')
+    // console.log('load balances')
     //this.loadEWalletAssets()
     setTimeout(() => {
       this.$store.dispatch('dapp/loadDappBalances')

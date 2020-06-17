@@ -102,7 +102,7 @@
   "DomainRegistTopClosedTip": "このルートドメインはサブドメインレジストリに対して開かれていません",
   "DomainSearchNoResultTip": "検索結果はありません。",
   "DomainFilterTopPlaceholderTip": "希望するドメイン名をここに入力してください...",
-  "DomainSearchPlaceHolder": "希望するサブドメインを入力してください",
+  "DomainSearchPlaceHolder": "希望するドメインを入力してください",
   "MarketSearchValidDomainTip": "特殊文字やスペースを含めることはできません",
   "MarketMostPopularDomainTitle": "最も人気のあるドメイン",
   "MarketOnSaleDomainTitle": "販売用ドメイン",

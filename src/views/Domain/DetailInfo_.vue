@@ -1,150 +1,187 @@
 <template>
 <div class="detail-bg-wrapper">
-  <div class="container">
+  <div class="container bas-place-bottom">
     <div class="row justify-content-center">
       <div class="col-7 bas-card">
-        <div class="bas-card__header bas-green-bg text-white">
-          <div class="bas-card__header-title">
-            {{ handleDomain }} {{$t('p.DominDetailRegistTitle')}}
+        <div class="bas-card-header bas-green-bg text-white">
+          <div class="bas-card-header--title">
+            <span>{{ handleDomain }}</span> {{$t('p.DominDetailRegistTitle')}}
           </div>
-          <div class="bas-card__tools d-none">
+          <!-- <div class="bas-card__tools d-none">
             <button class="btn btn-secondary">Regist</button>
-          </div>
+          </div> -->
         </div>
 
-        <div class="bas-card__body">
+        <div class="bas-detail-body">
           <div class="bas-inline">
             <label class="bas-form-label">{{$t('p.DominDetailOwnerLabel')}}</label>
             <span class="bas-small">{{asset.owner}}</span>
           </div>
-          <div class="bas-inline">
+          <!-- <div class="bas-inline">
             <label class="bas-form-label">{{$t('l.DomainHash')}}</label>
             <span>{{asset.hash}}</span>
-          </div>
-          <div class="bas-inline d-none">
+          </div> -->
+          <div class="bas-inline">
             <label class="bas-form-label">{{$t('p.DomainDetailContactsLabel')}}</label>
             <span>{{contact.tel}}</span>
           </div>
-          <div class="bas-inline ">
+          <div class="bas-inline">
             <label class="bas-form-label">{{$t('p.DomainDetailEmailLabel')}}</label>
             <span>{{contact.email}}</span>
           </div>
-          <div class="bas-inline d-none">
+          <div class="bas-inline">
             <label class="bas-form-label">{{$t('p.DomainDetailSiteLabel')}}</label>
             <span>{{contact.website}}</span>
           </div>
-          <div class="bas-inline d-none">
+          <div class="bas-inline">
             <label class="bas-form-label">{{$t('p.DomainDetailContactAddressLabel')}}</label>
             <span>{{contact.address}}</span>
           </div>
-          <hr>
 
-          <div class="bas-whois--second">
-            <div class="d-block">
-              <div class="bas-inline">
-                <label class="bas-form-label">{{$t('p.DomainDetailTypeLabel')}}</label>
-                <span>{{ $t(`g.${domainType}`) }}</span>
-              </div>
-              <div class="bas-inline" :class="asset.isRoot ? '' : 'd-none'">
-                <label class="bas-form-label">{{$t('p.DomainDetailOpenApplyLabel')}}</label>
-                <span>{{ asset.openApplied ? $t('g.Y') : $t('g.N')}}</span>
-              </div>
-              <div class="bas-inline">
-                <label class="bas-form-label">{{$t('p.DomainExpirationLable')}}</label>
-                <span>{{expireDate}}</span>
-              </div>
-            </div>
+          <hr/>
 
+          <div class="bas-inline">
+            <label class="bas-form-label">{{$t('p.DomainDetailTypeLabel')}}</label>
+            <span>{{ $t(`g.${domainType}`) }}</span>
+          </div>
+          <div class="bas-inline" :class="asset.isRoot ? '' : 'd-none'">
+            <label class="bas-form-label">{{$t('p.DomainDetailOpenApplyLabel')}}</label>
+            <span>{{ asset.openApplied ? $t('g.Y') : $t('g.N')}}</span>
+          </div>
+          <div class="bas-inline">
+            <label class="bas-form-label">{{$t('p.DomainExpirationLable')}}</label>
+            <span>{{expireDate}}</span>
           </div>
         </div>
       </div>
     </div>
     <div class="row justify-content-center">
-      <div class="col-7 bas-refdata-box--header">
-        <div class="bas-card__header">
-          <div class="bas-card__header-title ">
+      <div class="col-7 bas-card">
+        <div class="bas-card-header">
+          <div class="bas-domain-data">
             <span>{{$t('l.ReffererData')}}</span>
           </div>
-          <a v-if="isMine" class="bas-link" @click="gotoSetting">
+          <!-- <a v-if="isMine" class="bas-link" @click="gotoSetting">
             {{$t('l.GotoConfiguration')}}
-          </a>
-        </div>
-      </div>
-    </div>
-    <div class="row justify-content-center">
-      <div class="col-7 pt-2 bas-refdata-box--body">
-        <el-form :model="refdata"  label-width="140px" class="refdata-form">
-          <el-form-item :label="$t('p.DomainDetailRefiPv4Label')" >
-            <el-input type="textarea" :disabled="true"
-              :placeholder="$t('p.DomainRefDataShowPlaceholder')"
-              :value="refdata.A" autosize="{minRows:1,maxRows:8}"/>
-          </el-form-item>
-          <el-form-item :label="$t('p.DomainDetailRefIPv6Label')" >
-            <el-input :value="refdata.AAAA" type="textarea" :disabled="true"
-              :placeholder="$t('p.DomainRefDataShowPlaceholder')" autosize>
-            </el-input>
-          </el-form-item>
-          <el-form-item :label="$t('p.DomainDetailRefMXLabel')" >
-            <el-input :value="refdata.MX" type="textarea" :disabled="true"
-              :placeholder="$t('p.DomainRefDataShowPlaceholder')" autosize>
-            </el-input>
-          </el-form-item>
-          <el-form-item :label="$t('p.DomainDetailRefMXBCALabel')" >
-            <el-input :value="refdata.MXBCA" type="textarea" :disabled="true"
-              :placeholder="$t('p.DomainRefDataShowPlaceholder')" autosize>
-            </el-input>
-          </el-form-item>
-          <el-form-item :label="$t('p.DomainDetailRefWalletLabel')" >
-            <el-input :value="refdata.BlockChain" type="textarea" :disabled="true"
-              :placeholder="$t('p.DomainRefDataShowPlaceholder')" autosize>
-            </el-input>
-          </el-form-item>
-          <el-form-item :label="$t('p.DomainDetailRefAliasLabel')" >
-            <el-input :value="refdata.CName" type="textarea" :disabled="true"
-              :placeholder="$t('p.DomainRefDataShowPlaceholder')" autosize>
-            </el-input>
-          </el-form-item>
-          <el-form-item :label="$t('p.DomainDetailRefIOTALabel')" >
-            <el-input :value="refdata.IOTA" type="textarea" :disabled="true"
-              :placeholder="$t('p.DomainRefDataShowPlaceholder')" autosize>
-            </el-input>
-          </el-form-item>
-          <el-form-item :label="$t('p.DomainDetailRefExtensionLabel')" >
-            <el-input :value="refdata.Optional" type="textarea" :disabled="true"
-              :placeholder="$t('p.DomainRefDataShowPlaceholder')" autosize>
-            </el-input>
-          </el-form-item>
-        </el-form>
-      </div>
-    </div>
-    <div class="row justify-content-center mb-5">
-        <div v-if="showRegistBtn"
-          class="col-7 bas-card__body bas-card__body--top-canregist bas-gray-bg">
-            <div class="row justify-content-center">
-              <div class="col-12 text-center">
-                  <span>{{$t('p.DomainDetailRegistSubTips')}}</span>
-                  <h1 class="bas-text-green d-inline" style="font-size:">{{subUnitPrice}}</h1>
-                  <span class="bas-text-green">BAS/{{$t('g.EnumTSYear')}}</span>
-              </div>
-
-              <div class="col-12 text-center pt-2">
-                <button class="btn bas-btn-primary w-25" @click="gotoRegistSub">
-                  {{$t('l.gotoRegistBtn')}}
-                </button>
-              </div>
+          </a> -->
+          <div class="bas-detail-body">
+            <div class="bas-inline">
+              <label class="bas-form-label">{{$t('p.DomainDetailRefiPv4Label')}}</label>
+              <span>{{refdata.A}}</span>
             </div>
+            <div class="bas-inline">
+              <label class="bas-form-label">{{$t('p.DomainDetailRefIPv6Label')}}</label>
+              <span>{{refdata.AAAA}}</span>
+            </div>
+            <div class="bas-inline">
+              <label class="bas-form-label">{{$t('p.DomainDetailRefWalletLabel')}}</label>
+              <span>{{refdata.BlockChain}}</span>
+            </div>
+            <div class="bas-inline">
+              <label class="bas-form-label">{{$t('p.DomainDetailRefAliasLabel')}}</label>
+              <span>{{refdata.CName}}</span>
+            </div>
+            <div class="bas-inline">
+              <label class="bas-form-label">{{$t('p.DomainDetailRefExtensionLabel')}}</label>
+              <span>{{refdata.Optional}}</span>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
     <div class="row justify-content-center mb-5">
-      <div class="col-12" style="height:2.5rem"></div>
+      <div v-if="showRegistBtn"
+        class="col-7 bas-card__body bas-card__body--top-canregist bas-gray-bg">
+          <div class="row justify-content-center">
+            <div class="col-12 text-center bas-sub-price">
+                <label>{{$t('p.DomainDetailRegistSubTips')}}</label>
+                <h1 class="bas-text-green d-inline">{{subUnitPrice}}</h1>
+                <span class="bas-text-green">BAS/{{$t('g.EnumTSYear')}}</span>
+            </div>
+            <div class="col-12 text-center pt-2">
+              <button class="btn bas-btn-primary w-25" @click="gotoRegistSub">
+                {{$t('l.gotoRegistBtn')}}
+              </button>
+            </div>
+          </div>
+      </div>
     </div>
   </div>
 </div>
 
 </template>
 
-<style>
-/* //4,6,46,1 */
+<style scoped>
+.bas-place-bottom {
+  padding-bottom: 98px;
+}
+.bas-sub-price > h1 {
+  font-size:36px;
+  font-family:Lato-Bold,Lato;
+  font-weight:bold;
+  color:rgba(0,202,155,1);
+  line-height:44px;
+  letter-spacing:1px;
+}
+.bas-sub-price > label {
+  font-size:14px;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(4,6,46,1);
+}
+.bas-domain-data {
+  font-size:22px;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(4,6,46,1);
+  line-height:30px;
+  letter-spacing:1px;
+  padding: 25px 24px 7px 24px;
+  border-left: 1px solid rgba(235,237,237,1);
+  border-right: 1px solid rgba(235,237,237,1);
+}
+.bas-detail-body {
+  padding: 2px 24px 3px 24px;
+  border-left: 1px solid rgba(235,237,237,1);
+  border-right: 1px solid rgba(235,237,237,1);
+  border-bottom: 1px solid rgba(235,237,237,1);
+}
+.bas-inline > span {
+  font-size:16px;
+  font-family:Lato-Regular,Lato;
+  font-weight:400;
+  color:rgba(4,6,46,1);
+  line-height:19px;
+  }
+.bas-inline > label {
+  font-size:18px;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(150,150,166,1);
+  line-height:25px;
+  margin: 0px;
+}
+.bas-inline {
+  margin: 12px 0px 11px 0px;
+  line-height: 25px;
+}
+.bas-card-header {
+  /* height: 62px; */
+}
+.bas-card-header--title > span {
+  font-size: 22px;
+  font-weight: Semibold;
+}
+.bas-card-header--title {
+  font-size:18px;
+  font-family:PingFangSC-Regular,PingFang SC;
+  color:#FFFFFF;
+  line-height:62px;
+  letter-spacing:1px;
+  margin-left: 24px;
+  font-weight: 300;
+}
+
 .bas-refdata-box--header {
   border: 1px solid rgba(235,237,237,1);
   border-bottom: 0px ;

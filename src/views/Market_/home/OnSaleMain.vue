@@ -3,38 +3,35 @@
     <h1 class="bas-market-title pt-5 pb-3">
       {{getTitle}}
     </h1>
-
     <div class="container">
       <div class="row justify-content-center align-items-center">
         <div class="col-10 pb-5">
           <div class="row ">
-            <div v-for="item in items"
+            <div v-for="item in domains"
               class="col-lg-6 col-md-6 bas-row--padding"
               :key="item.owner">
               <div class="bas-list-card">
                 <div class="list-card--header">
-                  <div class="block">
+                  <div class="bas-block">
                     <h4>{{item.domaintext}}</h4>
-                    <p class="small">
+                    <p class="bas-small-owner">
                       {{item.shortAddress}}
                     </p>
-                  </div>
-                  <div class="block">
-
                   </div>
                   <div class="inline-btn-group">
                     <span class="number">
                       {{item.sellprice}}
                     </span>
-                    <button @click="gotoBuying(item)"
-                      class="btn btn-sm bas-btn-pink">
-                      {{$t('l.Buying')}}
-                    </button>
+                    <div class="bas-buy-button">
+                      <el-button type="primary" size="mini" @click="gotoBuying(item)">
+                        {{$t('l.Buying')}}
+                      </el-button>
+                    </div>
                   </div>
                 </div>
                 <div class="list-card--footer">
                   <div class="block-inline">
-                    <p class="small">
+                    <p class="bas-small-expire">
                       {{$t('l.expire')}}:{{item.expireDate}}
                     </p>
                   </div>
@@ -45,7 +42,6 @@
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -69,11 +65,11 @@ export default {
     getTitle(){
       return this.$t('p.MarketOnSaleDomainTitle')
     },
-    ...Vuex.mapState({
-      items:state=>{
-        return state.domains.marketOnSale || []
-      }
-    })
+    // ...Vuex.mapState({
+    //   items:state=>{
+    //     return state.domains.marketOnSale || []
+    //   }
+    // })
   },
   data() {
     return {
@@ -82,7 +78,37 @@ export default {
       pagesize:8,
       ruleState:{
         decimals:18
-      }
+      },
+      domains: [
+        {
+          owner: '0x08970…59FB',
+          domaintext: 'rte',
+          shortAddress: '0x08970…59FB',
+          sellprice: '2000',
+          expireDate: '2020-05-06'
+        },
+        {
+          owner: '0x08970…59FB',
+          domaintext: 'ngx',
+          shortAddress: '0x08970…59FB',
+          sellprice: '9000',
+          expireDate: '2020-05-06'
+        },
+        {
+          owner: '0x08970…59FB',
+          domaintext: 'coco.bas',
+          shortAddress: '0x08970…59FB',
+          sellprice: '7800',
+          expireDate: '2020-05-06'
+        },
+        {
+          owner: '0x08970…59FB',
+          domaintext: 'nn',
+          shortAddress: '0x08970…59FB',
+          sellprice: '1900',
+          expireDate: '2020-05-06'
+        }
+      ]
     }
   },
   methods: {
@@ -113,43 +139,16 @@ export default {
           path:`/market/buying/${domaintext}/${pricevol}`
         })
       }
-
     }
   },
   mounted(){
     let ruleState = this.$store.getters['web3/ruleState']
     this.ruleState = Object.assign({},ruleState)
     this.$store.dispatch('loadMarketOnSale',{enfroce:true,pagesize:8})
-
-    // const proxy = new MarketProxy()
-    // let pagenumber = this.pagenumber||1
-    // let pagesize = this.pagesize || 8
-
-    // const decimals = ruleState.decimals || 18;
-    // proxy.getSellingDomains({
-    //   pagenumber,
-    //   pagesize
-    // }).then(resp=>{
-
-    //   if(resp.state){
-    //     this.total = resp.totalpage
-    //     let list =resp.domains.map(item=>{
-    //       item.expireDate = item.expiretime ? dateFormat(item.expiretime,TS_DATEFORMAT) : ''
-    //       item.shortAddress = compressAddr(item.owner)
-    //       item.sellprice = item.price ?  wei2Float(item.price,decimals) : ''
-    //       item.domaintext = toUnicodeDomain(item.domain)
-    //       return item
-    //     })
-    //     console.log(list)
-
-    //     this.items = Object.assign(list)
-    //   }
-    // }).catch(ex=>{
-    //   console.log(ex)
-    // })
   },
 }
 </script>
-<style>
+<style scoped>
+
 
 </style>

@@ -17,7 +17,8 @@ export function CheckLegal(text) {
   if (!checkDotRuleForSub(text)) throw Codes.V100000
   let SpecialEn = getRule('specialEn')
   if (SpecialEn.expr.test(text))throw Codes.V100002
-  if (getRule('specialLocal').expr.test(text)) throw Codes.V100002
+  let SpecialCh = getRule('specialLocal')
+  if (SpecialCh.expr.test(text)) throw Codes.V100002
 
   //let DotTimes = getRule('dotTimes')
  // if (text.match(DotTimes.expr) && text.match(DotTimes.expr).length > 1) throw Codes.V100003
@@ -37,8 +38,10 @@ export function CheckSearchLegal(text,isSub){
   if (text.indexOf(' ') >= 0) throw Codes.V100002
   let SpecialEn = getRule('specialEn')
   if (SpecialEn.expr.test(text)) throw Codes.V100002
-  if (getRule('specialLocal').expr.test(text)) throw Codes.V100002
-
+  let SpecialCh = getRule('specialLocal')
+  // console.log('^^^^^^^^^', text)
+  if (SpecialCh.expr.test(text)) throw Codes.V100002
+  // console.log('^^^^^^^^^', text)
   let DotTimes = getRule('dotTimes')
   if(isSub){
     if (!checkDotRuleForSub(text)) throw Codes.V100000
@@ -70,7 +73,8 @@ export function CheckSearchMarketIllegal(text){
   if (text.indexOf(' ') >= 0) throw Codes.V100002
   let SpecialEn = getRule('specialEn')
   if (SpecialEn.expr.test(text)) throw Codes.V100002
-  if (getRule('specialLocal').expr.test(text)) throw Codes.V100002
+  let SpecialCh = getRule('specialLocal')
+  if (SpecialCh.expr.test(text)) throw Codes.V100002
   return true
 }
 
@@ -153,7 +157,7 @@ export function getDomainTypeNoIllegal(text) {
 export function getDomainTopType(text) {
   try {
     let flag = CheckLegal(text)
-    console.log(text, flag)
+    console.log('aaaaaaaa',text, flag)
     let val = text.trim()
 
     if (isSub(val)) {
