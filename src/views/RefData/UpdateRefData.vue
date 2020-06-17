@@ -147,7 +147,7 @@
     </div>
 
     <div class="row justify-content-center align-items-center">
-      <el-form class="col-md-10 col-sm-12" label-width="140px" @submit.native.prevent>
+      <el-form class="col-md-10 col-sm-12" label-width="150px" @submit.native.prevent>
         <el-form-item >
           <div class="dns-demo-wrapper bas-w-70" style="height:32px;">
             <span>

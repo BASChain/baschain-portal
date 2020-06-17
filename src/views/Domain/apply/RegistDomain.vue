@@ -56,7 +56,7 @@
               <el-input-number v-model="subUnitPrice"
                 :disabled="!customPriceEditEnabled"
                 :precision="2" :step="1.0"
-                controls-position="right"
+                controls-position=""
                 @change="customedPriceChanged"
                 :min="minsubBas"
                 >

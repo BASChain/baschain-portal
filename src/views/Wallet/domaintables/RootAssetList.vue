@@ -163,7 +163,9 @@
             </el-form-item>
             <el-form-item>
               <div class="transout-tips">
-                <span>{{$t('l.TransToDomainBCAPTips')}}</span>
+                <span>
+                  {{$t('l.TransToDomainBCAPTips')}}
+                </span>
               </div>
             </el-form-item>
 
@@ -397,8 +399,7 @@ export default {
     },
     ...Vuex.mapState({
       items:state => state.ewallet.assets.filter( it =>{
-        console.log(it)
-        //it.hadExpired = isDateExpired(it.expire)
+        it.hadExpired = isDateExpired(it.expire)
         return it.isRoot==true
       }),
       mailServiceBas:state => wei2Bas(state.dapp.mailSeviceGas),
@@ -1010,13 +1011,14 @@ h5 > span {
   background:rgba(255,87,47,.1);
   border-radius:2px;
   padding: .25rem .75rem;
+  line-height:initial;
 }
 
 .transout-tips * {
   font-family:PingFangSC-Light,PingFang SC;
   font-weight:300;
   color:rgba(255,87,47,1);
-  line-height:20px;
+  line-height:initial;
 }
 
 .transout-body {
