@@ -359,18 +359,18 @@ export default {
         }
       ],
       osApps:[
-        {
-          icon:"/static/icons/bas_bp.png",
-          title:"BPasswordPro",
-          intro:"Password Management Using Blockchain Tech",
-          labels:[
-            'chrome',
-            'firefox',
-            'opera'
-          ],
-          type:"app",
-          id: 0
-        },
+        // {
+        //   icon:"/static/icons/bas_bp.png",
+        //   title:"BPasswordPro",
+        //   intro:"Password Management Using Blockchain Tech",
+        //   labels:[
+        //     'chrome',
+        //     'firefox',
+        //     'opera'
+        //   ],
+        //   type:"app",
+        //   id: 0
+        // },
         {
           icon:"/static/icons/bas_bmail.png",
           title:"BMail",
