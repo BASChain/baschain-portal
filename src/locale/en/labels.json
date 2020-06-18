@@ -161,5 +161,6 @@
   "BMailAccount":"BMail Address",
   "BMailBCALabel":"BMail Client Public Key",
   "RechargingTip":"Recharging...",
-  "ConfirmAbandon":"Confirm"
+  "ConfirmAbandon":"Confirm",
+  "InternalRegistBMail": "Apply BMail"
 }

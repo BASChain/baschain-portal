@@ -185,6 +185,14 @@ export default [
         }
       },
       {
+        path: "regist_internal/:domaintext",
+        name: "mail.registInternal",
+        component: () => import("@/views/Mail/MailInternalRegist.vue"),
+        meta: {
+          guest: true
+        }
+      },
+      {
         path: "detail/:hash/:domaintext",
         name: "mail.detail",
         component: () => import("@/views/Mail/MailDetail.vue"),
@@ -215,7 +223,7 @@ export default [
         meta: {
           guest: true
         }
-      },
+      }
     ],
     meta: {
       guest: true
@@ -258,7 +266,7 @@ export default [
         meta: {
           guest: true
         }
-      },
+      }
       //#########################
       // {
       //   path: "index1",
@@ -343,19 +351,19 @@ export default [
         }
       },
       {
-        path:'appdetail',
-        name:'appdetail.index',
-        component:()=> import('@/views/AppStore/AppDetail.vue'),
-        meta:{
-          guest:true
+        path: "appdetail",
+        name: "appdetail.index",
+        component: () => import("@/views/AppStore/AppDetail.vue"),
+        meta: {
+          guest: true
         }
       },
       {
-        path:'extension',
-        name:'extension.index',
-        component:()=> import('@/views/AppStore/Extension.vue'),
-        meta:{
-          guest:true
+        path: "extension",
+        name: "extension.index",
+        component: () => import("@/views/AppStore/Extension.vue"),
+        meta: {
+          guest: true
         }
       }
     ]
@@ -540,4 +548,4 @@ export default [
     path: "/*",
     redirect: "/home"
   }
-]
+];

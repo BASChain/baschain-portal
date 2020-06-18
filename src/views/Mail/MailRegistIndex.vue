@@ -1,5 +1,5 @@
 <template>
-  <div class=" mail-regist-wrapper">
+  <div class="mail-regist-wrapper">
     <div class="container inner-center-container">
         <div class="row justify-content-center pt-5 pb-5">
           <div class="col-md-5 col-sm-10 mail-content-card">

@@ -26,13 +26,6 @@
                 class="bas-hash-show"
                 v-model="mailInfo.hash" autosize>
               </el-input>
-
-              <!-- <el-tooltip class="item" effect="light" :content="mailInfo.hash" placement="right">
-                <span class="mail-info-text">
-                  {{shortHash}}
-                </span>
-              </el-tooltip> -->
-
             </div>
             <div>
               <label class="bas-info-label"> {{$t('l.Domain')}}</label>
@@ -53,7 +46,7 @@
             </span>
           </div>
 
-          <el-form label-width="120px" class="mail-conf-container">
+          <el-form label-width="150px" class="mail-conf-container">
             <el-form-item :label="$t('l.MailAliasLabel')">
               <el-input  :disabled="!ctrl.editEnabled && !ctrl.loading"
                 type="text"
@@ -142,7 +135,14 @@
 .bas-hash-container label.bas-info-label {
   width:108px;
 }
+a:not([href]):not([tabindex]) {
+    color: #00CA9B;
+    text-decoration: none;
+}
 
+a.bas-link:focus,a.bas-link:hover {
+  color: #00CA9B;
+}
 
 .bas-hash-container div.bas-hash-show {
   width: calc( 100% - 108px );
@@ -379,15 +379,20 @@ export default {
 }
 .breadcrumbs {
   cursor: pointer;
-  background-color: rgba(235,237,237,1);
+  background-color: rgba(0,202,155,0.1);
   border-radius: 12px;
   padding: 4px 12px;
+  border:1px solid rgba(0,202,155,0.2);
 }
 
 .breadcrumbs span{
   margin: auto .25rem;
-  color:rgba(139,139,158,1);
+  color:rgba(0,202,155,1);
   line-height: 20px;
+}
+
+.breadcrumbs i.fa {
+  color:rgba(0,202,155,1);
 }
 
 .mail-box-wrapper {
@@ -396,7 +401,7 @@ export default {
 }
 
 .mail-box-wrapper div.inner-box{
-  width: 60%;
+  width: 65%;
   margin: 24px auto;
 }
 

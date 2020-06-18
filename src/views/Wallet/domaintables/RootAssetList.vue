@@ -50,10 +50,15 @@
                 :disabled="scope.row.hadExpired || scope.row.isorder">
                 {{$t('l.TransOut')}}
               </el-dropdown-item>
-              <el-dropdown-item
+              <el-dropdown-item v-if="!scope.row.mailActived"
                 @click.native="showActvationDialog(scope.$index,scope.row)"
-                :disabled="scope.row.hadExpired || scope.row.isorder || scope.row.mailActived">
+                :disabled="scope.row.hadExpired || scope.row.isorder">
                 {{$t('l.ActivationMailBtn')}}
+              </el-dropdown-item>
+              <el-dropdown-item  v-if="scope.row.mailActived"
+                @click.native="gotoRegistMailIndex(scope.$index,scope.row)"
+                :disabled="scope.row.hadExpired || scope.row.isorder">
+                {{$t('l.InternalRegistBMail')}}
               </el-dropdown-item>
               <el-dropdown-item
                 @click.native="goRegistSub(scope.$index,scope.row)"
@@ -947,6 +952,25 @@ export default {
           }
         }
       }
+    },
+    gotoRegistMailIndex(index,row){
+      if(this.$store.getters['metaMaskDisabled']){
+        this.$metamask()
+        return
+      }
+
+      const domaintext = row.domaintext
+      const hash = row.hash
+
+      const owner = row.owner
+      console.log(domaintext,hash,owner)
+      this.$router.push({
+        path:`/mail/regist_internal/${domaintext}`,
+        query:{
+          owner:owner,
+          hash:hash
+        }
+      });
     }
   },
 }
