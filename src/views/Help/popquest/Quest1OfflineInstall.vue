@@ -17,7 +17,7 @@
       <p>
         {{$t('p.HelpQuest1Step2Desc1')}}
       </p>
-      <img :src="isCN ? 'static/img/help/quest_basext_01.png' : 'static/img/help/quest_basext_01_en.png'"
+      <img :src="isCN ? '/static/img/help/quest_basext_01.png' : '/static/img/help/quest_basext_01_en.png'"
         class="img-fluid">
     </div>
     <div class="bas-issue-section">
@@ -25,15 +25,15 @@
       <p>
         {{$t('p.HelpQuest1Step3Desc1')}}
       </p>
-      <img :src="isCN ? 'static/img/help/quest_basext_02.png' : 'static/img/help/quest_basext_02_en.png'" class="img-fluid">
+      <img :src="isCN ? '/static/img/help/quest_basext_02.png' : '/static/img/help/quest_basext_02_en.png'" class="img-fluid">
     </div>
     <div class="bas-issue-section">
       <h6>{{$t('p.HelpQuest1Step4Title')}}</h6>
       <p>
         {{$t('p.HelpQuest1Step4Desc1')}}
       </p>
-      <img :src="isCN ? 'static/img/help/chrome_drop_install.png':'static/img/help/chrome_drop_install_en.png'" class="img-fluid">
-      <img :src="isCN ? 'static/img/help/quest_basext_04.png' : 'static/img/help/quest_basext_04_en.png'"
+      <img :src="isCN ? '/static/img/help/chrome_drop_install.png':'/static/img/help/chrome_drop_install_en.png'" class="img-fluid">
+      <img :src="isCN ? '/static/img/help/quest_basext_04.png' : '/static/img/help/quest_basext_04_en.png'"
         class="img-fluid">
     </div>
   </div>
