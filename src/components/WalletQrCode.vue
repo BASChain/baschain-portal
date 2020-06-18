@@ -91,11 +91,11 @@ export default {
     let id = this.getId();
     let that = this;
     let text = this.content ||'';
-    console.log("QRCode>>",text,id)
+    //console.log("QRCode>>",text,id)
 
     QRCode.toDataURL(text,opts,function(err,url){
       if(!err){
-       console.log(url)
+        //console.log(url)
         that.imgSrc = url;
       }else{
         console.log("QRCODE>>>>",err)
