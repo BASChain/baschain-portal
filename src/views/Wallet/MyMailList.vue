@@ -108,7 +108,7 @@
         <div class="text-center">
           <el-button :disabled="abandon.loading"
             type="primary"
-            @click="submitAbandon" class="bas-w-60 bas-btn-primary btn-abandon">
+            @click="submitAbandon" class="bas-w-65 bas-btn-primary btn-abandon">
             <div>
               <LoadingDot v-if="abandon.loading" />
             </div>
@@ -160,7 +160,13 @@
         <div class="row">
           <div class="bas-inline-between">
             <div class="max-tip">
-              {{$t('p.MailRechargeMaxYearsComments',{year:recharge.maxchargeYears})}}
+              {{
+                $t('p.MailRechargeMaxYearsComments',
+                {
+                  year:recharge.maxchargeYears,
+                  unit:recharge.maxchargeYears==1 ? $t('g.EnumTSYear') : $t('g.EnumTSYears')
+                })
+              }}
             </div>
             <div @click="toggleMoreshow"
               class="more-toggle">
@@ -206,8 +212,8 @@
 .btn-abandon {
   font-family:PingFangSC-Semibold,PingFang SC;
   font-weight:600;
-  line-height:28px;
-  font-size:20px;
+  /* line-height:28px;
+  font-size:20px; */
   letter-spacing:1px;
 }
 

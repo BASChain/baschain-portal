@@ -85,9 +85,9 @@
         <div class="row justify-content-center">
           <div class="col-10 text-center">
             <h5>
-              开启
+              {{$t('p.MailDialogOpenMailServicePrefixText')}}
               <span>{{'@' + mailDialog.domaintext}}</span>
-              的邮箱服务
+              {{$t('p.MailDialogOpenMailServiceSuffixText')}}
             </h5>
             <div class="bas-mail-expire">
               {{$t('l.ExpiredDate') + ':'}}
@@ -95,9 +95,6 @@
             </div>
           </div>
         </div>
-        <!-- <div class="bas-mail-expire">
-          {{$t('l.ExpiredDate') + ':' + this.items.expire}}
-        </div> -->
         <div class="row">
           <div class="col-12 text-center bas-open-mail">
             <el-button :disabled="mailDialog.loading"
@@ -202,7 +199,7 @@
       <div class="bas-dg-header" slot="title">
         <div class="title">
           <span class="">
-            {{$t('p.SaleOnDialogRootDomainTitle')}}
+            {{$t('p.SaleOnDialogDomainTitle',{text:$t('g.RootDomainLower')})}}
           </span>
           <span class="title-domain">
             {{saleOn.domaintext}}

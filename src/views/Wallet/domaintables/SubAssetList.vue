@@ -196,7 +196,7 @@
       <div class="bas-dg-header" slot="title">
         <div class="title">
           <span class="">
-            {{$t('p.SaleOnDialogRootDomainTitle')}}
+            {{$t('p.SaleOnDialogDomainTitle',{text:$t('g.SubDomainLower')})}}
           </span>
           <span class="title-domain">
             {{saleOn.domaintext}}
