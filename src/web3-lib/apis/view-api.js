@@ -15,6 +15,10 @@ import {
 import * as ApiErrors from '../api-errors.js'
 import { checkSupport } from "../networks";
 
+/**
+ * get all root domains for apply select
+ * @param {*} chainId
+ */
 export async function getRootDomains(chainId) {
   const web3js = getInfuraWeb3(chainId);
   const rootInst = basMailManagerInstance(web3js, chainId)
@@ -54,7 +58,7 @@ export async function getRootDomains(chainId) {
 }
 
 /**
- *
+ * get all public domain mail service for apply mail
  * @param {*} chainId
  */
 export async function publicMailDomains(chainId){
@@ -118,6 +122,11 @@ export async function publicMailDomains(chainId){
   return showNames
 }
 
+/**
+ * find a mail info maybe no exist
+ * @param {*} fulltext
+ * @param {*} chainId
+ */
 export async function findMailInfo(fulltext,chainId){
   if (assertNullParameter(fulltext))throw ApiErrors.PARAM_ILLEGAL
 
@@ -163,7 +172,7 @@ export async function findMailInfo(fulltext,chainId){
 }
 
 /**
- *
+ * get mail info ,not exist will throw error.
  * @param {*} hash
  * @param {*} chainId
  */
@@ -214,7 +223,7 @@ export async function getMailInfo(hash,chainId) {
 
 
 /**
- *
+ * 
  * @param {*} text required
  * @param {*} chainId
  */

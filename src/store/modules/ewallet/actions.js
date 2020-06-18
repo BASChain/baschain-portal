@@ -5,11 +5,7 @@ import {
 
 import { getMailInfo, getDomainInfo } from '@/web3-lib/apis/view-api'
 
-import {checkSupport} from '@/bizlib/networks'
-
-import {
-  getKey, EWALLET_ASSETS_PREFIX, EWALLET_MAIL_PREFIX
-} from '@/bascore/db-schema'
+import { checkSupport } from "@/web3-lib/networks";
 
 import {
   WALLET_ASSETS,

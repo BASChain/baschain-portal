@@ -1,11 +1,11 @@
 {
   "name": "baschain-web",
-  "version": "2.6.102",
+  "version": "2.6.3",
   "description": "Bas Chain",
   "author": "bas-team",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js ",
     "start": "npm run dev",
     "build": "run-s upinfo build:prod",
     "serve": "lite-server -c bin/bs-config.json",

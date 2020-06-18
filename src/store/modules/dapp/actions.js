@@ -1,5 +1,5 @@
 import * as types from './mutation-types'
-import { checkSupport } from '@/bizlib/networks'
+import { checkSupport } from '@/web3-lib/networks'
 import {
   getBalances
 } from '@/web3-lib/apis/token-api'

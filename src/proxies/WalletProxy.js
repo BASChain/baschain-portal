@@ -1,5 +1,5 @@
 import BaseProxy from './Proxy'
-import { networkAPIEndpoint } from '@/bizlib/web3'
+import { networkAPIEndpoint } from "./chain-endpoint";
 import wpaths from './api/wallet-paths'
 
 class WalletProxy extends BaseProxy {
