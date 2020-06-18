@@ -203,6 +203,7 @@ export default {
       let mailalias = commitData.mailalias
       const mailhash = commitData.mailhash
       if(!years||!domaintext||!domainhash||!mailhash){
+        console.log(years,domaintext,domainhash,mailhash)
         console.error('BAS-err','lost parameters.')
         return;
       }
@@ -279,21 +280,18 @@ export default {
   },
   mounted() {
     const commitData = this.$route.params.commitData ||{};
-    const domaintext = this.$route.params.domaintext;
+    const domaintext = this.$route.params.domaintext || commitData.domaintext;
     const years = this.$route.params.years
     const mailname = this.$route.params.mailname
-
-
-    console.log("commitData>>>>>",commitData,domaintext,years,mailname)
-
+    console.log("commitData>>>>>",commitData,years,mailname)
     this.commitData = Object.assign({},commitData,{domaintext,years,mailname})
     const costwei = new Web3.utils.BN(years+'').mul(new Web3.utils.BN(this.mailGas)).toString()
-    console.log("costWei:",costwei)
+    //console.log("costWei:",costwei)
     this.commitApprove()
   },
   watch: {
     registState:function (cur,old) {
-      console.log('>>>>>>>>>>>>>>>>>.',cur,old)
+      //console.log('>>>>>>>>>>>>>>>>>.',cur,old)
       if(old === APPROVING_SATE && cur === CONFIRMING_STATE){
         this.commitSendConfirm()
       }

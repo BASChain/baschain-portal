@@ -6,7 +6,8 @@ const DomainCheckRules = [
   ['specialLocal', /[·！#￥（——）：；“”‘、，|《。》？、【】[\]]/im],
   ['dotTimes', /\./gi],
   ['hasSpace',/[ ]/g],
-  ['positiveNumber', /^(?!0+(?:\.0+)?$)(?:[1-9]\d*|0)(?:\.\d{1,2})?$/]
+  ['positiveNumber', /^(?!0+(?:\.0+)?$)(?:[1-9]\d*|0)(?:\.\d{1,2})?$/],
+  ['mailRegx',/[A-Za-z0-9\u4e00-\u9fa5]_-\./]
 ]
 
 

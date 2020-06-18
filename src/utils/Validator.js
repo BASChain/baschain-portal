@@ -64,6 +64,15 @@ function checkDotRuleForSub(text){
 }
 
 /**
+ * valid
+ * @param {*} acc
+ */
+export function validMailAccount(acc){
+  if(acc == undefined)return false;
+  return /^[\u4e00-\u9fa5_a-zA-Z0-9\._-]+$/.test(acc);
+}
+
+/**
  * Market Search
  * @param {*} text
  */
@@ -203,4 +212,5 @@ export default {
   isSub,
   getDomainType,
   CheckSearchMarketIllegal,
-}
+  validMailAccount,
+};

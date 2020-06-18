@@ -91,6 +91,235 @@
   </div>
 </template>
 <style lang="css">
+.header-logo img {
+  margin-left: 2rem;
+}
+</style>
+<script>
+import {
+  dateFormat,  wei2Bas,
+  handleDomain,toUnicodeDomain,
+} from '@/utils'
+import {
+  validMailAccount
+} from '@/utils/Validator'
+import {
+  PARAM_ILLEGAL,USER_REJECTED_REQUEST,UNSUPPORT_NETWORK ,
+  DOMAIN_NOT_EXIST,MAILSERVICE_INACTIVED,MAIL_REGIST_BY_OWNER,
+  MAIL_HASH_EXIST,MAIL_YEAR_OVER_MAX,LACK_OF_TOKEN
+}from '@/web3-lib/api-errors'
+
+import {findMailInfo} from '@/web3-lib/apis/view-api'
+import {validPrevRegistMail} from '@/web3-lib/apis/mail-manager-api'
+
+export default {
+  name:"MailInternalRegistIndex",
+  computed: {
+    showMailtext(){
+      const domaintext = this.domaintext
+      return `@${domaintext}`
+    },
+    ...Vuex.mapState({
+      unitBas:state => wei2Bas(state.dapp.mailRegGas || 2),
+      maxMailRegYears:state => state.dapp.maxMailRegYears
+    })
+  },
+  data() {
+    return {
+      years:1,
+      domaintext:'',
+      hash:'',
+      owner:'',
+      mailName:"",
+      mailAlias:"",
+      mailActived:false,
+      inputctrl:{
+        message:''
+      },
+      ctrl:{
+        loading:false,
+        timeoutId:null
+      }
+    }
+  },
+  methods: {
+    initData(domaintext,hash,owner){
+      this.domaintext = domaintext
+      this.hash = hash
+      this.owner = owner
+    },
+    selectYearsHandle(years){
+      this.years = years <=0 || years > this.maxMailRegYears ? this.maxMailRegYears : years
+    },
+    async submitMailName(){
+      if(this.inputctrl.message) return
+      if(this.$store.getters['metaMaskDisabled']){
+        this.$metamask()
+        return
+      }
+
+      const web3State = this.$store.getters['web3State']
+      const chainId = web3State.chainId
+      const wallet = web3State.wallet
+      const domaintext = this.mailDomainText
+      const domainhash = this.hash
+      const mailName =this.mailName
+      const mailAlias = this.mailAlias
+
+      let msg =''
+      if(mailName === ''|| !mailName.trim().length || !domainhash){
+        msg = this.$t('code.888888',{text:this.$t('l.ApplyMailNameLabel')})
+        this.$message(this.$basTip.error(msg))
+        return;
+      }
+
+      const years = this.years
+
+      try{
+        this.ctrl.loading = true
+        /**
+         * return :{domaintext,mailalias,years,chainId,wallet,domainhash,mailhash,costwei,basbal,}
+         */
+        const commitData = await validPrevRegistMail(domainhash,mailName,years,chainId,wallet)
+        //console.log(commitData)
+        this.ctrl.loading = false
+
+        // route commit page
+        //const mailalias = commitData.mailalias
+        commitData.mailalias = mailAlias
+        const mailhash = commitData.mailhash
+        //return;
+        this.$router.push({
+          path:`/mail/registing/${domaintext}/${years}/${mailName}`,
+          name:"mail.registing",
+          params:{
+            domaintext,
+            years,
+            mailname:mailName,
+            commitData:commitData
+          }
+        })
+      }catch(ex){
+        this.ctrl.loading = false
+        switch (ex) {
+          case UNSUPPORT_NETWORK:
+          case LACK_OF_TOKEN:
+            msg = this.$t(`code.${ex}`)
+            this.$message(this.$basTip.error(msg))
+            return
+          case MAIL_HASH_EXIST:
+            msg = this.$t(`code.${ex}`,{mailname:mailName})
+            this.$message(this.$basTip.error(msg))
+            return;
+          case MAIL_REGIST_BY_OWNER:
+            msg = this.$t(`code.${ex}`,{domaintext})
+            this.$message(this.$basTip.error(msg))
+            return;
+          case PARAM_ILLEGAL:
+          case MAILSERVICE_INACTIVED:
+          case DOMAIN_NOT_EXIST:
+          case MAIL_YEAR_OVER_MAX:
+          case PARAM_ILLEGAL:
+            console.log('Coding Logic Error:',ex)
+            return
+          default:
+            break;
+        }
+        if(ex.code === USER_REJECTED_REQUEST){
+          msg = this.$t(`code.${ex}`)
+          this.$message(this.$basTip.error(msg))
+          return;
+        }
+        console.error("Unknown Error:",ex)
+      }
+    }
+  },
+  mounted() {
+    const dmtext = this.$route.params.domaintext
+    const hash = this.$route.query.hash
+    const owner = this.$route.query.owner
+    console.log(hash,owner)
+    this.initData(dmtext,hash,owner)
+    this.mailActived = this.$route.query.mailActived
+  },
+  watch:{
+    mailName:function(val,old) {
+      const web3State = this.$store.getters['web3State']
+      const chainId = web3State.chainId
+      const wallet = web3State.wallet
+      const owner = this.owner
+      if(val !== '' && val !== old){
+        console.log(val)
+        if(!validMailAccount(val)){
+          this.inputctrl.message = this.$t('p.ValidMailAccountNameWarn')
+          return;
+        }
+        this.inputctrl.message = ''
+        if(this.ctrl.timeoutId){
+          clearTimeout(this.ctrl.timeoutId)
+        }
+        const that = this;
+        const fulltext = `${val}@${that.domaintext}`
+        this.ctrl.timeoutId = setTimeout(async () => {
+          try{
+
+            const resp = await findMailInfo(fulltext,chainId)
+            if(resp.state){
+              console.log(resp.mail)
+              that.inputctrl.message = that.$t(`code.${MAIL_HASH_EXIST}`,{mailname:fulltext})
+            }else{
+              that.inputctrl.message = ''
+            }
+          }catch(ex){
+            console.log('lazy valid',ex)
+            that.inputctrl.message = ''
+          }
+        },1500)
+      }else{
+        this.inputctrl.message = ''
+      }
+    }
+  }
+}
+</script>
+<style>
+.bmail-regist-wrapper {
+  background-color: rgba(255,255,255,1);
+  min-height: calc( 100vh - 425px);
+  width: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  direction: column;
+  font-family: PingFangSC-Regular,PingFang SC;
+}
+
+.bmail-content-card {
+  display: inline-flexbox;
+  direction: column;
+  justify-content: flex-start;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  align-items: stretch;
+  border-radius:4px;
+  border:2px solid rgba(225,229,229,1);
+}
+.bmail-content-card>div {
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
+}
+
+.bmail-regist-title {
+  line-height: 30px;
+  font-size: 22px;
+  margin: 2.5rem auto;
+  width: 100%;
+  text-align: left;
+}
+
+.bmail-regist-btns {
+  margin-top: 1.5rem;
+}
 .selector-wrapper {
   width: 100%;
   padding: 2px;
@@ -283,102 +512,5 @@
 .year-inner-box>div{
   width: 100%;
   text-align: center;
-}
-
-</style>
-<script>
-import {
-  dateFormat,  wei2Bas,
-  handleDomain,toUnicodeDomain,
-} from '@/utils'
-
-export default {
-  name:"MailInternalRegistIndex",
-  computed: {
-    showMailtext(){
-      const domaintext = this.domaintext
-      return `@${domaintext}`
-    },
-    ...Vuex.mapState({
-      unitBas:state => wei2Bas(state.dapp.mailRegGas || 2),
-      maxMailRegYears:state => state.dapp.maxMailRegYears
-    })
-  },
-  data() {
-    return {
-      years:1,
-      domaintext:'',
-      hash:'',
-      owner:'',
-      mailName:"",
-      mailAlias:'',
-      inputctrl:{
-        message:''
-      },
-      ctrl:{
-        loading:false,
-        timeoutId:null
-      }
-    }
-  },
-  methods: {
-    initData(domaintext,hash,owner){
-      this.domaintext = domaintext
-      this.hash = hash
-      this.owner = owner
-    },
-    selectYearsHandle(year){
-
-    },
-    submitMailName(){
-
-    }
-  },
-  mounted() {
-    const dmtext = this.$route.params.domaintext
-    const hash = this.$route.query.hash
-    const owner = this.$route.query.owner
-    console.log(hash,owner)
-    this.initData(dmtext,hash,owner)
-  },
-}
-</script>
-<style>
-.bmail-regist-wrapper {
-  background-color: rgba(255,255,255,1);
-  min-height: calc( 100vh - 425px);
-  width: 100%;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  direction: column;
-  font-family: PingFangSC-Regular,PingFang SC;
-}
-
-.bmail-content-card {
-  display: inline-flexbox;
-  direction: column;
-  justify-content: flex-start;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-  align-items: stretch;
-  border-radius:4px;
-  border:2px solid rgba(225,229,229,1);
-}
-.bmail-content-card>div {
-  margin-left: 1.5rem;
-  margin-right: 1.5rem;
-}
-
-.bmail-regist-title {
-  line-height: 30px;
-  font-size: 22px;
-  margin: 1.5rem auto;
-  width: 100%;
-  text-align: left;
-}
-
-.bmail-regist-btns {
-  margin-top: 1.5rem;
 }
 </style>

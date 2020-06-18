@@ -239,5 +239,6 @@
   "MailAbandonDialogWarnTip":"邮箱一旦弃用系统将自动默认放弃使用权并不能恢复",
   "RechargeTimeEnoughTip":"当前有效日期到{expirationText},最大充值年限为{max},不能再充值",
   "MailDialogOpenMailServicePrefixText":"开启",
-  "MailDialogOpenMailServiceSuffixText":"的邮箱服务"
+  "MailDialogOpenMailServiceSuffixText":"的邮箱服务",
+  "ValidMailAccountNameWarn":"BMail账号不允许含有空格以及除[_-.]以外的特殊字符"
 }

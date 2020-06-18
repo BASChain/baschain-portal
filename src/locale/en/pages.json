@@ -239,5 +239,6 @@
   "MailAbandonDialogWarnTip": "Once the BMail is abandoned, the system will automatically give up the right to use by default and cannot be restored",
   "RechargeTimeEnoughTip": "The current effective date to {expirationText}, the maximum recharge period is {max}, can not be recharged",
   "MailDialogOpenMailServicePrefixText": "Open ",
-  "MailDialogOpenMailServiceSuffixText": " BMail service"
+  "MailDialogOpenMailServiceSuffixText": " BMail service",
+  "ValidMailAccountNameWarn": "BMail accounts are not allowed to contain spaces and special characters other than [_-.]"
 }

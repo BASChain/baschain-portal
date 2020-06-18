@@ -57,7 +57,7 @@
               </el-dropdown-item>
               <el-dropdown-item  v-if="scope.row.mailActived"
                 @click.native="gotoRegistMailIndex(scope.$index,scope.row)"
-                :disabled="scope.row.hadExpired || scope.row.isorder">
+                :disabled="scope.row.hadExpired">
                 {{$t('l.InternalRegistBMail')}}
               </el-dropdown-item>
               <el-dropdown-item
@@ -968,7 +968,8 @@ export default {
         path:`/mail/regist_internal/${domaintext}`,
         query:{
           owner:owner,
-          hash:hash
+          hash:hash,
+          mailActived:row.mailActived
         }
       });
     }
