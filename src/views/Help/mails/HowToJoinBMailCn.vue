@@ -7,7 +7,7 @@
       <p>
         需要注意的是，目前只有根域名能开启邮箱服务，其中只有顶级根域名能对外提供邮箱服务，普通根域名只允许域名所有者注册邮箱
       </p>
-      <img src="static/img/domains/apply_domain_endpoint.png" class="img-fluid">
+      <img src="/static/img/domains/apply_domain_endpoint.png" class="img-fluid">
 
       <h6 class="bas-text-green pt-2 pb-2">
         ##关于域名的类型
@@ -26,7 +26,7 @@
       二、开启邮箱服务
     </h6>
     <div class="section">
-      <img src="static/img/domains/open_domain_service.png"  class="img-fluid">
+      <img src="/static/img/domains/open_domain_service.png"  class="img-fluid">
     </div>
 
     <h6 class="help-outline-6 pt-2">
