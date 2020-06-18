@@ -90,9 +90,10 @@ export default {
     let opts = this.getOptions()
     let id = this.getId();
     let that = this;
-    let text = this.content;
+    let text = this.content ||'';
+    console.log("QRCode>>",text,id)
 
-    QRCode.toDataURL(''+id,opts,function(err,url){
+    QRCode.toDataURL(text,opts,function(err,url){
       if(!err){
        console.log(url)
         that.imgSrc = url;

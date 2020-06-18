@@ -59,6 +59,7 @@ import SubAssetList from './domaintables/SubAssetList.vue'
 import RootAssetList from './domaintables/RootAssetList.vue'
 import {checkSupport} from '@/web3-lib/networks'
 
+
 export default {
   name:"MineDomainList",
   components:{
@@ -72,7 +73,10 @@ export default {
     },
     subdomainLabel(){
       return this.$t('l.subdomainLabel')
-    }
+    },
+    ...Vuex.mapState({
+      currentWallet:state =>state.dapp.wallet
+    })
   },
   data() {
     return {
