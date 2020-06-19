@@ -92,13 +92,14 @@
                   </el-input>
                 </el-form-item>
                 <!-- 购买期限 -->
-                <div>
-
-                  <div class="bas-label2">{{$t('l.PurchaseYears')}}</div>
-                  <div class="years-select-container">
-                    <div v-for="idx in maxMailRegYears"
-                      :key="idx"
-                      class="mail-year-selector">
+                <div class="purchase-label-wrapper pt-1 pb-1">
+                  <div class="bmail-form-label">{{$t('l.PurchaseYears')}}</div>
+                </div>
+                <div class="years-select-container">
+                  <div v-for="idx in maxMailRegYears"
+                    :key="idx"
+                    class="bmail-year-selector">
+                    <div class="selector-wrapper">
                       <div class="year-inner-box"
                         @click="selectYearsHandle(idx)"
                         :class="idx == years ? 'year-active' : ''">
@@ -116,7 +117,6 @@
                       </div>
                     </div>
                   </div>
-                <!-- </el-form-item> -->
                 </div>
               </el-form>
             </div>
@@ -295,12 +295,7 @@ hr {
   margin-bottom: 0px;
 }
 .mail-domain--poper {
-  /* position: absolute;
-  float: right; */
   width: 100%;
-  /* top:42px; */
-  /* left: 50%;
-  transform: translateX(-50%); */
   z-index: 9999;
   background: #fff;
   border-collapse:collapse;
@@ -670,7 +665,7 @@ export default {
   text-align: left;
 }
 
-.years-select-container {
+/* .years-select-container {
   width: 100%;
   display: inline-flex;
   direction: row;
@@ -695,22 +690,21 @@ export default {
 
 .mail-years {
   font-size:1rem;
-}
+} */
 
-.mail-year-selector .year-active div.bas-total{
+/* .mail-year-selector .year-active div.bas-total{
   color:#fff;
-}
+} */
 
-.years-select-container div.mail-year-selector{
+/* .years-select-container div.mail-year-selector{
   width: 25%;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  /* padding: 4px; */
   margin-right: 8px;
-}
+} */
 
-.year-inner-box {
+/* .year-inner-box {
   cursor: pointer;
   position: relative;
   width: 100%;
@@ -751,5 +745,5 @@ export default {
 .year-inner-box>div{
   width: 100%;
   text-align: center;
-}
+} */
 </style>

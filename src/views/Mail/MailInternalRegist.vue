@@ -47,6 +47,7 @@
                     class="bmail-alias">
                   </el-input>
                 </el-form-item>
+                <!-- 购买期限 -->
                 <!-- <div> -->
                   <div class="purchase-label-wrapper">
                     <div class="bmail-form-label">{{$t('l.PurchaseYears')}}</div>
@@ -76,7 +77,7 @@
                   </div>
                 <!-- </div> -->
               </el-form>
-              <!-- 购买期限 -->
+
 
             </div>
 
