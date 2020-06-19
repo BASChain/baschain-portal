@@ -2,7 +2,7 @@
   <div class="mail-regist-wrapper">
     <div class="container inner-center-container">
         <div class="row justify-content-center pt-5 pb-5">
-          <div class="col-md-5 col-sm-10 mail-content-card">
+          <div class="bmail-box-auto mail-content-card">
             <div class="header-logo">
               <img src="/static/icons/logo_header_blk.png" class="img-fluid">
             </div>
@@ -93,7 +93,7 @@
                 </el-form-item>
                 <!-- 购买期限 -->
                 <div>
-                <!-- <el-form-item :label="$t('l.PurchaseYears')" > -->
+
                   <div class="bas-label2">{{$t('l.PurchaseYears')}}</div>
                   <div class="years-select-container">
                     <div v-for="idx in maxMailRegYears"
@@ -166,7 +166,7 @@ hr {
 .mail-regist-btns {
   margin-top: 24px;
 }
-.el-form-item__content {
+.mail-regist-form-wrapper .el-form-item__content {
   height: 50px;
 }
 .bas-label2 {
@@ -363,6 +363,7 @@ hr {
 }
 </style>
 <script>
+import './assets/mail-regist.css'
 import {
   dateFormat,  wei2Bas,
   handleDomain,toUnicodeDomain,
@@ -372,7 +373,7 @@ import {validPrevRegistMail} from '@/web3-lib/apis/mail-manager-api'
 import {
   PARAM_ILLEGAL,USER_REJECTED_REQUEST,UNSUPPORT_NETWORK ,
   DOMAIN_NOT_EXIST,MAILSERVICE_INACTIVED,MAIL_REGIST_BY_OWNER,
-  MAIL_HASH_EXIST,MAIL_YEAR_OVER_MAX,LACK_OF_TOKEN
+  MAIL_HASH_EXIST,MAIL_YEAR_OVER_MAX,LACK_OF_TOKEN,RPC_TIMEOUT
 }from '@/web3-lib/api-errors'
 
 import {findMailInfo} from '@/web3-lib/apis/view-api'
@@ -483,7 +484,7 @@ export default {
          * return :{domaintext,mailalias,years,chainId,wallet,domainhash,mailhash,costwei,basbal,}
          */
         const commitData = await validPrevRegistMail(domainhash,mailName,years,chainId,wallet)
-        console.log(commitData)
+        console.log(">>>>",commitData)
         this.ctrl.loading = false
 
         // route commit page
@@ -531,14 +532,16 @@ export default {
           msg = this.$t(`code.${ex}`)
           this.$message(this.$basTip.error(msg))
           return;
+        }else if(ex.code === RPC_TIMEOUT){
+          msg = this.$t(`code.-32603`)
+          this.$message(this.$basTip.error(msg))
+          return;
         }
+        console.log("Message",ex.message)
+        console.log("Message Code",ex.code)
         console.error("Unknown Error:",ex)
       }
     },
-    async validExist(fulltext){
-
-    }
-
   },
   async beforeMount() {
     await this.$store.dispatch('dapp/fillPublicMailDomains')//

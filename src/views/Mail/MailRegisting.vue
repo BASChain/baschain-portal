@@ -67,7 +67,7 @@ import {
 import {
   PARAM_ILLEGAL,USER_REJECTED_REQUEST,UNSUPPORT_NETWORK ,
   DOMAIN_NOT_EXIST,MAILSERVICE_INACTIVED,MAIL_REGIST_BY_OWNER,
-  MAIL_HASH_EXIST,MAIL_YEAR_OVER_MAX,LACK_OF_TOKEN
+  MAIL_HASH_EXIST,MAIL_YEAR_OVER_MAX,LACK_OF_TOKEN,RPC_TIMEOUT
 }from '@/web3-lib/api-errors'
 
 
@@ -182,6 +182,10 @@ export default {
           if(ex.code === USER_REJECTED_REQUEST){
             msg = that.$t(`code.${ex.code}`)
             that.$message(that.$basTip.error(msg))
+          }else if(ex.code === RPC_TIMEOUT){
+            msg = this.$t(`code.-32603`)
+            this.$message(this.$basTip.error(msg))
+            return;
           }else{
             console.error(ex)
           }
@@ -239,6 +243,10 @@ export default {
             msg = that.$t(`code.${USER_REJECTED_REQUEST}`)
             that.$message(that.$basTip.error(msg))
             return
+          }else if(ex.code === RPC_TIMEOUT){
+            msg = this.$t(`code.-32603`)
+            this.$message(this.$basTip.error(msg))
+            return;
           }else{
             console.error("MetaMask Error:",ex)
           }

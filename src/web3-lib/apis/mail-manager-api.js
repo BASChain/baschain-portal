@@ -269,44 +269,58 @@ export async function validPrevRegistMail(domainhash, mailtext,years,chainId,wal
   const web3js = winWeb3()
   if (!checkSupport(chainId)) throw ApiErrors.UNSUPPORT_NETWORK
 
-  const token = basTokenInstance(web3js, chainId, { from: wallet })
-  const view = basViewInstance(web3js, chainId, { from: wallet })
-  const mailManager = basMailManagerInstance(web3js, chainId, { from: wallet })
 
-  //callback name[hex] owner,expiration,isActive,openToPublic
-  const mailDomainRet = await view.methods.queryDomainEmailInfo(domainhash).call()
+  try{
+    console.log(1);
 
-  if (!mailDomainRet.name) throw ApiErrors.DOMAIN_NOT_EXIST
-  if (!mailDomainRet.isActive) throw ApiErrors.MAILSERVICE_INACTIVED
+    const token = basTokenInstance(web3js, chainId, { from: wallet });
+    const view = basViewInstance(web3js, chainId, { from: wallet });
+    const mailManager = basMailManagerInstance(web3js, chainId, { from: wallet });
 
-  const owner = mailDomainRet.owner
-  //valid isOwner when not public
-  console.log(mailDomainRet.openToPublic,wallet,owner)
-  if (!mailDomainRet.openToPublic && wallet.toLowerCase() !== owner.toLowerCase()) throw ApiErrors.MAIL_REGIST_BY_OWNER
+    console.log(2);
 
+       //callback name[hex] owner,expiration,isActive,openToPublic
+    const mailDomainRet = await view.methods
+      .queryDomainEmailInfo(domainhash)
+      .call();
 
-  const domaintext = parseHexDomain(mailDomainRet.name)
-  mailtext = mailtext.trim()
-  const mailfulltext = `${mailtext}${mailConcatChar}${domaintext}`
-  const mailhash = Web3.utils.keccak256(mailfulltext)
+    if (!mailDomainRet.name) throw ApiErrors.DOMAIN_NOT_EXIST;
+    if (!mailDomainRet.isActive) throw ApiErrors.MAILSERVICE_INACTIVED;
 
-  //vliad mailhash exist
-  /**
-   * owner, expiration,domainHash,isValid aliasName, bcAddress
-   */
-  const mailRet = await view.methods.queryEmailInfo(mailhash).call()
-  if (mailRet.isValid) throw ApiErrors.MAIL_HASH_EXIST
+    const owner = mailDomainRet.owner;
+    //valid isOwner when not public
+    console.log(mailDomainRet.openToPublic, wallet, owner);
+    if (
+      !mailDomainRet.openToPublic &&
+      wallet.toLowerCase() !== owner.toLowerCase()
+    )
+      throw ApiErrors.MAIL_REGIST_BY_OWNER;
 
-  const regMailGas = await mailManager.methods.REG_MAIL_GAS().call()
-  const maxRegYears = await mailManager.methods.MAX_MAIL_YEAR().call()
+    const domaintext = parseHexDomain(mailDomainRet.name);
+    mailtext = mailtext.trim();
+    const mailfulltext = `${mailtext}${mailConcatChar}${domaintext}`;
+    const mailhash = Web3.utils.keccak256(mailfulltext);
 
-  if (parseInt(maxRegYears) < parseInt(years)) ApiErrors.MAIL_YEAR_OVER_MAX;
+    //vliad mailhash exist
+    /**
+    * owner, expiration,domainHash,isValid aliasName, bcAddress
+    */
+    const mailRet = await view.methods.queryEmailInfo(mailhash).call();
+    if (mailRet.isValid) throw ApiErrors.MAIL_HASH_EXIST;
 
-  const costwei = new Web3.utils.BN('' + years).mul(new Web3.utils.BN(regMailGas)).toString()
+    const regMailGas = await mailManager.methods.REG_MAIL_GAS().call();
+    const maxRegYears = await mailManager.methods.MAX_MAIL_YEAR().call();
 
-  const basbal = await token.methods.balanceOf(wallet).call()
+    if (parseInt(maxRegYears) < parseInt(years))
+      ApiErrors.MAIL_YEAR_OVER_MAX;
 
-  if (compareWei2Wei(basbal, costwei) < 0) throw ApiErrors.LACK_OF_TOKEN
+    const costwei = new Web3.utils.BN("" + years)
+      .mul(new Web3.utils.BN(regMailGas))
+      .toString();
+
+    const basbal = await token.methods.balanceOf(wallet).call();
+
+    if (compareWei2Wei(basbal, costwei) < 0) throw ApiErrors.LACK_OF_TOKEN;
 
   return {
     domaintext,
@@ -317,8 +331,14 @@ export async function validPrevRegistMail(domainhash, mailtext,years,chainId,wal
     domainhash,
     mailhash,
     costwei,
-    basbal,
+    basbal
+  };
+  }catch(ex){
+    throw ex
   }
+
+
+
 }
 
 /**
