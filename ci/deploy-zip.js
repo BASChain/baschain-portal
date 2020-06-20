@@ -85,6 +85,9 @@ execZipFile(ZipOpts)
       if (secondIP) {
         pushZip2SeconRemot(ZipOpts.destination, secondIP);
       }
+      console.log(
+        chalk.redBright("ZipFileDir:" + path.parse(ZipOpts.destination).dir)
+      );
     }else{
       console.log(chalk.redBright("ZipFile:" + path.parse(ZipOpts.destination).dir));
     }

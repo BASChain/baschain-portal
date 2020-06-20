@@ -474,25 +474,36 @@ export default {
         /**
          * return :{domaintext,mailalias,years,chainId,wallet,domainhash,mailhash,costwei,basbal,}
          */
-        const commitData = await validPrevRegistMail(domainhash,mailName,years,chainId,wallet)
-        console.log(">>>>",commitData)
-        this.ctrl.loading = false
-
-        // route commit page
-        //const mailalias = commitData.mailalias
-        commitData.mailalias = mailAlias
-        const mailhash = commitData.mailhash
-        this.$router.push({
-          path:`/mail/registing/${domaintext}/${years}/${mailName}`,
-          name:"mail.registing",
-          params:{
-            domaintext,
-            years,
-            mailname:mailName,
-            commitData:commitData
+        //const commitData = await validPrevRegistMail(domainhash,mailName,years,chainId,wallet)
+        validPrevRegistMail(domainhash,mailName,years,chainId,wallet).then(commitData =>{
+          commitData.mailalias = mailAlias
+          const mailhash = commitData.mailhash
+          this.ctrl.loading = false
+          this.$router.push({
+            path:`/mail/registing/${domaintext}/${years}/${mailName}`,
+            name:"mail.registing",
+            params:{
+              domaintext,
+              years,
+              mailname:mailName,
+              commitData:commitData
+            }
+          })
+        }).catch(ex=>{
+          if(ex.code === RPC_TIMEOUT){
+            msg = this.$t(`code.-32603`)
+            this.$message(this.$basTip.error(msg))
+            return;
+          }else{
+            console.log(">>>>",ex)
+            msg = ex
+            this.$message(this.$basTip.error(msg))
+            return
           }
         })
 
+        // route commit page
+        //const mailalias = commitData.mailalias
       }catch(ex){
         this.ctrl.loading = false
         switch (ex) {
