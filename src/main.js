@@ -52,7 +52,11 @@ global.punycode = require('punycode')
 import './assets/css/element-#00CA9B/index.css'
 import "./assets/css/main.css";
 
-
+/**
+ * load
+ */
+store.dispatch("dapp/checkInjected");
+store.dispatch("dapp/autoLoginMetaMask");
 
 /* eslint-disable no-new */
 global.basvue = new Vue({
@@ -67,11 +71,7 @@ global.basvue = new Vue({
   },
 });
 
-/**
- * load
- */
-store.dispatch("dapp/checkInjected");
-store.dispatch("dapp/autoLoginMetaMask");
+
 //store.dispatch('dapp/loadDAppConfiguration');
 //make window.web3 new version and Injected =true
 
