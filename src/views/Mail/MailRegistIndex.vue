@@ -239,9 +239,7 @@ hr {
 
   font-size:16px;
 }
-.mail-domain--poper-footbar > .el-input.is-active, .el-input__inner, .el-input__inner:focus {
-  border: 0;
-}
+
 .mail-domain--poper-footbar > .el-button:focus,
 .mail-domain--poper-footbar > .el-button:hover {
   color: #00CA9B;
@@ -291,9 +289,7 @@ hr {
   font-size: 14px;
 }
 
-.el-form-item {
-  margin-bottom: 0px;
-}
+
 .mail-domain--poper {
   width: 100%;
   z-index: 9999;
