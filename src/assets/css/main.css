@@ -1369,3 +1369,38 @@ div.inner-box>div {
   color:rgba(171,171,184,1);
   line-height:17px;
 }
+
+
+/** el-dialog validate */
+.bas-wrapper--valid {
+  width: 100%;
+  display: inline-flexbox;
+  justify-content: center;
+  align-items: center;
+}
+.bas-wrapper--valid > div {
+  width:100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: .5rem;
+}
+.bas-dialog-nobody div.el-dialog__body {
+  padding: 0;
+}
+
+.bas-wrapper--valid span.tip-prefix {
+  font-size:18px;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(4,6,46,1);
+  line-height:25px;
+}
+.bas-wrapper--valid span.tip-green {
+  margin-left: .25rem;
+  font-size:22px;
+  font-weight:500;
+  color:rgba(0,202,155,1);
+  line-height:30px;
+  letter-spacing:1px;
+}

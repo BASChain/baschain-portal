@@ -4,7 +4,7 @@ import { getInfuraWeb3 } from '../infura'
 import { checkSupport } from "../networks";
 import ContractJsons from '../abi-manager'
 
-import * as ApiErrors from '../api-errors.js'
+import apiErrors, * as ApiErrors from '../api-errors.js'
 import {DomainConfTypes} from './domain-conf-api'
 import {
   mailConcatChar, compareWei2Wei, hex2confDataStr,
@@ -271,16 +271,13 @@ export async function validPrevRegistMail(domainhash, mailtext,years,chainId,wal
 
 
   try{
-    console.log(1);
-
     const token = basTokenInstance(web3js, chainId, { from: wallet });
     const view = basViewInstance(web3js, chainId, { from: wallet });
     const mailManager = basMailManagerInstance(web3js, chainId, { from: wallet });
 
-    console.log(2);
-
+    console.log("Begin RPC Time:", new Date().getTime() / 1000);
        //callback name[hex] owner,expiration,isActive,openToPublic
-    const mailDomainRet = await view.methods
+    let mailDomainRet = await view.methods
       .queryDomainEmailInfo(domainhash)
       .call();
 
@@ -293,8 +290,10 @@ export async function validPrevRegistMail(domainhash, mailtext,years,chainId,wal
     if (
       !mailDomainRet.openToPublic &&
       wallet.toLowerCase() !== owner.toLowerCase()
-    )
+    ){
       throw ApiErrors.MAIL_REGIST_BY_OWNER;
+    }
+
 
     const domaintext = parseHexDomain(mailDomainRet.name);
     mailtext = mailtext.trim();
@@ -322,23 +321,25 @@ export async function validPrevRegistMail(domainhash, mailtext,years,chainId,wal
 
     if (compareWei2Wei(basbal, costwei) < 0) throw ApiErrors.LACK_OF_TOKEN;
 
-  return {
-    domaintext,
-    mailtext,
-    years,
-    chainId,
-    wallet,
-    domainhash,
-    mailhash,
-    costwei,
-    basbal
-  };
+    return {
+      domaintext,
+      mailtext,
+      years,
+      chainId,
+      wallet,
+      domainhash,
+      mailhash,
+      costwei,
+      basbal
+    };
   }catch(ex){
-    throw ex
+    console.log("API Ex:",ex)
+    if(ex.code === -32603 ){
+      throw apiErrors.RPC_TIMEOUT
+    }else{
+       throw ex;
+    }
   }
-
-
-
 }
 
 /**

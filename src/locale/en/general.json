@@ -53,5 +53,6 @@
   "GetTokenOrETHFail":"Application failed, please try again.",
   "GetTokenOrETHSuccess":"The application is successful, please go to my wallet to view",
   "PaymentOngoing":"payment ongoing",
-  "MetaMaskNoPopTips":"If the page is loading for a long time, please check whether MateMask is authorized"
+  "MetaMaskNoPopTips":"If the page is loading for a long time, please check whether MateMask is authorized",
+  "ValidateOnBlockChain":"Verifying BMail "
 }

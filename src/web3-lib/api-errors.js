@@ -4,6 +4,7 @@
  * RPC Error Codes 5 length -32601
  */
 /* ================= Biz API Errors =================== */
+export const  NetworkRequestFail = "Network request failed"
 export const NO_UPDATE_PERMISSIONS = 110110;
 export const ACCOUNT_NOT_MATCHED = 119119;
 
@@ -87,6 +88,7 @@ export const INVALID_PARAMS = -32602;
 export const RPC_TIMEOUT = -32603;
 
 export default {
+  NetworkRequestFail,
   NO_UPDATE_PERMISSIONS,
   ACCOUNT_NOT_MATCHED,
   ROOT_REGIST_CLOSE,

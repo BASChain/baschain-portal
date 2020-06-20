@@ -91,6 +91,26 @@
         </div>
       </div>
     </div>
+
+    <el-dialog  width="320px"
+      :close-on-click-modal="false"
+      :show-close="false"
+      :visible.sync="ctrl.loading"
+      top="35vh" class="bas-dialog-nobody">
+      <div slot="title" class="bas-wrapper--valid">
+        <div class="logo-container">
+          <CircleLoading></CircleLoading>
+        </div>
+        <div class="bas-dialog-content">
+          <span class="tip-prefix">
+            {{$t('g.ValidateOnBlockChain')}}
+          </span>
+          <span class="tip-green">
+             {{mailName}}{{showMailtext}}
+          </span>
+        </div>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <style lang="css">
@@ -110,14 +130,18 @@ import {
 import {
   PARAM_ILLEGAL,USER_REJECTED_REQUEST,UNSUPPORT_NETWORK ,
   DOMAIN_NOT_EXIST,MAILSERVICE_INACTIVED,MAIL_REGIST_BY_OWNER,
-  MAIL_HASH_EXIST,MAIL_YEAR_OVER_MAX,LACK_OF_TOKEN
+  MAIL_HASH_EXIST,MAIL_YEAR_OVER_MAX,LACK_OF_TOKEN,NetworkRequestFail
 }from '@/web3-lib/api-errors'
 
 import {findMailInfo} from '@/web3-lib/apis/view-api'
 import {validPrevRegistMail} from '@/web3-lib/apis/mail-manager-api'
+import CircleLoading from '@/components/CircleLoading.vue'
 
 export default {
   name:"MailInternalRegistIndex",
+  components:{
+    CircleLoading
+  },
   computed: {
     showMailtext(){
       const domaintext = this.domaintext
@@ -172,7 +196,6 @@ export default {
       const domainhash = this.hash
       const mailName =this.mailName
       const mailAlias = this.mailAlias
-
 
       let msg =''
       if(mailName === ''|| !mailName.trim().length || !domainhash){
@@ -235,6 +258,10 @@ export default {
         }
         if(ex.code === USER_REJECTED_REQUEST){
           msg = this.$t(`code.${ex}`)
+          this.$message(this.$basTip.error(msg))
+          return;
+        }else if(ex.message.includes(NetworkRequestFail)){
+          msg = this.$t(`code.-32603`)
           this.$message(this.$basTip.error(msg))
           return;
         }

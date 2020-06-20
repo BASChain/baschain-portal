@@ -56,5 +56,6 @@
   "GetTokenOrETHFail":"申请失败,请重试.",
   "GetTokenOrETHSuccess":"申请成功,请到我的钱包查看",
   "PaymentOngoing":"支付中",
-  "MetaMaskNoPopTips":"如页面长时间处于加载中，请检查MateMask是否授权"
+  "MetaMaskNoPopTips":"如页面长时间处于加载中，请检查MateMask是否授权",
+  "ValidateOnBlockChain":"正在校验"
 }

@@ -134,10 +134,31 @@
     <div class="row">
       <div style="height:1.5rem;"></div>
     </div>
+    <el-dialog  width="320px"
+      :close-on-click-modal="false"
+      :show-close="false"
+      :visible.sync="ctrl.loading"
+      top="35vh" class="bas-dialog-nobody">
+      <div slot="title" class="bas-wrapper--valid">
+        <div class="logo-container">
+          <CircleLoading></CircleLoading>
+        </div>
+        <div class="bas-dialog-content">
+          <span class="tip-prefix">
+            {{$t('g.ValidateOnBlockChain')}}
+          </span>
+          <span class="tip-green">
+             {{mailName}}{{showMailtext}}
+          </span>
+        </div>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <style>
+
+
 hr {
   width: 96%;
   margin: 8px 2px 7px 7px;
@@ -364,14 +385,17 @@ import {validPrevRegistMail} from '@/web3-lib/apis/mail-manager-api'
 import {
   PARAM_ILLEGAL,USER_REJECTED_REQUEST,UNSUPPORT_NETWORK ,
   DOMAIN_NOT_EXIST,MAILSERVICE_INACTIVED,MAIL_REGIST_BY_OWNER,
-  MAIL_HASH_EXIST,MAIL_YEAR_OVER_MAX,LACK_OF_TOKEN,RPC_TIMEOUT
+  MAIL_HASH_EXIST,MAIL_YEAR_OVER_MAX,LACK_OF_TOKEN,NetworkRequestFail
 }from '@/web3-lib/api-errors'
 
 import {findMailInfo} from '@/web3-lib/apis/view-api'
+import CircleLoading from '@/components/CircleLoading.vue'
 
 export default {
   name:"MailRegistIndex",
-  components:{},
+  components:{
+    CircleLoading
+  },
   computed: {
     toggleIconClass(){
       return this.mailPoper.visible ? 'fa-chevron-up' : 'fa-chevron-down'
@@ -444,9 +468,12 @@ export default {
       }
     },
     async submitMailName(){
-      if(this.inputctrl.message) return
       if(this.$store.getters['metaMaskDisabled']){
         this.$metamask()
+        return
+      }
+      if(this.inputctrl.message){
+        this.$message(this.$basTip.error(this.inputctrl.message))
         return
       }
 
@@ -457,7 +484,6 @@ export default {
       const domainhash = this.mailDomainHash
       const mailName =this.mailName
       const mailAlias = this.mailAlias
-
 
       let msg =''
       if(mailName === ''|| !mailName.trim().length || !domainhash){
@@ -474,35 +500,25 @@ export default {
         /**
          * return :{domaintext,mailalias,years,chainId,wallet,domainhash,mailhash,costwei,basbal,}
          */
-        //const commitData = await validPrevRegistMail(domainhash,mailName,years,chainId,wallet)
-        validPrevRegistMail(domainhash,mailName,years,chainId,wallet).then(commitData =>{
-          commitData.mailalias = mailAlias
-          const mailhash = commitData.mailhash
-          this.ctrl.loading = false
-          this.$router.push({
-            path:`/mail/registing/${domaintext}/${years}/${mailName}`,
-            name:"mail.registing",
-            params:{
-              domaintext,
-              years,
-              mailname:mailName,
-              commitData:commitData
-            }
-          })
-        }).catch(ex=>{
-          if(ex.code === RPC_TIMEOUT){
-            msg = this.$t(`code.-32603`)
-            this.$message(this.$basTip.error(msg))
-            return;
-          }else{
-            console.log(">>>>",ex)
-            msg = ex
-            this.$message(this.$basTip.error(msg))
-            return
+        const commitData = await validPrevRegistMail(domainhash,mailName,years,chainId,wallet)
+
+        commitData.mailalias = mailAlias
+        const mailhash = commitData.mailhash
+
+        //return
+        // route commit page
+        this.ctrl.loading = false
+        this.$router.push({
+          path:`/mail/registing/${domaintext}/${years}/${mailName}`,
+          name:"mail.registing",
+          params:{
+            domaintext,
+            years,
+            mailname:mailName,
+            commitData:commitData
           }
         })
 
-        // route commit page
         //const mailalias = commitData.mailalias
       }catch(ex){
         this.ctrl.loading = false
@@ -534,13 +550,11 @@ export default {
           msg = this.$t(`code.${ex}`)
           this.$message(this.$basTip.error(msg))
           return;
-        }else if(ex.code === RPC_TIMEOUT){
+        }else if(ex.message.includes(NetworkRequestFail)){
           msg = this.$t(`code.-32603`)
           this.$message(this.$basTip.error(msg))
           return;
         }
-        console.log("Message",ex.message)
-        console.log("Message Code",ex.code)
         console.error("Unknown Error:",ex)
       }
     },
@@ -616,7 +630,7 @@ export default {
             console.log('lazy valid',ex)
             that.inputctrl.message = ''
           }
-        }, 1000);
+        }, 500);
       }else{
         this.inputctrl.message = ''
       }
