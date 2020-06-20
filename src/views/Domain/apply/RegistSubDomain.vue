@@ -124,7 +124,8 @@ export default {
   name:"DomainRegistSub",
   computed: {
     getTotal(){
-      return this.unitPrice * this.years
+      const total = parseFloat(this.unitPrice * this.years)
+      return total.toFixed(2)
     },
     topExpireDate(){
       if(!this.topasset.expire) return ''

@@ -32,7 +32,7 @@ global.BasRuntime = Object.assign({}, runtime.info, DAppInfo, { browser })
 // import { BindInfura } from './web3-lib/infura'
 // BindInfura()
 
-import './assets/css/main.css'
+
 
 //Seria WorkFlow
 import App from './App'
@@ -50,12 +50,10 @@ global.punycode = require('punycode')
  * all at last
  */
 import './assets/css/element-#00CA9B/index.css'
+import "./assets/css/main.css";
 
-//make window.web3 new version and Injected =true
-store.dispatch("dapp/checkInjected");
-store.dispatch('dapp/autoLoginMetaMask');
 
-//store.dispatch('dapp/loadDAppConfiguration');
+
 /* eslint-disable no-new */
 global.basvue = new Vue({
   el: "#app",
@@ -65,8 +63,18 @@ global.basvue = new Vue({
   render: h => h(App),
   mounted() {
     document.dispatchEvent(new Event('render-event'))
+
   },
 });
+
+/**
+ * load
+ */
+store.dispatch("dapp/checkInjected");
+store.dispatch("dapp/autoLoginMetaMask");
+//store.dispatch('dapp/loadDAppConfiguration');
+//make window.web3 new version and Injected =true
+
 
 document.addEventListener('DOMContentLoaded', function () {
   console.log(">>>>DOMCLoaded",new Date().getTime())
