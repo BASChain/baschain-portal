@@ -54,5 +54,6 @@
   "GetTokenOrETHSuccess":"The application is successful, please go to my wallet to view",
   "PaymentOngoing":"payment ongoing",
   "MetaMaskNoPopTips":"If the page is loading for a long time, please check whether MateMask is authorized",
-  "ValidateOnBlockChain":"Verifying BMail "
+  "ValidateOnBlockChain":"Verifying BMail ",
+  "RequestTimeoutOverTip": "It has been more than (ts) seconds, please check the MetaMask network or continue to wait."
 }

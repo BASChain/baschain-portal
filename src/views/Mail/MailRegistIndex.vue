@@ -136,7 +136,8 @@
     </div>
     <el-dialog  width="320px"
       :close-on-click-modal="false"
-      :show-close="false"
+      :show-close="ctrl.closeable"
+      :before-close="setCloseableFalse"
       :visible.sync="ctrl.loading"
       top="35vh" class="bas-dialog-nobody">
       <div slot="title" class="bas-wrapper--valid">
@@ -150,6 +151,11 @@
           <span class="tip-green">
              {{mailName}}{{showMailtext}}
           </span>
+        </div>
+        <div v-show="Boolean(ctrl.closeable)">
+          <p class="small">
+            {{$t('g.RequestTimeoutOverTip',{ts:ctrl.timeout})}}
+          </p>
         </div>
       </div>
     </el-dialog>
@@ -434,7 +440,9 @@ export default {
       },
       ctrl:{
         loading:false,
-        timeoutId:null
+        timeoutId:null,
+        closeable:false,
+        timeout:10
       }
     }
   },
@@ -467,6 +475,10 @@ export default {
         this.mailDomainHash = mailassets[0].hash
       }
     },
+    setCloseableFalse(){
+      this.ctrl.closeable = false
+      this.ctrl.loading = false
+    },
     async submitMailName(){
       if(this.$store.getters['metaMaskDisabled']){
         this.$metamask()
@@ -497,6 +509,7 @@ export default {
       console.log(domaintext,domainhash,mailName,years)
       try{
         this.ctrl.loading = true
+
         /**
          * return :{domaintext,mailalias,years,chainId,wallet,domainhash,mailhash,costwei,basbal,}
          */
@@ -575,7 +588,7 @@ export default {
     setTimeout(async () => {
       console.log("pull open mails")
       this.loadPublicMailDomainOnMount()
-    }, 1000);
+    }, 500);
   },
   watch: {
     mailName:function(val,old){
@@ -640,6 +653,18 @@ export default {
         this.mailDomainText = mails[0].domaintext
         this.mailDomainHash = mails[0].hash
       }
+    },
+    'ctrl.loading':{
+      handler(val,old){
+        if(val && !old){
+          console.log(new Date().getTime()/1000)
+          const ts = this.ctrl.timeout * 1000
+          setTimeout(() => {
+            this.ctrl.closeable =true
+          }, ts);
+        }
+      },
+      immediate:true
     }
   },
 }

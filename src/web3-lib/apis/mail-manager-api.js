@@ -262,7 +262,7 @@ export async function getDomainMailDetail(domaintext, chainId) {
  * @param {*} wallet
  */
 export async function validPrevRegistMail(domainhash, mailtext,years,chainId,wallet){
-  console.log('>>>>', domainhash, mailtext,years)
+  console.log('>>>>', domainhash, mailtext,years,new Date().getTime()/1000)
   if (!domainhash || mailtext === undefined || !(mailtext + '').length || years <= 0 || !wallet)
     throw ApiErrors.PARAM_ILLEGAL;
 
