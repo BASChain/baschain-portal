@@ -1,6 +1,7 @@
 
 import { LAST_CHAINID_KEY} from './mutation-types'
 
+const fromWei = Web3.utils.fromWei
 /**
  *
  */
@@ -13,20 +14,20 @@ const getters = {
     let cid = Cookies.get(LAST_CHAINID_KEY)
 
     return {
-      chainId: state.chainId || cid,
-      wallet: state.wallet,
+      chainId:state.chainId||cid,
+      wallet:state.wallet,
       decimals,
-      rareBas: Web3.utils.fromWei(state.rareGas, "ether"),
-      rootBas: Web3.utils.fromWei(state.rootGas, "ether"),
-      subBas: Web3.utils.fromWei(state.subGas, "ether"),
-      externalBas: Web3.utils.fromWei(state.externalGas, "ether"),
-      mailSeviceBas: Web3.utils.fromWei(state.mailSeviceGas, "ether"),
-      mailRegBas: Web3.utils.fromWei(state.mailRegGas, "ether"),
+      rareBas: fromWei(state.rareGas,'ether'),
+      rootBas: fromWei(state.rootGas,'ether'),
+      subBas: fromWei(state.subGas,'ether'),
+      externalBas: fromWei(state.externalGas ,'ether'),
+      mailSeviceBas: fromWei(state.mailSeviceGas,'ether'),
+      mailRegBas: fromWei(state.mailRegGas,'ether'),
       maxRegYears: state.maxRegYears,
       maxMailRegYears: state.maxMailRegYears,
       maxDataLength: state.maxDataLength,
       maxPriceBas: state.maxPriceBas,
-      minSubBas: Web3.utils.fromWei(state.subGas, "ether")
+      minSubBas:fromWei (state.subGas ,'ether')
     };
   },
   /**

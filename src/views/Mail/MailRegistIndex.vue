@@ -152,10 +152,16 @@
              {{mailName}}{{showMailtext}}
           </span>
         </div>
-        <div v-show="Boolean(ctrl.closeable)">
+        <div v-if="Boolean(ctrl.closeable)">
           <p class="small">
             {{$t('g.RequestTimeoutOverTip',{ts:ctrl.timeout})}}
           </p>
+
+        </div>
+        <div v-if="Boolean(ctrl.closeable)" class="text-center">
+          <el-button @click="setCloseableFalse" size="mini" class="w-25">
+            {{$t('l.Cancel')}}
+          </el-button>
         </div>
       </div>
     </el-dialog>
@@ -442,7 +448,7 @@ export default {
         loading:false,
         timeoutId:null,
         closeable:false,
-        timeout:10
+        timeout:15
       }
     }
   },

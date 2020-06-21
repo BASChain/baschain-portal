@@ -1,5 +1,8 @@
 import * as types from './mutation-types'
 
+const fromWei = Web3.utils.fromWei
+const toWei = Web3.utils.toWei
+
 export default {
   [types.SET_INJECTED](state, injected) {
     state.injected = injected;
@@ -54,9 +57,7 @@ export default {
   [types.LOAD_DOMAIN_YEAR_ITEMS](state,maxYear) {
     if (maxYear && parseInt(maxYear) > 0 && parseInt(maxYear) <= 50 ){
       const items = new Array()
-      const unitbas = Web3.utils.fromWei(
-        state.subGas || Web3.utils.toWei("4", "ether")
-      );
+      const unitbas = fromWei(state.subGas || toWei("4",'ether'))
       for (let i = maxYear;i > 0;i--){
         items.push({ y: i, total: parseFloat(unitbas)* i})
       }
