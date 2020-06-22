@@ -7,9 +7,7 @@
           <div class="bas-card-header--title">
             <span>{{ handleDomain }}</span> {{$t('p.DominDetailRegistTitle')}}
           </div>
-          <!-- <div class="bas-card__tools d-none">
-            <button class="btn btn-secondary">Regist</button>
-          </div> -->
+
         </div>
 
         <div class="bas-detail-body">
@@ -17,27 +15,10 @@
             <label class="bas-form-label">{{$t('p.DominDetailOwnerLabel')}}</label>
             <span class="bas-small">{{asset.owner}}</span>
           </div>
-          <!-- <div class="bas-inline">
+          <div class="bas-inline">
             <label class="bas-form-label">{{$t('l.DomainHash')}}</label>
             <span>{{asset.hash}}</span>
-          </div> -->
-          <div class="bas-inline">
-            <label class="bas-form-label">{{$t('p.DomainDetailContactsLabel')}}</label>
-            <span>{{contact.tel}}</span>
           </div>
-          <div class="bas-inline">
-            <label class="bas-form-label">{{$t('p.DomainDetailEmailLabel')}}</label>
-            <span>{{contact.email}}</span>
-          </div>
-          <div class="bas-inline">
-            <label class="bas-form-label">{{$t('p.DomainDetailSiteLabel')}}</label>
-            <span>{{contact.website}}</span>
-          </div>
-          <div class="bas-inline">
-            <label class="bas-form-label">{{$t('p.DomainDetailContactAddressLabel')}}</label>
-            <span>{{contact.address}}</span>
-          </div>
-
           <hr/>
 
           <div class="bas-inline">

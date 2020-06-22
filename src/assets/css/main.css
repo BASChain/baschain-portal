@@ -1429,3 +1429,8 @@ button.bas-btn-goback:hover {
 button.bas-btn-goback span.text:hover {
   color:rgba(0,202,155,1);
 }
+
+button.bas-btn-goback[disabled]:hover,button.bas-btn-goback[disabled]>span.text:hover {
+  color: rgba(139,139,158,1);
+  cursor: not-allowed;
+}

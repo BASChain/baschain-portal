@@ -1,7 +1,16 @@
 <template>
   <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-7 bas-card" v-loading="ctrl.loading">
+    <!-- <div class="row justify-content-center align-items-center">
+      <div class="col-md-7 col-sm-10 pb-2" style="padding-left:0">
+        <button class="bas-btn-goback" @click="goback" :disabled="ctrl.loading">
+          <span class="text">
+            {{$t('l.GoBackPrevPage')}}
+          </span>
+        </button>
+      </div>
+    </div> -->
+    <div class="row justify-content-center pt-3">
+      <div class="col-md-7 col-sm-10 bas-card" v-loading="ctrl.loading">
         <div class="bas-card__header">
           <div class="bas-card__header-title">
             {{$t('p.DomainRegistSubTitle')}}
@@ -185,6 +194,9 @@ export default {
     }
   },
   methods: {
+    goback(){
+      this.$router.go(-1)
+    },
     setUnitPrice(){
       const ruleState = this.$store.getters['dapp/ruleState']
       const topasset = this.topasset

@@ -1,8 +1,17 @@
 <template>
 <div class="background-fill-wrapper bas-gray-bg">
   <div class="container">
-    <div class="row justify-content-center align-items-center">
-      <el-card class="col-md-8 col-sm-10 box-card">
+    <div class="row justify-content-center align-items-center d-none">
+      <div class="col-md-8 col-sm-10 pb-2" style="padding-left:0">
+        <button class="bas-btn-goback" @click="goback" :disabled="ctrl.inprogress">
+          <span class="text">
+            {{$t('l.GoBackPrevPage')}}
+          </span>
+        </button>
+      </div>
+    </div>
+    <div class="row justify-content-center align-items-center pt-3">
+      <el-card class="col-md-8 col-sm-10 box-card ">
         <div class="clearfix" slot="header">
           <h4>
             Transaction Hash
@@ -124,9 +133,10 @@ export default {
         isCustomed:false,
         years:1,
       },
-      transactions:[
-
-      ],
+      transactions:[],
+      ctrl:{
+        inprogress:false
+      },
       tmpData:{
         expire:0,//second
         unitTS:365*24*60*60
@@ -149,6 +159,9 @@ export default {
         this.transactions.splice(idx,1,{hash,state})
       }
     },
+    goback(){
+      this.$router.go(-1)
+    },
     commitApprove(){
       //
       let web3State = this.$store.getters['dapp/web3State'];//getWeb3State()
@@ -158,6 +171,7 @@ export default {
       console.log('CommitApprove',chainId,wallet,costWei)
       approveToken4OannEmitter(costWei,chainId,wallet).on('transactionHash',(txhash)=>{
         this.registState = 'approving'
+        this.ctrl.inprogress = true
         this.addTxHashItem(txhash,'loading')
       }).on('receipt',(receipt)=>{
         let status = receipt.status;
@@ -171,7 +185,9 @@ export default {
         if(receipt){
           this.updateTxHashItem(receipt.transactionHash,'fail')
         }
+        this.ctrl.inprogress = false
       }).catch(ex=>{
+        this.ctrl.inprogress = false
         this.registState = 'fail'
         if(ex.code === 4001){
           let errMsg = this.$t(`code.${ex.code}`)
@@ -205,6 +221,7 @@ export default {
           let status = receipt.status;
           if(status){
             that.registState = 'success'
+            this.ctrl.inprogress = false
 
             that.updateTxHashItem(receipt.transactionHash,'success')
             that.$store.dispatch('ewallet/syncEWalletAssets',web3State)
@@ -218,11 +235,13 @@ export default {
         }).on('error',(err,receipt)=>{
           console.error('Confirm RPC Error',err)
           that.registState = 'fail'
+          this.ctrl.inprogress = false
           if(receipt){
             that.updateTxHashItem(receipt.transactionHash,'fail')
           }
         }).catch(ex=>{
           that.registState = 'fail'
+          this.ctrl.inprogress = false
           if(ex.code === 4001){
             let errMsg = that.$t(`code.${ex.code}`)
             that.$message(that.$basTip.error(errMsg))
@@ -239,6 +258,7 @@ export default {
         }).on('receipt',(receipt)=>{
           console.log('Regist Sub Complete>>>>>',receipt)
           let status = receipt.status;
+          this.ctrl.inprogress = false
           if(status){
             that.registState = 'success'
             that.updateTxHashItem(receipt.transactionHash,'success')
@@ -253,6 +273,7 @@ export default {
           }
           that.completed = true
         }).on('error',(err,receipt)=>{
+          this.ctrl.inprogress = false
           console.error(err)
           that.registState = 'fail'
           if(receipt){
