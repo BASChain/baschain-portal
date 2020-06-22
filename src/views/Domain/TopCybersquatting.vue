@@ -115,8 +115,13 @@ import {
 import {wei2Bas,dateFormat,hasExpired} from '@/utils'
 
 import {
-  PARAM_ILLEGAL, LACK_OF_ETH,
+  PARAM_ILLEGAL, LACK_OF_ETH, LACK_OF_TOKEN,
+  DOMAIN_PRICE_RANGE, DOMAIN_NOT_EXPIRED,
+  UNSUPPORT_NETWORK,USER_REJECTED_REQUEST,
+  NetworkRequestFail
 } from '@/web3-lib/api-errors.js'
+
+import { MaxPriceBas } from '@/web3-lib/utils'
 import { checkSupport } from '@/web3-lib/networks'
 import { getDomainInfo } from '@/web3-lib/apis/view-api'
 import { preValidRoot } from '@/web3-lib/apis/cybersquatting-api'
@@ -148,10 +153,10 @@ export default {
     },
     ...Vuex.mapGetters({
       ruleState:'dapp/ruleState'
-    },
+    }),
     ...Vuex.mapState({
       maxYears:state => state.dapp.maxRegYears
-    })),
+    }),
   },
   data(){
     return {
@@ -189,7 +194,11 @@ export default {
 
     },
     openAppliedChange(){
-
+      if(!this.asset.openApplied || !this.asset.isCustomed){
+        this.subUnitPrice = parseFloat(this.ctrlState.subBas)
+      }else{
+        this.subUnitPrice = parseFloat(wei2Bas(this.asset.customPrice))
+      }
     },
     customedChangeHandle(){
       if(!this.asset.isCustomed){
@@ -197,9 +206,6 @@ export default {
       }else if(this.asset.customPrice){
         this.subUnitPrice = parseFloat(wei2Bas(this.asset.customPrice))
       }
-    },
-    preValid(){
-
     },
     async registing(){
       if(this.$store.getters['metaMaskDisabled']){
@@ -231,7 +237,35 @@ export default {
           }
         })
       }catch(ex){
-        console.log(ex)
+        let msg = ''
+        const domaintext = this.domaintext
+        switch (ex) {
+          case LACK_OF_ETH:
+          case LACK_OF_TOKEN:
+          case UNSUPPORT_NETWORK:
+            msg = this.$t(`code.${ex}`)
+            this.$message(this.$basTip.error(msg))
+            return
+          case DOMAIN_PRICE_RANGE:
+            msg = this.$t(`code.${ex}`,{begin:4,end:MaxPriceBas})
+            this.$message(this.$basTip.error(msg))
+            return
+          case DOMAIN_NOT_EXPIRED:
+          case PARAM_ILLEGAL:
+            console.log('lost args',ex)
+            return;
+          default:
+            break;
+        }
+
+        if(ex.code === USER_REJECTED_REQUEST){
+          let errMsg = that.$t(`code.${ex.code}`)
+          that.$message(that.$basTip.error(errMsg))
+        }else if(ex.message.includes(NetworkRequestFail)){
+          that.$message(that.$basTip.error(ex.message))
+        }else{
+          console.error("Unknow Error",ex)
+        }
       }
 
     }

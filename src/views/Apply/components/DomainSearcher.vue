@@ -910,9 +910,10 @@ export default {
         if(!text ||!topText)return;
         this.$router.push({
           name:"domain.subcybersquatting",
-          params:{
-            subDomain:text,
-            topDomain:topText
+          query:{
+            hash,
+            subPart:text,
+            topPart:topText
           }
         })
       }else{

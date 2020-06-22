@@ -47,7 +47,7 @@ export async function getAssetHashPager(chainId, wallet){
     const ret = await viewInst.methods.queryDomainInfo(hash).call()
     if(!ret.name||!ret.expiration)continue;
     const mailState = await mailManager.methods.mailConfigs(hash).call()
-
+    console.log(ret)
     let asset = transAsset(ret, hash, chainId, Boolean(mailState.active), Boolean(mailState.openToPublic))
     assets.push(asset)
   }

@@ -223,7 +223,7 @@ export async function getMailInfo(hash,chainId) {
 
 
 /**
- * 
+ *
  * @param {*} text required
  * @param {*} chainId
  */
@@ -296,6 +296,8 @@ export async function getDomainInfo(domainhash,chainId){
   const viewInst = basViewInstance(web3js, chainId)
   const res = await viewInst.methods.queryDomainInfo(domainhash).call();
 
+  const isRoot = res && Boolean(res.isRoot);
+
   if (!res.name || parseInt(res.expiration) === 0) return {state:0};
   const resp = {
     state:1,
@@ -312,6 +314,34 @@ export async function getDomainInfo(domainhash,chainId){
       isRare: Boolean(res.rIsRare),
       isOrder: Boolean(res.isMarketOrder),
       roothash: res.sRootHash
+    },
+    rootasset:{
+      isRoot:true,
+      hash:res.sRootHash,
+      owner:'',
+      expire:0
+    }
+  }
+
+  if(!isRoot && notNullHash(res.sRootHash)){
+    const rootRes = await viewInst.methods
+      .queryDomainInfo(res.sRootHash)
+      .call();
+    if(rootRes.owner && rootRes.expiration){
+      const rootasset = {
+        domaintext: parseHexDomain(rootRes.name),
+        hash: res.sRootHash,
+        owner:rootRes.owner||'',
+        isRoot: Boolean(rootRes.isRoot),
+        openApplied: Boolean(rootRes.rIsOpen),
+        isCustomed: Boolean(rootRes.rIsCustom),
+        customPrice: rootRes.rCusPrice,
+        expire: rootRes.expiration,
+        isRare: Boolean(rootRes.rIsRare),
+        isOrder: Boolean(rootRes.isMarketOrder)
+      };
+
+      resp.rootasset = rootasset
     }
   }
 

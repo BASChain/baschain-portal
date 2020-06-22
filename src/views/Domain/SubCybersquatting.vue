@@ -4,39 +4,32 @@
       <div class="col-7 bas-card">
         <div class="bas-card__header">
           <div class="bas-card__header-title">
-            抢注域名
+            {{$t('l.CybersquattingDomain')}}
           </div>
         </div>
         <div class="bas-gray-split" />
         <div class="bas-card__body bas-border-none">
           <el-form class="col-10" label-width="160px">
-            <el-form-item label="域名" >
-              <el-input v-model="domain" :disabled="true"
+            <el-form-item :label="$t('l.Domain')">
+              <el-input v-model="subPart" :disabled="true"
                 class="bas-regist--domain-input"
                 placeholder="please enter domain...">
-                <template slot="append">{{ `.${topData.domain}` }}</template>
+                <template slot="append">{{ `.${topPart}` }}</template>
               </el-input>
-              <div class="bas-text-warning" v-if="showErrorTip">
-                <i class="fa fa-warning"></i>
-                {{error}}
-              </div>
             </el-form-item>
 
-            <el-form-item v-if="false" label="别名" class="w-50">
-              <el-input placeholder="Please enter alias..." v-model="alias"></el-input>
-            </el-form-item>
-
-            <el-form-item label="价格" >
-              <span> {{ topData.unitPrice }} </span>
+            <el-form-item :label="$t('l.PriceBas')">
+              <span> {{ unitPrice }} </span>
               <span> BAS/year </span>
             </el-form-item>
 
-            <el-form-item label="购买期限">
+            <el-form-item  :label="$t('l.PurchaseYears')">
               <el-input-number v-model="years" name="years"
-                controls-position="right"
-                :min="1" :max="configs.maxYearReg">
+                :disabled="ctrl.loading"
+                controls-position=""
+                :min="1" :max="maxYears">
               </el-input-number>
-              <span>Year</span>
+              <span>Year </span>
             </el-form-item>
           </el-form>
 
@@ -45,45 +38,36 @@
               size="mini" label-position="right"
               >
               <el-form-item>
-                <h6 slot="label" class="pt-2">其根域名信息</h6>
+                <h6 slot="label" class="pt-2">{{$t('p.DomainRegistSubRootInfoTitle')}}</h6>
               </el-form-item>
-              <el-form-item label-width="120px" label="到期日期">
+              <el-form-item label-width="120px" :label="$t('l.ExpiredDate')">
                 <span>{{ topExpireDate }}</span>
               </el-form-item>
-              <el-form-item label-width="120px" label="所有者">
-                {{ topData.owner ? topData.owner : '未注册' }}
+              <el-form-item label-width="120px" :label="$t('l.Owner')">
+                {{ rootasset.owner ? rootasset.owner : $t('l.Unregist') }}
               </el-form-item>
-              <el-form-item v-if="topData.owner !== ''"
+              <el-form-item v-if="rootasset.owner !== ''"
                 label-width="120px">
                 <a slot="label"
                   class="bas-link topinfo-whois"
-                  @click.prevent="gotoWhois(topData.domain)">
+                  @click.prevent="gotoWhois(topPart)">
                   Who is >>
                 </a>
               </el-form-item>
             </el-form>
           </div>
-
-          <!-- <div
-            class="bas-regist--topdomain-container">
-            <h4 class="">根域名信息</h4>
-            <p>到期日期:{{ topExpireDate }}</p>
-            <p>
-              <span>所有者:{{ topData.owner ? topData.owner : '未注册' }}</span>
-              <a v-if="topData.owner !== ''" class="bas-link" @click.prevent="gotoWhois(topData.domain)">
-                Who is >>
-              </a>
-            </p>
-          </div> -->
-
           <div class="col-12 text-center pt-3">
-            <span class="bas-text-green">总计:</span>
+            <span class="bas-text-green">{{$t('l.Total')}}:</span>
             <h2 class="d-inline bas-text-green">{{getTotal}}</h2>
             <span class="bas-text-green">BAS</span>
           </div>
         </div>
         <div class="bas-card__footer">
-          <button class="btn w-25 bas-btn-primary" @click="registing">注册</button>
+          <button class="btn w-25 bas-btn-primary"
+            :disabled="ctrl.loading"
+            @click="registing">
+            {{$t('l.RegistBtn')}}
+          </button>
         </div>
       </div>
     </div>
@@ -98,105 +82,60 @@ import {
   isSubdomain,
   getSplitDomain
  }  from '@/utils/domain-validator'
-import { findDomainByName,validExistDomain,calcSubCost } from '@/bizlib/web3/domain-api.js'
 import {
   dateFormat,
   diffDays,hasExpired,
-  handleDomain
+  handleDomain,
+  wei2Bas
 } from '@/utils'
-import DomainProxy from '@/proxies/DomainProxy.js'
+
+import {
+  PARAM_ILLEGAL, LACK_OF_ETH, LACK_OF_TOKEN,
+  DOMAIN_PRICE_RANGE, DOMAIN_NOT_EXPIRED,
+  UNSUPPORT_NETWORK,USER_REJECTED_REQUEST,
+  NetworkRequestFail
+} from '@/web3-lib/api-errors.js'
+import { checkSupport } from '@/web3-lib/networks'
+import { getDomainInfo } from '@/web3-lib/apis/view-api'
+import {preValidSub4Cybersquatting } from '@/web3-lib/apis/cybersquatting-api'
 
 export default {
   name:"SubCybersquatting",
-  data(){
-    return {
-      domain:"",
-      years:1,
-      hasError:false,
-      topData:{
-        domain:'',
-        owner:'',
-        expire:'',
-        unitPrice:4,
-        openApplied:true
-      },
-      configs:{
-        rareGas:5000 ,
-        topGas:20 ,
-        subGas:4 ,
-        customedPriceGas:100,
-        maxYearReg:5,
-      },
-      error:''
-    }
-  },
-  mounted(){
-    let topDomain = this.$route.params.topDomain
-    let subDomain = this.$route.params.subDomain
-    console.log(`${subDomain}.${topDomain}`)
-    this.topData.domain = topDomain
-    this.domain = subDomain;
-    if(!topDomain)return;
-
-
-    let cfg = this.$store.getters['web3/getOANNConfigs']
-    this.configs = Object.assign({},this.configs,cfg)
-
-    let proxy = new DomainProxy()
-    let topText = handleDomain(topDomain);
-    proxy.getDomainInfo(topText).then(resp=>{
-      if(resp.state){
-        const asset = resp.assetinfo;
-        this.topData.owner = asset.owner
-        this.topData.expire = asset.expire;
-        this.topData.isCustomed =  asset.riscustomed
-
-        this.topData.unitPrice = this.configs.subGas;
-        if(asset.riscustomed && asset.ropentopublic){
-          this.topData.unitPrice = asset.customeprice/(10**18)
-        }
-        this.topData.openApplied = asset.ropentopublic;
-      }
-    }).catch(ex=>{
-        this.topData.owner = ''
-        this.topData.expire = '';
-        this.topData.unitPrice = this.config.subGas
-        this.error = ''
-    })
-
-
-    // findDomainByName(this.topData.domain).then(resp=>{
-    //   console.log(resp)
-    //   if(resp.state){
-    //     console.log(resp.data)
-    //     this.topData.owner = resp.data.owner
-    //     this.topData.expire = resp.data.expire;
-    //     this.topData.isCustomed =  resp.data.isCustomed
-    //     this.topData.unitPrice = resp.data.isCustomed ? resp.data.customedPrice : this.config.subGas;
-    //     this.topData.openApplied = resp.data.openApplied;
-    //     if(!resp.data.openApplied){
-    //       this.error = '此根域名暂不支持二级域名注册，根域名所有者未开放注册权限'
-    //     }
-    //   }else{
-    //     this.topData.owner = ''
-    //     this.topData.expire = '';
-    //     this.topData.unitPrice = this.config.subGas
-    //     this.error = ''
-    //   }
-    // }).catch(ex=>{
-
-    // })
-  },
   computed:{
     getTotal(){
-      return this.years * this.topData.unitPrice;
+      return this.years * this.unitPrice;
     },
     topExpireDate(){
-      if(!this.topData.expire)return ''
-      return dateFormat(this.topData.expire)
+      if(!this.rootasset.expire)return ''
+      return dateFormat(this.rootasset.expire)
     },
-    showErrorTip(){
-      return !!(this.error)
+    ...Vuex.mapState({
+      maxYears:state => state.dapp.maxRegYears
+    }),
+  },
+  data(){
+    return {
+      subPart:"",
+      topPart:"",
+      years:1,
+      hasError:false,
+      unitPrice:4,
+      rootasset:{
+        domaintext:"",
+        owner:"",
+        hash:'',
+        expire:0,
+      },
+      asset:{
+        domaintext:"",
+        hash:'',
+        expire:0,
+        owner:""
+      },
+      ctrl:{
+        loading:false,
+        closeable:false
+      },
     }
   },
   methods:{
@@ -207,74 +146,114 @@ export default {
       })
     },
     async registing(){
-      let error = '域名非法或为空'
       if(this.$store.getters['metaMaskDisabled']){
         this.$metamask()
-        return;
+        return
       }
+      const web3State = this.$store.getters['web3State']
+      const roottext = this.topPart;
+      const years = this.years;
+      const hash = this.asset.hash;
+      const domaintext = `${this.subPart}.${this.topPart}`
 
-      //valid form
-      if(!this.topData.openApplied && this.owner){
-        error = `顶级域名 ${this.topData.domain} 未开放注册.`
-        this.$message(this.$basTip.error(error))
-        return;
-      }
-      if(!this.domain || checkDomainIllegal(this.domain) || !this.topData.domain){
-        const error = '域名非法或为空'
-        this.$message(this.$basTip.error(error))
-        return ;
-      }
-      let fullDomain = `${this.domain}.${this.topData.domain}`
-      let exsitResp = await validExistDomain(fullDomain)
+      console.log(domaintext)
+      try{
+        const chainId = web3State.chainId;
+        const wallet = web3State.wallet;
+        const unitBas = this.unitPrice
 
-      if(exsitResp.exist && exsitResp.owner && !hasExpired(exsitResp.expire)){
-        this.$message(
-          this.$basTip.error(
-            `${this.domain}.${this.topData.domain} 域名已存在,请选用其他域名注册!`
-          ))
-        //this.$Alert(` ${this.domain}.${this.topData.domain} 域名已存在,请选用其他域名注册!`)
-        return;
-      }
+        const validArgs = {
+          hash,
+          unitBas,
+          roottext:roottext,
+          years,
+          chainId,
+          wallet
+        }
 
+        console.log("validParams",validArgs)
+        this.ctrl.loading = true
+        const commitData = await preValidSub4Cybersquatting(validArgs)
+        console.log("commitData",commitData)
 
-      let dappState = this.$store.getters['web3/dappState']
-      let year = this.years;
-      console.log('>>>CostSub>>')
-      calcSubCost(year,this.domain,this.topData.domain).then(ret =>{
-        console.log('>>>CostSub>>',ret)
-        if(ret.cost){
-          const commitData = {
-            costWei:ret.cost,
-            isSubdomain:true,
-            domain:this.domain,
-            topDomain:this.topData.domain,
-            year:year
+        this.ctrl.loading = false
+        this.$router.push({
+          name:"domain.cybersquattingres",
+          params:{
+            commitData:commitData
+          },
+          query:{
+            domaintext:domaintext
           }
-          console.log(commitData)
-          this.$router.push({
-            name:'domain.cybersquattingres',
-            params:{
-              commitData
-            }
-          })
+        })
+      }catch(ex){
+        this.ctrl.loading = false
+        let msg = ''
+        const domaintext = this.domaintext
+        switch (ex) {
+          case LACK_OF_ETH:
+          case LACK_OF_TOKEN:
+          case UNSUPPORT_NETWORK:
+            msg = this.$t(`code.${ex}`)
+            this.$message(this.$basTip.error(msg))
+            return
+          case DOMAIN_PRICE_RANGE:
+            msg = this.$t(`code.${ex}`,{begin:4,end:MaxPriceBas})
+            this.$message(this.$basTip.error(msg))
+            return
+          case DOMAIN_NOT_EXPIRED:
+          case PARAM_ILLEGAL:
+            console.log('lost args',ex)
+            return;
+          default:
+            break;
         }
 
-      }).catch(ex=>{
-        if(ex==9001){
-          this.$alert(` ${this.domain}.${this.topData.domain} 域名已存在,请选用其他域名注册!`)
-          return;
+        if(ex.code === USER_REJECTED_REQUEST){
+          let errMsg = that.$t(`code.${ex.code}`)
+          that.$message(that.$basTip.error(errMsg))
+        }else if(ex.message.includes(NetworkRequestFail)){
+          that.$message(that.$basTip.error(ex.message))
+        }else{
+          console.error("Unknow Error",ex)
         }
-      })
+      }
     }
   },
-  watch:{
-    domain:function (val) {
-      if(checkDomainIllegal(val)){
-        this.error = '域名非法'
+  mounted(){
+    const topPart = this.$route.query.topPart
+    const hash =  this.$route.query.hash
+    let subPart = this.$route.query.subPart
+    let topText = handleDomain(topPart);
+    this.topPart = topText
+    this.subPart = subPart
+    console.log(`${subPart}.${topText}`)
+    const web3State = this.$store.getters['dapp/web3State']
+    const ruleState = this.$store.getters['dapp/ruleState']
+
+    if( !hash || !web3State.chainId)return;
+
+    getDomainInfo(hash,web3State.chainId).then(resp=>{
+      console.log(resp)
+      if(resp.state){
+        this.asset = Object.assign(this.asset,resp.assetinfo)
+        const rootasset = resp.rootasset
+        this.rootasset = Object.assign(this.rootasset,rootasset)
+        if(rootasset.isCustomed && rootasset.openApplied){
+          this.unitPrice = parseFloat(wei2Bas(rootasset.customPrice))
+        }else{
+          this.unitPrice = ruleState.subBas
+        }
       }else{
-        this.error = ''
+        console.log("not found domain:",hash)
       }
-    }
+    }).catch(ex=>{
+      console.log(ex)
+    })
+  },
+
+  watch:{
+
   }
 }
 </script>

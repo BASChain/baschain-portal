@@ -88,11 +88,10 @@
 <script>
 import LoadingDot from '@/components/LoadingDot.vue'
 import {
-  approveToken4OannEmitter,
-  registSubEmitter
+  approveToken4OannEmitter
 } from '@/web3-lib/apis/oann-api.js'
 
-import {registRootEmitter} from '@/web3-lib/apis/cybersquatting-api'
+import {registRootEmitter,registSubEmitter} from '@/web3-lib/apis/cybersquatting-api'
 
 export default {
   name:"CybersquattingResult",
@@ -212,7 +211,41 @@ export default {
           }
         })
       }else{
+        const subData = Object.assign({},data,{wallet})
+        console.log(subData)
+        registSubEmitter(subData).on('transactionHash',(txhash)=>{
+          that.addTxHashItem(txhash,'loading')
+        }).on('receipt',(receipt)=>{
+          let status = receipt.status;
+          if(status){
+            that.registState = 'success'
 
+            that.updateTxHashItem(receipt.transactionHash,'success')
+            that.$store.dispatch('ewallet/syncEWalletAssets',web3State)
+            //that.$store.commit('updateLatestSubDomainsChanged',true)
+          }else{
+            that.registState = 'fail'
+            that.updateTxHashItem(receipt.transactionHash,'fail')
+          }
+          that.completed = true
+
+        }).on('error',(err,receipt)=>{
+          console.error('Confirm RPC Error',err)
+          that.registState = 'fail'
+          if(receipt){
+            that.updateTxHashItem(receipt.transactionHash,'fail')
+          }
+        }).catch(ex=>{
+          that.registState = 'fail'
+          if(ex.code === 4001){
+            let errMsg = that.$t(`code.${ex.code}`)
+            that.$message(that.$basTip.error(errMsg))
+          }else if(ex.code === -32601 && ex.message){
+            that.$message(that.$basTip.error(ex.message))
+          }else{
+            console.error(ex)
+          }
+        })
       }
     },
     gotoWallet(){
@@ -230,7 +263,27 @@ export default {
       })
     },
     gotoUpdateDNS(){
-
+      if(this.$store.getters['metaMaskDisabled']){
+        this.$metamask()
+        return
+      }
+      
+      const data = this.commitData
+      const domaintext = this.domaintext
+      this.$router.push({
+        path:`/domain/updaterefdata/${domaintext}`,
+        name:'domain.updaterefdata',
+        params:{
+          domaintext:domaintext,
+          hash:data.hash,
+          expire:data.expire,
+          owner:data.wallet,
+          isRoot:data.isRoot,
+          openApplied: data.isRoot ? data.openApplied : false,
+          isCustomed:data.isRoot ? data.isCustomed :false,
+          customedPrice:data.customedPrice
+        }
+      })
     },
     continueRegist(){
       this.$router.go(-2)

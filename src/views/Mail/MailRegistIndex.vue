@@ -566,7 +566,7 @@ export default {
             break;
         }
         if(ex.code === USER_REJECTED_REQUEST){
-          msg = this.$t(`code.${ex}`)
+          msg = this.$t(`code.${ex.code}`)
           this.$message(this.$basTip.error(msg))
           return;
         }else if(ex.message.includes(NetworkRequestFail)){
