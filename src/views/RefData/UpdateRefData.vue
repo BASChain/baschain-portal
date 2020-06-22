@@ -48,7 +48,7 @@
       class="row justify-content-center align-items-center">
       <div class="col-md-10 col-sm-12">
         <div class="pt-4 pb-2">
-          <h5>{{$t('l.SubDomainConfiguration')}}</h5>
+          <h5>{{$t('l.SubDomainConfiguration')}} {{ruleState.subBas}}</h5>
         </div>
       </div>
 
@@ -67,8 +67,8 @@
             :precision="2" :step="1.0"
             :disabled="!asset.openApplied || !asset.isCustomed"
             @change="customedPriceChanged"
-            :max="ruleState.maxPriceBas"
-            :min="ruleState.minSubBas" class="w-25">
+            :max="1000000000"
+            :min="4" class="w-25">
           </el-input-number>
           <el-checkbox v-model="asset.isCustomed"
             @change="customedCheckedChange"
@@ -596,6 +596,7 @@ import {
   dataShowDelimiter,
   str2ConfDatas,
   confDatas2Str,
+  MaxPriceBas
 } from '@/web3-lib/utils'
 import * as ApiError from '@/web3-lib/api-errors'
 import { getDomainDetail } from '@/web3-lib/apis/domain-api'
@@ -660,7 +661,10 @@ export default {
       return !f
     },
     ...Vuex.mapState({
-      externalWei:state=>state.dapp.externalGas
+      externalWei:state=>state.dapp.externalGas,
+    }),
+    ...Vuex.mapGetters({
+      ruleState:'dapp/ruleState'
     })
   },
   data() {
@@ -685,9 +689,8 @@ export default {
       vstate:{
         subUnitBas:4,
       },
-      ruleState:{
-        minSubBas:4,
-        maxPriceBas:10000000000,
+      rule:{
+        MaxPriceBas
       },
       origin:{
         isCustomed:true,
