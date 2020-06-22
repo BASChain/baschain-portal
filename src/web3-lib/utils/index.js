@@ -4,6 +4,7 @@ import punycode from "punycode";
 import * as ApiErrors from '../api-errors.js'
 
 export const MinGasWei = 100000;
+export const MaxPriceBas = 1000000000;
 
 export const dataStoreDelimiter = '7f';
 export const dataShowDelimiter = '|';
@@ -264,6 +265,27 @@ export function splitSubDomain(domaintext) {
   }
 }
 
+/**
+ *
+ * @param {*} wei string or Bn
+ * @param {*} web3
+ */
+export function wei2Bas(wei,web3){
+  if (!wei) return "0";
+  if(!web3 || !web3.utils) throw 'lost web3 instance'
+  return web3.utils.fromWei(wei,'ether')
+}
+/**
+ *
+ * @param {*} bas
+ * @param {*} web3
+ */
+export function bas2Wei(bas, web3) {
+  if(!bas)return "0"
+  if (!web3 || !web3.utils) throw "lost web3 instance";
+  return web3.utils.toWei(bas, "ether");
+}
+
 export default {
   MinGasWei,
   mailConcatChar,
@@ -280,5 +302,8 @@ export default {
   isOwner,
   assertExpired,
   canMaxRechargeYears,
-  splitSubDomain
+  splitSubDomain,
+  wei2Bas,
+  bas2Wei,
+  MaxPriceBas,
 };

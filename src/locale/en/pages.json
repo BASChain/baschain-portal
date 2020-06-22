@@ -98,7 +98,7 @@
   "WalletSaleOnInprogressTip": "Submitting...",
   "DomainDetailRegistSubTips": "Sub Domain Price:",
   "DomainRegistTopTitle": "Register",
-  "DomainRegistExternalBasTip": "Need extral BAS to change sub domain registry price",
+  "DomainRegistExternalBasTip": "Opening a custom price requires ",
   "DomainRegistTopClosedTip": "This root domain is not open for public sub domain registry",
   "DomainSearchNoResultTip": "No result",
   "DomainFilterTopPlaceholderTip": "Type keyword and hit enter to filter root domains",

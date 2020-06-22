@@ -162,5 +162,6 @@
   "BMailBCALabel":"邮箱客户端公钥",
   "RechargingTip":"充值中...",
   "ConfirmAbandon":"确认弃用",
-  "InternalRegistBMail":"注册邮箱"
+  "InternalRegistBMail":"注册邮箱",
+  "CybersquattingDomain":"抢注域名"
 }

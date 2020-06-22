@@ -1404,3 +1404,28 @@ div.inner-box>div {
   line-height:30px;
   letter-spacing:1px;
 }
+
+.bas-btn-goback {
+  min-width: 83px;
+  padding: .25rem .5rem;
+  background:rgba(235,237,237,1);
+  border-radius:12px;
+  border: 1px solid rgba(235,237,237,.1);
+}
+
+.bas-btn-goback span.text {
+  font-size:14px;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(139,139,158,1);
+  line-height:20px;
+}
+button.bas-btn-goback:hover {
+  background:rgba(0,202,155,.1);
+  border: 1px solid rgba(0,202,155,.1);
+  color:rgba(0,202,155,1);
+}
+
+button.bas-btn-goback span.text:hover {
+  color:rgba(0,202,155,1);
+}

@@ -2,7 +2,7 @@
   <v-layout>
     <page-container class="bas-gray-bg">
       <div class="bas-gray-bg domain-wrapper--min" slot="body">
-        <router-view :key="$route.fullpath" class="pt-5"/>
+        <router-view :key="$route.fullpath" class="pt-3"/>
       </div>
       <foot-container slot="footer"/>
     </page-container>

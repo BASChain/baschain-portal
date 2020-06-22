@@ -19,6 +19,8 @@ export const DOMAIN_NOT_EXIST = 200004;
 
 export const DOMAIN_TOP_EXPIRED = 200005;
 export const DOMAIN_EXPIRED = 200006;
+export const DOMAIN_NOT_EXPIRED = 200007;
+export const DOMAIN_PRICE_RANGE = 200008;
 
 
 // 3xxxxx Markets
@@ -97,6 +99,8 @@ export default {
   DOMAIN_NOT_EXIST,
   DOMAIN_TOP_EXPIRED,
   DOMAIN_EXPIRED,
+  DOMAIN_NOT_EXPIRED,
+  DOMAIN_PRICE_RANGE,
 
 
   //4xxxxx Mail

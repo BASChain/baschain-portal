@@ -162,5 +162,6 @@
   "BMailBCALabel":"BMail Client Public Key",
   "RechargingTip":"Recharging...",
   "ConfirmAbandon":"Confirm",
-  "InternalRegistBMail": "Apply BMail"
+  "InternalRegistBMail": "Apply BMail",
+  "CybersquattingDomain":"Cybersquatting Domain"
 }

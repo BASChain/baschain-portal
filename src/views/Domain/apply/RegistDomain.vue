@@ -163,7 +163,6 @@ export default {
       return this.openApplied && this.isCustomed
     },
     domainType(){
-
       return this.domain === '' ? '': this.$t(`g.${getDomainType(this.domain)}`)
     },
     showTopAssetInfo(){
@@ -294,29 +293,6 @@ export default {
           console.log(e)
         })
       }
-
-
-      //const proxy = new DomainProxy()
-      // proxy.getDomainInfo(handleDomain(text)).then(resp=>{
-      //   if(resp.state){
-      //     let asset = resp.assetinfo
-      //     const ret = {
-      //       name:asset.name,
-      //       expire:asset.expire,
-      //       owner:asset.owner,
-      //       openApplied:asset.ropentopublic,
-      //       isCustomed:asset.riscustomed,
-      //       customPrice:asset.rcustomeprice
-      //     }
-      //     that.topasset = Object.assign({},ret)
-      //   }else{
-      //     that.resetTopAsset()
-      //   }
-      //   that.setUnitPrice()
-      // }).catch(ex=>{
-      //   that.resetTopAsset()
-      //   that.setUnitPrice()
-      // })
 
     },
     resetTopAsset(){

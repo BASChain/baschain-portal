@@ -620,8 +620,6 @@ export default {
     },
     showCybersquttingBtn(){
       if(!this.asset.name)return false;
-      //return true;
-      console.log('>>>',this.asset.name)
       if(isSub(this.asset.name)){
         if(!hasExpired(this.asset.expire)){
           return false
@@ -710,6 +708,7 @@ export default {
       topAsset:{
         name:'',
         owner:'',
+        hash:'',
         expire:'',
         isRoot:false,
         domainhash:'',
@@ -719,11 +718,11 @@ export default {
       },
       ruleState:{
         decimals:18,
-        rareGas:500,
-        topGas:20,
-        subGas:4,
-        externalBAS:100,
-        maxYearReg:5,
+        rareBas:2000,
+        rootBas:200,
+        subBas:4,
+        externalBas:100,
+        maxRegYears:5,
         aliasLen: 256,
         extensionLen:512
       },
@@ -798,7 +797,7 @@ export default {
     },
     searchSub(){
       const web3State = this.$store.getters["web3State"];
-      const ruleState = this.$store.getters["web3/ruleState"]
+      const ruleState = this.$store.getters["dapp/ruleState"]
       const subBas = ruleState.subBas || 4.00;
 
       const rootSuggests = this.topAssets
@@ -894,17 +893,13 @@ export default {
       }
     },
     gotoCybersquetting(){
-      console.log('gotoCybersquetting>>>>>')
-      try{
-        checkFetchDappState()
-      }catch(ex){
-        if(ex===1001){
-          this.$metamask()
-        }else if(ex === 3001){
-          this.$message(this.$basTip.error('当前网络不支持'))
-        }
-        return;
+      if(this.$store.getters['metaMaskDisabled']){
+        this.$metamask()
+        return
       }
+      const hash = this.asset.hash
+      console.log('gotoCybersquetting>>>>>',hash)
+
       let text = ''
 
       if(this.ctrl.tabActived === 'sub'){
@@ -926,8 +921,9 @@ export default {
         const domain = handleDomain(text)
         this.$router.push({
           name:"domain.topcybersquatting",
-          params:{
-            domain
+          query:{
+            domaintext:domain,
+            hash:hash
           }
         })
       }
