@@ -29,7 +29,7 @@ export const ContractAddresses = {
   },
   BasAccountant: {
     1: "",
-    3: "0xDFBaE728bE4e722Ca321ba02f96AD12718A5b9e1"
+    3: "0x271c2741DAB31A05dF9E5730C910A07FC30eFd8A"
   },
   BasMiner: {
     1: "",
@@ -37,11 +37,11 @@ export const ContractAddresses = {
   },
   BasOANN: {
     1: "",
-    3: "0x5d6cc197A2Ef8D037E5FC6876ee8Ea10F9fB074c"
+    3: "0xFd735A5Dc66200E508C0e3444317465e896Fb4FC"
   },
   BasMarket: {
     1: "",
-    3: "0x26a7D86C92bB60b9AA941F2E40BAF19F9854a90D"
+    3: "0x183f7267136c09EDD25ECC522d22157aFE0Bc46D"
   },
   BasMail: {
     1: "",
@@ -49,12 +49,12 @@ export const ContractAddresses = {
   },
   BasMailManager: {
     1: "",
-    3: "0xcc1Ef9e60E5f4037BdD1E10fcB9b93Ee8064bb89"
+    3: "0xc3892fe74b7466869E87e077A41E651Ec8175d3E"
   },
   BasView: {
     1: "",
     3: "0x331c08bBd8493d190906aFFcF134691846A4957F"
-  },
+  }
 };
 
 export default { ContractAddresses };
