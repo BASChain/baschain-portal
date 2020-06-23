@@ -144,13 +144,13 @@
     </div>
   </el-dialog>
   <el-dialog  width="320px"
-    :close-on-click-modal="false"
+    :close-on-click-modal="true"
     :show-close="true"
     :visible.sync="faildialog.visible"
     top="35vh" class="bas-dialog-nobody">
     <div slot="title" class="bas-wrapper--valid">
       <div>
-        <circle-icon-state className="bascc-icon--fail"/>
+        <circle-icon-state className="bascc-icon--sad"/>
       </div>
       <div v-if="faildialog.text">
         <div class="text-danger">
@@ -232,6 +232,7 @@ export default {
         visible:false,
         loading:false,
         closeable:true,
+        error:"",
         timeover:false
       },
       sucdialog:{
@@ -243,7 +244,7 @@ export default {
         text:''
       },
       ctrl:{
-        timeout:10,
+        timeout:30,
         autoclose:10
       },
       refresh:{
@@ -328,19 +329,21 @@ export default {
           const text = that.$t('p.WithdrawSuccessTip')
           that.showSucDialog(text,6)
         }).on('error',(err,receipt)=>{
+          that.withDrawCloseHandle()
           if(err.code === 4001){
             let errMsg = this.$t(`code.${err.code}`)
-            this.$message(this.$basTip.error(errMsg))
+            that.showFailDialog(errMsg,6)
+            //this.$message(this.$basTip.error(errMsg))
             return
           }else if(ex.message.includes(NetworkRequestFail)){
             msg = this.$t(`code.-32603`)
-            this.$message(this.$basTip.error(msg))
+            //that.$message(this.$basTip.error(msg))
+            that.showFailDialog(msg,6)
             return;
           }else{
             console.log('unknow-error',err)
-            that.withDrawCloseHandle()
             const text = that.$t('p.WithdrawFailTip')
-            that.showFailDialog(text,10)
+            that.showFailDialog(text,6)
           }
         })
       }catch(ex){
