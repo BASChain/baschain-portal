@@ -55,5 +55,5 @@
   "PaymentOngoing":"payment ongoing",
   "MetaMaskNoPopTips":"If the page is loading for a long time, please check whether MateMask is authorized",
   "ValidateOnBlockChain":"Verifying BMail ",
-  "RequestTimeoutOverTip": "It has been more than (ts) seconds, please check the MetaMask network or continue to wait."
+  "RequestTimeoutOverTip": "It has exceeded (ts) seconds, please check the MetaMask network or refresh and try again."
 }

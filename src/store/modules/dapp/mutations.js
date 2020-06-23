@@ -63,5 +63,11 @@ export default {
       }
       state.domainYearItems = items
     }
+  },
+  [types.UPDATE_WITHDRAWABLE_WEI](state,withdrawableWei){
+    state.withdrawable = withdrawableWei;
+  },
+  [types.UPDATE_WITHDRAWN_WEI](state,withdrawnWei){
+    state.withdrawn = withdrawnWei;
   }
 };

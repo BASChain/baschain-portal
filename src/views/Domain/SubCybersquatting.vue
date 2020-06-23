@@ -103,7 +103,8 @@ export default {
   name:"SubCybersquatting",
   computed:{
     getTotal(){
-      return this.years * this.unitPrice;
+      const total = this.years * parseFloat(this.unitPrice);
+      return typeof total === 'number'? total.toFixed(2) : total
     },
     topExpireDate(){
       if(!this.rootasset.expire)return ''

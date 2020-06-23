@@ -130,8 +130,18 @@ export function basMarketInstance(web3js, chainId, options = {}) {
  */
 export function sendFreeBasInstance(web3js, chainId, options = {}) {
   let ctx = ContractManager.SendFreeBas(chainId)
-  console.log(ctx)
   return new web3js.eth.Contract(ctx.abi, ctx.address, options)
+}
+
+/**
+ *
+ * @param {*} web3js
+ * @param {*} chainId
+ * @param {*} options
+ */
+export function basAccountInstance(web3js,chainId,options={}){
+  let ctx = ContractManager.BasAccountant(chainId);
+  return new web3js.eth.Contract(ctx.abi, ctx.address, options);
 }
 
 export default {
@@ -147,4 +157,5 @@ export default {
   basExpireOwnershipInstance,
   basMarketInstance,
   sendFreeBasInstance,
+  basAccountInstance,
 };

@@ -19,6 +19,7 @@ const DEF_DATA_TYPE_DICTS = [
 ]
 
 import { publicMailDomains } from '@/web3-lib/apis/view-api'
+import { getWithdrawable } from '@/web3-lib/apis/account-api'
 
 /**
  * reload open mail on BlockChain
@@ -113,10 +114,20 @@ export async function loadDappBalances({commit,state}){
   const chainId = state.chainId
   const wallet = state.wallet
   console.log('load Balance on ',chainId)
-  if(chainId && wallet){
-    const resp = await getBalances(chainId,wallet);
+  if (checkSupport(chainId) && wallet) {
+    const resp = await getBalances(chainId, wallet);
     console.log("load balances dispatch", resp);
     commit(types.SET_BALANCES, resp);
+
+    try{
+      const drawRet = await getWithdrawable(chainId,wallet)
+      if( drawRet !== undefined){
+        //console.log(drawRet);
+        commit(types.UPDATE_WITHDRAWABLE_WEI, drawRet.withdrawWei);
+      }
+    }catch(ex){
+      console.log(ex)
+    }
   }
 }
 

@@ -43,6 +43,7 @@ import { router } from './plugins/vue-router';
 //build need recomment
 global.punycode = require('punycode')
 
+
 // import dayjs from "dayjs";
 // global.dayjs= dayjs
 
@@ -67,7 +68,6 @@ global.basvue = new Vue({
   render: h => h(App),
   mounted() {
     document.dispatchEvent(new Event('render-event'))
-
   },
 });
 

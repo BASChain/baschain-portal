@@ -14,6 +14,8 @@ export const UPDATE_CHAINID = "updateChainId"
 export const LOAD_ROOT_ASSETS = "loadRootAssets"
 export const LOAD_PUBLIC_MAIL_ASSETS = "loadPublicMailAssets"
 export const LOAD_DOMAIN_YEAR_ITEMS = "loadDomainYearItems"
+export const UPDATE_WITHDRAWABLE_WEI = "updateWithdrawable";
+export const UPDATE_WITHDRAWN_WEI ="updateWithdrawnWei"
 
 export const LAST_CHAINID_KEY = "lastChainId"
 
@@ -36,4 +38,6 @@ export default {
   LAST_CHAINID_KEY,
   LOAD_PUBLIC_MAIL_ASSETS,
   LOAD_DOMAIN_YEAR_ITEMS,
+  UPDATE_WITHDRAWABLE_WEI,
+  UPDATE_WITHDRAWN_WEI,
 };

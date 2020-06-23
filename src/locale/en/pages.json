@@ -240,5 +240,9 @@
   "RechargeTimeEnoughTip": "The current effective date to {expirationText}, the maximum recharge period is {max}, can not be recharged",
   "MailDialogOpenMailServicePrefixText": "Open ",
   "MailDialogOpenMailServiceSuffixText": " BMail service",
-  "ValidMailAccountNameWarn": "BMail accounts are not allowed to contain spaces and special characters other than [_-.]"
+  "ValidMailAccountNameWarn": "BMail accounts are not allowed to contain spaces and special characters other than [_-.]",
+  "WithdrawInTransactionTip": "Extracting...",
+  "WithdrawSuccessTip": "Extracted successfully.",
+  "WithdrawFailTip": "Extract failed, please try again.",
+  "CannotWithDrawErrorTip":"The current withdrawal amount is 0"
 }

@@ -11,25 +11,13 @@
           <span class="bas-small">{{ wallet }}</span>
         </div>
       </div>
-
       <div>
-        <!-- <span class="small">
-          {{$t('l.sumIncomeBas')}}
-        </span>
+
         <span>
-          {{drawBas}}
-        </span>
-        <span class="small mr-2">BAS</span>
-        <span class="mr-2">
-          <a @click="recoverBas" class="bas-text-green">
-            {{$t('l.recoverBasBtn')}}
-          </a>
-        </span> -->
-        <!-- <span>
-          <a class="bas-text-green" @click="refreshWalletBase">
+          <a class="bas-text-green" @click="refreshWalletBalances">
             <i class="fa fa-refresh" style="font-size:14px;font-weight:100;"></i>
           </a>
-        </span> -->
+        </span>
       </div>
     </el-col>
   </el-row>
@@ -45,12 +33,9 @@
               {{$t('l.canRecover')}}
             </p>
             <div>
-              <a @click="gotoBreakdownDetail" class="bas-link">
-                {{$t('l.recoverDetailItems')}}
-              </a>
-              <!-- <a class="bas-link">
-                {{$t('l.recoverDetailItems')}}
-              </a> -->
+              <button class="bas-btn-link" @click="withdrawHandle">
+                {{$t('l.recoverBasBtn')}}
+              </button>
             </div>
           </div>
         </div>
@@ -107,8 +92,73 @@
       </el-col>
     </el-row>
   </div>
+  <!-- withdraw dialog -->
+  <el-dialog  width="380px"
+    :close-on-click-modal="false"
+    :show-close="withdraw.closeable"
+    :before-close="withDrawCloseHandle"
+    :visible.sync="withdraw.visible"
+    top="35vh" class="bas-dialog-nobody">
+    <div slot="title" class="bas-wrapper--valid">
+      <div v-if="withdraw.loading">
+        <circle-icon-state className="bascc-icon--loading"/>
+      </div>
+      <div>
+        <span class="bas-tip-text">
+          {{$t('p.WithdrawValuePretext')}}
+        </span>
+        <span class="bas-text-green bas-currency">
+          {{ drawBalance }}
+        </span>
+      </div>
+      <div v-if="withdraw.timeover">
+        <div class="small text-danger">
+          {{$t('g.RequestTimeoutOverTip',{ts:ctrl.timeout})}}
+        </div>
+      </div>
+      <div v-if="!withdraw.loading">
+        <el-button size="mini" class="w-25"
+          @click="confirmSubmmitWithdraw">
+          {{$t('g.Confirm')}}
+        </el-button>
+      </div>
 
+    </div>
 
+  </el-dialog>
+  <!--  -->
+  <el-dialog  width="320px"
+    :close-on-click-modal="false"
+    :show-close="true"
+    :visible.sync="sucdialog.visible"
+    top="35vh" class="bas-dialog-nobody">
+    <div slot="title" class="bas-wrapper--valid">
+      <div>
+        <circle-icon-state className="bascc-icon--cong"/>
+      </div>
+      <div v-if="sucdialog.text">
+        <div class="bas-text-green">
+          {{ sucdialog.text }}
+        </div>
+      </div>
+    </div>
+  </el-dialog>
+  <el-dialog  width="320px"
+    :close-on-click-modal="false"
+    :show-close="true"
+    :visible.sync="faildialog.visible"
+    top="35vh" class="bas-dialog-nobody">
+    <div slot="title" class="bas-wrapper--valid">
+      <div>
+        <circle-icon-state className="bascc-icon--fail"/>
+      </div>
+      <div v-if="faildialog.text">
+        <div class="text-danger">
+          {{ faildialog.text }}
+        </div>
+      </div>
+    </div>
+  </el-dialog>
   <!-- Table -->
   <div class="pt-2">
     <mine-domain-tabs />
@@ -142,23 +192,31 @@
 import MineDomainList from './MineDomainList.vue'
 import MineDomainTabs from './MineDomainTabs.vue'
 import WalletQrCode from '@/components/WalletQrCode.vue'
-import { recoverBAS } from '@/bizlib/web3/miner-api'
+import CircleLoading from '@/components/CircleLoading.vue'
+import CircleIconState from '@/components/CircleIconState.vue'
+
+import {
+  PARAM_ILLEGAL,USER_REJECTED_REQUEST,UNSUPPORT_NETWORK,
+  NetworkRequestFail
+}from '@/web3-lib/api-errors'
 import {checkSupport} from '@/web3-lib/networks'
 
 import {wei2BasFormat,hexBN2Ether} from '@/utils'
+import {commitWithdrawTo } from '@/web3-lib/apis/account-api'
 export default {
   name:"WalletIndex",
   components:{
     MineDomainList,
     MineDomainTabs,
     WalletQrCode,
+    CircleLoading,
+    CircleIconState,
   },
   computed:{
     ...Vuex.mapState({
       wallet:state=>state.dapp.wallet,
       drawBalance:state =>{
-        //console.log(state)
-        return hexBN2Ether(state.dapp.withdraw,'0[.]0000')
+        return hexBN2Ether(state.dapp.withdrawable,'0[.]0000')
       },
       ethBalance:state =>{
         return hexBN2Ether(state.dapp.ethwei,'0[.]0000')
@@ -166,46 +224,130 @@ export default {
       basBalance:state => {
         return hexBN2Ether(state.dapp.baswei,'0[.]00')
       }
-    })
+    }),
   },
-  mounted(){
-    //load balance
-    //this.loadEWalletAssets()
-    setTimeout(() => {
-      this.$store.dispatch('dapp/loadDappBalances')
-    }, 2000);
-
-  },
-  beforeUpdate() {
-
+  data() {
+    return {
+      withdraw:{
+        visible:false,
+        loading:false,
+        closeable:true,
+        timeover:false
+      },
+      sucdialog:{
+        visible:false,
+        text:''
+      },
+      faildialog:{
+        visible:false,
+        text:''
+      },
+      ctrl:{
+        timeout:10,
+        autoclose:10
+      },
+      refresh:{
+        loading:false
+      }
+    }
   },
   methods:{
     refreshWalletBalances(){
       //load eth,bas,withdraw
       this.$store.dispatch('dapp/loadDappBalances')
-
     },
-    recoverBas(){
-      let wei = this.$store.state.web3.drawWei
-      if(wei==0 || wei ==='0'){
-        this.$message(this.$basTip.error(this.$t('p.WalletRecoverZeroTip')))
+    withdrawHandle(){
+      let msg = ''
+      const drawBas = this.drawBalance;
+      const wei = this.$store.state.dapp.withdrawable
+      if(!drawBas || parseFloat(drawBas) <= 0.0 ||!wei){
+        msg = this.$t('p.CannotWithDrawErrorTip')
+        this.$message(this.$basTip.error(msg))
+        return;
+      }
+      if(this.$store.getters['metaMaskDisabled']){
+        this.$metamask()
         return
       }
-
-      const dappState = this.$store.getters['web3/dappState']
-      //
-      recoverBAS(dappState.chainId,dappState.wallet).then(resp=>{
-        let msg = this.$t('p.recoverSuccess') + this.drawBas
-        //this.refreshWalletBase()
-        this.$message(this.$basTip.warn(msg))
-      }).catch(ex=>{
-        console.log('recover>>'+ex)
-        if(ex==4001){
-          this.$message(this.$basTip.error(ex.message))
-        }else if(ex== -32601){
-          this.$message(this.$basTip.error(ex.message))
-        }
+      this.withdraw = Object.assign({
+        visible:false,
+        loading:false,
+        closeable:true,
+        state:'loading',
+        timeover:false
+      },{visible:true})
+    },
+    withDrawCloseHandle(){
+      this.withdraw = Object.assign({
+        visible:false,
+        loading:false,
+        closeable:true,
+        state:'',
+        timeover:false
       })
+    },
+    showSucDialog(text,autoclose){
+      this.sucdialog = Object.assign({visible:true,text:text})
+      if(autoclose && autoclose > 0){
+        setTimeout(async () => {
+          this.sucdialog.visible = false
+        }, parseFloat(autoclose)*1000);
+      }
+    },
+    showFailDialog(text,autoclose){
+      this.faildialog = Object.assign({visible:true,text:text})
+      if(autoclose && autoclose > 0){
+        setTimeout(async () => {
+          this.faildialog.visible = false
+        }, parseFloat(autoclose)*1000);
+      }
+    },
+    confirmSubmmitWithdraw(){
+      if(this.$store.getters['metaMaskDisabled']){
+        this.$metamask()
+        return
+      }
+      const wei = this.$store.state.dapp.withdrawable
+      const web3State = this.$store.getters['web3State']
+      const chainId = web3State.chainId
+      const wallet = web3State.wallet
+      const that = this
+      try{
+        const emmitter = commitWithdrawTo(wei,chainId,wallet)
+        that.withdraw.loading = true
+        emmitter.on('transactionHash',txhash =>{
+          //TODO
+          setTimeout(async () => {
+            that.withdraw.timeover = true
+          }, that.ctrl.timeout*1000);
+        }).on('receipt',(receipt)=>{
+          that.withDrawCloseHandle()
+          //refresh balance
+          that.refreshWalletBalances()
+          //show success
+          const text = that.$t('p.WithdrawSuccessTip')
+          that.showSucDialog(text,6)
+        }).on('error',(err,receipt)=>{
+          if(err.code === 4001){
+            let errMsg = this.$t(`code.${err.code}`)
+            this.$message(this.$basTip.error(errMsg))
+            return
+          }else if(ex.message.includes(NetworkRequestFail)){
+            msg = this.$t(`code.-32603`)
+            this.$message(this.$basTip.error(msg))
+            return;
+          }else{
+            console.log('unknow-error',err)
+            that.withDrawCloseHandle()
+            const text = that.$t('p.WithdrawFailTip')
+            that.showFailDialog(text,10)
+          }
+        })
+      }catch(ex){
+        that.withDrawCloseHandle()
+        console.log("catch ex",ex)
+        this.$message(this.$basTip.error(ex))
+      }
     },
     gotoBreakdownDetail(){
       if(this.$store.getters['metaMaskDisabled']){
@@ -228,8 +370,15 @@ export default {
         console.log('MataMask unlogin or chainId unsupport.',web3State)
       }
     }
-  }
+  },
+  mounted(){
+    //load balance
+    //this.loadEWalletAssets()
+    setTimeout(() => {
+      this.$store.dispatch('dapp/loadDappBalances')
+    }, 500);
 
+  }
 }
 </script>
 <style>

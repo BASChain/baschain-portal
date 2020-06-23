@@ -58,6 +58,6 @@
   "PaymentOngoing":"支付中",
   "MetaMaskNoPopTips":"如页面长时间处于加载中，请检查MateMask是否授权",
   "ValidateOnBlockChain":"正在校验",
-  "RequestTimeoutOverTip":"已超过{ts}秒,请检查MetaMask网络或继续等待.",
+  "RequestTimeoutOverTip":"已超过{ts}秒,请检查MetaMask网络或刷新重试.",
   "RefreshPageNotCommitAgain":"刷新本页面不会重新提交数据,请返回上一步重新提交"
 }
