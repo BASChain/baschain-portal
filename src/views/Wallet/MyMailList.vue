@@ -553,9 +553,9 @@ export default {
 
       if(hash && domaintext){
         this.$router.push({
-          path:`/mail/detail/${hash}/${domaintext}`,
-          name:'mail.detail',
-          params:{
+          path:'/mail/detail_conf',
+          name:'mail.detailconf',
+          query:{
             hash:hash,
             domaintext
           }

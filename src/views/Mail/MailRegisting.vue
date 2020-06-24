@@ -258,10 +258,11 @@ export default {
     gotoMailConfiguration(){
       const domaintext = this.$route.params.domaintext
       const hash = this.commitData.mailhash
+      //console.log(this.$route.params)
       this.$router.push({
-        path:`/mail/detail/${hash}/${domaintext}`,
-        name:'mail.detail',
-        params:{
+        path:'/mail/detail_conf',
+        // name:'mail.detail',
+        query:{
           domaintext:domaintext,
           hash:hash
         }

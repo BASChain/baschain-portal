@@ -339,8 +339,8 @@ export default {
     }
   },
   async mounted() {
-    const hash = this.$route.params.hash
-    const domaintext = this.$route.params.domaintext
+    const hash = this.$route.query.hash
+    const domaintext = this.$route.query.domaintext
     this.mailInfo.hash = hash
     this.mailInfo.domaintext = domaintext
 

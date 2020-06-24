@@ -201,6 +201,14 @@ export default [
         }
       },
       {
+        path: "detail_conf",
+        name: "mail.detailconf",
+        component: () => import("@/views/Mail/MailDetail.vue"),
+        meta: {
+          guest: true
+        }
+      },
+      {
         path: "mailsvr/:domaintext",
         name: "mail.mailsvr",
         component: () => import("@/views/Mail/MailDomainDetail.vue"),
