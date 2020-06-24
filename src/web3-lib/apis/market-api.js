@@ -59,15 +59,13 @@ export async function validAdd2Market(domainhash,salebas,chainId,wallet){
  * @param {*} chainId
  * @param {*} wallet
  */
-export async function addHashToMarket(domainhash,unitwei,chainId,wallet){
+export function addHashToMarket(domainhash,unitwei,chainId,wallet){
   if (!domainhash || !unitwei || !wallet) throw apiErrors.PARAM_ILLEGAL
-
   if (!checkSupport(chainId)) throw apiErrors.UNSUPPORT_NETWORK
   const web3js = winWeb3()
-
   const market = basMarketInstance(web3js, chainId, { from : wallet })
-  console.log(domainhash, unitwei)
-  return await market.methods.AddToSells(domainhash, unitwei).send({ from: wallet })
+
+  return market.methods.AddToSells(domainhash, unitwei).send({ from: wallet })
 }
 
 /**

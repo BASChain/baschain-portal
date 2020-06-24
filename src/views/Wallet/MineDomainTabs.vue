@@ -7,9 +7,6 @@
         </h5>
 
         <div>
-          <!-- <el-button class="bas-btn-primary" size="medium" >
-          转入
-          </el-button> -->
           <el-popover v-if="currentWallet !==''"
             width="150"
             placement="top-start"
@@ -32,10 +29,13 @@
       <el-tabs
         @tab-click="handChangeTab"
         v-model="tabs.activeName">
-        <el-tab-pane :label="subdomainLabel" name="subasset">
+        <el-tab-pane :label="$t('l.allDomainLabel')" name="allasset">
+          <all-domain-list />
+        </el-tab-pane>
+        <el-tab-pane :label="$t('l.subdomainLabel')" name="subasset">
           <sub-asset-list />
         </el-tab-pane>
-        <el-tab-pane :label="topTableLabel" name="topasset">
+        <el-tab-pane :label="$t('l.topdomainLabel')" name="topasset">
           <root-asset-list />
         </el-tab-pane>
       </el-tabs>
@@ -57,6 +57,7 @@
 import WalletQrCode from '@/components/WalletQrCode.vue'
 import SubAssetList from './domaintables/SubAssetList.vue'
 import RootAssetList from './domaintables/RootAssetList.vue'
+import AllDomainList from './domaintables/AllDomainList.vue'
 import {checkSupport} from '@/web3-lib/networks'
 
 
@@ -66,14 +67,9 @@ export default {
     WalletQrCode,
     SubAssetList,
     RootAssetList,
+    AllDomainList,
   },
   computed: {
-    topTableLabel(){
-      return this.$t('l.topdomainLabel')
-    },
-    subdomainLabel(){
-      return this.$t('l.subdomainLabel')
-    },
     ...Vuex.mapState({
       currentWallet:state =>state.dapp.wallet
     })
@@ -81,7 +77,7 @@ export default {
   data() {
     return {
       tabs:{
-        activeName:'subasset',//subasset,topasset
+        activeName:'allasset',//allasset,subasset,topasset,
       },
       ruleState:{
         subGas:4,

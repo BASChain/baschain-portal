@@ -1502,3 +1502,8 @@ button.bas-btn-goback[disabled]:hover,button.bas-btn-goback[disabled]>span.text:
   animation: dot-down .9s .6s linear infinite;
   -webkit-animation: dot-down .9s .6s linear infinite;
 }
+
+.bas-eldialog-nobody>div.el-dialog__body {
+  padding: 0px 20px;
+}
+

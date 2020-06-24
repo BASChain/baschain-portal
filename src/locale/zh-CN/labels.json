@@ -20,6 +20,7 @@
   "recoverDetailItems":"查看明细",
   "tranInBasOrEth":"转入BAS 或 ETH",
   "domainAsset":"域名资产",
+  "allDomainLabel":"全部",
   "topdomainLabel":"顶级域名",
   "subdomainLabel":"子域名",
   "RootDomain":"根域名",

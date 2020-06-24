@@ -83,7 +83,7 @@
       :close-on-click-modal="false"
       :show-close="!mailDialog.loading"
       :before-close="cancelMailDialog"
-      :title="$t()"
+      :title="''"
       :visible.sync="mailDialog.visible">
 
       <div class="contianer mail-dialog--body">
