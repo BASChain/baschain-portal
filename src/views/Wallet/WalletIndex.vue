@@ -318,10 +318,11 @@ export default {
         that.withdraw.loading = true
         emmitter.on('transactionHash',txhash =>{
           //TODO
-          setTimeout(async () => {
+          setTimeout( () => {
             that.withdraw.timeover = true
           }, that.ctrl.timeout*1000);
         }).on('receipt',(receipt)=>{
+          console.log(receipt)
           that.withDrawCloseHandle()
           //refresh balance
           that.refreshWalletBalances()
