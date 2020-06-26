@@ -1,7 +1,7 @@
 import { winWeb3 } from "../index";
 
 
-import * as ApiErrors from '../api-errors.js'
+import apiErrors, * as ApiErrors from '../api-errors.js'
 
 import ContractJsons from '../abi-manager'
 import {
@@ -204,7 +204,7 @@ export async function closeCustomPriceByRoot(hash,chainId,wallet) {
 }
 
 /**
- *
+ * 充值校验
  * @param {*} domainhash
  * @param {*} year
  * @param {*} chainId
@@ -251,11 +251,11 @@ export async function validRecharge4Domain(domainhash,year,chainId,wallet) {
   }else{
     if (notNullHash(roothash)){
       const rootRet = await view.methods.queryDomainInfo(roothash).call()
-
-      if (rootRet.rIsCustom){
-        if (!rootRet.rCusPrice) throw 'data error root domain:' + roothash
-        unitwei = rootRet.rCusPrice
-      }
+      if (!rootRet.rIsOpen)throw apiErrors.ROOT_REGIST_CLOSE;
+        if (rootRet.rIsCustom) {
+          if (!rootRet.rCusPrice) throw "data error root domain:" + roothash;
+          unitwei = rootRet.rCusPrice;
+        }
     }
   }
 

@@ -182,45 +182,44 @@ export async function getDomainDetail(name,chainId){
   return resp
 }
 
+/**
+ *
+ * @param {*} chainId
+ */
 export async function getRootDomains(chainId){
   const web3js = getInfuraWeb3(chainId);
   const rootInst = basRootDomainInstance(web3js,chainId)
+  const view = basViewInstance(web3js,chainId);
 
   let namesPromise = await (async() =>{
-    let openList = await rootInst.getPastEvents('RootPublicChanged',{
-      fromBlock: 0, toBlock: "latest"
-    })
-    //console.log(openList)
+    let openList = await rootInst.getPastEvents("NewRootDomain", {
+      fromBlock: 0,
+      toBlock: "latest"
+    });
 
-    return openList.map( d =>{
-      return rootInst.getPastEvents("NewRootDomain",{
-        fromBlock: 0, toBlock: "latest",
-        filter: { nameHash: d.returnValues.nameHash }
-      })
+    return openList.map( x  => {
+      return view.methods.queryDomainInfo(x.returnValues.nameHash).call();
     })
   })();
   let namesResult = await Promise.all(namesPromise)
+  //console.log(namesResult);
 
-  let ko = {}
-  let showNames = namesResult.reduce((cur, next) => {
-
-    ko[next[0].returnValues.nameHash] ? "" : ko[next[0].returnValues.nameHash] = true && cur.push(next)
-    //cur.push(next)
-    return cur
-    }, []).map((x) => {
-
-    return  {
-      domaintext: parseHexDomain(x[0].returnValues.rootName),
-      name: Web3.utils.hexToString(x[0].returnValues.rootName),
-      openApplied: Boolean(x[0].returnValues.openToPublic),
-      isCustomed: Boolean(x[0].returnValues.isCustom),
-      hash: x[0].returnValues.nameHash,
-      customPrice: x[0].returnValues.customPrice
-    }
-    //return [parseHexDomain(x[0].returnValues.rootName), x[0].returnValues.openToPublic]
+  let rootDomains = namesResult.map(d =>{
+    const nametext = web3js.utils.hexToString(d.name);
+    return {
+      hash:web3js.utils.keccak256(nametext),
+      name: nametext,
+      domaintext: parseHexDomain(d.name),
+      isRare: Boolean(d.rIsRare),
+      openApplied: Boolean(d.rIsOpen),
+      isCustomed: Boolean(d.rIsCustom),
+      customPrice:d.rCusPrice,
+      owner: d.owner,
+      expire: d.expiration
+    };
   })
-  //console.log("rootDomains>>>>>>>",showNames)
-  return showNames.filter(r => r.openApplied && isRare(r.domaintext))
+  //console.log("rootDomains", rootDomains);
+  return rootDomains.filter(d => d.openApplied && d.isRare);
 }
 
 export async function getDomainBCADatas(domaintext,chainId) {

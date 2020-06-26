@@ -14,6 +14,7 @@
   "-32603": "Network timeout, please check MetaMask network",
   "80001": "The asset is not under the current account",
   "200001": "The root domain name {text} is not open for registration",
+  "200001-Recharge": "The root domain name {text} is not open,can't recharge.",
   "200002": "Domain {domaintext} already exists",
   "200003": "The domain name {text} format is incorrect",
   "200004": "The domain name {domaintext} does not exist, please check if the network is correct",

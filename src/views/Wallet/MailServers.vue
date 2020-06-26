@@ -14,6 +14,7 @@
       <el-table-column
         prop="expire"
         sortable
+        sort-orders="descending"
         :label="$t('l.ExpiredDate')"
         :formatter="expireFormat"
         width="180">

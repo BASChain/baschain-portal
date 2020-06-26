@@ -342,6 +342,8 @@ import {
   MAILSERVICE_HAS_ACTIVED,
   NetworkRequestFail,
   NO_UPDATE_PERMISSIONS,
+  RECHARGE_YEAR_RANGE,
+  ROOT_REGIST_CLOSE,
 } from '@/web3-lib/api-errors.js'
 import { getDomainBCADatas } from '@/web3-lib/apis/domain-api'
 import { getDomainInfo } from '@/web3-lib/apis/view-api'
@@ -610,11 +612,16 @@ export default {
           case UNSUPPORT_NETWORK:
           case LACK_OF_TOKEN:
             msg = this.$t(`code.${ex}`)
-            this.message(this.$basTip.error(msg))
+            this.$message(this.$basTip.error(msg))
             return;
           case RECHARGE_YEAR_RANGE:
             msg = this.$t(`code.${ex}`,{max:canRechargeYear})
-            this.message(this.$basTip.error(msg))
+            this.$message(this.$basTip.error(msg))
+            return;
+          case ROOT_REGIST_CLOSE:
+            const rootText = domaintext.substr(domaintext.lastIndexOf('.')+1)
+            msg = this.$t(`code.${ex}-Recharge`,{text:rootText});
+            this.$message(this.$basTip.error(msg ))
             return;
           case PARAM_ILLEGAL:
           case DOMAIN_NOT_EXIST:
@@ -677,11 +684,11 @@ export default {
           case UNSUPPORT_NETWORK:
           case LACK_OF_TOKEN:
             msg = this.$t(`code.${ex}`)
-            this.message(this.$basTip.error(msg))
+            this.$message(this.$basTip.error(msg))
             return;
           case RECHARGE_YEAR_RANGE:
             msg = this.$t(`code.${ex}`,{max:canRechargeYear})
-            this.message(this.$basTip.error(msg))
+            this.$message(this.$basTip.error(msg))
             return;
 
           case PARAM_ILLEGAL:

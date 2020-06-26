@@ -40,7 +40,7 @@
             <el-button @click="gotoMyMailList" :disabled="inprogress"
               class="w-25 mx-2">
               <i v-if="inprogress" class="fa fa-ban"></i>
-              {{$t('l.GtotoMyWallet')}}
+              {{$t('l.GtotoMyBMails')}}
             </el-button>
             <el-button @click="continueRegist" :disabled="inprogress"
               class="w-25 mx-2 bas-btn-primary">
