@@ -12,6 +12,8 @@
         >
       </el-table-column>
       <el-table-column
+        header-align="center"
+        align="center"
         prop="expire"
         sortable
         :label="$t('l.ExpiredDate')"
@@ -19,7 +21,8 @@
         width="180">
       </el-table-column>
       <el-table-column header-align="center"
-        index="operate" width="380"
+        index="operate"
+        class-name="el-tbc-operator" width="200"
         align="right" :label="$t('l.Operating')">
         <template slot-scope="scope">
           <el-dropdown>

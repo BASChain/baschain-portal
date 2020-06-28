@@ -5,30 +5,38 @@
       :data="items" @cell-click="gotoDetail"
       style="width: 100%">
       <el-table-column
+        header-align="center"
+        align="center"
         prop="domaintext"
         index="domain"
         :formatter="domainMailFormat"
         :label="$t('l.EWalletDomainMailServers')"
+
         >
       </el-table-column>
       <el-table-column
         prop="expire"
+        header-align="center"
+        align="center"
         sortable
         sort-orders="descending"
         :label="$t('l.ExpiredDate')"
         :formatter="expireFormat"
-        width="180">
+        >
       </el-table-column>
       <el-table-column
         prop="mailPublic"
+        header-align="center"
+        align="center"
         sortable
         :label="$t('l.MailIsOpenPublic')"
         :formatter="mailPublicFormat"
-        width="180">
+        >
       </el-table-column>
       <el-table-column header-align="center"
-        index="operate" width="380"
-        align="right" :label="$t('l.Operating')">
+        index="operate"
+        class-name="el-tbc-operator"
+        align="center" :label="$t('l.Operating')">
         <template slot-scope="scope">
           <el-dropdown>
             <el-button size="mini" type="default">

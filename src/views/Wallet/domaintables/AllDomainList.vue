@@ -5,6 +5,8 @@
       :data="items" @cell-click="gotoDetail"
       style="width: 100%">
       <el-table-column
+        header-align="left"
+        align="left"
         :class-name="'bas-link'"
         prop="domaintext"
         index="domain"
@@ -12,20 +14,24 @@
         >
       </el-table-column>
       <el-table-column
+        header-align="center"
+        align="center"
         prop="expire"
         sortable
         :label="$t('l.ExpiredDate')"
         :formatter="expireFormat"
-        width="180">
+        >
       </el-table-column>
       <el-table-column
+        header-align="center"
+        align="center"
         prop="type"
         :formatter="translateType"
-          width="180"
         :label="$t('l.DomainType')">
       </el-table-column>
       <el-table-column header-align="center"
-        index="operate" width="380"
+        index="operate" width="200"
+        class-name="el-tbc-operator"
         align="right" :label="$t('l.Operating')">
         <template slot-scope="scope">
           <el-dropdown class="bas-drop">

@@ -1,14 +1,5 @@
 <template>
   <div class="container">
-    <!-- <div class="row justify-content-center align-items-center">
-      <div class="col-md-7 col-sm-10 pb-2" style="padding-left:0">
-        <button class="bas-btn-goback" @click="goback" :disabled="ctrl.loading">
-          <span class="text">
-            {{$t('l.GoBackPrevPage')}}
-          </span>
-        </button>
-      </div>
-    </div> -->
     <div class="row justify-content-center pt-3">
       <div class="col-md-7 col-sm-10 bas-card" v-loading="ctrl.loading">
         <div class="bas-card__header">
@@ -200,7 +191,9 @@ export default {
     setUnitPrice(){
       const ruleState = this.$store.getters['dapp/ruleState']
       const topasset = this.topasset
-      if(topasset.owner&&topasset.openApplied&&topasset.isCustomed){
+      const expire = topasset.expire
+      const curTs = parseInt(new Date().getTime()/1000)
+      if(topasset.owner&&topasset.openApplied&&topasset.isCustomed && (expire - curTs) >0 ){
         const customWei = topasset.customPrice
         this.unitPrice =  customWei ? wei2Bas(customWei) : ruleState.subBas
       }else{
@@ -209,7 +202,7 @@ export default {
     },
     checkSubHasTaken(fullText,chainId){
       hasTaken(fullText,chainId,false).then(b=>{
-        console.log('>>>>>>>>>.check>>>>',b)
+        //console.log('>>>>>>>>>.check>>>>',b)
         this.exist = b
         this.errorMsg = b ? this.$t('p.DomainRegistSubHasTakenTips',{domaintext:fullText}) : ''
       }).catch(ex=>{
@@ -217,7 +210,7 @@ export default {
       })
     },
     changeLower(val){
-      console.log(val)
+      //console.log(val)
       if(val){
         this.subText = (val+'').trim().toLowerCase()
       }
@@ -237,7 +230,7 @@ export default {
         if(this.topasset.owner && !this.topasset.openApplied)throw 10012
         return true;
       }catch(ex){
-        console.log(ex)
+        //console.log(ex)
         switch (ex) {
           case 10000:
             errMsg = `${fullText } `+ this.$t('l.Illegal')

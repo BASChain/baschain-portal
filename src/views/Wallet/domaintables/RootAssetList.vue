@@ -13,19 +13,23 @@
       </el-table-column>
       <el-table-column
         prop="expire"
+        header-align="center"
+        align="center"
         sortable
         :label="$t('l.ExpiredDate')"
         :formatter="expireFormat"
-        width="180">
+        >
       </el-table-column>
       <el-table-column
         prop="type"
+        header-align="center"
+        align="center"
         :formatter="translateType"
-          width="180"
         :label="$t('l.DomainType')">
       </el-table-column>
       <el-table-column header-align="center"
-        index="operate" width="380"
+        index="operate"
+        class-name="el-tbc-operator" width="200"
         align="right" :label="$t('l.Operating')">
         <template slot-scope="scope">
           <el-dropdown class="bas-drop">

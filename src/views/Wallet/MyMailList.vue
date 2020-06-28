@@ -41,6 +41,7 @@
 
       <el-table-column header-align="center"
         index="operate" width="200"
+        class-name="el-tbc-operator"
         align="right" :label="$t('l.Operating')">
         <template slot-scope="scope">
           <el-dropdown>
@@ -202,6 +203,7 @@
   </div>
 </template>
 <style lang="css">
+
 .el-table--scrollable-x .el-table__body-wrapper::-webkit-scrollbar {
     height: 8px;
 }
