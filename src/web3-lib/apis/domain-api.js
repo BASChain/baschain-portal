@@ -145,7 +145,7 @@ export async function getDomainDetail(name,chainId){
   const refRet = await viewInst.methods.queryDomainConfigs(hash).call()
 
   const extraRet = await confInst.methods.domainConfData(hash, DomainConfTypes.extrainfo).call()
-  console.log(">>>>", refRet, hex2confDataStr(refRet.A))
+  //console.log(">>>>", refRet, hex2confDataStr(refRet.A))
   resp.refdata = {
     A: hex2confDataStr(refRet.A),
     AAAA: hex2confDataStr(refRet.AAAA),
