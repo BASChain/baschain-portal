@@ -104,6 +104,7 @@ import {
 import {
   getDomainType,
   CheckLegal,
+  MAX_AROOT_LEN,
 } from '@/utils/Validator.js'
 
 
@@ -237,7 +238,7 @@ export default {
             this.$message(this.$basTip.error(errMsg))
             break;
           case 10001:
-            errMsg = `${fullText}` + this.$t('l.ErrorMaxLength256')
+            errMsg = this.$t('code.10001',{max:MAX_AROOT_LEN})
             this.$message(this.$basTip.error(errMsg))
             break;
           case 10002:

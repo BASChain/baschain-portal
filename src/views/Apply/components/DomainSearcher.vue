@@ -273,7 +273,7 @@
 
 .domain-sub--suffix-wrapper {
   position: relative;
-  width: 160px;
+  min-width: 120px;
   height: 100%;
   display: inline-flex;
   direction: row;
@@ -1052,7 +1052,13 @@ export default {
 </script>
 
 <style>
-/* .domaintext {
+#basTabContentTop input{
+  padding-right: 100px;
+}
+#basTabContentSub input {
+  padding-right: 121px;
+}
+/* .domaintext {12
   border: 1px solid rgba(235,237,237,1);
   height: 60%;
   border-radius: 4px;
@@ -1129,9 +1135,8 @@ export default {
   background:rgba(245,246,246,1);
 }
 
-#basTabContentTop input {
-  padding-right: 100px;
-}
+
+
 
 .domain--searcher input:focus,.domain--searcher.el-inpu:focus{
   border: 1px solid rgba(225,229,229,0.75)
