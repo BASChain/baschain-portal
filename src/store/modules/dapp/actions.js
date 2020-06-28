@@ -132,6 +132,7 @@ export async function loadDappBalances({commit,state}){
 }
 
 /**
+ * notcie : execute position.
  * load DAppConfiguration from Server api
  * @param {*} param0
  * @param {*} param1
@@ -152,15 +153,6 @@ export async function loadDAppConfiguration({commit,state}){
   }
 }
 
-/**
- * load Domain data type dictions from contract
- *
- * @param {*} param0
- * @param {*} param1
- */
-export async function loadDataTypeDiction({commit,state},{chainId=3}){
-  //TODO
-}
 
 export default {
   checkInjected,

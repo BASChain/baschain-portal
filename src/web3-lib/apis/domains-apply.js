@@ -6,8 +6,12 @@ import {
 } from "./index";
 
 import {
-  MinGasWei, compareWei2Wei, prehandleDomain,
-  isRare,assertNullAddress,
+  MinGasWei,
+  compareWei2Wei,
+  prehandleDomain,
+  isRare,
+  assertNullAddress,
+  isOwner,
 } from "../utils";
 
 import * as ApiErrors from '../api-errors.js'
@@ -102,9 +106,10 @@ export async function preCheck4Sub(
 
   const roothash = Web3.utils.keccak256(rootname)
   const rootRet = await view.methods.queryDomainInfo(roothash).call()
+  const owner = rootRet.owner
 
-  if (rootRet.name){
-    if (!rootRet.rIsOpen) throw ApiErrors.ROOT_REGIST_CLOSE
+  if (rootRet.name && owner){
+    if (!rootRet.rIsOpen && !isOwner(owner,wallet)) throw ApiErrors.ROOT_REGIST_CLOSE
 
     if(rootRet.rIsCustom && rootRet.rCusPrice){
       unitGas = rootRet.rCusPrice

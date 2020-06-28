@@ -1050,11 +1050,11 @@ export default {
         return
       }
       const toptext = row.domaintext
-      if(!row.openApplied){
-        const msg = this.$t('code.200001',{roottext:toptext})
-        this.$message(this.$basTip.error(msg))
-        return
-      }
+      // if(!row.openApplied){
+      //   const msg = this.$t('code.200001',{roottext:toptext})
+      //   this.$message(this.$basTip.error(msg))
+      //   return
+      // }
       this.$router.push({
         path:`/domain/applysub/${toptext}`,
       })

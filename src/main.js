@@ -51,7 +51,7 @@ import './assets/css/element-#00CA9B/index.css'
 import "./assets/css/main.css";
 
 /**
- * load
+ * load on mount App
  */
 store.dispatch("dapp/checkInjected");
 store.dispatch("dapp/autoLoginMetaMask");

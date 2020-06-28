@@ -18,7 +18,7 @@
                 placeholder="please enter domain...">
                 <template slot="append">{{ `.${showTopDomain}` }}</template>
               </el-input>
-              <div class="bas-text-warning" v-if="showErrorTips">
+              <div class="bas-text-warning" v-if="Boolean(errorMsg)">
                 <i class="fa fa-warning"></i>
                 {{errorMsg}}
               </div>
@@ -115,6 +115,7 @@ import {
  DOMAIN_FORMAT_ILLEGAL,DOMAIN_HAS_TAKEN,
  DOMAIN_TOP_EXPIRED
 } from '@/web3-lib/api-errors.js'
+import {isOwner} from '@/web3-lib/utils'
 
 import {globalWebState} from '@/web3-lib'
 import { findDomainInfo,hasTaken } from '@/web3-lib/apis/domain-api.js'
@@ -203,7 +204,6 @@ export default {
     },
     checkSubHasTaken(fullText,chainId){
       hasTaken(fullText,chainId,false).then(b=>{
-        //console.log('>>>>>>>>>.check>>>>',b)
         this.exist = b
         this.errorMsg = b ? this.$t('p.DomainRegistSubHasTakenTips',{domaintext:fullText}) : ''
       }).catch(ex=>{
@@ -223,12 +223,15 @@ export default {
         return false;
       }
       let fullText = this.subText
+      const web3State = this.$store.getters['web3State']
       try{
         if(this.topText == '')throw 10000;
         fullText = `${this.subText}.${this.topText}`
         if(this.exist)throw 10011;
         CheckLegal(fullText)
-        if(this.topasset.owner && !this.topasset.openApplied)throw 10012
+        if(this.topasset.owner &&
+          !this.topasset.openApplied &&
+          !isOwner(this.topasset.owner,web3State.wallet))throw 10012
         return true;
       }catch(ex){
         //console.log(ex)

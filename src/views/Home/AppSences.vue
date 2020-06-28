@@ -21,7 +21,7 @@
         v-for="(sence,index) in appSences" :key="index"
       >
         <div class="bas-app-sence--box">
-          <img :src="sence.icon" class="bas-app-sences--icon">
+          <img :src="`/static/icons/${sence.icon}`" class="bas-app-sences--icon">
           <p class="bas-app-sences--text">
             {{$t(`${sence.i18n}`)}}
           </p>
@@ -34,12 +34,12 @@
 </template>
 
 <script>
-import TicketsIcon from './assets/icons/tickets_icon.png'
-import CreditIcon from './assets/icons/credit_icon.png'
-import MedicalIcon from './assets/icons/medical_icon.png'
-import WebIcon from './assets/icons/web_icon.png'
-import TravelIcon from './assets/icons/travel_icon.png'
-import OtherIcon from './assets/icons/other_icon.png'
+// import TicketsIcon from './assets/icons/tickets_icon.png'
+// import CreditIcon from './assets/icons/credit_icon.png'
+// import MedicalIcon from './assets/icons/medical_icon.png'
+// import WebIcon from './assets/icons/web_icon.png'
+// import TravelIcon from './assets/icons/travel_icon.png'
+// import OtherIcon from './assets/icons/other_icon.png'
 
 export default {
   name:"AppSences",
@@ -54,32 +54,38 @@ export default {
       appSencesDesc:"BAS系统不仅可以获取IP地址映射、区块链地址这些基础功能，还可以让物联网设备间不依赖于中心网关 也能相互发现，同时能进行更安全的身份认证和加密通讯，免于信道劫持的风险； 帮助用户生成和管理包括互联网应用之内的众多账号，并免于泄露密码的风险； 帮助企业和机构管理用户身份，例如征信信息，BAS能使这些信息更加完整，难以伪造，方便获取。",
       appSences:[
         {
-          icon:TicketsIcon,
+         // icon:TicketsIcon,
+          icon:"tickets_icon.png",
           text:"飞机/火车身份认证",
           i18n:'p.HomeAppSenceSection1'
         },
         {
-          icon:MedicalIcon,
+         // icon:MedicalIcon,
+          icon:"medical_icon.png",
           text:"医疗就诊挂号",
           i18n:'p.HomeAppSenceSection2'
         },
         {
-          icon:WebIcon,
+         // icon:WebIcon,
+          icon:"web_icon.png",
           text:"网站登录认证",
           i18n:'p.HomeAppSenceSection3'
         },
         {
-          icon:CreditIcon,
+          //icon:CreditIcon,
+          icon:"credit_icon.png",
           text:"征信身份认证",
           i18n:'p.HomeAppSenceSection4'
         },
         {
-          icon:TravelIcon,
+         // icon:TravelIcon,
+          icon:"travel_icon.png",
           text:"酒店/会务认证",
           i18n:'p.HomeAppSenceSection5'
         },
         {
-          icon:OtherIcon,
+          //icon:OtherIcon,
+          icon:"other_icon.png",
           text:"其他任何认证场景",
           i18n:'p.HomeAppSenceSection6'
         }
