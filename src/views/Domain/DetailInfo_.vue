@@ -59,6 +59,14 @@
               <span>{{refdata.BlockChain}}</span>
             </div>
             <div class="bas-inline">
+              <label class="bas-form-label">{{$t('l.RefDataMX')}}</label>
+              <span>{{refdata.MX}}</span>
+            </div>
+            <div class="bas-inline">
+              <label class="bas-form-label">{{$t('l.RefDataMXBCA')}}</label>
+              <span>{{refdata.MXBCA}}</span>
+            </div>
+            <div class="bas-inline">
               <label class="bas-form-label">{{$t('p.DomainDetailRefAliasLabel')}}</label>
               <span>{{refdata.CName}}</span>
             </div>
