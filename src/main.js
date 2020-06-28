@@ -41,12 +41,8 @@ import { router } from './plugins/vue-router';
 //import './plugins/vuex-router-sync'
 
 //build need recomment
-global.punycode = require('punycode')
+//global.punycode = require('punycode')
 
-
-// import dayjs from "dayjs";
-import * as UtilsWeb3 from './web3-lib/utils'
-global.util3 = UtilsWeb3;
 
 /**
  * all at last
@@ -71,10 +67,6 @@ global.basvue = new Vue({
     document.dispatchEvent(new Event('render-event'))
   },
 });
-
-
-//store.dispatch('dapp/loadDAppConfiguration');
-//make window.web3 new version and Injected =true
 
 
 document.addEventListener('DOMContentLoaded', function () {

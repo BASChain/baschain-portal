@@ -11,7 +11,7 @@ import {
   sendFreeBasInstance,
   basTokenInstance
 } from './index'
-
+//Send BAS
 const DEF_BAS_WEI = Web3.utils.toWei('5000','ether')
 export const MIN_BAS = "500";
 
