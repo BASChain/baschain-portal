@@ -578,7 +578,8 @@ import {
   CheckSearchLegal,getDomainTopType
 } from '@/utils/Validator.js'
 
-import {checkFetchDappState} from '@/bizlib/web3'
+
+import {MAX_ROOTDOMAIN_LENGTH , str2utf8Array} from '@/web3-lib/utils'
 
 import { handleTopDomainList } from './search-utils'
 
@@ -790,7 +791,7 @@ export default {
         CheckSearchLegal(text,isSub)
         return true;
       }catch(ex){
-        msg = this.$t(`code.${ex}`)
+        msg = this.$t(`code.${ex}`,{max:MAX_ROOTDOMAIN_LENGTH})
         this.$message(this.$basTip.error(msg))
         return false;
       }
@@ -930,18 +931,12 @@ export default {
       }
     },
     gotoRegist(){
-      let text = ''
-      try{
-        checkFetchDappState()
-      }catch(ex){
-        console.log(ex)
-        if(ex===1001){
-          this.$metamask()
-        }else if(ex === 3001){
-          this.$message(this.$basTip.error('当前网络不支持'))
-        }
-        return;
+      if(this.$store.getters['metaMaskDisabled']){
+        this.$metamask()
+        return
       }
+      const web3State = this.$store.getters['web3State']
+      let text = ''
 
       if(this.ctrl.tabActived === 'sub'){
         text = `${this.subSearchText}`
@@ -1132,6 +1127,10 @@ export default {
   height:58px;
   font-size: 1.05rem;
   background:rgba(245,246,246,1);
+}
+
+#basTabContentTop input {
+  padding-right: 100px;
 }
 
 .domain--searcher input:focus,.domain--searcher.el-inpu:focus{

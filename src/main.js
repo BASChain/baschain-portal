@@ -45,7 +45,8 @@ global.punycode = require('punycode')
 
 
 // import dayjs from "dayjs";
-// global.dayjs= dayjs
+import * as UtilsWeb3 from './web3-lib/utils'
+global.util3 = UtilsWeb3;
 
 /**
  * all at last

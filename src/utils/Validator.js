@@ -3,6 +3,7 @@ import Codes from './error-codes'
 import { getRule, getDomainRules } from './rules'
 
 export const MAX_BILLON_VOL = 1000000000.00
+export const MAX_AROOT_LEN = 64;//bytes
 
 
 export function CheckLegal(text) {
@@ -12,7 +13,10 @@ export function CheckLegal(text) {
   if (text.startsWith('.') || text.endsWith('.')) throw Codes.V100002
   if(/[A-Z]+/.test(text))throw Codes.V100004
   let encodeText = punycode.toASCII(text)
-  if(encodeText.length > 63) throw Codes.V100001
+  if (encodeText.length > MAX_AROOT_LEN) {
+    console.log("input:", text, encodeText, encodeText.length);
+    throw Codes.V100001;
+  }
   if (text.indexOf(' ') >= 0) throw Codes.V100002
   if (!checkDotRuleForSub(text)) throw Codes.V100000
   let SpecialEn = getRule('specialEn')
@@ -34,7 +38,7 @@ export function CheckSearchLegal(text,isSub){
   if (text === undefined || text.trim().length == 0)
     throw Codes.V100000
   let encodeText = punycode.toASCII(text)
-  if (encodeText.length > 63) throw Codes.V100001
+  if (encodeText.length > 64) throw Codes.V100001
   if (text.indexOf(' ') >= 0) throw Codes.V100002
   let SpecialEn = getRule('specialEn')
   if (SpecialEn.expr.test(text)) throw Codes.V100002
