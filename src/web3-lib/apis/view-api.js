@@ -364,7 +364,8 @@ export async function valid4CustomizeRoot(roottext, chainId) {
   const ret = await viewInst.methods.queryDomainInfo(hash).call();
 
   const exist = ret.name && ret.owner
-  if (exist && !ret.rIsOpen) {
+  const curTs = new Date().getTime()/1000
+  if (exist && !ret.rIsOpen && parseInt(ret.expiration - curTs)>0) {
     throw ApiErrors.ROOT_REGIST_CLOSE;
   }
 
