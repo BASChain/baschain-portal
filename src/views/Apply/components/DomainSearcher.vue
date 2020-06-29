@@ -28,14 +28,6 @@
               @keyup.enter.native="searchSub"
               :placeholder="$t('p.DomainSearchPlaceHolder')"
               class="domain--searcher">
-              <!-- <el-select v-model="topSelectText" slot="suffix"
-                class="domain-sub--searcher-select"
-                placeholder="请选择">
-                <el-option v-for="(it,idx) in topDomains"
-                  :key="idx"
-                  :label="it.text" :value="it.name"/>
-
-              </el-select> -->
               <div slot="suffix"
                class="domain-sub--suffix-wrapper">
                 <div class="toptext-show">
@@ -89,15 +81,21 @@
             <!-- domain footbar -->
             <div class="domain-sub--footbar">
               <el-input size="mini"
-                v-model="submodel.filterkey"
-                :placeholder="$t('p.DomainFilterTopPlaceholderTip')"
-                @keyup.enter.native="filterTopDomain"
+                v-model="submodel.customize"
+                :placeholder="$t('p.CustomizationRootPlaceholder')"
+                @keyup.enter.native="validCustomize"
                 class="sub-filter-input">
-                <div @click="filterTopDomain"
+                <div @click="validCustomize"
                   slot="suffix" class="domain-search">
                   <i class="fa fa-search"></i>
                 </div>
               </el-input>
+              <el-button
+                :disabled="submodel.loading"
+                @click="addCustomizeRoot"
+                type="default" size="mini" class="left-border">
+                {{$t('l.CustomizeRoot')}}
+              </el-button>
               <el-button
                 :disabled="submodel.loading"
                 @click="reloadRootAssets"
@@ -568,6 +566,8 @@ button.bas-append-serachbtn {
 }
 </style>
 <script>
+
+
 import {
   hasExpired,dateFormat,
   handleDomain,toUnicodeDomain,
@@ -575,16 +575,21 @@ import {
 } from '@/utils'
 import {
   getDomainType,isSub,
-  CheckSearchLegal,getDomainTopType
+  CheckSearchLegal,getDomainTopType,
+  CheckLegalRoot
 } from '@/utils/Validator.js'
-
-
-import {MAX_ROOTDOMAIN_LENGTH , str2utf8Array} from '@/web3-lib/utils'
 
 import { handleTopDomainList } from './search-utils'
 
+import {ROOT_REGIST_CLOSE} from '@/web3-lib/api-errors'
+
+import {getDefaultNetwork} from '@/web3-lib/networks'
+import {MAX_ROOTDOMAIN_LENGTH , str2utf8Array} from '@/web3-lib/utils'
+
+
+
 import {getDomainDetail} from '@/web3-lib/apis/domain-api'
-import {findDomain4Search} from '@/web3-lib/apis/view-api'
+import {findDomain4Search,valid4CustomizeRoot} from '@/web3-lib/apis/view-api'
 
 import {
   ROOT_ASSETS,
@@ -690,6 +695,8 @@ export default {
         filterkey:"",
         popvisible:false,
         loading:false,
+        customize:'',
+        isCustomizeRoot:false
       },
       ctrl:{
         tabActived:'sub',
@@ -761,6 +768,74 @@ export default {
     },
     filterTopDomain(){
 
+    },
+    validCustomize(){
+      const roottext = this.submodel.customize +''
+      if(roottext === '' || !roottext.trim().length){
+        this.submodel.isCustomizeRoot = false
+      }
+      let msg = ''
+
+      try{
+        //100002,100001
+        CheckLegalRoot(roottext);
+        const web3State = this.$store.getters['web3State']
+
+      }catch(ex){
+
+        if(ex === 100001){
+          msg = this.$t('code.100001',{max:MAX_ROOTDOMAIN_LENGTH})
+        }else{
+           msg = this.$t(`code.${ex}`,{text:roottext})
+        }
+
+        this.$message(this.$basTip.error(msg))
+        return;
+      }
+    },
+    async addCustomizeRoot(){
+      const roottext = this.submodel.customize +''
+      if(roottext === '' || !roottext.trim().length){
+        this.submodel.isCustomizeRoot = false
+        return ;
+      }
+      let msg = ''
+
+      try{
+        //100002,100001
+        CheckLegalRoot(roottext);
+        const web3State = this.$store.getters['web3State']
+        const chainId = web3State.chainId|| getDefaultNetwork().chainId
+
+        const resp = await valid4CustomizeRoot(roottext,chainId)
+        console.log(resp)
+
+      }catch(ex){
+        this.submodel.isCustomizeRoot = false
+        this.submodel.customize = ''
+        switch (ex) {
+          case ROOT_REGIST_CLOSE:
+            msg = this.$t(`code.${ROOT_REGIST_CLOSE}`,{text:roottext})
+            this.$message(this.$basTip.error(msg))
+            return;
+          case 100001:
+            msg = this.$t('code.100001',{max:MAX_ROOTDOMAIN_LENGTH})
+            this.$message(this.$basTip.error(msg))
+            return;
+          case 100002:
+            msg = this.$t(`code.${ex}`,{text:roottext})
+            this.$message(this.$basTip.error(msg))
+            return;
+          default:
+
+            //9999:网络异常,请重试
+            msg = this.$t('code.9999')
+            this.$message(this.$basTip.error(msg))
+            console.error(ex)
+            return;
+        }
+        return;
+      }
     },
     resetSearchData(){
       const asset= {

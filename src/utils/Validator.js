@@ -31,6 +31,27 @@ export function CheckLegal(text) {
 
 /**
  *
+ * @param {*} text
+ */
+export function CheckLegalRoot(text) {
+  if (text === undefined || text.trim().length == 0) throw Codes.V100000;
+  if (text.indexOf(".")>0) throw Codes.V100002;
+
+  let encodeText = punycode.toASCII(text);
+  if (encodeText.length > MAX_AROOT_LEN) {
+    console.log("input:", text, encodeText, encodeText.length);
+    throw Codes.V100001;
+  }
+  if (text.indexOf(" ") >= 0) throw Codes.V100002;
+  let SpecialEn = getRule("specialEn");
+  if (SpecialEn.expr.test(text)) throw Codes.V100002;
+  let SpecialCh = getRule("specialLocal");
+  if (SpecialCh.expr.test(text)) throw Codes.V100002;
+  return true;
+}
+
+/**
+ *
  * 校验 不允许含有 .
  * @param {*} text
  */
@@ -217,4 +238,5 @@ export default {
   getDomainType,
   CheckSearchMarketIllegal,
   validMailAccount,
+  CheckLegalRoot,
 };

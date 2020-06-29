@@ -105,6 +105,7 @@ import {
   getDomainType,
   CheckLegal,
   MAX_AROOT_LEN,
+  CheckLegalRoot,
 } from '@/utils/Validator.js'
 
 

@@ -244,5 +244,6 @@
   "WithdrawInTransactionTip": "Extracting...",
   "WithdrawSuccessTip": "Extracted successfully.",
   "WithdrawFailTip": "Extract failed, please try again.",
-  "CannotWithDrawErrorTip":"The current withdrawal amount is 0"
+  "CannotWithDrawErrorTip":"The current withdrawal amount is 0",
+  "CustomizationRootPlaceholder":"Please enter a custom root domain name."
 }

@@ -245,5 +245,6 @@
   "WithdrawInTransactionTip": "正在提取中...",
   "WithdrawSuccessTip": "提取成功.",
   "WithdrawFailTip": "提取失败,请重试.",
-  "CannotWithDrawErrorTip":"当前可提取额度为0"
+  "CannotWithDrawErrorTip":"当前可提取额度为0",
+  "CustomizationRootPlaceholder":"请输入自定义根域名"
 }

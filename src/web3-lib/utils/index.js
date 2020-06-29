@@ -334,6 +334,8 @@ export function str2utf8Array(str){
   return utf8;
 }
 
+
+
 export default {
   MinGasWei,
   mailConcatChar,

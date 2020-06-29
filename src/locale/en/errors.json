@@ -10,6 +10,7 @@
   "4001": "You canceled MetaMask authorization",
   "3001": "Your currently selected network is not supported, please switch to Ethereum main network or Ropsten testnet operation through MetaMask",
   "5999": "BAS authorization failed: {wei}",
+  "9999": "The network is abnormal, please try again",
   "-32601": "Network timeout, please check MetaMask network",
   "-32603": "Network timeout, please check MetaMask network",
   "80001": "The asset is not under the current account",
