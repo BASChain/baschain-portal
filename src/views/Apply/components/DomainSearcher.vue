@@ -809,13 +809,17 @@ export default {
 
         const resp = await valid4CustomizeRoot(roottext,chainId)
         console.log(resp)
-
+        const text = resp.domaintext
+        this.submodel.isCustomizeRoot = true
+        this.submodel.customize = text
+        this.selectTopText(text)
       }catch(ex){
+        console.log(ex)
         this.submodel.isCustomizeRoot = false
-        this.submodel.customize = ''
         switch (ex) {
           case ROOT_REGIST_CLOSE:
             msg = this.$t(`code.${ROOT_REGIST_CLOSE}`,{text:roottext})
+            console.log(msg)
             this.$message(this.$basTip.error(msg))
             return;
           case 100001:
@@ -823,11 +827,11 @@ export default {
             this.$message(this.$basTip.error(msg))
             return;
           case 100002:
+          case 200001:
             msg = this.$t(`code.${ex}`,{text:roottext})
             this.$message(this.$basTip.error(msg))
             return;
           default:
-
             //9999:网络异常,请重试
             msg = this.$t('code.9999')
             this.$message(this.$basTip.error(msg))
