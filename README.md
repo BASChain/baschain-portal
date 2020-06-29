@@ -1,6 +1,8 @@
 # baschain-web
 
-> A Vue.js project
+> BAS Chain Web Portal
+
+> Block Recoreds History Technology Links Future
 
 ## Build Setup
 

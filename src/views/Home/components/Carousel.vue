@@ -71,12 +71,12 @@
                     Records
                   </span>
                   <span class="bas-slogan">
-                    Hostory
+                    History
                   </span>
                 </div>
                 <div class="bas-slogan-block">
                   <span class="bas-slogan">
-                    Techology
+                    Technology
                   </span>
                   <span class="bas-slogan green-cn">
                     Links
