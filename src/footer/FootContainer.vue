@@ -108,7 +108,8 @@ export default {
     },
     gotoExtensionDownload(){
       this.$router.push({
-        name:'download.products'
+        name:'extension.index',
+        query:{id:3}
       })
     },
     gotoHelpCenter(){

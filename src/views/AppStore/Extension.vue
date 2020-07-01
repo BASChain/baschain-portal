@@ -5,9 +5,13 @@
 				<div class="row align-items-center">
 					<div class="bas-app-detail">
 						<div class="bas-server-hint">
-							<img src="/static/img/appstore/chrome.png" alt="">
-							<img src="/static/img/appstore/firefox.png" alt="">
-							<div class="bas-hint-info">可访问Google play /firefox store 直接点击上方按钮安装即可</div>
+							<img src="/static/img/appstore/chrome.png" alt="" class="img-fluid" @click="openChromeExtension">
+							<img src="/static/img/appstore/firefox.png" alt="" class="img-fluid"  @click="openFirefoxExt">
+							<div class="bas-hint-info">
+								<p>
+								  可访问Google play /firefox store 直接点击上方按钮安装即可
+								</p>
+							</div>
 						</div>
 						<div class="bas-server-title">
 							<h1>{{$t('p.HelpPopQuest1InnerTitle')}}</h1>
@@ -22,19 +26,25 @@
 </template>
 <style scoped>
 .bas-hint-info {
-	margin-left: 8px;
-	font-size:18px;
-	font-family:PingFangSC-Regular,PingFang SC;
-	font-weight:400;
-	color:rgba(4,6,46,1);
-	line-height:176px;
+ margin-left: 8px;
+ font-size:18px;
+ font-family:PingFangSC-Regular,PingFang SC;
+ font-weight:400;
+ color:rgba(4,6,46,1);
+ padding-top: 70px;
+ line-height:25px;
 }
 .bas-server-hint > img {
-	width: 12%;
-	margin: 24px 0px 24px 24px;
+ cursor: pointer;
+ width: auto;
+ height: auto;
+ max-width: 100%;
+ max-height: 100%;
+ margin: 24px 0px 24px 24px;
 }
 .bas-server-hint {
-	display: flex;
+ display: flex;
+ height: auto;
 }
 .bas-server-title > p {
 	height:25px;
@@ -95,6 +105,13 @@
 }
 </style>
 <script>
+import {
+  ChromeExtensionStore,FirefoxExtensionStore,
+  getOfflineExtFile,
+  getDownloadAppsPath,MacBrowserApp,
+  getExtfansUrl,
+} from '@/bizlib/apps'
+
 import QuestionInstallOffline from '@/views/Help/popquest/Quest1OfflineInstall.vue'
 export default {
 	components: {
@@ -104,6 +121,16 @@ export default {
     ...Vuex.mapState({
       isCN:state => state.lang === 'zh-CN'
     })
+  },
+  methods: {
+    openChromeExtension(){
+      let url= ChromeExtensionStore
+      window.open(url,'Chrowe Extension')
+    },
+    openFirefoxExt(){
+      let url= FirefoxExtensionStore
+      window.open(url,'Firfox Extension')
+    },
   },
 }
 </script>
