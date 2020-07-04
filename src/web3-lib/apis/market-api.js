@@ -10,6 +10,7 @@ import {
   basViewInstance,
   basMarketInstance,
 } from "./index";
+import { getInfuraWeb3 } from "../infura";
 
 
 /**
@@ -105,12 +106,23 @@ export async function getEWalletOrders(chainId,wallet){
       price:m.price
     }
   })
-  console.log(hashes, mails)
-  return hashes
+  console.log('market domians',hashes, mails)
+  return mails
 }
+
+export async function changeSellPrice(domainhash, unitwei, chainId, wallet) {
+  if (!domainhash || !unitwei || !wallet) throw apiErrors.PARAM_ILLEGAL
+  if (!checkSupport(chainId)) throw apiErrors.UNSUPPORT_NETWORK
+  const web3js = winWeb3()
+  const market = basMarketInstance(web3js, chainId, { from: wallet })
+  return market.methods.ChangeSellPrice(domainhash, unitwei).send({ from: wallet })
+}
+
+// export function deleteSellOrder
 
 export default {
   validAdd2Market,
   addHashToMarket,
-  getEWalletOrders
+  getEWalletOrders,
+  changeSellPrice
 }

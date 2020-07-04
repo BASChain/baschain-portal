@@ -4,12 +4,13 @@ import {
  } from '@/web3-lib/apis/wallet-api.js'
 
 import { getMailInfo, getDomainInfo } from '@/web3-lib/apis/view-api'
-
+import { getEWalletOrders } from '@/web3-lib/apis/market-api'
 import { checkSupport } from "@/web3-lib/networks";
-
+import { wei2Float } from '@/utils'
 import {
   WALLET_ASSETS,
   WALLET_MAILS,
+  MARKET_ASSETS,
   checkStorage,
   saveToStorage,
 } from '@/bascore/indexDBService'
@@ -65,7 +66,7 @@ export async function fillMyAssets({ commit, rootState }, payload = { chainId, w
   console.log("load MyAssets from Indexed DB.")
   if (assets && assets.length){
     commit(types.LOAD_EWALLET_ASSETS, assets)
-  }else{
+  } else {
     console.log('Not find My Assets in IndexedDB')
   }
 }
@@ -217,6 +218,30 @@ export async function loadEWalletMails({ commit, rootState},payload={chainId,wal
   }
 }
 
+export async function loadEWalletOrders({ commit }, payload={chainId, wallet}) {
+  const chainId = payload.chainId
+  const wallet = payload.wallet
+  if (!chainId || !wallet) {
+    console.error('chainId or wallet required.')
+  } else if (!checkSupport(chainId)) {
+    console.error(`Network ${chainId} unsupport.`)
+  } else {
+    try {
+      console.log('load My order list...')
+      let orders = await getEWalletOrders(chainId, wallet)
+      orders = orders.map(m => {
+        m.owner = wallet
+        m.price = m.price ? wei2Float(m.price, 18) : ''
+        return m
+      })
+      commit(types.LOAD_EWALLET_ORDERS, orders)
+      await saveToStorage(MARKET_ASSETS, orders)
+    } catch(e) {
+      console.error('load wallet orders', e)
+    }
+  }
+}
+
 /**
  * update my assets props
  * @param {*} param0
@@ -225,7 +250,9 @@ export async function loadEWalletMails({ commit, rootState},payload={chainId,wal
 export function updateAssetProps({commit},payload){
   commit(types.UPDATE_ASSET_PROPS,payload)
 }
-
+export function updateEWalletOrders({commit}, payload) {
+  commit(types.UPDATE_EWALLET_ORDERS, payload)
+}
 /**
  * hash
  * @param {*} param0
@@ -303,6 +330,7 @@ export default {
   loadMyAssets,
   updateAssetProps,
   loadEWalletMails,
+  loadEWalletOrders,
   fillEWalletMails,
   updataMyMailProps,
   removeMyAssetByHash,

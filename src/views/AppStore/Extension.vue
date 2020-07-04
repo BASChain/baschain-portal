@@ -7,15 +7,18 @@
 						<div class="bas-server-hint">
 							<img src="/static/img/appstore/chrome.png" alt="" class="img-fluid" @click="openChromeExtension">
 							<img src="/static/img/appstore/firefox.png" alt="" class="img-fluid"  @click="openFirefoxExt">
-							<div class="bas-hint-info">
+							<!-- <div class="bas-hint-info">
 								<p>
 								  可访问Google play /firefox store 直接点击上方按钮安装即可
 								</p>
 							</div>
+							<img src="/static/img/appstore/chrome.png" alt="">
+							<img src="/static/img/appstore/firefox.png" alt=""> -->
+							<div class="bas-hint-info">{{$t('p.AppStoreExtensionAuto')}}</div>
 						</div>
 						<div class="bas-server-title">
 							<h1>{{$t('p.HelpPopQuest1InnerTitle')}}</h1>
-							<p>如果你无法透过谷歌扩展商店安装，你可以选择手动下载压缩包方式来安装，这篇教程适用于 Chrome、FireFox。</p>
+							<p>{{$t('p.AppStoreExtensionSelf')}}</p>
 						</div>
     				<QuestionInstallOffline />
 					</div>
@@ -43,8 +46,20 @@
  margin: 24px 0px 24px 24px;
 }
 .bas-server-hint {
- display: flex;
- height: auto;
+	width: 100%;
+	height:176px;
+	display: flex;
+	/* height: auto; */
+	margin-left: 8px;
+	font-size:18px;
+	font-family:PingFangSC-Regular,PingFang SC;
+	font-weight:400;
+	color:rgba(4,6,46,1);
+	/* padding-top: 70px; */
+	line-height:25px;
+	border-radius:6px;
+	margin-top: 25px;
+	background:rgba(245,246,246,1);
 }
 .bas-server-title > p {
 	height:25px;
@@ -61,13 +76,6 @@
 	color:rgba(4,6,46,1);
 	line-height:50px;
 	margin-top: 32px;
-}
-.bas-server-hint {
-	width: 100%;
-	height:176px;
-	background:rgba(245,246,246,1);
-	border-radius:6px;
-	margin-top: 25px;
 }
 .bas-app-detail {
 	width: 66%;

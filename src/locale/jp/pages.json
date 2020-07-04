@@ -190,5 +190,31 @@
   "MainnetNotificationNetworkContent": "現在、Ethereumメインネットワーク上にあります.",
   "UnsupportNotificationNetworkContent": "選択されているネットワークは現在サポートされていません.",
   "WalletIndexEthBalance": "ETH バランス",
-  "WallletIndexBASBalance": "BAS バランス"
+  "WallletIndexBASBalance": "BAS バランス",
+
+  "AppStoreBMailIntro": "End-to-End Encrypted Mail System Using Blockchain Tech",
+  "AppStoreBMailServerIntro": "intro",
+  "AppStoreExtensionIntro": "Domain Service Using Blockchain",
+  "AppStoreMetaMaskIntro": "Extension for accessing Ethereum enabled distributed applications",
+
+  "AppDetailDownTitle":"已开发的功能:",
+  "AppDetailFunc1":"# 去中心化",
+  "AppDetailFunc2":"# 安全加密",
+  "AppDetailFunc3":"# 安全加密",
+  "AppDetailToDoTitle":"正在完善的功能:",
+  "AppDetailUndo1":"# 正在完善的功能",
+  "AppDetailUndo2":"# 正在完善的功能",
+  "BMailIntro":"Intro",
+  "BMailIntroTitle1":"Explore your creations in full screen.",
+  "BMailIntroContent1":"Immerse yourself by using the vivid Retina displays of iPad or Mac. Simply tap the center divider, then drag to view your code or live project on the full screen. You can also customize built-in games like Battleship and Brick Breaker, then immerse yourself by letting them take up the whole screen.",
+  "BMailIntroTitle2":"Explore your creations in full screen.",
+  "BMailIntroContent2":"Immerse yourself by using the vivid Retina displays of iPad or Mac. Simply tap the center divider, then drag to view your code or live project on the full screen. You can also customize built-in games like Battleship and Brick Breaker, then immerse yourself by letting them take up the whole screen.",
+  "BMailServerIntro":"Intro",
+  "BMailServerIntroTitle1":"Explore your creations in full screen.",
+  "BMailServerIntroContent1":"Immerse yourself by using the vivid Retina displays of iPad or Mac. Simply tap the center divider, then drag to view your code or live project on the full screen. You can also customize built-in games like Battleship and Brick Breaker, then immerse yourself by letting them take up the whole screen.",
+  "BMailServerIntroTitle2":"Explore your creations in full screen.",
+  "BMailServerIntroContent2":"Immerse yourself by using the vivid Retina displays of iPad or Mac. Simply tap the center divider, then drag to view your code or live project on the full screen. You can also customize built-in games like Battleship and Brick Breaker, then immerse yourself by letting them take up the whole screen.",
+
+  "AppStoreExtensionAuto":"可访问Google play /firefox store 直接点击按钮安装即可",
+  "AppStoreExtensionSelf":"如果你无法透过谷歌扩展商店安装，你可以选择手动下载压缩包方式来安装，这篇教程适用于 Chrome、FireFox。"
 }

@@ -8,7 +8,8 @@ export const UPDATE_ASSET_PROPS = 'updateAssetProps'
 export const LOAD_EWALLET_MAILS = "loadEWalletMails"
 export const ADD_OR_UPDATE_MAIL = "addOrUpdateMails"
 export const REMOVE_ASSET_BY_HASH = "removeAssetByHash"
-
+export const LOAD_EWALLET_ORDERS = "loadEWalletOrders"
+export const UPDATE_EWALLET_ORDERS = "updateEWalletOrders"
 
 
 /** Set */
@@ -25,4 +26,6 @@ export default {
   LOAD_EWALLET_MAILS,
   UPDATE_EWMAIL_PROPS,
   REMOVE_ASSET_BY_HASH,
+  LOAD_EWALLET_ORDERS,
+  UPDATE_EWALLET_ORDERS
 };

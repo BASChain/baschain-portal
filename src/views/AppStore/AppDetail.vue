@@ -13,8 +13,8 @@
 									<div class="bas-head-top--left">
 										<h1>{{ apps[componentid].appName }}</h1>
 										<div class="bas-min-p">
-											<p>{{ apps[componentid].appIntro }}</p>
-											<p>{{ apps[componentid].appIntro }}</p>
+											<p>{{ $t(apps[componentid].appIntro) }}</p>
+											<p>{{ $t(apps[componentid].appIntro) }}</p>
 										</div>
 									</div>
 									<div class="bas-head-top--right">
@@ -45,8 +45,8 @@
 								</div>
 								<div class="bas-head-line"></div>
 								<div v-for="item in apps[componentid].details" :key="item.hash" class="bas-head-fun">
-									{{ item.osTitle }}
-									<div v-for="min in item.osLabels" :key="min.hash" :class="item.styleType==='done'?'bas-done':''">{{ min }}</div>
+									{{ $t(item.osTitle) }}
+									<div v-for="min in item.osLabels" :key="min.hash" :class="item.styleType==='done'?'bas-done':''">{{ $t(min) }}</div>
 								</div>
 							</div>
 						</div>
@@ -54,8 +54,8 @@
 							<img v-for="img in apps[componentid].imgUrls" :key="img.hash" :src="img">
 						</div>
 						<div v-for="appintro in apps[componentid].intros" :key="appintro.hash" class="row bas-app-intro">
-							<h1>{{ appintro.introTitle }}</h1>
-							<p>{{ appintro.introInfo }}</p>
+							<h1>{{ $t(appintro.introTitle) }}</h1>
+							<p>{{ $t(appintro.introInfo) }}</p>
 						</div>
 					</div>
 				</div>
@@ -354,7 +354,7 @@ export default {
 				{
 					appid: 1,
 					appName: "BMail",
-					appIntro: "intro",
+					appIntro: "p.BMailIntro",
 					iconUrl: "/static/icons/bas_bmail.png",
 					imgUrls: [
 						'/static/img/appstore/Account.png',
@@ -391,38 +391,38 @@ export default {
 					],
 					details: [
 						{
-							osTitle: "已开发的功能:",
+							osTitle: "p.AppDetailDownTitle",
 							styleType: "done",
 							osLabels:[
-								'# 去中心化',
-								'# 安全加密',
-								'# 安全加密'
+								'p.AppDetailFunc1',
+								'p.AppDetailFunc2',
+								'p.AppDetailFunc3'
 							]
 						},
 						{
-							osTitle: "正在完善的功能:",
+							osTitle: "p.AppDetailToDoTitle",
 							styleType: "undo",
 							osLabels:[
-								'# 正在完善的功能',
-								'# 正在完善的功能'
+								'p.AppDetailUndo1',
+								'p.AppDetailUndo2'
 							]
 						}
 					],
 					intros: [
 						{
-							introTitle: "Explore your creations in full screen.",
-							introInfo: "Immerse yourself by using the vivid Retina displays of iPad or Mac. Simply tap the center divider, then drag to view your code or live project on the full screen. You can also customize built-in games like Battleship and Brick Breaker, then immerse yourself by letting them take up the whole screen."
+							introTitle: "p.BMailIntroTitle1",
+							introInfo: "p.BMailIntroContent1"
 						},
 						{
-							introTitle: "Explore your creations in full screen.",
-							introInfo: "Immerse yourself by using the vivid Retina displays of iPad or Mac. Simply tap the center divider, then drag to view your code or live project on the full screen. You can also customize built-in games like Battleship and Brick Breaker, then immerse yourself by letting them take up the whole screen."
+							introTitle: "p.BMailIntroTitle2",
+							introInfo: "p.BMailIntroContent2"
 						}
 					]
 				},
 				{
 					appid: 2,
 					appName: "BMail server",
-					appIntro: "intro",
+					appIntro: "p.BMailServerIntro",
 					iconUrl: "/static/icons/bas-mail-server.png",
 					imgUrls: [],
 					serveInfo: 'download BMail server for ',
@@ -444,31 +444,31 @@ export default {
 					downloadButtons: [],
 					details: [
 						{
-							osTitle: "已开发的功能:",
+							osTitle: "p.AppDetailDownTitle",
 							styleType: "done",
 							osLabels:[
-								'# 去中心化',
-								'# 安全加密',
-								'# 安全加密'
+								'p.AppDetailFunc1',
+								'p.AppDetailFunc2',
+								'p.AppDetailFunc3'
 							]
 						},
 						{
-							osTitle: "正在完善的功能:",
+							osTitle: "p.AppDetailToDoTitle",
 							styleType: "undo",
 							osLabels:[
-								'# 正在完善的功能',
-								'# 正在完善的功能'
+								'p.AppDetailUndo1',
+								'p.AppDetailUndo2'
 							]
 						}
 					],
 					intros: [
 						{
-							introTitle: "Explore your creations in full screen.",
-							introInfo: "Immerse yourself by using the vivid Retina displays of iPad or Mac. Simply tap the center divider, then drag to view your code or live project on the full screen. You can also customize built-in games like Battleship and Brick Breaker, then immerse yourself by letting them take up the whole screen."
+							introTitle: "p.BMailServerIntroTitle1",
+							introInfo: "p.BMailServerIntroContent1"
 						},
 						{
-							introTitle: "Explore your creations in full screen.",
-							introInfo: "Immerse yourself by using the vivid Retina displays of iPad or Mac. Simply tap the center divider, then drag to view your code or live project on the full screen. You can also customize built-in games like Battleship and Brick Breaker, then immerse yourself by letting them take up the whole screen."
+							introTitle: "p.BMailServerIntroTitle2",
+							introInfo: "p.BMailServerIntroContent2"
 						}
 					]
 				}

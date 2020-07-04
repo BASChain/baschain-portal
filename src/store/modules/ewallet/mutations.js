@@ -67,6 +67,9 @@ export default {
   [types.LOAD_EWALLET_MAILS](state,mails) {
     state.mails = mails||[]
   },
+  [types.LOAD_EWALLET_ORDERS](state, orders) {
+    state.orders = orders||[]
+  },
   [types.UPDATE_EWMAIL_PROPS](state,mail){
     const hash = mail.hash
     if(hash){

@@ -4,10 +4,10 @@
       <div class="bas-dialog__metamask" :style="containerStyle"
         aria-modal="true" aria-lable="tips">
         <div class="bas-dialog__metamask-header">
-          <span>
+          <span style="margin: 8px">
             <i class="fa fa-warning"></i>
           </span>
-          <a class="bas-dialog__close" @click="cancel">
+          <a class="bas-dialog__close" @click="cancel" style="margin:8px">
             <i class="el-dialog__close el-icon el-icon-close" ></i>
           </a>
         </div>
@@ -32,8 +32,7 @@
           </div>
         </div>
         <div class="bas-dialog__metamask-footer">
-          <a
-            class="metamask-login-btn" @click="loginMetaMaskHandle">
+          <a class="metamask-login-btn" @click="loginMetaMaskHandle" style="margin-bottom:15px">
             {{ canLoginState ? 'Login MetaMask' : "Close" }}
           </a>
         </div>

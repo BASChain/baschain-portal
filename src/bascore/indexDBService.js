@@ -10,7 +10,6 @@ export const OPEN_MAILS = "open_mails"
 export const WALLET_ASSETS = "wallet_assets"
 
 export const WALLET_MAILS = "wallet_mails"
-
 export const MARKET_ASSETS = "market_assets"
 
 const dbPromise = _ => {
