@@ -434,7 +434,9 @@ export default {
     clickWin() {
       // this.os = 'windows'
       this.menuVisible = false
-      alert("产品开发中")
+
+      this.$message(this.$basTip.warn('come soon...'))
+      //alert("产品开发中")
     },
     DownloadExplorerHanle(){
       let fileType = this.os
