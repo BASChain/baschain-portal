@@ -38,6 +38,7 @@ global.BasRuntime = Object.assign({}, runtime.info, DAppInfo, { browser })
 import App from './App'
 import store from './store'
 import { router } from './plugins/vue-router';
+
 //import './plugins/vuex-router-sync'
 
 //build need recomment

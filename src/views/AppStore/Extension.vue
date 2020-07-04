@@ -7,11 +7,11 @@
 						<div class="bas-server-hint">
 							<img src="/static/img/appstore/chrome.png" alt="">
 							<img src="/static/img/appstore/firefox.png" alt="">
-							<div class="bas-hint-info">可访问Google play /firefox store 直接点击上方按钮安装即可</div>
+							<div class="bas-hint-info">{{$t('p.AppStoreExtensionAuto')}}</div>
 						</div>
 						<div class="bas-server-title">
 							<h1>{{$t('p.HelpPopQuest1InnerTitle')}}</h1>
-							<p>如果你无法透过谷歌扩展商店安装，你可以选择手动下载压缩包方式来安装，这篇教程适用于 Chrome、FireFox。</p>
+							<p>{{$t('p.AppStoreExtensionSelf')}}</p>
 						</div>
     				<QuestionInstallOffline />
 					</div>
@@ -27,14 +27,19 @@
 	font-family:PingFangSC-Regular,PingFang SC;
 	font-weight:400;
 	color:rgba(4,6,46,1);
-	line-height:176px;
+	padding-top: 70px;
+	line-height:25px;
 }
 .bas-server-hint > img {
-	width: 12%;
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	max-height: 100%;
 	margin: 24px 0px 24px 24px;
 }
 .bas-server-hint {
 	display: flex;
+	height: auto;
 }
 .bas-server-title > p {
 	height:25px;

@@ -20,7 +20,7 @@
             </div>
             <div class="bas-explorer-content">
               <p>
-                {{$t('p.ProductsExplorerAboutContents')}}
+                {{$t(this.aboutExplorer)}}
               </p>
             </div>
           </div>
@@ -40,7 +40,7 @@
                 <p>{{item.title}}</p>
               </div>
               <div class="bas-inner-intro">
-                <p>{{item.intro}}</p>
+                <p>{{$t(item.intro)}}</p>
               </div>
               <div class="bas-inner-lable">
                 <div v-for="min in item.labels" :key="min.hash" class="bas-inner-lable--min">{{min}}</div>
@@ -66,7 +66,7 @@
                 <p>{{item.title}}</p>
               </div>
               <div class="bas-inner-intro">
-                <p>{{item.intro}}</p>
+                <p>{{$t(item.intro)}}</p>
               </div>
               <div class="bas-inner-lable">
                 <div v-for="min in item.labels" :key="min.hash" class="bas-inner-lable--min">{{min}}</div>
@@ -156,6 +156,7 @@
   letter-spacing:1px;
   border: 0px;
   padding: 0px;
+  cursor: pointer;
   transform: scale(1,1);
   -ms-transform: scale(1,1); /* IE 9 */
   -webkit-transform: scale(1,1); /* Safari and Chrome */
@@ -345,7 +346,7 @@ export default {
       menuVisible: false,
       os:'mac',
       osText:"Get BAS Explorer For ",
-      aboutExplorer:'BAS浏览器是基于Chromium再开发的融合了BAS域名系统并且升级了安全协议的浏览器，目前处于开发阶段，只能用于浏览BAS测试网络.',
+      aboutExplorer: 'p.ProductsExplorerAboutContents',
       osTypes:[
         {
           text:"MAC",
@@ -374,7 +375,7 @@ export default {
         {
           icon:"/static/icons/bas_bmail.png",
           title:"BMail",
-          intro:"End-to-End Encrypted Mail System Using Blockchain Tech",
+          intro:"p.AppStoreBMailIntro",
           labels:[
             'ios',
             'android',
@@ -386,7 +387,7 @@ export default {
         {
           icon:"/static/icons/bas-mail-server.png",
           title:"BMail server",
-          intro:"intro",
+          intro:"p.AppStoreBMailServerIntro",
           labels:[
             'mac',
             'linux',
@@ -398,7 +399,7 @@ export default {
         {
           icon:"/static/icons/bas-browser.png",
           title:"BAS Extension",
-          intro:"Domain Service Using Blockchain",
+          intro:"p.AppStoreExtensionIntro",
           labels:[
             'chrome',
             'firefox',
@@ -410,7 +411,7 @@ export default {
         {
           icon:"/static/icons/meta.png",
           title:"MetaMask",
-          intro:"Extension for accessing Ethereum enabled distributed applications",
+          intro:"p.AppStoreMetaMaskIntro",
           labels:[
             'chrome',
             'firefox',
@@ -443,7 +444,7 @@ export default {
     },
     toDetail(id) {
       if(id < 3) {
-          console.log('$$$$$$$$$', id)
+          // console.log('$$$$$$$$$', id)
         this.$router.push({path: '/appstore/appdetail', query: {id: id}})
       } else if(id === 3) {
         this.$router.push({path: '/appstore/extension', query: {id: id}})
@@ -456,7 +457,7 @@ export default {
     apps: function() {
       return this.osApps.filter(function(item) {
         if(item.type === 'app') {
-          console.log('$$$$$$$$$', item)
+          // console.log('$$$$$$$$$', item)
           return item
         }
       })

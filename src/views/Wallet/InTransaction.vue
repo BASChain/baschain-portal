@@ -3,7 +3,7 @@
     <el-row :gutter="20" class="bas-white-bg" >
       <el-col :span="24">
         <el-tabs v-model="activeTab" @tab-click="handleTabClick">
-          <el-tab-pane :label="OnSaleTabName" name="selling">
+          <!-- <el-tab-pane :label="OnSaleTabName" name="selling"> -->
             <el-table type="index"
               v-loading="pager.loading"
               @cell-click="gotoDetail"
@@ -18,22 +18,8 @@
                >
               </el-table-column>
               <el-table-column
-                align="center"
-                prop="ordertime"
-                :sortable="true"
-                :formatter="timeFormat"
-                :label="$t('l.OnSaleDate')"
-                width="180">
-              </el-table-column>
-              <!-- <el-table-column
-                align="center"
-                prop="expireDate"
-                :label="$t('l.ExpiredDate')"
-                width="180">
-              </el-table-column>               -->
-              <el-table-column
-                 width="140"
-                prop="priceVol"
+                width="240"
+                prop="price"
                 :sortable="false"
                 :label="$t('l.PriceBas')+'(BAS)'">
               </el-table-column>
@@ -46,6 +32,7 @@
                     {{$t('l.ChangePrice')}}
                   </el-button>
                   <el-button
+                    disabled="true"
                     size="mini"
                     @click="handleRevokeSale(scope.$index, scope.row)">
                     {{$t('l.Revoke')}}
@@ -76,7 +63,7 @@
                 </span>
               </div>
             </el-row>
-          </el-tab-pane>
+          <!-- </el-tab-pane> -->
         </el-tabs>
       </el-col>
 
@@ -107,54 +94,62 @@
         </el-button>
       </div>
     </el-dialog>
+    <!-- change price -->
     <el-dialog
-      :title="`域名改价:[${cpd.domaintext}]`"
       :visible.sync="cpd.visible"
-      width="35%"
+      width="28%"
       :before-close="cancelChangePrice"
       :close-on-click-modal="false"
-      :show-close="false">
-      <div class="bas-eldialog-body">
-        <el-form :inline="true">
-          <el-form-item prop="price"
+      :show-close="true">
+      <div class="bas-dg-header" slot="title">
+        <div class="title">
+          <span>修改域名</span>
+          <span class="title-domain">{{ cpd.domaintext }}</span>
+          <span>价格</span>
+        </div> 
+      </div>
+      <div class="bas-dg-body">
+        <!-- <el-form :inline="false"> -->
+          <!-- <el-form-item prop="price"
             :error="cpd.error"
             :show-message="!cpd.validState"
-            :label="$t('l.PriceBas')"
-            class="basunit-number--wrapper">
-            <el-input-number
-              placeholder="Please input Price"
-              :clearable="true"
+            :label="$t('l.PriceBas')"> -->
+            <el-input
+              type="text"
+              :placeholder="$t('p.SaleOnDialogUnitBasPlaceholder')"
+              :show-message="!cpd.validState"
               v-model="cpd.pricevol"
               name="price"
-              :precision="2" :step="1.0"
-
+              :error="cpd.error"
               :min="ctrl.minprice"
               :max="ctrl.maxprice"
               :disabled="cpd.loading"
               @change="priceChangeValid"
               :controls="false"
-              class="bas-unit-number"
+              class="input-unit-bas"
               >
-            </el-input-number>
-            <span class="bas-unit">BAS</span>
-            <span class="bas-text-warning">
+              <div class="suffix" slot="suffix">BAS</div>
+            </el-input>
+            <!-- <span class="bas-unit">BAS</span> -->
+            <div class="bas-text-warning">
               {{$t('l.DomainPriceMaxTips')}}
-            </span>
-          </el-form-item>
-        </el-form>
-      </div>
-      <div class="dialog-footer" slot="footer">
-        <span class="bas-dialog-footer--tips">
+            </div>
+          <!-- </el-form-item> -->
+        <!-- </el-form> -->
+      <!-- </div> -->
+      <!-- <div class="dialog-footer" slot="footer"> -->
+        <div class="bas-dialog-footer--tips">
           <loading-dot v-if="cpd.loading" style="float:left;"/>
           <span v-if="cpd.loading" class="small pr-3">
             {{$t('g.TransactionWaitTips')}}
           </span>
-        </span>
-        <el-button :disabled="cpd.loading" @click="cancelChangePrice">
+        </div>
+        <!-- <el-button :disabled="cpd.loading" @click="cancelChangePrice">
           {{$t('g.Cancel')}}
-        </el-button>
+        </el-button> -->
         <el-button :disabled="cpd.loading"
-          @click="submitChangeDomainPrice">
+          @click="submitChangeDomainPrice"
+          class="w-100 bas-btn-primary">
           {{$t('g.Confirm')}}
         </el-button>
       </div>
@@ -187,15 +182,18 @@
 </style>
 <script>
 import LoadingDot from '@/components/LoadingDot.vue'
-
+import { getEWalletOrders, changeSellPrice, validAdd2Market } from '@/web3-lib/apis/market-api.js'
 import SellingTable from './trans/SellingTable'
 import {
   toUnicodeDomain,compressAddr,isOwner,
   TS_DATEFORMAT,dateFormat,wei2Float,
   transBAS2Wei,
 } from '@/utils'
+import {
+  transoutOwnershipCi,approveTraOspEmitter
+} from '@/web3-lib/apis/ownership-api'
 import {getWeb3State} from '@/bizlib/web3'
-import {marketInstance,
+import {
 removeSellOrderEmitter,
 changeOnSellPriceEmitter,
 } from '@/bizlib/web3/market-api'
@@ -208,6 +206,10 @@ export default {
     SellingTable,
   },
   computed: {
+    ...Vuex.mapState({
+      sellItems:state => state.ewallet.orders,
+      // unitBas:state => wei2Bas(state.dapp.mailRegGas)
+    }),
     OnSaleTabName(){
       return this.$t('l.Selling')
     },
@@ -223,7 +225,7 @@ export default {
     return {
       activeTab:'selling',
       sellTotal:0,
-      sellItems:[],
+      // sellItems:[],
       allItems:[],
       pager:{
         pagenumber:1,
@@ -368,6 +370,7 @@ export default {
 
     },
     handleEditPrice(index,row){
+      console.log('scope row', row, index)
       if(this.$store.getters['metaMaskDisabled']){
         this.$metamask()
         return;
@@ -381,7 +384,7 @@ export default {
           visible:true,
           domaintext:row.domaintext,
           hash:row.hash,
-          pricevol:row.priceVol
+          pricevol:row.price
         })
       }else{
         let msg = `当前操作域名${row.domaintext} 不在登录账户 [${wallet}]下,请刷新页面确认.`
@@ -398,42 +401,50 @@ export default {
         pricevol:0
       })
     },
-    submitChangeDomainPrice(){
+    async submitChangeDomainPrice(){
       //改价
       if(this.$store.getters['metaMaskDisabled']){
         this.$metamask()
         return;
       }
-
       if(!this.cpd.validState){
         this.$message(this.$basTip.error(`你输入的价格必须大于${this.ctrl.minprice},并且小于${this.ctrl.maxprice}`))
         return;
       }
-      let web3State = getWeb3State()
-      let chainId = web3State.chainId;
-      let wallet = web3State.wallet
+      const web3State = this.$store.getters['web3State']
+      const chainId = web3State.chainId
+      const wallet = web3State.wallet
+      
       let hash = this.cpd.hash;
-
-      if(hash){
-        const strWei = transBAS2Wei(this.cpd.pricevol);
-        changeOnSellPriceEmitter(hash,strWei,chainId,wallet).on('transactionHash',txhash=>{
-          this.cpd.loading = true;
-        }).on('receipt',(receipt)=>{
-          this.$message(this.$basTip.warn(this.$t('g.OperateTipSuccess')))
-          this.loadSellItems({pagenumber:1,pagesize:100})
-          this.cpd = Object.assign({
-            loading:false,
-            visible:false,
-            domaintext:'',
-            hash:'',
-            pricevol:0
-          })
-        }).on('err',(err,receipt) =>{
-          this.cpd.loading = false;
-          this.$message(this.$basTip.error(this.$t('g.OperateTipFail')))
+      console.log('hash',this.cpd)
+      try {
+        const resp = await validAdd2Market(hash, this.cpd.pricevol, chainId, wallet)
+        let that = this
+        approveTraOspEmitter(resp.domainhash, resp.spender, resp.chainId, resp.wallet).on('transactionHash', txhash=>{
+          that.cpd.loading = true
+        }).on('receipt', async receipt=>{
+          try {
+            const res = await changeSellPrice(resp.domainhash, resp.salewei, resp.chainId, resp.wallet)
+            that.$store.dispatch('ewallet/updateEWalletOrders', {hash: resp.domainhash, price: resp.salewei})
+            that.cpd = Object.assign({
+              loading: false,
+              visible: false,
+              hash: '',
+              domaintext: '',
+              pricevol: '',
+              validState: true,
+              error: ''
+            })
+          } catch(e) {
+            console.error(e)
+            that.cpd.loading = false
+          }
+        }).on('error', (err, receipt)=>{
+          console.log(err)
+          that.cpd.loading = false
         })
-      }else{
-        throw new Error('lost hash')
+      } catch(e) {
+        console.error(e)
       }
     },
     reloadSellItems(){
@@ -499,13 +510,18 @@ export default {
       })
     }
   },
-  mounted() {
-    let ruleState = this.$store.getters['web3/ruleState']
-    this.ruleState = Object.assign({},ruleState)
-    const params = {
-      pagenumber:this.pager.pagenumber||1,
-      pagesize:this.pager.pagesize||100,
+  async mounted() {
+    const web3State = this.$store.getters['web3State']
+    console.log('>>>>>wallet orders', this.sellItems)
+    if (web3State.chainId && web3State.wallet) {
+      this.$store.dispatch('ewallet/loadEWalletOrders', web3State)
     }
+    // let ruleState = this.$store.getters['web3/ruleState']
+    // this.ruleState = Object.assign({},ruleState)
+    // const params = {
+    //   pagenumber:this.pager.pagenumber||1,
+    //   pagesize:this.pager.pagesize||100,
+    // }
     //this.loadSellItems(params)
   },
 }
