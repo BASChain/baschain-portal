@@ -17,11 +17,11 @@ module.exports = {
           "^/reth": ""
         }
       },
-      "/apps": {
-        target: "http://47.113.87.58/apps",
+      "/prod": {
+        target: "https://prod.baschain.cn/",
         changeOrigin: true,
         pathRewrite: {
-          "^/apps": ""
+          "^/prod": ""
         }
       }
     },

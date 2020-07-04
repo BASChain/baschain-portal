@@ -4,15 +4,18 @@ export const RelaDownloadBasePath = '/apps'
 export const ExtFansBase ="https://www.extfans.com/search/extensions"
 
 export const MacBrowserApp = 'Uranium.app.zip'
-export const ExtChromeOffline = 'bas-v0.1.0-crx.zip'
-export const ExtFirefoxOffline = 'bas-0.1.1-fx.zip'
+export const ExtChromeOffline = 'bas-1.0.1-chromium.zip'
+export const ExtFirefoxOffline = 'bas-1.0.2-fx.xpi'
+export const RELA_DOWNLOAD_BASE="/prod";
+export const APPS_BASE="apps";
+export const EXTS_BASE="exts";
 
 export function getExtensionStoreUrl(browser){
   return browser === 'chrome' ? ChromeExtensionStore : FirefoxExtensionStore
 }
 
 export function getDownloadAppsPath(subPath){
-  return `${RelaDownloadBasePath}/${subPath}`
+  return `${RELA_DOWNLOAD_BASE}/${APPS_BASE}/${subPath}`
 }
 
 /**
@@ -21,7 +24,7 @@ export function getDownloadAppsPath(subPath){
  */
 export function getOfflineExtFile(browser){
   return browser === 'chrome' ?
-    `${RelaDownloadBasePath}/${ExtChromeOffline}` : `${RelaDownloadBasePath}/${ExtFirefoxOffline}`
+    `${RELA_DOWNLOAD_BASE}/${EXTS_BASE}/${ExtChromeOffline}` : `${RELA_DOWNLOAD_BASE}/${EXTS_BASE}/${ExtFirefoxOffline}`
 }
 
 /**
