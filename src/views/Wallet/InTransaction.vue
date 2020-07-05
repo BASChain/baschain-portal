@@ -32,7 +32,6 @@
                     {{$t('l.ChangePrice')}}
                   </el-button>
                   <el-button
-                    disabled="true"
                     size="mini"
                     @click="handleRevokeSale(scope.$index, scope.row)">
                     {{$t('l.Revoke')}}
@@ -182,7 +181,7 @@
 </style>
 <script>
 import LoadingDot from '@/components/LoadingDot.vue'
-import { getEWalletOrders, changeSellPrice, validAdd2Market } from '@/web3-lib/apis/market-api.js'
+import { getEWalletOrders, changeSellPrice, validAdd2Market, deleteSellOrder } from '@/web3-lib/apis/market-api.js'
 import SellingTable from './trans/SellingTable'
 import {
   toUnicodeDomain,compressAddr,isOwner,
@@ -190,7 +189,7 @@ import {
   transBAS2Wei,
 } from '@/utils'
 import {
-  transoutOwnershipCi,approveTraOspEmitter
+  transoutOwnershipCi,approveTraOspEmitter,revokeOwnerShipEmitter
 } from '@/web3-lib/apis/ownership-api'
 import {getWeb3State} from '@/bizlib/web3'
 import {
@@ -331,43 +330,69 @@ export default {
         hash:''
       })
     },
-    confirmRevoke(){
-      let web3State = getWeb3State()
-      const wallet = web3State.wallet
+    async confirmRevoke() {
+      if(this.$store.getters['metaMaskDisabled']) {
+        this.$metamask()
+        return
+      }
+      const web3State = this.$store.getters['web3State']
       const chainId = web3State.chainId
-      const hash = this.revokeDialog.hash;
-      console.log(hash,chainId,wallet)
+      const wallet = web3State.wallet
+      let hash = this.revokeDialog.hash;
 
-      removeSellOrderEmitter(hash,chainId,wallet).on('transactionHash',txhash=>{
-        this.revokeDialog.loading = true
-      }).on('receipt',(receipt)=>{
-        this.revokeDialog = Object.assign(this.revokeDialog,{
-          loading:false,
-          visible:false,
-          domaintext:'',
-          hash:''
-        })
-        this.$message(this.$basTip.warn(this.$t('g.OperateTipSuccess')))
-        this.loadSellItems({pagenumber:1,pagesize:100})
-      }).on('err',(err,receipt) =>{
-          console.log(err)
-          let errMsg = that.$t('g.MetaMaskRejectedAuth')
-          if(err.code === 4001){
-            that.$message(that.$basTip.error(errMsg))
-          }else if(err.code === -32601 && err.message){
-            that.$message(that.$basTip.error(err.message))
-          }else{
-            errMsg = this.$t('g.OperateTipFail')
-            that.$message(that.$basTip.error(err.message))
+      // let web3State = getWeb3State()
+      // const hash = this.revokeDialog.hash;
+      console.log('delete order',hash,chainId,wallet)
+      try {
+        let that = this
+        revokeOwnerShipEmitter(hash, chainId, wallet).on('transactionHash', txhash=>{
+          that.revokeDialog.loading = true
+        }).on('receipt', async receipt=>{
+          try{
+            const res = await deleteSellOrder(hash, chainId, wallet)
+            that.$store.dispatch('ewallet/updateEWalletOrders', {hash: hash})
+            that.revokeDialog = Object.assign(this.revokeDialog,{
+              loading:false,
+              visible:false,
+              domaintext:'',
+              hash:''
+            })
+          } catch(e) {
+            console.error('DELETE_ORDER', e)
           }
-          this.revokeDialog = Object.assign(this.revokeDialog,{
-            loading:false,
-            visible:false,
-            domaintext:'',
-            hash:''
-          })
-      })
-
+        })
+      } catch(e) {
+        console.error('REVOKE_ORDER', e)
+      }
+      // removeSellOrderEmitter(hash,chainId,wallet).on('transactionHash',txhash=>{
+      //   this.revokeDialog.loading = true
+      // }).on('receipt',(receipt)=>{
+      //   this.revokeDialog = Object.assign(this.revokeDialog,{
+      //     loading:false,
+      //     visible:false,
+      //     domaintext:'',
+      //     hash:''
+      //   })
+      //   this.$message(this.$basTip.warn(this.$t('g.OperateTipSuccess')))
+      //   this.loadSellItems({pagenumber:1,pagesize:100})
+      // }).on('err',(err,receipt) =>{
+      //     console.log(err)
+      //     let errMsg = that.$t('g.MetaMaskRejectedAuth')
+      //     if(err.code === 4001){
+      //       that.$message(that.$basTip.error(errMsg))
+      //     }else if(err.code === -32601 && err.message){
+      //       that.$message(that.$basTip.error(err.message))
+      //     }else{
+      //       errMsg = this.$t('g.OperateTipFail')
+      //       that.$message(that.$basTip.error(err.message))
+      //     }
+      //     this.revokeDialog = Object.assign(this.revokeDialog,{
+      //       loading:false,
+      //       visible:false,
+      //       domaintext:'',
+      //       hash:''
+      //     })
+      // })
     },
     handleEditPrice(index,row){
       console.log('scope row', row, index)

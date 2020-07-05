@@ -12,7 +12,6 @@ import {
 } from "./index";
 import { getInfuraWeb3 } from "../infura";
 
-
 /**
  *
  * @param {*} domainhash
@@ -50,8 +49,6 @@ export async function validAdd2Market(domainhash,salebas,chainId,wallet){
     wallet,
   }
 }
-
-
 
 /**
  *
@@ -110,6 +107,12 @@ export async function getEWalletOrders(chainId,wallet){
   return mails
 }
 
+/**
+ * @param {*} domainhash
+ * @param {*} unitwei
+ * @param {*} chainId
+ * @param {*} wallet
+ */
 export async function changeSellPrice(domainhash, unitwei, chainId, wallet) {
   if (!domainhash || !unitwei || !wallet) throw apiErrors.PARAM_ILLEGAL
   if (!checkSupport(chainId)) throw apiErrors.UNSUPPORT_NETWORK
@@ -117,12 +120,24 @@ export async function changeSellPrice(domainhash, unitwei, chainId, wallet) {
   const market = basMarketInstance(web3js, chainId, { from: wallet })
   return market.methods.ChangeSellPrice(domainhash, unitwei).send({ from: wallet })
 }
-
-// export function deleteSellOrder
+/**
+ * remove order on market
+ * @param {*} domainhash
+ * @param {*} chainId
+ * @param {*} wallet
+ */
+export function deleteSellOrder(domainhash, chainId, wallet) {
+  if (!domainhash || !wallet) throw apiErrors.PARAM_ILLEGAL
+  if (!checkSupport(chainId)) throw apiErrors.UNSUPPORT_NETWORK
+  const web3js = winWeb3()
+  const market = basMarketInstance(web3js, chainId, { from: wallet })
+  return market.methods.RemoveSellOrder(domainhash).send({ from: wallet })
+}
 
 export default {
   validAdd2Market,
   addHashToMarket,
   getEWalletOrders,
-  changeSellPrice
+  changeSellPrice,
+  deleteSellOrder
 }

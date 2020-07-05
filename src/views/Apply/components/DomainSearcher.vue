@@ -991,7 +991,7 @@ export default {
   async beforeMount() {
     try{
       const assets = await checkStorage(ROOT_ASSETS)
-      console.log('assets',assets)
+      // console.log('assets',assets)
       if(assets && assets.length && this.topSelectText === '.'){
         console.log('fill default selectTopText',assets[0].domaintext)
         this.selectTopText(assets[0].domaintext)

@@ -54,6 +54,17 @@ export function approveTraOspEmitter(domainhash, spender, chainId, wallet) {
 
   return owsInst.methods.approve(domainhash,spender).send({from:wallet})
 }
+/**
+ *
+ * @param {*} domainhash
+ * @param {*} chainId
+ * @param {*} wallet
+ */
+export function revokeOwnerShipEmitter(domainhash, chainId, wallet) {
+  const web3js = winWeb3()
+  const owsInst = basTraOwnershipInstance(web3js, chainId, { from: wallet })
+  return owsInst.methods.revoke(domainhash).send({ from: wallet })
+}
 
 /**
  *
@@ -105,4 +116,5 @@ export default {
   validTransOwnership,
   approveTraOspEmitter,
   transferOwnershipEmitter,
+  revokeOwnerShipEmitter
 }
