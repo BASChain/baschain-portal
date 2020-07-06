@@ -12,10 +12,7 @@
 								<div class="bas-head-top">
 									<div class="bas-head-top--left">
 										<h1>{{ apps[componentid].appName }}</h1>
-										<div class="bas-min-p">
-											<p>{{ $t(apps[componentid].appIntro) }}</p>
-											<p>{{ $t(apps[componentid].appIntro) }}</p>
-										</div>
+										<div class="bas-min-p">{{ $t(apps[componentid].appIntro) }}</div>
 									</div>
 									<div class="bas-head-top--right">
 										<div v-if="componentid!=2" class="bas-download-button" styble="background-position:bottom right;">
@@ -34,7 +31,6 @@
 													{{butt.buttInfo}}
 													</button>
 												</el-popover>
-												
 											</div>
 										</div>
 										<div v-if="componentid!=0" class="bas-download-button--serve">
@@ -142,8 +138,8 @@
 	text-overflow:ellipsis;
 	overflow:hidden;
 }
-.bas-min-p > p {
-	margin-bottom: 0px;
+.bas-min-p {
+	margin: 0px 0px 0px 24px;
 	font-size:16px;
 	font-family:PingFangSC-Regular,PingFang SC;
 	font-weight:400;
@@ -151,7 +147,7 @@
 	line-height:22px;
 	letter-spacing:1px;
 }
-.bas-head-top--left > .bas-min-p {
+/* .bas-head-top--left > .bas-min-p {
 	width:39px;
 	height:22px;
 	font-size:16px;
@@ -162,7 +158,7 @@
 	letter-spacing:1px;
 	padding-top: 30px;
 	padding-left: 24px;
-}
+} */
 .bas-head-top--left > h1 {
 	/* width:70px; */
 	height:30px;
@@ -172,7 +168,7 @@
 	color:rgba(4,6,46,1);
 	line-height:30px;
 	letter-spacing:1px;
-	padding-top: 45px;
+	margin-top: 45px;
 	padding-left: 24px;
 }
 .bas-head-top--left {
@@ -209,15 +205,15 @@
 	display: flex;
 }
 .bas-app-img {
-	width: 100%;
-	/* height: 402px; */
+	width: 110%;
+	height: auto;
 	display: flex;
 	margin-bottom: 43px;
 }
 .bas-app-img > img {
 	margin-right: 26px;
 	width: 226px;
-	height: 402px;
+	/* height: 402px; */
 }
 .bas-app-intro > p {
 	font-size:16px;
@@ -302,9 +298,9 @@ export default {
 					appIntro: "intro",
 					iconUrl: "/static/icons/bas_bp.png",
 					imgUrls: [
-						'/static/img/appstore/Account.png',
-						'/static/img/appstore/BP_Account.png',
-						'/static/img/appstore/BP_home.png'
+						// '/static/img/appstore/Account.png',
+						// '/static/img/appstore/BP_Account.png',
+						// '/static/img/appstore/BP_home.png'
 					],
 					serveInfo: '',
 					serveButts: [],
@@ -357,9 +353,10 @@ export default {
 					appIntro: "p.BMailIntro",
 					iconUrl: "/static/icons/bas_bmail.png",
 					imgUrls: [
-						'/static/img/appstore/Account.png',
-						'/static/img/appstore/BP_Account.png',
-						'/static/img/appstore/BP_home.png'
+						'/static/img/appstore/bamil/bamilside.png',
+						'/static/img/appstore/bmail/contact@2x.png',
+						'/static/img/appstore/bmail/Inbox@2x.png',
+						'/static/img/appstore/bmail/New@2x.png'
 					],
 					serveInfo: 'download BMail server for ',
 					serveButts: [
