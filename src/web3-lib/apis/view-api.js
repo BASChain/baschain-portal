@@ -16,6 +16,7 @@ import * as ApiErrors from '../api-errors.js'
 import { checkSupport } from "../networks";
 
 /**
+ * depearded
  * get all root domains for apply select
  * @param {*} chainId
  */

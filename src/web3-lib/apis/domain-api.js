@@ -183,7 +183,7 @@ export async function getDomainDetail(name,chainId){
 }
 
 /**
- *
+ * get all root Domains
  * @param {*} chainId
  */
 export async function getRootDomains(chainId){
