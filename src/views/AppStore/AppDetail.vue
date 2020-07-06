@@ -353,7 +353,7 @@ export default {
 					appIntro: "p.BMailIntro",
 					iconUrl: "/static/icons/bas_bmail.png",
 					imgUrls: [
-						'/static/img/appstore/bamil/bamilside.png',
+						'/static/img/appstore/bmail/bamilside.png',
 						'/static/img/appstore/bmail/contact@2x.png',
 						'/static/img/appstore/bmail/Inbox@2x.png',
 						'/static/img/appstore/bmail/New@2x.png'
