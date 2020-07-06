@@ -290,7 +290,6 @@ export default {
         this.$metamask()
         return;
       }
-
       //row.domaintext = row.domaintext.trim().toLowerCase()
       this.$router.push({
         path:`/domain/detail/${row.domaintext}`
