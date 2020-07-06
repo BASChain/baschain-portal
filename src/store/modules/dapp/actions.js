@@ -5,7 +5,7 @@ import {
 } from '@/web3-lib/apis/token-api'
 
 import { loadDappConfProps } from "@/web3-lib/apis/dapp-conf-api";
-import { getRootDomains } from '@/web3-lib/apis/domain-api'
+import { getRootDomains } from '@/web3-lib/apis/view-api'
 
 import {
   ROOT_ASSETS,
