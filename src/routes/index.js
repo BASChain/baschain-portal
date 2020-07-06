@@ -46,6 +46,15 @@ export default [
         }
       },
       {
+        path: "applysub_notop",
+        name: "domain.applysub",
+        component: () =>
+          import("@/views/Domain/apply/RegistSubNorootDomain.vue"),
+        meta: {
+          guest: true
+        }
+      },
+      {
         path: "applyresult",
         name: "domain.applyresult",
         component: () => import("@/views/Domain/apply/RegistResult.vue"),

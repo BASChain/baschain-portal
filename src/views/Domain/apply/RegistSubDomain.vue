@@ -1,14 +1,5 @@
 <template>
   <div class="container">
-    <!-- <div class="row justify-content-center align-items-center">
-      <div class="col-md-7 col-sm-10 pb-2" style="padding-left:0">
-        <button class="bas-btn-goback" @click="goback" :disabled="ctrl.loading">
-          <span class="text">
-            {{$t('l.GoBackPrevPage')}}
-          </span>
-        </button>
-      </div>
-    </div> -->
     <div class="row justify-content-center pt-3">
       <div class="col-md-7 col-sm-10 bas-card" v-loading="ctrl.loading">
         <div class="bas-card__header">
@@ -27,7 +18,7 @@
                 placeholder="please enter domain...">
                 <template slot="append">{{ `.${showTopDomain}` }}</template>
               </el-input>
-              <div class="bas-text-warning" v-if="showErrorTips">
+              <div class="bas-text-warning" v-if="Boolean(errorMsg)">
                 <i class="fa fa-warning"></i>
                 {{errorMsg}}
               </div>
@@ -113,6 +104,8 @@ import {
 import {
   getDomainType,
   CheckLegal,
+  MAX_AROOT_LEN,
+  CheckLegalRoot,
 } from '@/utils/Validator.js'
 
 
@@ -123,6 +116,7 @@ import {
  DOMAIN_FORMAT_ILLEGAL,DOMAIN_HAS_TAKEN,
  DOMAIN_TOP_EXPIRED
 } from '@/web3-lib/api-errors.js'
+import {isOwner} from '@/web3-lib/utils'
 
 import {globalWebState} from '@/web3-lib'
 import { findDomainInfo,hasTaken } from '@/web3-lib/apis/domain-api.js'
@@ -200,7 +194,9 @@ export default {
     setUnitPrice(){
       const ruleState = this.$store.getters['dapp/ruleState']
       const topasset = this.topasset
-      if(topasset.owner&&topasset.openApplied&&topasset.isCustomed){
+      const expire = topasset.expire
+      const curTs = parseInt(new Date().getTime()/1000)
+      if(topasset.owner&&topasset.openApplied&&topasset.isCustomed && (expire - curTs) >0 ){
         const customWei = topasset.customPrice
         this.unitPrice =  customWei ? wei2Bas(customWei) : ruleState.subBas
       }else{
@@ -209,7 +205,6 @@ export default {
     },
     checkSubHasTaken(fullText,chainId){
       hasTaken(fullText,chainId,false).then(b=>{
-        console.log('>>>>>>>>>.check>>>>',b)
         this.exist = b
         this.errorMsg = b ? this.$t('p.DomainRegistSubHasTakenTips',{domaintext:fullText}) : ''
       }).catch(ex=>{
@@ -217,7 +212,7 @@ export default {
       })
     },
     changeLower(val){
-      console.log(val)
+      //console.log(val)
       if(val){
         this.subText = (val+'').trim().toLowerCase()
       }
@@ -229,22 +224,25 @@ export default {
         return false;
       }
       let fullText = this.subText
+      const web3State = this.$store.getters['web3State']
       try{
         if(this.topText == '')throw 10000;
         fullText = `${this.subText}.${this.topText}`
         if(this.exist)throw 10011;
         CheckLegal(fullText)
-        if(this.topasset.owner && !this.topasset.openApplied)throw 10012
+        if(this.topasset.owner &&
+          !this.topasset.openApplied &&
+          !isOwner(this.topasset.owner,web3State.wallet))throw 10012
         return true;
       }catch(ex){
-        console.log(ex)
+        //console.log(ex)
         switch (ex) {
           case 10000:
             errMsg = `${fullText } `+ this.$t('l.Illegal')
             this.$message(this.$basTip.error(errMsg))
             break;
           case 10001:
-            errMsg = `${fullText}` + this.$t('l.ErrorMaxLength256')
+            errMsg = this.$t('code.10001',{max:MAX_AROOT_LEN})
             this.$message(this.$basTip.error(errMsg))
             break;
           case 10002:

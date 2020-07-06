@@ -348,6 +348,35 @@ export async function getDomainInfo(domainhash,chainId){
   return resp
 }
 
+/**
+ *
+ * @param {*} roottext
+ * @param {*} chainId
+ */
+export async function valid4CustomizeRoot(roottext, chainId) {
+  const web3js = getInfuraWeb3(chainId);
+
+  const domaintext = (roottext+'').trim().toLowerCase()
+  const name = prehandleDomain(roottext)
+
+  const hash = web3js.utils.keccak256(name);
+  const viewInst = basViewInstance(web3js, chainId);
+  const ret = await viewInst.methods.queryDomainInfo(hash).call();
+
+  const exist = ret.name && ret.owner
+  const curTs = new Date().getTime()/1000
+  if (exist && !ret.rIsOpen && parseInt(ret.expiration - curTs)>0) {
+    throw ApiErrors.ROOT_REGIST_CLOSE;
+  }
+
+  return {
+    domaintext: domaintext,
+    name:name,
+    hash,
+    isCustomizeRoot: true
+  };
+}
+
 export default {
   publicMailDomains,
   findMailInfo,

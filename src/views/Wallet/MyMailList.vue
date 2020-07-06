@@ -9,14 +9,14 @@
         index="hash"
         :formatter="mailtextShow"
         :label="$t('l.BMailAccount')"
-        >
+        width="180">
       </el-table-column>
       <el-table-column
         prop="domaintext"
         index="domain"
         :formatter="domainMailFormat"
         :label="$t('l.EWalletDomainMailServers')"
-        width="180">
+        width="160">
       </el-table-column>
       <el-table-column
         prop="expiration"
@@ -31,11 +31,17 @@
         header-align="center"
         align="left"
         :label="$t('l.BMailBCALabel')"
-        width="420">
+        >
+         <template slot-scope="scope">
+           <div class="mail-public-key">
+             {{scope.row.bca}}
+           </div>
+         </template>
       </el-table-column>
 
       <el-table-column header-align="center"
         index="operate" width="200"
+        class-name="el-tbc-operator"
         align="right" :label="$t('l.Operating')">
         <template slot-scope="scope">
           <el-dropdown>
@@ -197,6 +203,15 @@
   </div>
 </template>
 <style lang="css">
+
+.el-table--scrollable-x .el-table__body-wrapper::-webkit-scrollbar {
+    height: 8px;
+}
+
+.el-table--scrollable-x .el-table__body-wrapper::-webkit-scrollbar-track {
+    height: 6px;
+}
+
 .abandon-title {
   width: 100%;
   text-align: center;
@@ -328,6 +343,10 @@ span.bas-unit::after {
 .box-selected span.bas-unit,.box-selected span.bas-unit::after,.recharge-year-box:hover span.bas-unit {
   color:rgba(255,255,255,1);
 }
+/*
+.mail-public-key {
+  max-width: 420px;
+} */
 
 </style>
 

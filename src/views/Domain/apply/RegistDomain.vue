@@ -125,6 +125,7 @@ import {
   getDomainType,
   isTop,isSub,isRareTop,
   CheckLegal,domainSplit,
+  MAX_AROOT_LEN,
 } from '@/utils/Validator.js'
 
 import {
@@ -319,7 +320,7 @@ export default {
             msg = `${domain} ${this.$t('l.Illegal')}`
             break;
           case 10001:
-            msg = `${domain} ${this.$t('l.ErrorMaxLength256')}`
+            msg = this.$t('code.10001',{max:MAX_AROOT_LEN})
             break;
           case 10002:
             msg = `${domain} ${this.$t('l.ErrorHasSpecialCharacter')}`

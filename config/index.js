@@ -17,11 +17,11 @@ module.exports = {
           "^/reth": ""
         }
       },
-      "/apps": {
-        target: "http://47.113.87.58/apps",
+      "/prod": {
+        target: "https://prod.baschain.cn/",
         changeOrigin: true,
         pathRewrite: {
-          "^/apps": ""
+          "^/prod": ""
         }
       }
     },
@@ -61,7 +61,7 @@ module.exports = {
     /**
      * Source Maps
      */
-    productionSourceMap: false,
+    productionSourceMap: true,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: "#source-map",
 

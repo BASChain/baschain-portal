@@ -1,6 +1,6 @@
 import { getInfuraWeb3 } from '../infura'
 
-import apiErrors, * as ApiErrors from '../api-errors.js'
+import apiErrors from '../api-errors.js'
 import { checkSupport } from "../networks";
 
 import {
@@ -29,28 +29,31 @@ export async function getLatestRootDomains(chainId){
     });
     rootEvents = rootEvents.reverse().filter((it, idx) => idx < 10)
 
-    // return rootEvents.map( d =>{
-    //   const hash = d.returnValues.nameHash
-    //   console.log(hash)
-    //   return view.methods.queryDomainInfo(hash).call()
-    // })
-    return rootEvents
+    return rootEvents.map( d =>{
+      const hash = d.returnValues.nameHash
+      return view.methods.queryDomainInfo(hash).call()
+    })
   })();
 
 
   let latest10 = await Promise.all(rootPromise)
-  //console.log("latest10", latest10)
-  return latest10.map( d =>{
-    const res = d.returnValues
+
+
+  return latest10.map(d => {
+    const nametext = web3js.utils.hexToString(d.name);
     return {
-      name: res.rootName,
-      domaintext: parseHexDomain(res.rootName),
-      hash:res.nameHash,
-      customPrice: res.customPrice,
-      isCustomed: Boolean(res.isCustom),
-      openApplied: Boolean(res.openToPublic),
-    }
-  })
+      name: nametext,
+      domaintext: parseHexDomain(d.name),
+      hash: web3js.utils.keccak256(nametext),
+      customPrice: d.customPrice,
+      isRare: Boolean(d.rIsRare),
+      openApplied: Boolean(d.rIsOpen),
+      isCustomed: Boolean(d.rIsCustom),
+      customPrice: d.rCusPrice,
+      owner: d.owner,
+      expire: d.expiration
+    };
+  });
 }
 
 export async function getLatestSubDomains(chainId){
@@ -67,20 +70,24 @@ export async function getLatestSubDomains(chainId){
     })
 
     subEvents = subEvents.reverse().filter((it,idx) => idx < 10 )
-
-    return subEvents
+    return subEvents.map(d => {
+      const hash = d.returnValues.nameHash;
+      return view.methods.queryDomainInfo(hash).call();
+    });
   })();
 
   let latest10 = await Promise.all(subPromise)
 
   return latest10.map( d => {
-    const res = d.returnValues
+    const nametext = web3js.utils.hexToString(d.name);
     return {
-      hash:res.nameHash,
-      roothash:res.rootHash,
-      name:res.totalName,
-      domaintext: parseHexDomain(res.totalName)
-    }
+      hash: web3js.utils.keccak256(nametext),
+      roothash: d.rootHash,
+      name: nametext,
+      domaintext: parseHexDomain(d.name),
+      owner: d.owner,
+      expire: d.expiration
+    };
   })
 }
 

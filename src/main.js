@@ -42,11 +42,8 @@ import { router } from './plugins/vue-router';
 //import './plugins/vuex-router-sync'
 
 //build need recomment
-global.punycode = require('punycode')
+//global.punycode = require('punycode')
 
-
-// import dayjs from "dayjs";
-// global.dayjs= dayjs
 
 /**
  * all at last
@@ -55,7 +52,7 @@ import './assets/css/element-#00CA9B/index.css'
 import "./assets/css/main.css";
 
 /**
- * load
+ * load on mount App
  */
 store.dispatch("dapp/checkInjected");
 store.dispatch("dapp/autoLoginMetaMask");
@@ -71,10 +68,6 @@ global.basvue = new Vue({
     document.dispatchEvent(new Event('render-event'))
   },
 });
-
-
-//store.dispatch('dapp/loadDAppConfiguration');
-//make window.web3 new version and Injected =true
 
 
 document.addEventListener('DOMContentLoaded', function () {

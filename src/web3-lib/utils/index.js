@@ -9,6 +9,8 @@ export const MaxPriceBas = 1000000000;
 export const dataStoreDelimiter = '7f';
 export const dataShowDelimiter = '|';
 export const mailConcatChar='@'
+export const MAX_ROOTDOMAIN_LENGTH = 64; //bytes
+
 
 
 
@@ -286,6 +288,54 @@ export function bas2Wei(bas, web3) {
   return web3.utils.toWei(bas, "ether");
 }
 
+export function str2utf8Array(str){
+  let utf8 = []
+  if(str === undefined)return utf8;
+  for(let i=0;i<str.length;i++){
+    let code = str.charCodeAt(i)
+
+    if (code <= 0x007f) {
+      utf8.push(code | 0b00000000);
+    } else if (code < 0x07ff) {
+      utf8.push((code >> 6) | 0b11000000, (code & 0x3f) | 0x80);
+    } else if (code < 0xffff) {
+      utf8.push(
+        (code >> 12) | 0b11100000,
+        ((code >> 6) & 0x3f) | 0x80,
+        (code & 0x3f) | 0x80
+      );
+    } else if (code < 0x1fffff) {
+      utf8.push(
+        (code >> 18) | 0b11110000,
+        ((code >> 12) & 0x3f) | 0x80,
+        ((code >> 6) & 0x3f) | 0x80,
+        (code & 0x3f) | 0x80
+      );
+    } else if (code < 0x3ffffff) {
+      utf8.push(
+        (code >> 24) | 0b11111000,
+        ((code >> 18) & 0x3f) | 0x80,
+        ((code >> 12) & 0x3f) | 0x80,
+        ((code >> 6) & 0x3f) | 0x80,
+        (code & 0x3f) | 0x80
+      );
+    } else if (code < 0x7fffffff) {
+      utf8.push(
+        (code >> 30) | 0b11111100,
+        ((code >> 24) & 0x3f) | 0x80,
+        ((code >> 18) & 0x3f) | 0x80,
+        ((code >> 12) & 0x3f) | 0x80,
+        ((code >> 6) & 0x3f) | 0x80,
+        (code & 0x3f) | 0x80
+      );
+    }
+  }
+
+  return utf8;
+}
+
+
+
 export default {
   MinGasWei,
   mailConcatChar,
@@ -306,4 +356,5 @@ export default {
   wei2Bas,
   bas2Wei,
   MaxPriceBas,
+  str2utf8Array,
 };

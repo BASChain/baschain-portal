@@ -12,6 +12,8 @@
         >
       </el-table-column>
       <el-table-column
+        header-align="center"
+        align="center"
         prop="expire"
         sortable
         :label="$t('l.ExpiredDate')"
@@ -19,7 +21,8 @@
         width="180">
       </el-table-column>
       <el-table-column header-align="center"
-        index="operate" width="380"
+        index="operate"
+        class-name="el-tbc-operator" width="200"
         align="right" :label="$t('l.Operating')">
         <template slot-scope="scope">
           <el-dropdown>
@@ -343,7 +346,7 @@ import {
   NO_UPDATE_PERMISSIONS,
   DOMAIN_NOT_EXIST,MAILSERVICE_HAS_ACTIVED,LACK_OF_TOKEN,
   DOMAIN_EXPIRED,LACK_OF_ETH,ACCOUNT_NOT_MATCHED,
-  RECHARGE_YEAR_RANGE,
+  RECHARGE_YEAR_RANGE,ROOT_REGIST_CLOSE,
 } from '@/web3-lib/api-errors.js'
 
 import { activationSubMailService } from '@/web3-lib/apis/mail-manager-api'
@@ -719,7 +722,7 @@ export default {
       }
       const items = getYearItems(canRegMaxYear,unitbas)
 
-      console.log(items)
+      //console.log(items)
 
       this.recharge = Object.assign({},this.recharge,{
         visible:true,
@@ -824,16 +827,22 @@ export default {
           case UNSUPPORT_NETWORK:
           case LACK_OF_TOKEN:
             msg = this.$t(`code.${ex}`)
-            this.message(this.$basTip.error(msg))
+            this.$message(this.$basTip.error(msg))
             return;
           case RECHARGE_YEAR_RANGE:
             msg = this.$t(`code.${ex}`,{max:canRechargeYear})
-            this.message(this.$basTip.error(msg))
+            this.$message(this.$basTip.error(msg))
+            return;
+          case ROOT_REGIST_CLOSE:
+            const rootText = domaintext.substr(domaintext.lastIndexOf('.')+1)
+            msg = this.$t(`code.${ex}-Recharge`,{text:rootText});
+            this.$message(this.$basTip.error(msg ))
             return;
           case PARAM_ILLEGAL:
           case DOMAIN_NOT_EXIST:
             console.error('PARAM_ILLEGAL',ex)
             break;
+
           default:
             console.error(ex)
             break;

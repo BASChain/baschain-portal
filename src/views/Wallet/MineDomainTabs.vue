@@ -124,6 +124,9 @@ export default {
 }
 </script>
 <style>
+.el-tbc-operator {
+  max-width: 200px;
+}
 .bas-mine-table--header{
   width: 100%;
   text-align: left;
