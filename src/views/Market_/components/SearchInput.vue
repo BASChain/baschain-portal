@@ -12,6 +12,7 @@
         Search
       </el-button>
     </el-input>
+    <div v-if="this.searched">hhh</div>
   </div>
 </template>
 <style scoped>
@@ -20,6 +21,7 @@
 }
 </style>
 <script>
+import {queryMarketDomain} from '@/web3-lib/apis/view-api'
 export default {
   name: 'SearchInput',
   data() {
@@ -30,17 +32,17 @@ export default {
   },
   methods: {
     InputChange() {
-      console.log('Input>>>>>')
       this.searched = false;
-      this.$emit('issearched', this.searched)
     },
-    queryDomains() {
+    async queryDomains() {
       console.log('query>>>>>', this.inputInfo)
-      this.$router.push({
-        path: "search"
-      })
+      let domainInfo = await queryMarketDomain(this.inputInfo)
+      console.log('queryRes>>>>>', domainInfo.domaintext===undefined)
+      // this.$router.push({
+      //   path: "search"
+      // })
       this.searched = true
-      this.$emit('issearched', this.searched)
+      // this.$emit('issearched', this.searched)
     }
   }
 }

@@ -2,7 +2,7 @@
 import { winWeb3 } from "../index";
 import apiErrors from "../api-errors";
 import { checkSupport } from '../networks'
-import { isOwner, assertExpired, parseHexDomain } from "../utils";
+import { isOwner, assertExpired, parseHexDomain, dateFormat, prehandleDomain } from "../utils";
 
 import ContractJson from '../abi-manager'
 
@@ -11,6 +11,8 @@ import {
   basMarketInstance,
 } from "./index";
 import { getInfuraWeb3 } from "../infura";
+import { compare } from "semver";
+import { cat } from "shelljs";
 
 /**
  *
@@ -133,11 +135,86 @@ export function deleteSellOrder(domainhash, chainId, wallet) {
   const market = basMarketInstance(web3js, chainId, { from: wallet })
   return market.methods.RemoveSellOrder(domainhash).send({ from: wallet })
 }
+/**
+ * get onsale hash array list
+ * @param {*} chainId
+ */
+export async function getOnSaleDomains(chainId) {
+  const web3js = getInfuraWeb3(chainId)
+  const market = basMarketInstance(web3js, chainId)
+  const view = basViewInstance(web3js, chainId)
+
+  let sellAdded = await market.getPastEvents("SellAdded", {fromBlock:0, toBlock:"latest"})
+  let sellChanged = await market.getPastEvents("SellChanged", {fromBlock:0, toBlock:"latest"})
+  let soldBySell = await market.getPastEvents("SoldBySell", {fromBlock:0, toBlock:"latest"})
+  let sellRemoved = await market.getPastEvents("SellRemoved", {fromBlock:0, toBlock:"latest"})
+
+  var logThread = sellAdded.concat(sellChanged, soldBySell, sellRemoved)
+
+  //Inverse Priority
+  try {
+    logThread.sort(function(a, b) {
+      return (a.blockNumber - b.blockNumber)
+    })
+  } catch(e) {
+    console.error('Inverse logs error', e)
+  }
+
+  console.log('******logThread', logThread)
+  
+  //filter valid log
+  try {
+    logThread = logThread.reduceRight((sum, cur) => {
+      // console.log('sum',sum)
+      // console.log('cur', cur)
+      sum = Array.isArray(sum) ? sum : [sum]
+      if (((sum).find((el) => Object.is(el.returnValues.nameHash, cur.returnValues.nameHash)))!==undefined) {
+        return sum
+      }
+      return [cur, ...sum]
+    })
+  } catch(e) {
+    console.error('Filter vaild log error', e)
+  }
+
+  logThread = logThread.filter(item => {
+    return (item.event !== "SellRemoved" && item.event !== "SoldBySell")
+  })
+
+  console.log('******logThread', logThread)
+
+  var domainOrders = []
+  for (let log of logThread) {
+    let singleOrder = await view.methods.queryDomainInfo(log.returnValues.nameHash).call()
+    domainOrders.push(Object.assign(singleOrder, { salePrice: log.returnValues.price }))
+  }
+  console.log('******domainOrders', domainOrders)
+  return domainOrders
+}
+
+export async function getSoldDomains(chainId) {
+  const web3js = getInfuraWeb3(chainId)
+  const market = basMarketInstance(web3js, chainId)
+  const view = basViewInstance(web3js, chainId)
+
+  let soldList = await market.getPastEvents("SoldBySell", {fromBlock:0, toBlock:"latest"})
+  console.log('##########soldList', soldList)
+  
+  var soldDomains = []
+  for (log in soldList) {
+    let domainInfo = await view.methods.queryDomainInfo(log.returnValues.nameHash)
+    soldDomains.push(Object.assign({ expire: domainInfo.expiration }, log.returnValues))
+  }
+
+  return soldDomains
+}
 
 export default {
   validAdd2Market,
   addHashToMarket,
   getEWalletOrders,
   changeSellPrice,
-  deleteSellOrder
+  deleteSellOrder,
+  getOnSaleDomains,
+  getSoldDomains
 }

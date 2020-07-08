@@ -2,7 +2,7 @@
   <div>
     <div class="market-search-warp">
       <div class="container">
-        <div class="row justify-content-center align-items-center">
+        <div class="justify-content-center align-items-center">
           <div class="col-md-8 market-search--outer">
             <SearchInput />
             <!-- <el-input class="market-search--input"

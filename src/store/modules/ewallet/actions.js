@@ -217,7 +217,7 @@ export async function loadEWalletMails({ commit, rootState},payload={chainId,wal
     }
   }
 }
-
+//load personal orders
 export async function loadEWalletOrders({ commit }, payload={chainId, wallet}) {
   const chainId = payload.chainId
   const wallet = payload.wallet
@@ -250,6 +250,8 @@ export async function loadEWalletOrders({ commit }, payload={chainId, wallet}) {
 export function updateAssetProps({commit},payload){
   commit(types.UPDATE_ASSET_PROPS,payload)
 }
+
+
 export function updateEWalletOrders({commit}, payload) {
   commit(types.UPDATE_EWALLET_ORDERS, payload)
 }

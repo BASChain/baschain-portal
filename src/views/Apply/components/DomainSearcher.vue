@@ -200,8 +200,7 @@
             <div class="sugguest-tag-box">
               <span>{{$t('l.Recommend')}}</span>
             </div>
-            <div class="domain-sugguest-box"
-             >
+            <div class="domain-sugguest-box">
               <div class="sugguest-inner">
                 <div class="flex">
                   <span class="domain">
@@ -956,7 +955,7 @@ export default {
         const web3State = this.$store.getters['web3State']
         const roottext = this.topSearchText
         findDomain4Search(roottext,web3State.chainId).then(resp=>{
-          console.log(resp)
+          console.log('findDomain4Search=>resp',resp)
           if(resp.state){
             const domaintext = resp.assetinfo.domaintext
             this.asset = Object.assign({},resp.assetinfo,{name:domaintext})
@@ -1054,6 +1053,7 @@ export default {
       }
     },
     whois(){
+      console.log('namenamename', this.asset.name)
       if(this.hasRegisted && this.asset.name){
         this.$router.push({
           path:`/domain/detail/${this.asset.name}`

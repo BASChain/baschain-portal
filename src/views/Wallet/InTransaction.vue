@@ -534,6 +534,9 @@ export default {
       })
     }
   },
+  async beforeMount() {
+    
+  },
   async mounted() {
     const web3State = this.$store.getters['web3State']
     console.log('>>>>>wallet orders', this.sellItems)
@@ -547,7 +550,7 @@ export default {
     //   pagesize:this.pager.pagesize||100,
     // }
     //this.loadSellItems(params)
-  },
+  }
 }
 </script>
 <style>
