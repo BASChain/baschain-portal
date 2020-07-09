@@ -1034,7 +1034,6 @@ export default {
           }
         })
       }
-
     },
     gotoRegistSub(){
       let topText = this.asset.name
@@ -1053,7 +1052,6 @@ export default {
       }
     },
     whois(){
-      console.log('namenamename', this.asset.name)
       if(this.hasRegisted && this.asset.name){
         this.$router.push({
           path:`/domain/detail/${this.asset.name}`

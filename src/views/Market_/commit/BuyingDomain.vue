@@ -5,7 +5,7 @@
         <div class="market-buying--asset">
           <div class="bas-inline-flex">
             <p>
-              {{$t('p.MarketBuyingDomain')}} <span>{{domaintext}}</span>
+              {{$t('p.MarketBuyingDomain')}} <span>{{ this.domaintext }}</span>
             </p>
             <div class="domain-type-badge">
               <span >{{$t(`g.${getDomainType}`)}}</span>
@@ -13,15 +13,15 @@
           </div>
           <div class="bas-inline-flex">
             <div class="bas-info-label">{{$t('l.Owner')}}</div>
-            <div class="bas-info-text">aaaa{{asset.owner}}</div>
+            <div class="bas-info-text">{{ this.order.owner }}</div>
           </div>
           <div class="bas-inline-flex">
             <div class="bas-info-label">{{$t('l.ExpiredDate')}}</div>
-            <div class="bas-info-text">{{getAssetExpireDate}}</div>
+            <div class="bas-info-text">{{ this.order.expiration }}</div>
           </div>
         </div>
 
-        <div v-if="!topasset.owner" class="market-buying--top">
+        <div v-if="!this.order.isRoot" class="market-buying--top">
           <div class="bas-header-tool">
             <p>
                {{$t('p.DomainRegistSubRootInfoTitle')}}
@@ -74,7 +74,9 @@ export default {
   computed: {
     getDomainType(){
       if(!this.domaintext)return ''
-      return getDomainType(this.domaintext)
+      let type = getDomainType(this.domaintext)
+      console.log('domain type', type)
+      return type
     },
     getAssetExpireDate(){
       return dateFormat(this.asset.expire)
@@ -86,7 +88,9 @@ export default {
   data() {
     return {
       domaintext:'',
-      pricevol:'',
+      price:'',
+      nameHash: '',
+      order: {},
       asset:{
         domainhash:"",
         isroot:false,
@@ -167,36 +171,42 @@ export default {
     }
   },
   mounted() {
-    let ruleState = this.$store.getters['web3/ruleState']
-    this.ruleState = Object.assign({},ruleState)
+    // let ruleState = this.$store.getters['web3/ruleState']
+    // this.ruleState = Object.assign({},ruleState)
 
-    let decimals = ruleState.decimals ||18
+    // let decimals = ruleState.decimals ||18
 
     let params = this.$route.params;
+    let order = this.$route.params.order
+    this.order = order
+    this.price = order.salePrice;
     this.domaintext = params.domaintext
-    this.pricevol = params.pricevol;
 
-    const proxy = new DomainProxy()
-    if(this.domaintext){
-      proxy.getDomainInfo(handleDomain(this.domaintext)).then(resp=>{
-        const ret = proxy.transData(resp)
-        console.log(ret)
-        if(ret.state){
-          this.asset = Object.assign(ret.asset)
-          if(ret.asset.parent){
-            this.topasset = Object.assign(ret.asset.parent)
-          }
-        }
-      }).catch(ex=>{
+    console.log('params', params)
+    console.log('params.order.domaintext', this.domaintext)
+    console.log('params.order.isRoot', this.order.isRoot)
 
-      })
-    }
+    // const proxy = new DomainProxy()
+    // if(this.domaintext){
+    //   proxy.getDomainInfo(handleDomain(this.domaintext)).then(resp=>{
+    //     const ret = proxy.transData(resp)
+    //     console.log(ret)
+    //     if(ret.state){
+    //       this.asset = Object.assign(ret.asset)
+    //       if(ret.asset.parent){
+    //         this.topasset = Object.assign(ret.asset.parent)
+    //       }
+    //     }
+    //   }).catch(ex=>{
+
+    //   })
+    // }
 
   },
 }
 </script>
 
-<style>
+<style scoped>
 hr {
   margin-bottom: 23px;
 }
@@ -285,11 +295,11 @@ hr {
   background: rgba(255,255,255,.8);
   padding: 1.5rem 1rem;
 }
-.market-buying--asset * ,.market-buying--top * {
+/* .market-buying--asset * ,.market-buying--top * { */
   /* line-height: 1.2rem; */
   /* margin-bottom: auto; */
   /* justify-self: start; */
-}
+/* } */
 
 .domain-type-badge {
   margin-left: 1.25rem;

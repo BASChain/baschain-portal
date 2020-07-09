@@ -377,22 +377,21 @@ export async function valid4CustomizeRoot(roottext, chainId) {
   };
 }
 
-export async function queryMarketDomain(text, chainId) {
-  if (text === undefined || !text.length) throw apiErrors.PARAM_ILLEGAL
+// export async function queryMarketDomain(text, chainId) {
+//   if (text === undefined || !text.length) throw apiErrors.PARAM_ILLEGAL
 
-  const web3js = getInfuraWeb3(chainId);
-  const hash = web3js.utils.keccak256(prehandleDomain(text))
-  const view = basViewInstance(web3js, chainId)
-  const domainInfo = await view.methods.queryDomainInfo(hash).call();
-  console.log('------', domainInfo)
-  if (domainInfo.isMarketOrder) {
-    return Object.assign(domainInfo, { domaintext: text })
-  }
-  return []
-}
+//   const web3js = getInfuraWeb3(chainId);
+//   const hash = web3js.utils.keccak256(prehandleDomain(text))
+//   const view = basViewInstance(web3js, chainId)
+//   const domainInfo = await view.methods.queryDomainInfo(hash).call();
+//   console.log('------', domainInfo)
+//   if (domainInfo.isMarketOrder) {
+//     return Object.assign(domainInfo, { domaintext: text })
+//   }
+//   return []
+// }
 
 export default {
   publicMailDomains,
-  findMailInfo,
-  queryMarketDomain
+  findMailInfo
 }
