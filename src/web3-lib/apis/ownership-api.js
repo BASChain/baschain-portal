@@ -54,6 +54,7 @@ export function approveTraOspEmitter(domainhash, spender, chainId, wallet) {
 
   return owsInst.methods.approve(domainhash,spender).send({from:wallet})
 }
+
 /**
  *
  * @param {*} domainhash

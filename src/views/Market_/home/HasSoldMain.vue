@@ -11,14 +11,14 @@
             <div class="bas-list-card">
               <div class="list-card--header">
                 <div class="bas-block">
-                  <h4>{{item.nameHash}}</h4>
-                  <p class="bas-small-owner">{{item.from}}</p>
+                  <h4>{{paraseDomain(item.name)}}</h4>
+                  <p class="bas-small-owner">{{item.from | ellipsis}}</p>
                 </div>
               </div>
               <div class="list-card--footer">
                 <div class="bas-sold-num">
                   <span class="number">{{item.price}}</span>
-                  <p type="primary" class="el-icon-time bas-small-expire">{{item.expiration}}</p>
+                  <p type="primary" class="el-icon-time bas-small-expire">{{item.expire}}</p>
                 </div>
                 <div class="bas-sold-btn">
                   <el-button type="info" plain size="medium" disabled>已售</el-button>
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import {parseHexDomain} from  '@/web3-lib/utils/index.js'
 export default {
   name:"HasSoldMain",
   computed: {
@@ -48,8 +49,22 @@ export default {
     if (web3State.chainId && web3State.wallet) {
       this.$store.dispatch('market/loadMarketSolds', web3State)
     }
+  },
+  methods: {
+    paraseDomain(name) {
+      return parseHexDomain(name)
+    }
+  },
+  filters: {
+    ellipsis (value) {
+      let len=value.length;
+      if (!value) return ''
+      if (value.length > 10) {
+        return value.substring(0,6) + '...' +value.substring(len-4,len)
+      }
+      return value
+		}
   }
-
 }
 </script>
 <style scoped>

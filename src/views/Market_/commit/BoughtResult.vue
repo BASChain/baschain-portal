@@ -60,7 +60,10 @@
 </template>
 
 <script>
+import { approveTokenEmitter } from '@/web3-lib/apis/token-api'
+import { buyFromMarket, getMarketAddress } from '@/web3-lib/apis/market-api'
 import LoadingDot from '@/components/LoadingDot.vue'
+
 import {getWeb3State} from '@/bizlib/web3'
 import {approveToMarketEmitter} from '@/bizlib/web3/token-api'
 import {buyFromSellEmitter} from '@/bizlib/web3/market-api'
@@ -91,14 +94,11 @@ export default {
   data() {
     return {
       ctrl:{
-        completed:false,
+        completed: false,
       },
       buyingState:'approving',//confirm
-      data:{
-        domaintext:'',
-      },
-      transactions:[
-      ],
+      data: {},
+      transactions:[],
       ruleState:{
         decimals:18
       }
@@ -118,81 +118,73 @@ export default {
     },
     commitApprove(){
       let data = this.data;
-      if(!data.owner || !data.hash || !data.costWei){
+      if(!data.owner || !data.nameHash || !data.costWei){
         throw new Error('illegal arguments.')
         return;
       }
-      let web3State = getWeb3State()
+      const web3State = this.$store.getters['web3State']
       let chainId = web3State.chainId;
       let wallet = web3State.wallet;
 
       console.log(">>>>>>>>>>Approve>>>>>>>",data.owner,data.costWei,chainId,wallet)
-      approveToMarketEmitter({
-        costWei:data.costWei,
-        owner:data.owner,
-        chainId,
-        wallet
-      }).on('transactionHash',(txhash)=>{
-        this.buyingState = 'approving'
-        this.addTxHashItem(txhash,'loading')
-      }).on('receipt',(receipt)=>{
-        let status = receipt.status;
-
-        this.updateTxHashItem(receipt.transactionHash,'success')
-        this.buyingState = 'confirming'
-      }).on('err',(err,receipt)=>{
-        console.log(err)
-        this.buyingState = 'fail'
-        //4001
-        let errMsg = this.$t('g.MetaMaskRejectedAuth')
-        if(err.code === 4001){
-          this.$message(this.$basTip.error(errMsg))
-        }else if(err.code === -32601 && err.message){
-          this.$message(this.$basTip.error(err.message))
-        }
-        this.updateTxHashItem(receipt.transactionHash,'fail')
-      })
-
-    },
-    buySendTransaction(){
-
-      let data = this.data;
-      console.log('excute buying>>>>>Send>',data)
-      let web3State = getWeb3State()
-      let chainId = web3State.chainId;
-      let wallet = web3State.wallet;
+      
+      let spender = getMarketAddress(chainId)
       let that = this;
-      buyFromSellEmitter(data.hash,data.owner,chainId,wallet)
-        .on('transactionHash',(txhash)=>{
-          that.addTxHashItem(txhash,'loading')
-        }).on('receipt',(receipt)=>{
-          console.log('Buy Complete>>>>>',receipt)
-          let status = receipt.status;
-          if(status){
-            that.buyingState = 'success'
-
-            that.updateTxHashItem(receipt.transactionHash,'success')
-          }else{
-            that.buyingState = 'fail'
-            that.updateTxHashItem(receipt.transactionHash,'fail')
-          }
-          that.ctrl.completed = true
-        }).on('err',(err,receipt)=>{
-          console.log(err)
-          that.buyingState = 'fail'
-          //4001
-          let errMsg = that.$t('g.MetaMaskRejectedAuth')
-          if(err.code === 4001){
-            that.$message(that.$basTip.error(errMsg))
-          }else if(err.code === -32601 && err.message){
-            that.$message(that.$basTip.error(err.message))
-          }
-
-          if(receipt){
-            that.updateTxHashItem(receipt.transactionHash,'fail')
-          }
-        })
+      approveTokenEmitter(spender, data.costWei, chainId, wallet).on('transactionHash', txhash => {
+        that.buyingState = 'approving'
+        that.addTxHashItem(txhash, 'loading')
+      }).on('receipt', async (receipt) => {
+        let status = receipt.status
+        try {
+          console.log(">>>>>>>>>>Confirm>>>>>>>",data.nameHash,data.owner,data.costWei,chainId,wallet)
+          that.buyingState = 'confirming'
+          const res = await buyFromMarket(data.nameHash, data.owner, data.costWei, chainId, wallet)
+        } catch(e) {
+          console.error('buy from market err', e)
+        }
+        that.updateTxHashItem(receipt.transactionHash, 'success')
+        
+      }).on('error', (err, receipt) => {
+        that.buyingState = 'fail'
+        if (receipt) {
+          that.updateTxHashItem(receipt.transactionHash, 'fail')
+        }
+      })
     },
+    // buySendTransaction() {
+    //   let data = this.data;
+    //   console.log('excute buying>>>>>Send>',data)
+    //   const web3State = this.$store.getters['web3State']
+    //   let chainId = web3State.chainId;
+    //   let wallet = web3State.wallet;
+    //   let that = this;
+      // .on('transactionHash', txhash => {
+      //   that.addTxHashItem(txhash, 'loading')
+      // }).on('receipt', receipt => {
+      //   let status = receipt.status
+      //   if (status) {
+      //     that.buyingState = 'success'
+      //     that.updateTxHashItem(receipt.transactionHash, 'success')
+      //   } else {
+      //     that.buyingState = 'fail'
+      //     that.updateTxHashItem(receipt.transactionHash,'fail')
+      //   }
+      //   that.ctrl.completed = true
+      // }).on('error', (err, receipt) => {
+      //   that.buyingState = 'fail'
+      //   if(ex.code === 4001){
+      //     let errMsg = that.$t(`code.${ex.code}`)
+      //     that.$message(that.$basTip.error(errMsg))
+      //   }else if(ex.code === -32601 && ex.message){
+      //     that.$message(that.$basTip.error(ex.message))
+      //   }else{
+      //     console.error(ex)
+      //   }
+      //   if(receipt){
+      //     that.updateTxHashItem(receipt.transactionHash,'fail')
+      //   }
+      // })
+    // },
     gotoUpdateDNS(){
       let fullDomain = this.data.domaintext
       console.log(fullDomain)
@@ -212,19 +204,17 @@ export default {
     }
   },
   mounted() {
-    this.dappState = Object.assign({},this.$store.getters['web3/dappState'])
-    let commitData = this.$route.params.commitData;
-    if(commitData)this.data = Object.assign({},commitData)
-    //this.data.costWei = 50*10**18
-    console.log('',commitData)
+    // this.dappState = Object.assign({},this.$store.getters['web3/dappState'])
+    this.data = this.$route.params.commitData;
+    console.log('commitData', this.data)
     this.commitApprove()
   },
   watch: {
-    buyingState:function(val,old){
-      if(old === 'approving' && val === 'confirming'){
-        this.buySendTransaction()
-      }
-    }
+    // buyingState:function(val,old){
+    //   if(old === 'approving' && val === 'confirming'){
+    //     this.buySendTransaction()
+    //   }
+    // }
   },
 }
 </script>

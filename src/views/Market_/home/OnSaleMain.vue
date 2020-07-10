@@ -15,7 +15,7 @@
                   <div class="bas-block">
                     <h4>{{paraseDomain(item.name)}}</h4>
                     <p class="bas-small-owner">
-                      {{item.owner}}
+                      {{item.owner | ellipsis}}
                     </p>
                   </div>
                   <div class="inline-btn-group">
@@ -159,6 +159,16 @@ export default {
       this.$store.dispatch('market/loadMarketOrders', web3State)
     }
   },
+  filters: {
+    ellipsis (value) {
+      let len=value.length;
+      if (!value) return ''
+      if (value.length > 10) {
+        return value.substring(0,6) + '...' +value.substring(len-4,len)
+      }
+      return value
+		}
+  }
 }
 </script>
 <style scoped>

@@ -2,13 +2,14 @@
 import { winWeb3 } from "../index";
 import apiErrors from "../api-errors";
 import { checkSupport } from '../networks'
-import { isOwner, assertExpired, parseHexDomain, dateFormat, prehandleDomain } from "../utils";
+import { isOwner, assertExpired, parseHexDomain, dateFormat, prehandleDomain, compareWei2Wei } from "../utils";
 
 import ContractJson from '../abi-manager'
 
 import {
   basViewInstance,
   basMarketInstance,
+  basTokenInstance
 } from "./index";
 import { getInfuraWeb3 } from "../infura";
 import { compare } from "semver";
@@ -122,6 +123,7 @@ export async function changeSellPrice(domainhash, unitwei, chainId, wallet) {
   const market = basMarketInstance(web3js, chainId, { from: wallet })
   return market.methods.ChangeSellPrice(domainhash, unitwei).send({ from: wallet })
 }
+
 /**
  * remove order on market
  * @param {*} domainhash
@@ -135,6 +137,7 @@ export function deleteSellOrder(domainhash, chainId, wallet) {
   const market = basMarketInstance(web3js, chainId, { from: wallet })
   return market.methods.RemoveSellOrder(domainhash).send({ from: wallet })
 }
+
 /**
  * get onsale hash array list
  * @param {*} chainId
@@ -192,6 +195,10 @@ export async function getOnSaleDomains(chainId) {
   return domainOrders
 }
 
+/**
+ * get sold domain list
+ * @param {*} chainId
+ */
 export async function getSoldDomains(chainId) {
   const web3js = getInfuraWeb3(chainId)
   const market = basMarketInstance(web3js, chainId)
@@ -201,15 +208,39 @@ export async function getSoldDomains(chainId) {
   console.log('##########soldList', soldList)
   
   var soldDomains = []
-  for (log in soldList) {
-    let domainInfo = await view.methods.queryDomainInfo(log.returnValues.nameHash)
-    soldDomains.push(Object.assign({ expire: domainInfo.expiration }, log.returnValues))
+  for (let log of soldList) {
+    let domainInfo = await view.methods.queryDomainInfo(log.returnValues.nameHash).call()
+    soldDomains.push(Object.assign(log.returnValues, { expire: domainInfo.expiration, name: domainInfo.name }))
   }
-
+  console.log('##########soldDomains', soldDomains)
   return soldDomains
 }
 
+/**
+ * buy domain from market
+ * @param {*} chainId
+ * @param {*} price
+ * @param {*} nameHash
+ * @param {*} owner
+ * @param {*} wallet
+ */
+export async function buyFromMarket(nameHash, owner, price, chainId, wallet) {
+  const web3js = winWeb3()
+  const market = basMarketInstance(web3js, chainId, { from: wallet })
+  const token = basTokenInstance(web3js, chainId, { from: wallet })
 
+  //查余额
+  const costwei = price.toString()
+  const walletwei = await token.methods.balanceOf(wallet).call()
+  if (compareWei2Wei(walletwei, costwei) < 0) throw ApiErrors.LACK_OF_TOKEN
+
+  return market.methods.BuyFromSells(nameHash, owner).send({ from: wallet })
+}
+
+
+export function getMarketAddress(chainId) {
+  return ContractJson.BasMarket(chainId).address
+}
 // export async function queryMarketDomain(text, chainId) {
 //   // if (text === undefined || !text.length) throw apiErrors.PARAM_ILLEGAL
 
@@ -248,4 +279,6 @@ export default {
   deleteSellOrder,
   getOnSaleDomains,
   getSoldDomains,
+  buyFromMarket,
+  getMarketAddress
 }

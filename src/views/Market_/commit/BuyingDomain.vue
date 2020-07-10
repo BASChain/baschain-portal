@@ -32,7 +32,7 @@
           </div>
           <div class="bas-inline-flex">
             <div class="bas-info-label--sub">{{$t('p.ApplyTabRootName')+'：'}}</div>
-            <div class="bas-info-text--sub">aaaa{{topasset.name}}</div>
+            <div class="bas-info-text--sub">{{topasset.name}}</div>
           </div>
           <div class="bas-inline-flex">
             <div class="bas-info-label--sub">{{$t('l.Owner')+'：'}}</div>
@@ -40,14 +40,14 @@
           </div>
           <div class="bas-inline-flex">
             <div class="bas-info-label--sub">{{$t('l.ExpiredDate')+'：'}}</div>
-            <div class="bas-info-text--sub">{{getTopAssetExpireDate}}</div>
+            <div class="bas-info-text--sub">{{topasset.expire}}</div>
           </div>
         </div>
         <hr/>
         <div class="market-buying--foot mt-4">
           <div class="bas-inline-flex--center">
             <span class="payment-prefix">{{$t('l.PaymentAmout')+'：'}}</span>
-            <span class="bas-number">{{pricevol}}</span>
+            <span class="bas-number">{{this.price}}</span>
           </div>
           <div class="bas-inline-flex--center">
             <button @click="submitBuying"
@@ -66,9 +66,10 @@ import {
   handleDomain,dateFormat,diffBnFloat,transBAS2Wei
 } from '@/utils'
 import {getDomainType} from '@/utils/Validator.js'
-import {getWeb3State} from '@/bizlib/web3'
-import {getNewBalance,checkBalance} from '@/bizlib/web3/token-api'
-import DomainProxy from '@/proxies/DomainProxy.js'
+// import {getWeb3State} from '@/bizlib/web3'
+// import {getNewBalance,checkBalance} from '@/bizlib/web3/token-api'
+
+import {findDomain4Search} from '@/web3-lib/apis/view-api'
 export default {
   name:"MarketBuyingDomain",
   computed: {
@@ -91,22 +92,14 @@ export default {
       price:'',
       nameHash: '',
       order: {},
-      asset:{
-        domainhash:"",
-        isroot:false,
-        name:"",
-        owner:""
-      },
       topasset:{
         domainhash:"",
         name:"",
-        owner:""
+        owner:"",
+        expire:""
       },
       ctrl:{
         loading:false
-      },
-      ruleState:{
-
       }
     }
   },
@@ -123,37 +116,44 @@ export default {
         this.$metamask()
         return;
       }
-      const web3State = getWeb3State()
+      const web3State = this.$store.getters['web3State']
+
       console.log(web3State)
-      let decimals = 18;
 
       const commitData = {
-        domaintext:this.domaintext,
-        hash:this.asset.domainhash,
-        costWei:transBAS2Wei(this.pricevol),
-        pricevol:this.pricevol,
-        owner:this.asset.owner
+        nameHash: this.order.nameHash,
+        costWei: transBAS2Wei(this.price),
+        price: this.price,
+        owner: this.order.owner
       }
-      //检查余额
+      console.log(commitData)
       this.ctrl.loading = true
-      checkBalance(web3State.chainId,web3State.wallet,this.pricevol).then(ret=>{
-        console.log('Balance Check:',ret)
-        this.ctrl.loading = false
-        this.$router.push({
-          name:'market.bought',
-          params:{
-            commitData
-          }
-        })
-      }).catch(ex=>{
-        console.log(ex)
-        this.ctrl.loading = false
-        if(ex === 1002){
-          this.$message(this.$basTip.error(this.$t('g.LackOfBasBalance')))
-        }else if(ex === 1003 ){
-          this.$message(this.$basTip.error(this.$t('g.LackOfBasBalance')))
+
+      this.$router.push({
+        name: 'market.bought',
+        params: {
+          commitData
         }
       })
+
+      // checkBalance(web3State.chainId,web3State.wallet,this.pricevol).then(ret=>{
+      //   console.log('Balance Check:',ret)
+      //   this.ctrl.loading = false
+      //   this.$router.push({
+      //     name:'market.bought',
+      //     params:{
+      //       commitData
+      //     }
+      //   })
+      // }).catch(ex=>{
+      //   console.log(ex)
+      //   this.ctrl.loading = false
+      //   if(ex === 1002){
+      //     this.$message(this.$basTip.error(this.$t('g.LackOfBasBalance')))
+      //   }else if(ex === 1003 ){
+      //     this.$message(this.$basTip.error(this.$t('g.LackOfBasBalance')))
+      //   }
+      // })
       // getNewBalance().then(resp=>{
       //   if(!resp.basBal || diffBnFloat(commitData.costWei,resp.basBal)){
       //     this.$message(this.$basTip.error(this.$t('g.LackOfBasBalance')))
@@ -171,11 +171,6 @@ export default {
     }
   },
   mounted() {
-    // let ruleState = this.$store.getters['web3/ruleState']
-    // this.ruleState = Object.assign({},ruleState)
-
-    // let decimals = ruleState.decimals ||18
-
     let params = this.$route.params;
     let order = this.$route.params.order
     this.order = order
@@ -184,24 +179,21 @@ export default {
 
     console.log('params', params)
     console.log('params.order.domaintext', this.domaintext)
-    console.log('params.order.isRoot', this.order.isRoot)
-
-    // const proxy = new DomainProxy()
-    // if(this.domaintext){
-    //   proxy.getDomainInfo(handleDomain(this.domaintext)).then(resp=>{
-    //     const ret = proxy.transData(resp)
-    //     console.log(ret)
-    //     if(ret.state){
-    //       this.asset = Object.assign(ret.asset)
-    //       if(ret.asset.parent){
-    //         this.topasset = Object.assign(ret.asset.parent)
-    //       }
-    //     }
-    //   }).catch(ex=>{
-
-    //   })
-    // }
-
+    const web3State = this.$store.getters['web3State']
+    let rootText = this.domaintext.split('.')[1]
+    console.log('rootText', rootText)
+    if (rootText!==undefined) {
+      findDomain4Search(rootText, web3State.chainId).then(resp => {
+        console.log('resp', resp)
+        this.topasset.domainhash = resp.assetinfo.hash
+        this.topasset.name = rootText
+        this.topasset.owner = resp.assetinfo.owner
+        this.topasset.expire = dateFormat(resp.assetinfo.expire)
+        console.log('topasset', this.topasset)
+      }).catch(e => {
+        console.error(e)
+      })
+    }
   },
 }
 </script>
