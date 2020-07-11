@@ -83,37 +83,7 @@ export default {
       pagesize:8,
       ruleState:{
         decimals:18
-      },
-      domains: [
-        {
-          owner: '0x08970…59FB',
-          domaintext: 'rte',
-          shortAddress: '0x08970…59FB',
-          sellprice: '2000',
-          expireDate: '2020-05-06'
-        },
-        {
-          owner: '0x08970…59FB',
-          domaintext: 'ngx',
-          shortAddress: '0x08970…59FB',
-          sellprice: '9000',
-          expireDate: '2020-05-06'
-        },
-        {
-          owner: '0x08970…59FB',
-          domaintext: 'coco.bas',
-          shortAddress: '0x08970…59FB',
-          sellprice: '7800',
-          expireDate: '2020-05-06'
-        },
-        {
-          owner: '0x08970…59FB',
-          domaintext: 'nn',
-          shortAddress: '0x08970…59FB',
-          sellprice: '1900',
-          expireDate: '2020-05-06'
-        }
-      ]
+      }
     }
   },
   watch: {
@@ -155,9 +125,9 @@ export default {
   },
   async mounted(){
     const web3State = this.$store.getters['web3State']
-    if (web3State.chainId && web3State.wallet) {
+    // if (web3State.chainId && web3State.wallet) {
       this.$store.dispatch('market/loadMarketOrders', web3State)
-    }
+    // }
   },
   filters: {
     ellipsis (value) {

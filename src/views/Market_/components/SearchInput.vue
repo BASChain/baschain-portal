@@ -14,17 +14,17 @@
     </el-input>
     <div v-if="this.searched" class="bas-search-res">
       <div v-if="this.order.name!==undefined" class="append-result">
-        <div class="res-domain">{{this.inputInfo}}</div>
+        <div class="res-domain">{{inputInfo}}</div>
         <div class="res-text">{{$t('l.OnSale')}}</div>
         <el-button type="primary" size="mini" class="res-btn" @click="goBuySell">{{$t('l.Buying')}}</el-button>
       </div>
       <div v-if="this.order.name===undefined && this.registState" class="append-result">
-        <div class="res-domain">{{this.inputInfo}}</div>
+        <div class="res-domain">{{inputInfo}}</div>
         <div class="res-text">{{$t('l.HasBeenRegisted')}}</div>
         <el-button type="primary" size="mini" class="res-btn" @click="whois">Whois</el-button>
       </div>
       <div v-if="this.order.name===undefined && !this.registState" class="append-result">
-        <div class="res-domain">{{this.inputInfo}}</div>
+        <div class="res-domain">{{inputInfo}}</div>
         <div class="res-text">{{$t('l.Unregist')}}</div>
         <el-button type="primary" size="mini" class="res-btn" @click="goApplyPage">{{$t('l.gotoRegistBtn')}}</el-button>
       </div>
@@ -72,11 +72,18 @@
 import { parseHexDomain, strToHex } from '@/web3-lib/utils';
 import {findDomain4Search} from '@/web3-lib/apis/view-api'
 
+import {
+  getDomainType,isSub,
+  CheckSearchLegal,getDomainTopType,
+  CheckLegalRoot
+} from '@/utils/Validator.js'
+
 export default {
   name: 'SearchInput',
   data() {
     return {
       inputInfo: '',
+      searchAsset: '',
       searched: false,
       order: {},
       registState: false,
@@ -89,6 +96,22 @@ export default {
     })
   },
   methods: {
+    validPopTips(text,isSub){
+      let msg = ''
+      if(!text){
+        msg = this.$t('l.DomainSearchInputTips')
+        this.$message(this.$basTip.error(msg))
+        return false;
+      }
+      try{
+        CheckSearchLegal(text,isSub)
+        return true;
+      }catch(ex){
+        msg = this.$t(`code.${ex}`,{max:MAX_ROOTDOMAIN_LENGTH})
+        this.$message(this.$basTip.error(msg))
+        return false;
+      }
+    },
     InputChange() {
       this.searched = false
       this.order = {}
@@ -97,34 +120,36 @@ export default {
     },
     queryDomains() {
       console.log('query>>>>>', this.inputInfo)
-      const web3State = this.$store.getters["web3State"]
-      const name = strToHex(this.inputInfo)
-      console.log('strToHex', name)
-      console.log('saleOrders', this.saleOrders)
-      let orders = this.saleOrders
-      for (let i of orders) {
-        if (i.name === name) {
-          this.order = i
-          break
-        }
-      }
-      console.log('this.order', this.order)
-      if (this.order.name === undefined) {
-        findDomain4Search(this.inputInfo, web3State.chainId).then(resp=>{
-          console.log('findDomain4Search=>resp',resp)
-          if(resp.state){
-            const domaintext = resp.assetinfo.domaintext
-            this.asset = Object.assign({},resp.assetinfo,{name:domaintext})
-            this.registState = true
-          }else{
-            this.registState = false
+      if (this.validPopTips(this.inputInfo, isSub(this.inputInfo))) {
+        const web3State = this.$store.getters["web3State"]
+        const name = strToHex(this.inputInfo)
+        console.log('strToHex', name)
+        console.log('saleOrders', this.saleOrders)
+        let orders = this.saleOrders
+        for (let i of orders) {
+          if (i.name === name) {
+            this.order = i
+            break
           }
-        }).catch(ex=>{
-          console.log(ex)
-          this.$message(this.$basTip.error('查询服务出错'))
-        })
+        }
+        console.log('this.order', this.order)
+        if (this.order.name === undefined) {
+          findDomain4Search(this.inputInfo, web3State.chainId).then(resp=>{
+            console.log('findDomain4Search=>resp',resp)
+            if(resp.state){
+              const domaintext = resp.assetinfo.domaintext
+              this.asset = Object.assign({},resp.assetinfo,{name:domaintext})
+              this.registState = true
+            } else {
+              this.registState = false
+            }
+          }).catch(ex=>{
+            console.log(ex)
+            this.$message(this.$basTip.error('查询服务出错'))
+          })
+        }
+        this.searched = true
       }
-      this.searched = true
     },
     whois() {
       this.$router.push({
@@ -132,10 +157,43 @@ export default {
       })
     },
     goApplyPage() {
-      this.$router.push({ path: '/apply' })
+      if (this.$store.getters['metaMaskDisabled']) {
+        this.$metamask()
+        return
+      }
+      let text = this.inputInfo
+      if (isSub(text)) {
+        let subText = text.split('.')[0]
+        let topText = text.split('.')[1]
+        // if (!topText) {
+        //   return
+        // }
+        this.$router.push({
+          path:`/domain/applysub/${topText}/${subText}`,
+        })
+      } else {
+        this.$router.push({
+          name:"domain.applydomain",
+          params:{
+            domainText: text
+          }
+        })
+      }
+      // this.$router.push({ path: '/apply' })
     },
     goBuySell() {
       this.$router.push({ name: `market.buying`, params: { order: this.order, domaintext: this.inputInfo } })
+    }
+  },
+  watch: {
+    inputInfo(val,old){
+      if(val===''){
+        this.searched = false;
+      }
+      this.inputInfo = (val+'').trim().toLowerCase()
+      if(val !== old ){
+        this.searched = false;
+      }
     }
   }
 }

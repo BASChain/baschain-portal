@@ -10,11 +10,11 @@ import {
 } from '@/bascore/indexDBService'
 
 export async function loadMarketOrders({commit}, payload={chainId}) {
-  const chainId = payload.chainId
+  let chainId = payload.chainId
 
-  if (!chainId || !checkSupport(chainId)) {
-    console.error("chainId error")
-  } else {
+  // if (!chainId || !checkSupport(chainId)) {
+  //   chainId = 3
+  // } else {
     console.log('load market order list...')
     try {
       let onsaleDomains = await getOnSaleDomains(chainId)
@@ -32,7 +32,7 @@ export async function loadMarketOrders({commit}, payload={chainId}) {
     } catch (e) {
       console.error('load market onsale error', e)
     }
-  }
+  // }
 }
 
 export function updateMarketOrders({commit}, assets) {
@@ -42,9 +42,9 @@ export function updateMarketOrders({commit}, assets) {
 export async function loadMarketSolds({commit}, payload={chainId}) {
   const chainId = payload.chainId
 
-  if (!chainId || !checkSupport(chainId)) {
-    console.error('chainid error')
-  } else {
+  // if (!chainId || !checkSupport(chainId)) {
+  //   console.error('chainid error')
+  // } else {
     // console.log('load market sold')
     try {
       let soldDomains = await getSoldDomains(chainId)
@@ -60,7 +60,7 @@ export async function loadMarketSolds({commit}, payload={chainId}) {
     } catch (e) {
       console.error('load market sold faild', e)
     }
-  }
+  // }
 }
 
 export function updateMarketSolds({ commit }, assets) {

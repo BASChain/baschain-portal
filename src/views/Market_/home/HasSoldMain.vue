@@ -46,9 +46,9 @@ export default {
   },
   async mounted() {
     const web3State = this.$store.getters['web3State']
-    if (web3State.chainId && web3State.wallet) {
+    // if (web3State.chainId && web3State.wallet) {
       this.$store.dispatch('market/loadMarketSolds', web3State)
-    }
+    // }
   },
   methods: {
     paraseDomain(name) {

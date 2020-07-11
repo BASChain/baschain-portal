@@ -841,7 +841,7 @@ export default {
       }
     },
     resetSearchData(){
-      const asset= {
+      const asset = {
         name:'',
         owner:'',
         expire:'',
