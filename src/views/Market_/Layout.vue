@@ -11,7 +11,7 @@
 <style>
 .bas-buy-button {
   padding-top: 3px;
-  margin-left: 24px;
+  margin-left: 16px;
 }
 .inline-btn-group {
   display: flex;

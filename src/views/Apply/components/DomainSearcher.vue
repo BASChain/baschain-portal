@@ -200,8 +200,7 @@
             <div class="sugguest-tag-box">
               <span>{{$t('l.Recommend')}}</span>
             </div>
-            <div class="domain-sugguest-box"
-             >
+            <div class="domain-sugguest-box">
               <div class="sugguest-inner">
                 <div class="flex">
                   <span class="domain">
@@ -842,7 +841,7 @@ export default {
       }
     },
     resetSearchData(){
-      const asset= {
+      const asset = {
         name:'',
         owner:'',
         expire:'',
@@ -956,7 +955,7 @@ export default {
         const web3State = this.$store.getters['web3State']
         const roottext = this.topSearchText
         findDomain4Search(roottext,web3State.chainId).then(resp=>{
-          console.log(resp)
+          console.log('findDomain4Search=>resp',resp)
           if(resp.state){
             const domaintext = resp.assetinfo.domaintext
             this.asset = Object.assign({},resp.assetinfo,{name:domaintext})
@@ -1035,7 +1034,6 @@ export default {
           }
         })
       }
-
     },
     gotoRegistSub(){
       let topText = this.asset.name
@@ -1065,7 +1063,7 @@ export default {
   async beforeMount() {
     try{
       const assets = await checkStorage(ROOT_ASSETS)
-      console.log('assets',assets)
+      // console.log('assets',assets)
       if(assets && assets.length && this.topSelectText === '.'){
         console.log('fill default selectTopText',assets[0].domaintext)
         this.selectTopText(assets[0].domaintext)

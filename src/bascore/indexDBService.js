@@ -12,6 +12,9 @@ export const WALLET_ASSETS = "wallet_assets"
 export const WALLET_MAILS = "wallet_mails"
 export const MARKET_ASSETS = "market_assets"
 
+export const MARKET_ONSALE = "market_onsale"
+export const MARKET_SOLD = "market_sold"
+
 const dbPromise = _ => {
   if(!('indexedDB' in window)){
     throw new Error('Browser does not support IndexedDB.')
@@ -38,6 +41,12 @@ const dbPromise = _ => {
     }
     if (!upgradeDb.objectStoreNames.contains(MARKET_ASSETS)) {
       upgradeDb.createObjectStore(MARKET_ASSETS);
+    }
+    if (!upgradeDb.objectStoreNames.contains(MARKET_ONSALE)) {
+      upgradeDb.createObjectStore(MARKET_ONSALE)
+    }
+    if (!upgradeDb.objectStoreNames.contains(MARKET_SOLD)) {
+      upgradeDb.createObjectStore(MARKET_SOLD)
     }
   })
 }
