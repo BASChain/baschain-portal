@@ -344,9 +344,6 @@ export default {
       const chainId = web3State.chainId
       const wallet = web3State.wallet
       let hash = this.revokeDialog.hash;
-
-      // let web3State = getWeb3State()
-      // const hash = this.revokeDialog.hash;
       console.log('delete order',hash,chainId,wallet)
       try {
         let that = this
@@ -442,11 +439,16 @@ export default {
       }
     },
     reloadSellItems(){
-      const params = {
-        pagenumber:this.pager.pagenumber,
-        pagesize:this.pager.pagesize
+      // const params = {
+      //   pagenumber:this.pager.pagenumber,
+      //   pagesize:this.pager.pagesize
+      // }
+      const web3State = this.$store.getters['web3State']
+      console.log('>>>>>wallet orders', this.sellItems)
+      if (web3State.chainId && web3State.wallet) {
+        this.$store.dispatch('ewallet/loadEWalletOrders', web3State)
       }
-      this.loadSellItems(params)
+      // this.loadSellItems(params)
     },
     pagerChange(val){
       this.pageTrigger(val)
@@ -503,9 +505,6 @@ export default {
         this.pager.loading = false;
       })
     }
-  },
-  async beforeMount() {
-    
   },
   async mounted() {
     const web3State = this.$store.getters['web3State']

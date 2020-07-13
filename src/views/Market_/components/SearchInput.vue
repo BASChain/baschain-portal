@@ -70,8 +70,8 @@
 </style>
 <script>
 import { parseHexDomain, strToHex } from '@/web3-lib/utils';
-import {findDomain4Search} from '@/web3-lib/apis/view-api'
-
+import { findDomain4Search } from '@/web3-lib/apis/view-api'
+import { isOwner } from '@/utils'
 import {
   getDomainType,isSub,
   CheckSearchLegal,getDomainTopType,
@@ -182,6 +182,16 @@ export default {
       // this.$router.push({ path: '/apply' })
     },
     goBuySell() {
+      if(this.$store.getters['metaMaskDisabled']){
+        this.$metamask()
+        return;
+      }
+      // const web3State = getWeb3State()
+      const web3State = this.$store.getters['web3State']
+      if(isOwner(this.order.owner, web3State.wallet)){
+        this.$message(this.$basTip.error('当前域名已在您账户下,不需要购买.'))
+        return;
+      }
       this.$router.push({ name: `market.buying`, params: { order: this.order, domaintext: this.inputInfo } })
     }
   },

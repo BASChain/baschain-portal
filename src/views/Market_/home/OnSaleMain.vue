@@ -86,9 +86,6 @@ export default {
       }
     }
   },
-  watch: {
-    
-  },
   methods: {
     paraseDomain(name) {
       return parseHexDomain(name)
@@ -106,19 +103,21 @@ export default {
         this.$metamask()
         return;
       }
-      const web3State = getWeb3State()
+      // const web3State = getWeb3State()
+      const web3State = this.$store.getters['web3State']
       if(isOwner(data.owner,web3State.wallet)){
         this.$message(this.$basTip.error('当前域名已在您账户下,不需要购买.'))
         return;
       }
       console.log(data)
-      let domaintext = data.domaintext
-      let pricevol = data.sellprice
-      //isOwner
+      let domaintext = parseHexDomain(data.name)
+      let pricevol = data.salePrice
 
+      console.log(domaintext, pricevol)
       if(domaintext && typeof pricevol !== 'undefined'){
         this.$router.push({
-          path:`/market/buying/${domaintext}/${pricevol}`
+          name: `market.buying`,
+          params: { order: data, domaintext: domaintext }
         })
       }
     }
@@ -141,7 +140,4 @@ export default {
   }
 }
 </script>
-<style scoped>
 
-
-</style>

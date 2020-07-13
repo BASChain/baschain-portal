@@ -19,9 +19,8 @@
               Transaction Hash
             </h4>
           </div>
-          <div class="text item bas-inline-between"
-            v-for="(item,index) in transactions" :key="index">
-            <div class="">{{item.hash}}</div>
+          <div v-for="(item, index) in transactions" :key="index" class="text item bas-inline-between">
+            <div class="">{{ item.hash }}</div>
             <div v-if="item.state === 'loading'">
               <loading-dot />
             </div>
@@ -94,26 +93,21 @@ export default {
   data() {
     return {
       ctrl:{
-        completed: false,
+        completed: false
       },
       buyingState:'approving',//confirm
       data: {},
-      transactions:[],
-      ruleState:{
-        decimals:18
-      }
+      transactions:[]
     }
   },
   methods: {
-    addTxHashItem(hash,state){
-      this.transactions.push({
-        hash,state
-      })
+    addTxHashItem(hash, state) {
+      this.transactions.push({ hash,state })
     },
-    updateTxHashItem(hash,state){
-      let idx = this.transactions.findIndex(el => el.hash === hash)
-      if(idx >= 0){
-        this.transactions.splice(idx,1,{hash,state})
+    updateTxHashItem(hash, state) {
+      let index = this.transactions.findIndex(el => el.hash === hash)
+      if (index >= 0) {
+        this.transactions.splice(index, 1, { hash, state })
       }
     },
     commitApprove(){
@@ -126,65 +120,82 @@ export default {
       let chainId = web3State.chainId;
       let wallet = web3State.wallet;
 
-      console.log(">>>>>>>>>>Approve>>>>>>>",data.owner,data.costWei,chainId,wallet)
+      console.log(">>>>>>>>>>Approve>>>>>>>", data.owner, data.costWei, chainId, wallet)
       
       let spender = getMarketAddress(chainId)
+      console.log('market address', spender)
       let that = this;
       approveTokenEmitter(spender, data.costWei, chainId, wallet).on('transactionHash', txhash => {
         that.buyingState = 'approving'
         that.addTxHashItem(txhash, 'loading')
-      }).on('receipt', async (receipt) => {
-        let status = receipt.status
-        try {
-          console.log(">>>>>>>>>>Confirm>>>>>>>",data.nameHash,data.owner,data.costWei,chainId,wallet)
-          that.buyingState = 'confirming'
-          const res = await buyFromMarket(data.nameHash, data.owner, data.costWei, chainId, wallet)
-        } catch(e) {
-          console.error('buy from market err', e)
-        }
+        console.log('that.transactions>>>>>', that.transactions)
+      }).on('receipt', (receipt) => {
+        console.log('receipt IN COMMIT &&&&&&&&', receipt.status)
+        that.buyingState = 'confirming'
         that.updateTxHashItem(receipt.transactionHash, 'success')
-        
       }).on('error', (err, receipt) => {
         that.buyingState = 'fail'
-        if (receipt) {
+        if (receipt.status) {
           that.updateTxHashItem(receipt.transactionHash, 'fail')
         }
       })
     },
-    // buySendTransaction() {
-    //   let data = this.data;
-    //   console.log('excute buying>>>>>Send>',data)
-    //   const web3State = this.$store.getters['web3State']
-    //   let chainId = web3State.chainId;
-    //   let wallet = web3State.wallet;
-    //   let that = this;
+    buySendTransaction() {
+      let data = this.data;
+      console.log('excute buying>>>>>Send>', data)
+      const web3State = this.$store.getters['web3State']
+      let chainId = web3State.chainId;
+      let wallet = web3State.wallet;
+      
+      // let res = await buyFromMarket()
+
+
+      let that = this;
+      try {
+        buyFromMarket(data.nameHash, data.owner, data.costWei, chainId, wallet)
+        .then(function(receipt) {
+          console.log('buyFromMarket>>>>receipt', receipt)
+          if (receipt.status) {
+            that.buyingState = 'success'
+            that.addTxHashItem(receipt.transactionHash, 'success')
+          } else {
+            that.buyingState = 'fail'
+            that.addTxHashItem(receipt.transactionHash, 'fail')
+          }
+          that.ctrl.completed = true
+        })
+      } catch (error) {
+        console.error(error)
+      }
+      
       // .on('transactionHash', txhash => {
-      //   that.addTxHashItem(txhash, 'loading')
+      //   
+      //   console.log('that.transactions>>>>>', that.transactions)
       // }).on('receipt', receipt => {
-      //   let status = receipt.status
-      //   if (status) {
+      //   console.log('receipt IN BYU&&&&&&&&', receipt.status)
+      //   if (receipt.status) {
       //     that.buyingState = 'success'
       //     that.updateTxHashItem(receipt.transactionHash, 'success')
       //   } else {
       //     that.buyingState = 'fail'
-      //     that.updateTxHashItem(receipt.transactionHash,'fail')
+      //     that.updateTxHashItem(receipt.transactionHash, 'fail')
       //   }
       //   that.ctrl.completed = true
-      // }).on('error', (err, receipt) => {
+      // }).on('error', (ex, receipt) => {
       //   that.buyingState = 'fail'
-      //   if(ex.code === 4001){
+      //   if (ex.code === 4001) {
       //     let errMsg = that.$t(`code.${ex.code}`)
       //     that.$message(that.$basTip.error(errMsg))
-      //   }else if(ex.code === -32601 && ex.message){
+      //   }else if (ex.code === -32601 && ex.message){
       //     that.$message(that.$basTip.error(ex.message))
-      //   }else{
+      //   }else {
       //     console.error(ex)
       //   }
-      //   if(receipt){
-      //     that.updateTxHashItem(receipt.transactionHash,'fail')
+      //   if (receipt.status){
+      //     that.updateTxHashItem(receipt.transactionHash, 'fail')
       //   }
       // })
-    // },
+    },
     gotoUpdateDNS(){
       let fullDomain = this.data.domaintext
       console.log(fullDomain)
@@ -210,11 +221,11 @@ export default {
     this.commitApprove()
   },
   watch: {
-    // buyingState:function(val,old){
-    //   if(old === 'approving' && val === 'confirming'){
-    //     this.buySendTransaction()
-    //   }
-    // }
+    buyingState: function (val, old) {
+      if (old === 'approving' && val === 'confirming'){
+        this.buySendTransaction()
+      }
+    }
   },
 }
 </script>
