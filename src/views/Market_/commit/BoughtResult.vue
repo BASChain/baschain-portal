@@ -162,6 +162,7 @@ export default {
             that.buyingState = 'fail'
             that.addTxHashItem(receipt.transactionHash, 'fail')
           }
+          console.log('that.transactions>>>>>', that.transactions)
           that.ctrl.completed = true
         })
       } catch (error) {
