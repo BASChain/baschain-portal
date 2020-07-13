@@ -183,44 +183,44 @@ export async function getDomainDetail(name,chainId){
 }
 
 /**
- *
+ * get all root Domains
  * @param {*} chainId
  */
-export async function getRootDomains(chainId){
-  const web3js = getInfuraWeb3(chainId);
-  const rootInst = basRootDomainInstance(web3js,chainId)
-  const view = basViewInstance(web3js,chainId);
+// export async function getRootDomains(chainId){
+//   const web3js = getInfuraWeb3(chainId);
+//   const rootInst = basRootDomainInstance(web3js,chainId)
+//   const view = basViewInstance(web3js,chainId);
 
-  let namesPromise = await (async() =>{
-    let openList = await rootInst.getPastEvents("NewRootDomain", {
-      fromBlock: 0,
-      toBlock: "latest"
-    });
+//   let namesPromise = await (async() =>{
+//     let openList = await rootInst.getPastEvents("NewRootDomain", {
+//       fromBlock: 0,
+//       toBlock: "latest"
+//     });
 
-    return openList.map( x  => {
-      return view.methods.queryDomainInfo(x.returnValues.nameHash).call();
-    })
-  })();
-  let namesResult = await Promise.all(namesPromise)
-  //console.log(namesResult);
+//     return openList.map( x  => {
+//       return view.methods.queryDomainInfo(x.returnValues.nameHash).call();
+//     })
+//   })();
+//   let namesResult = await Promise.all(namesPromise)
+//   //console.log(namesResult);
 
-  let rootDomains = namesResult.map(d =>{
-    const nametext = web3js.utils.hexToString(d.name);
-    return {
-      hash:web3js.utils.keccak256(nametext),
-      name: nametext,
-      domaintext: parseHexDomain(d.name),
-      isRare: Boolean(d.rIsRare),
-      openApplied: Boolean(d.rIsOpen),
-      isCustomed: Boolean(d.rIsCustom),
-      customPrice:d.rCusPrice,
-      owner: d.owner,
-      expire: d.expiration
-    };
-  })
-  //console.log("rootDomains", rootDomains);
-  return rootDomains.filter(d => d.openApplied && d.isRare);
-}
+//   let rootDomains = namesResult.map(d =>{
+//     const nametext = web3js.utils.hexToString(d.name);
+//     return {
+//       hash:web3js.utils.keccak256(nametext),
+//       name: nametext,
+//       domaintext: parseHexDomain(d.name),
+//       isRare: Boolean(d.rIsRare),
+//       openApplied: Boolean(d.rIsOpen),
+//       isCustomed: Boolean(d.rIsCustom),
+//       customPrice:d.rCusPrice,
+//       owner: d.owner,
+//       expire: d.expiration
+//     };
+//   })
+//   //console.log("rootDomains", rootDomains);
+//   return rootDomains.filter(d => d.openApplied && d.isRare);
+// }
 
 export async function getDomainBCADatas(domaintext,chainId) {
   const web3js = getInfuraWeb3(chainId);
@@ -236,7 +236,6 @@ export default {
   hasTaken,
   rootHasTaken,
   findDomainInfo,
-  getRootDomains,
 };
 
 

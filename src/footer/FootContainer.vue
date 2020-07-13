@@ -53,7 +53,7 @@
           </a>
         </li>
         <li class="foot-item">
-          <a href="#" class="nav-link">
+          <a @click="gotoMailDetailPage" class="nav-link">
             {{ $t( 'menu.MailAppPage' )}}
           </a>
         </li>
@@ -115,6 +115,12 @@ export default {
     gotoHelpCenter(){
       this.$router.push({
         name:'help.issue'
+      })
+    },
+    gotoMailDetailPage(){
+      this.$router.push({
+        name:'appdetail.index',
+        query:{id:1}
       })
     }
   },

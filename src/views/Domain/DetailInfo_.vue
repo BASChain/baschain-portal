@@ -218,8 +218,6 @@
 }
 </style>
 <script>
-import { getDomainDetailAssetCI } from '@/bizlib/web3/domain-api.js'
-import { findDomainDetail } from '@/bizlib/web3/asset-api'
 
 import { getDomainDetail } from "@/web3-lib/apis/domain-api"
 
@@ -232,8 +230,6 @@ import {
   isOwner,handleDomain,
   wei2Bas
 } from '@/utils'
-
-import DomainProxy from '@/proxies/DomainProxy.js'
 
 export default {
   name:"DomainDetail",
@@ -328,33 +324,26 @@ export default {
     }
   },
   methods:{
-    async loadDomainDetail(text){
+    loadDomainDetail(text){
       if(!text)return;
       const web3State = this.$store.getters['web3State']
-      const resp = await getDomainDetail(text,web3State.chainId)
-      console.log('Load DomainInfo resp>>',resp)
-      if(resp.state){
-        this.asset = Object.assign({},resp.assetinfo)
-        this.refdata = Object.assign({},resp.refdata)
-      }
+      const tss = new Date().getTime()
+      console.log("start",tss)
+      //const resp = await getDomainDetail(text,web3State.chainId)
 
-      //get from server
-      // let proxy = new DomainProxy()
-      // proxy.getDomainInfo(text).then(data=>{
+      getDomainDetail(text,web3State.chainId).then(resp=>{
+        const tse = new Date().getTime()
+        //console.log('Load DomainInfo resp>>',resp,((new Date().getTime()/1000) - tss))
+        console.log('Load DomainInfo resp>>',tse,parseInt(tse - tss))
+        if(resp.state){
+          this.asset = Object.assign({},resp.assetinfo)
+          this.refdata = Object.assign({},resp.refdata)
+        }
+      }).catch(ex=>{
+        console.log("infrua get error",ex)
+      })
 
-      //   if(!data.state){
-      //     this.$message(this.$basTip.warn(`Domain ${text} unfound.`))
-      //     return
-      //   }
 
-      //   data = proxy.transData(data)
-      //   //console.log('Serve API:',data)
-      //   this.asset = Object.assign({},data.asset)
-      //   this.dns = Object.assign({},data.dns)
-
-      // }).catch(ex=>{
-      //   console.log(ex)
-      // })
     },
     gotoRegistSub() {
       if(this.$store.getters["metaMaskDisabled"]){
