@@ -15,9 +15,7 @@
       <div class="row justify-content-center align-items-center">
         <el-card shadow="never" class="col-md-8 col-sm-10 box-card">
           <div class="clearfix" slot="header">
-            <h4>
-              Transaction Hash
-            </h4>
+            <h4>Transaction Hash</h4>
           </div>
           <div v-for="(item, index) in transactions" :key="index" class="text item bas-inline-between">
             <div class="">{{ item.hash }}</div>
@@ -146,10 +144,6 @@ export default {
       const web3State = this.$store.getters['web3State']
       let chainId = web3State.chainId;
       let wallet = web3State.wallet;
-      
-      // let res = await buyFromMarket()
-
-
       let that = this;
       try {
         buyFromMarket(data.nameHash, data.owner, data.costWei, chainId, wallet)
@@ -168,34 +162,6 @@ export default {
       } catch (error) {
         console.error(error)
       }
-      
-      // .on('transactionHash', txhash => {
-      //   
-      //   console.log('that.transactions>>>>>', that.transactions)
-      // }).on('receipt', receipt => {
-      //   console.log('receipt IN BYU&&&&&&&&', receipt.status)
-      //   if (receipt.status) {
-      //     that.buyingState = 'success'
-      //     that.updateTxHashItem(receipt.transactionHash, 'success')
-      //   } else {
-      //     that.buyingState = 'fail'
-      //     that.updateTxHashItem(receipt.transactionHash, 'fail')
-      //   }
-      //   that.ctrl.completed = true
-      // }).on('error', (ex, receipt) => {
-      //   that.buyingState = 'fail'
-      //   if (ex.code === 4001) {
-      //     let errMsg = that.$t(`code.${ex.code}`)
-      //     that.$message(that.$basTip.error(errMsg))
-      //   }else if (ex.code === -32601 && ex.message){
-      //     that.$message(that.$basTip.error(ex.message))
-      //   }else {
-      //     console.error(ex)
-      //   }
-      //   if (receipt.status){
-      //     that.updateTxHashItem(receipt.transactionHash, 'fail')
-      //   }
-      // })
     },
     gotoUpdateDNS(){
       let fullDomain = this.data.domaintext
@@ -216,7 +182,6 @@ export default {
     }
   },
   mounted() {
-    // this.dappState = Object.assign({},this.$store.getters['web3/dappState'])
     this.data = this.$route.params.commitData;
     console.log('commitData', this.data)
     this.commitApprove()
@@ -230,14 +195,13 @@ export default {
   },
 }
 </script>
-<style>
+<style scoped>
 .market-domain-title {
   font-size: 36px;
 }
 .bas-market-result > div.el-card__body {
   padding: .25rem 20px;
 }
-
 .bas-market-result .el-card {
   border: none;
 }
