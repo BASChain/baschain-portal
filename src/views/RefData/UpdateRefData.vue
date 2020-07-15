@@ -48,7 +48,7 @@
       class="row justify-content-center align-items-center">
       <div class="col-md-10 col-sm-12">
         <div class="pt-4 pb-2">
-          <h5>{{$t('l.SubDomainConfiguration')}} {{ruleState.subBas}}</h5>
+          <h5>{{$t('l.SubDomainConfiguration')}} </h5>
         </div>
       </div>
 
