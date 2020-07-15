@@ -29,7 +29,7 @@
       <div class="bas-type-title">
         <p>APP</p>
       </div>
-      <div class="row justify-content-start">
+      <div class="row-detail justify-content-start">
         <div v-for="item in apps" :key="item.hash" class="col-xl-4 col-md-6 col-12 pt-3">
           <div class="bas-app-detail">
             <div class="bas-app-detail--left pt-1">
@@ -55,7 +55,7 @@
       <div class="bas-type-title">
         <p>{{$t('l.BowserExtension')}}</p>
       </div>
-      <div class="row justify-content-start">
+      <div class="row-detail justify-content-start">
         <div v-for="item in browsers" :key="item.hash" class="col-xl-4 col-md-6 col-12 pt-3">
           <div class="bas-app-detail">
             <div class="bas-app-detail--left pt-1">
@@ -82,6 +82,9 @@
   </div>
 </template>
 <style scoped>
+.row-detail {
+  display: flex;
+}
 .text-left {
   position: absolute;
   top: 128px;

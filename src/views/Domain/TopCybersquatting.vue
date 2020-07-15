@@ -103,16 +103,10 @@
 <script>
 
 
-import {
-  getDomainType,
-  checkDomainIllegal,
-  isRareDomain,
-  isSubdomain,
-  getTopDomain,
-  getSplitDomain,
- }  from '@/utils/domain-validator'
-
 import {wei2Bas,dateFormat,hasExpired} from '@/utils'
+import {
+  getDomainType
+} from '@/utils/Validator'
 
 import {
   PARAM_ILLEGAL, LACK_OF_ETH, LACK_OF_TOKEN,

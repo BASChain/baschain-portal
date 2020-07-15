@@ -276,7 +276,7 @@ export async function findDomain4Search(text, chainId) {
 
   const viewInst = basViewInstance(web3js, chainId)
   const res = await viewInst.methods.queryDomainInfo(hash).call();
-
+  //console.log('00000000', res)
   const resp = {
     state: 0,
     assetinfo: null,
@@ -284,7 +284,7 @@ export async function findDomain4Search(text, chainId) {
     registState: false
   }
 
-  if (!res.name || parseInt(res.expiration) === 0) return resp;
+  if (!res.name || parseInt(res.expiration) < 0) return resp;
   const isRoot = Boolean(res.isRoot)
   resp.registState = true
   resp.state = 1
@@ -418,7 +418,21 @@ export async function valid4CustomizeRoot(roottext, chainId) {
   };
 }
 
+// export async function queryMarketDomain(text, chainId) {
+//   if (text === undefined || !text.length) throw apiErrors.PARAM_ILLEGAL
+
+//   const web3js = getInfuraWeb3(chainId);
+//   const hash = web3js.utils.keccak256(prehandleDomain(text))
+//   const view = basViewInstance(web3js, chainId)
+//   const domainInfo = await view.methods.queryDomainInfo(hash).call();
+//   console.log('------', domainInfo)
+//   if (domainInfo.isMarketOrder) {
+//     return Object.assign(domainInfo, { domaintext: text })
+//   }
+//   return []
+// }
+
 export default {
   publicMailDomains,
-  findMailInfo,
+  findMailInfo
 }

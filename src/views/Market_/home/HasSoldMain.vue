@@ -5,28 +5,20 @@
     <div class="container">
       <div class="row justify-content-center align-items-center">
         <div class="col-10 pb-5 row">
-          <div v-for="idx in 12"
+          <div v-for="item in soldItems"
           class="col-md-3"
-          :key="idx">
+          :key="item.hash">
             <div class="bas-list-card">
               <div class="list-card--header">
                 <div class="bas-block">
-                  <h4>ETH</h4>
-                  <p class="bas-small-owner">0xFd30...e865</p>
+                  <h4>{{paraseDomain(item.name)}}</h4>
+                  <p class="bas-small-owner">{{item.from | ellipsis}}</p>
                 </div>
-                <!-- <div class="inline-btn-group">
-                  <span class="small bas-expired">
-                    过期时间:2020-03-32
-                  </span>
-                  <el-button type="info" plain size="mini" disabled>
-                    已售
-                  </el-button>
-                </div> -->
               </div>
               <div class="list-card--footer">
                 <div class="bas-sold-num">
-                  <span class="number">400</span>
-                  <p type="primary" class="el-icon-time bas-small-expire">2020-05-06</p>
+                  <span class="number">{{item.price}}</span>
+                  <p type="primary" class="el-icon-time bas-small-expire">{{item.expire}}</p>
                 </div>
                 <div class="bas-sold-btn">
                   <el-button type="info" plain size="medium" disabled>已售</el-button>
@@ -41,14 +33,38 @@
 </template>
 
 <script>
+import {parseHexDomain} from  '@/web3-lib/utils/index.js'
 export default {
   name:"HasSoldMain",
   computed: {
     getTitle(){
       return '已出售的域名'
+    },
+    ...Vuex.mapState({
+      soldItems:state => state.market.marketSolds
+    })
+  },
+  async mounted() {
+    const web3State = this.$store.getters['web3State']
+    // if (web3State.chainId && web3State.wallet) {
+      this.$store.dispatch('market/loadMarketSolds', web3State)
+    // }
+  },
+  methods: {
+    paraseDomain(name) {
+      return parseHexDomain(name)
     }
   },
-
+  filters: {
+    ellipsis (value) {
+      let len=value.length;
+      if (!value) return ''
+      if (value.length > 10) {
+        return value.substring(0,6) + '...' +value.substring(len-4,len)
+      }
+      return value
+		}
+  }
 }
 </script>
 <style scoped>

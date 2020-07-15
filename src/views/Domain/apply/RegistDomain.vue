@@ -259,7 +259,7 @@ export default {
       this.subUnitPrice = ruleState.subBas
     },
     openSubApply(val){
-       console.log(val)
+      console.log(val)
     },
     customedPriceChanged(){
 

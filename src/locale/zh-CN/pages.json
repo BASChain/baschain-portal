@@ -272,5 +272,7 @@
   "BMailServerIntroContent2":"Immerse yourself by using the vivid Retina displays of iPad or Mac. Simply tap the center divider, then drag to view your code or live project on the full screen. You can also customize built-in games like Battleship and Brick Breaker, then immerse yourself by letting them take up the whole screen.",
 
   "AppStoreExtensionAuto":"可访问Google play /firefox store 直接点击按钮安装即可",
-  "AppStoreExtensionSelf":"如果你无法透过谷歌扩展商店安装，你可以选择手动下载压缩包方式来安装，这篇教程适用于 Chrome、FireFox。"
+  "AppStoreExtensionSelf":"如果你无法透过谷歌扩展商店安装，你可以选择手动下载压缩包方式来安装，这篇教程适用于 Chrome、FireFox。",
+
+  "MarketConfirmRevoke": "你确定要撤回域名："
 }

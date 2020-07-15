@@ -269,7 +269,7 @@ export default [
         }
       },
       {
-        path: "buying/:domaintext/:pricevol",
+        path: "buying/:domaintext",
         name: "market.buying",
         component: () => import("@/views/Market_/commit/BuyingDomain.vue"),
         meta: {

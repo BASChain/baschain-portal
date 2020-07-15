@@ -12,6 +12,7 @@ import ewallet from './modules/ewallet'
 import web3 from './modules/web3';
 import auth from './modules/auth';
 import domains from './modules/domains'
+import market from './modules/market'
 
 
 const debug = process.env.NODE_ENV !== 'production'
@@ -44,6 +45,7 @@ export default new Vuex.Store({
     web3,
     auth,
     domains,
+    market
   },
   state:{
     lang: Cookies.get('BasLang') ||"zh-CN",

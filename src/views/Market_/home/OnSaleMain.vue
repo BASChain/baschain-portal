@@ -7,20 +7,20 @@
       <div class="row justify-content-center align-items-center">
         <div class="col-10 pb-5">
           <div class="row ">
-            <div v-for="item in domains"
+            <div v-for="item in soldItems"
               class="col-lg-6 col-md-6 bas-row--padding"
-              :key="item.owner">
+              :key="item.hash">
               <div class="bas-list-card">
                 <div class="list-card--header">
                   <div class="bas-block">
-                    <h4>{{item.domaintext}}</h4>
+                    <h4>{{paraseDomain(item.name)}}</h4>
                     <p class="bas-small-owner">
-                      {{item.shortAddress}}
+                      {{item.owner | ellipsis}}
                     </p>
                   </div>
                   <div class="inline-btn-group">
                     <span class="number">
-                      {{item.sellprice}}
+                      {{item.salePrice}}
                     </span>
                     <div class="bas-buy-button">
                       <el-button type="primary" size="mini" @click="gotoBuying(item)">
@@ -32,11 +32,11 @@
                 <div class="list-card--footer">
                   <div class="block-inline">
                     <p class="bas-small-expire">
-                      {{$t('l.expire')}}:{{item.expireDate}}
+                      {{$t('l.expire')}}:{{item.expiration}}
                     </p>
                   </div>
                   <div class="block-inline">
-                    <a class="market-whois" @click="gotoWhois(item.domaintext)">
+                    <a class="market-whois" @click="gotoWhois(item.name)">
                       Who is
                     </a>
                   </div>
@@ -57,7 +57,9 @@ import {
 } from '@/utils'
 
 import {getWeb3State} from '@/bizlib/web3'
-import {MarketProxy} from '@/proxies/MarketProxy.js'
+// import {MarketProxy} from '@/proxies/MarketProxy.js'
+import {parseHexDomain} from  '@/web3-lib/utils/index.js'
+
 
 export default {
   name:"OnSaleMain",
@@ -65,6 +67,9 @@ export default {
     getTitle(){
       return this.$t('p.MarketOnSaleDomainTitle')
     },
+    ...Vuex.mapState({
+      soldItems:state => state.market.marketOrders
+    })
     // ...Vuex.mapState({
     //   items:state=>{
     //     return state.domains.marketOnSale || []
@@ -78,42 +83,16 @@ export default {
       pagesize:8,
       ruleState:{
         decimals:18
-      },
-      domains: [
-        {
-          owner: '0x08970…59FB',
-          domaintext: 'rte',
-          shortAddress: '0x08970…59FB',
-          sellprice: '2000',
-          expireDate: '2020-05-06'
-        },
-        {
-          owner: '0x08970…59FB',
-          domaintext: 'ngx',
-          shortAddress: '0x08970…59FB',
-          sellprice: '9000',
-          expireDate: '2020-05-06'
-        },
-        {
-          owner: '0x08970…59FB',
-          domaintext: 'coco.bas',
-          shortAddress: '0x08970…59FB',
-          sellprice: '7800',
-          expireDate: '2020-05-06'
-        },
-        {
-          owner: '0x08970…59FB',
-          domaintext: 'nn',
-          shortAddress: '0x08970…59FB',
-          sellprice: '1900',
-          expireDate: '2020-05-06'
-        }
-      ]
+      }
     }
   },
   methods: {
+    paraseDomain(name) {
+      return parseHexDomain(name)
+    },
     gotoWhois(text){
       if(text){
+        text = parseHexDomain(text)
         this.$router.push({
           path:`/domain/detail/${text}`
         })
@@ -124,31 +103,41 @@ export default {
         this.$metamask()
         return;
       }
-      const web3State = getWeb3State()
+      // const web3State = getWeb3State()
+      const web3State = this.$store.getters['web3State']
       if(isOwner(data.owner,web3State.wallet)){
         this.$message(this.$basTip.error('当前域名已在您账户下,不需要购买.'))
         return;
       }
       console.log(data)
-      let domaintext = data.domaintext
-      let pricevol = data.sellprice
-      //isOwner
+      let domaintext = parseHexDomain(data.name)
+      let pricevol = data.salePrice
 
+      console.log(domaintext, pricevol)
       if(domaintext && typeof pricevol !== 'undefined'){
         this.$router.push({
-          path:`/market/buying/${domaintext}/${pricevol}`
+          name: `market.buying`,
+          params: { order: data, domaintext: domaintext }
         })
       }
     }
   },
-  mounted(){
-    let ruleState = this.$store.getters['web3/ruleState']
-    this.ruleState = Object.assign({},ruleState)
-    this.$store.dispatch('loadMarketOnSale',{enfroce:true,pagesize:8})
+  async mounted(){
+    const web3State = this.$store.getters['web3State']
+    // if (web3State.chainId && web3State.wallet) {
+      this.$store.dispatch('market/loadMarketOrders', web3State)
+    // }
   },
+  filters: {
+    ellipsis (value) {
+      let len=value.length;
+      if (!value) return ''
+      if (value.length > 10) {
+        return value.substring(0,6) + '...' +value.substring(len-4,len)
+      }
+      return value
+		}
+  }
 }
 </script>
-<style scoped>
 
-
-</style>

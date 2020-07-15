@@ -334,7 +334,10 @@ export function str2utf8Array(str){
   return utf8;
 }
 
-
+export function strToHex(text) {
+  let res = web3.utils.toHex(text)
+  return res
+}
 
 export default {
   MinGasWei,
@@ -357,4 +360,5 @@ export default {
   bas2Wei,
   MaxPriceBas,
   str2utf8Array,
+  strToHex
 };

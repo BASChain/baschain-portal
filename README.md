@@ -33,13 +33,15 @@ npm run build --report
 
 
 > 2.x
+
 ^  Version  ^  Update Date  ^  Comments  ^
 |  ----  |  ----  |  ----  |
-| v2.0.0 | 2020-04-27 | update new smart contract v3 |
-| v2.1.0 | 2020-06-03 | Optimize performance <br> 1. add prerender-spa-plugin <br> 2.used CDN js resources <br> 3.Turn on compression *.gz <br> 4.Optimize business code |
+| v2.7.0 | 2020-7-13  | feature market |
 | v2.6.6 | 2020-6-28  | fixed bug |
+| v2.1.0 | 2020-06-03 | Optimize performance <br> 1. add prerender-spa-plugin <br> 2.used CDN js resources <br> 3.Turn on compression *.gz <br> 4.Optimize business code |
+| v2.0.0 | 2020-04-27 | update new smart contract v3 |
 
 
-##
+>
 
 ## Update
