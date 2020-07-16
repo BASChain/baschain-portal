@@ -154,6 +154,10 @@ export async function getOnSaleDomains(chainId) {
 
   var logThread = sellAdded.concat(sellChanged, soldBySell, sellRemoved)
 
+  if (!logThread) {
+    return logThread
+  }
+
   //Inverse Priority
   try {
     logThread.sort(function(a, b) {
