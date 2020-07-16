@@ -18,12 +18,12 @@
         <div class="res-text">{{$t('l.OnSale')}}</div>
         <el-button type="primary" size="mini" class="res-btn" @click="goBuySell">{{$t('l.Buying')}}</el-button>
       </div>
-      <div v-if="this.order.name===undefined && this.registState" class="append-result">
+      <div v-if="this.order.name===undefined && this.registState===true" class="append-result">
         <div class="res-domain">{{inputInfo}}</div>
         <div class="res-text">{{$t('l.HasBeenRegisted')}}</div>
         <el-button type="primary" size="mini" class="res-btn" @click="whois">Whois</el-button>
       </div>
-      <div v-if="this.order.name===undefined && !this.registState" class="append-result">
+      <div v-if="this.order.name===undefined && this.registState===false" class="append-result">
         <div class="res-domain">{{inputInfo}}</div>
         <div class="res-text">{{$t('l.Unregist')}}</div>
         <el-button type="primary" size="mini" class="res-btn" @click="goApplyPage">{{$t('l.gotoRegistBtn')}}</el-button>
@@ -86,7 +86,7 @@ export default {
       searchAsset: '',
       searched: false,
       order: {},
-      registState: false,
+      registState: '',
       asset: {}
     }
   },
@@ -115,7 +115,7 @@ export default {
     InputChange() {
       this.searched = false
       this.order = {}
-      this.registState = false
+      this.registState = ''
       this.asset = {}
     },
     queryDomains() {
