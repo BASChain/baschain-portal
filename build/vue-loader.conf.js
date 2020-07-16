@@ -25,7 +25,7 @@ module.exports = {
   analyzOption: {
     analyzerMode: 'json',
     analyzerPort: 8899,
-    openAnalyzer: true,
+    openAnalyzer: false,
     statsFilename: statsPath,
     generateStatsFile: true
   }

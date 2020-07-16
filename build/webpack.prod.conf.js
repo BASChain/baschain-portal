@@ -214,7 +214,7 @@ if (config.build.bundleAnalyzerReport) {
   const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
   webpackConfig.plugins.push(new BundleAnalyzerPlugin(Object.assign(analyzOption, {
     analyzerPort: 8899,
-    openAnalyzer: true
+    openAnalyzer: false
   })))
 }
 
