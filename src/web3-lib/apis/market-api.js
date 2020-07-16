@@ -236,7 +236,7 @@ export async function buyFromMarket(nameHash, owner, price, chainId, wallet) {
   //查余额
   const costwei = price.toString()
   const walletwei = await token.methods.balanceOf(wallet).call()
-  if (compareWei2Wei(walletwei, costwei) < 0) throw ApiErrors.LACK_OF_TOKEN
+  if (compareWei2Wei(walletwei, costwei) < 0) throw apiErrors.LACK_OF_TOKEN
 
   return market.methods.BuyFromSells(nameHash, owner).send({ from: wallet })
 }
