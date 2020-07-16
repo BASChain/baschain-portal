@@ -37,7 +37,7 @@ export const ContractAddresses = {
   },
   BasOANN: {
     1: "",
-    3: "0xFd735A5Dc66200E508C0e3444317465e896Fb4FC"
+    3: "0xD2FEB65bA5EbCd2910665d208f8F7DC9dBc205f4"
   },
   BasMarket: {
     1: "",
