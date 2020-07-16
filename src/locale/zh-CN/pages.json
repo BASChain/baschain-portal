@@ -106,6 +106,8 @@
   "MarketSearchValidDomainTip": "你输入的域名格式不正确,不能含有特殊字符或空格",
   "MarketMostPopularDomainTitle": "最受欢迎的域名",
   "MarketOnSaleDomainTitle": "出售中的域名",
+  "MarketSoldDomainTitle": "已出售的域名",
+  "MarketSoldDomainBtn": "已售",
   "MarketSearchNoResultTip": "没有搜索到您想要的结果,请换一个关键字试试...",
   "MarketBuyingDomain": "购买域名",
   "MarketBoughtConfigurationBtn": "配置域名",

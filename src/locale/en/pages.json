@@ -106,6 +106,8 @@
   "MarketSearchValidDomainTip": "Invalid format, can't have space nor symbols other than '_', '-'",
   "MarketMostPopularDomainTitle": "Most Popular Domain",
   "MarketOnSaleDomainTitle": "Domain for Sale",
+  "MarketSoldDomainTitle": "Domains sold",
+  "MarketSoldDomainBtn": "sold",
   "MarketSearchNoResultTip": "No match, please try another",
   "MarketBuyingDomain": "Buy Domain",
   "MarketBoughtConfigurationBtn": "Domain configuration",
