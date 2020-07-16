@@ -189,10 +189,11 @@
 import LoadingDot from '@/components/LoadingDot.vue'
 import { getEWalletOrders, changeSellPrice, validAdd2Market, deleteSellOrder } from '@/web3-lib/apis/market-api.js'
 import SellingTable from './trans/SellingTable'
+import { validBetweenZero2Billion, MAX_BILLON_VOL } from '@/utils/Validator.js'
 import {
   toUnicodeDomain,compressAddr,isOwner,
   TS_DATEFORMAT,dateFormat,wei2Float,
-  transBAS2Wei,
+  transBAS2Wei,numThousandsFormat
 } from '@/utils'
 import {
   transoutOwnershipCi,approveTraOspEmitter,revokeOwnerShipEmitter
@@ -213,7 +214,6 @@ export default {
   computed: {
     ...Vuex.mapState({
       sellItems:state => state.ewallet.orders,
-      // unitBas:state => wei2Bas(state.dapp.mailRegGas)
     }),
     OnSaleTabName(){
       return this.$t('l.Selling')
@@ -400,6 +400,7 @@ export default {
       })
     },
     async submitChangeDomainPrice(){
+      let errMsg =''
       //改价
       if(this.$store.getters['metaMaskDisabled']){
         this.$metamask()
@@ -407,7 +408,12 @@ export default {
       }
       if(!this.cpd.validState){
         this.$message(this.$basTip.error(`你输入的价格必须大于${this.ctrl.minprice},并且小于${this.ctrl.maxprice}`))
-        return;
+        return
+      }
+      if(!validBetweenZero2Billion(this.cpd.pricevol)){
+        errMsg = this.$t('p.SaleOnPriceUnitBasValidError',{begin:"0",end:numThousandsFormat(MAX_BILLON_VOL)})
+        this.$message(this.$basTip.error(errMsg))
+        return
       }
       const web3State = this.$store.getters['web3State']
       const chainId = web3State.chainId

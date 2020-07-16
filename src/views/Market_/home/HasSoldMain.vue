@@ -21,7 +21,7 @@
                   <p type="primary" class="el-icon-time bas-small-expire">{{item.expire}}</p>
                 </div>
                 <div class="bas-sold-btn">
-                  <el-button type="info" plain size="medium" disabled>已售</el-button>
+                  <el-button type="info" plain size="medium" disabled>{{ $t('p.MarketSoldDomainBtn') }}</el-button>
                 </div>
               </div>
             </div>
@@ -38,7 +38,7 @@ export default {
   name:"HasSoldMain",
   computed: {
     getTitle(){
-      return '已出售的域名'
+      return this.$t('p.MarketSoldDomainTitle')
     },
     ...Vuex.mapState({
       soldItems:state => state.market.marketSolds

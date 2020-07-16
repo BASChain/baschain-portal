@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white">
     <h1 class="bas-market-title pt-5 pb-3">
-      {{getTitle}}
+      {{getTitle1}}
     </h1>
     <div class="container">
       <div class="row justify-content-center align-items-center">
@@ -64,7 +64,7 @@ import {parseHexDomain} from  '@/web3-lib/utils/index.js'
 export default {
   name:"OnSaleMain",
   computed: {
-    getTitle(){
+    getTitle1(){
       return this.$t('p.MarketOnSaleDomainTitle')
     },
     ...Vuex.mapState({

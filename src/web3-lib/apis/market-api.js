@@ -154,6 +154,10 @@ export async function getOnSaleDomains(chainId) {
 
   var logThread = sellAdded.concat(sellChanged, soldBySell, sellRemoved)
 
+  if (!logThread) {
+    return logThread
+  }
+
   //Inverse Priority
   try {
     logThread.sort(function(a, b) {
@@ -241,35 +245,6 @@ export async function buyFromMarket(nameHash, owner, price, chainId, wallet) {
 export function getMarketAddress(chainId) {
   return ContractJson.BasMarket(chainId).address
 }
-// export async function queryMarketDomain(text, chainId) {
-//   // if (text === undefined || !text.length) throw apiErrors.PARAM_ILLEGAL
-
-//   // const web3js = getInfuraWeb3(chainId);
-//   const preText = prehandleDomain(text)
-
-//   const name = parseHexDomain(text)
-//   // const hash = web3js.utils.keccak256(preText)
-//   // const view = basViewInstance(web3js, chainId)
-//   // const domainInfo = await view.methods.queryDomainInfo(hash).call();
-//   let domainInfo
-//   let onSalesDomains
-//   try {
-//     onSalesDomains = getOnSaleDomains(chainId)
-//   } catch (error) {
-//     console.error('onSalesDomains', error)
-//   }
-//   console.log('????onSalesDomains', onSalesDomains)
-//   for (let onsale of onSalesDomains) {
-//     if (onsale.name === name) {
-//       domainInfo = onsale
-//       break
-//     }
-//   }
-//   if (domainInfo) {
-//     return Object.assign(domainInfo, { domaintext: text })
-//   }
-//   return []
-// }
 
 export default {
   validAdd2Market,
