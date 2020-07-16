@@ -35,6 +35,7 @@ export function getDomainDetailAssetCI(domain){
   let chainId = currentChainId();
   if(!checkSupport(chainId))throw '3001:network unsupport or no walllet.';
   let domainHash = web3.utils.keccak256(domain)
+  console.log(domainHash)
   let inst = getBasAssetInstance(chainId,web3)
 
   return getDnsAndAssetByHash(inst,domainHash)

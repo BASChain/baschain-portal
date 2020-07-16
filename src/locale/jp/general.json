@@ -24,6 +24,7 @@
   "Cancel":"キャンセルする",
   "Clear":"構成を削除",
   "Confirm":"確認",
+  "Refresh": "刷新",
   "NetworkTimeout": "ネットワークがタイムアウトしました。ネットワークを確認してください",
   "4001": "MetaMask認証をキャンセルしましだ",
   "UpdateSuccess": "Update Success.",

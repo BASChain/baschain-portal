@@ -14,7 +14,7 @@ import {
   prehandleDomain, notNullHash,
   parseHexDomain, hex2confDataStr,
   hex2ConfDatas,
-  isRare, assertNullAddress,
+  assertNullAddress,
 } from "../utils";
 
 import apiErrors from "../api-errors";
@@ -105,7 +105,9 @@ export async function getDomainDetail(name,chainId){
   const web3js = getInfuraWeb3(chainId);
 
   const domain = prehandleDomain(name)
-  const hash = await Web3.utils.keccak256(domain)
+  const hash = await web3js.utils.keccak256(domain)
+
+  //console.log(domain,hash)
   const viewInst = basViewInstance(web3js,chainId)
   const confInst = basDomainConfInstance(web3js,chainId)
 
@@ -143,7 +145,9 @@ export async function getDomainDetail(name,chainId){
 
   //refdata
   const refRet = await viewInst.methods.queryDomainConfigs(hash).call()
+  //console.log("refRet", refRet)
 
+  //console.log(">>>>>>>",DomainConfTypes.extrainfo)
   const extraRet = await confInst.methods.domainConfData(hash, DomainConfTypes.extrainfo).call()
   //console.log(">>>>", refRet, hex2confDataStr(refRet.A))
   resp.refdata = {
@@ -159,24 +163,28 @@ export async function getDomainDetail(name,chainId){
 
 
   if (!isRoot && notNullHash(res.sRootHash)){
+    console.log("Query root", res.sRootHash)
     const topres = await viewInst.methods.queryDomainInfo(res.sRootHash).call();
-    const toptext = parseHexDomain(topres.name)
-    const rootasset = {
-      name: toptext,
-      domaintext: toptext,
-      hash: res.sRootHash,
-      owner: topres.owner,
-      isRoot: Boolean(topres.isRoot),
-      openApplied: Boolean(topres.rIsOpen),
-      isCustomed: Boolean(topres.rIsCustom),
-      customPrice: topres.rCusPrice,
-      expire: topres.expiration,
-      isRare: topres.rIsRare,
-      isOrder: topres.isMarketOrder,
-      roothash: topres.sRootHash
-    }
 
-    resp.rootasset = rootasset
+    if (topres && !assertNullAddress(topres.owner)){
+      const toptext = parseHexDomain(topres.name)
+      const rootasset = {
+        name: toptext,
+        domaintext: toptext,
+        hash: res.sRootHash,
+        owner: topres.owner,
+        isRoot: Boolean(topres.isRoot),
+        openApplied: Boolean(topres.rIsOpen),
+        isCustomed: Boolean(topres.rIsCustom),
+        customPrice: topres.rCusPrice,
+        expire: topres.expiration,
+        isRare: topres.rIsRare,
+        isOrder: topres.isMarketOrder,
+        roothash: topres.sRootHash
+      }
+
+      resp.rootasset = rootasset
+    }
   }
 
   return resp
