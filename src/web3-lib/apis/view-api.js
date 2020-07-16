@@ -276,7 +276,7 @@ export async function findDomain4Search(text, chainId) {
 
   const viewInst = basViewInstance(web3js, chainId)
   const res = await viewInst.methods.queryDomainInfo(hash).call();
-  console.log('00000000', res)
+  //console.log('00000000', res)
   const resp = {
     state: 0,
     assetinfo: null,
@@ -284,7 +284,7 @@ export async function findDomain4Search(text, chainId) {
     registState: false
   }
 
-  if (!res.name || parseInt(res.expiration) === 0) return resp;
+  if (!res.name || parseInt(res.expiration) < 0) return resp;
   const isRoot = Boolean(res.isRoot)
   resp.registState = true
   resp.state = 1

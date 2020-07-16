@@ -21,4 +21,5 @@ package-lock.json
 config/.env
 build/Release/**.*
 src/bascore/info.json
+build/stats.json
 

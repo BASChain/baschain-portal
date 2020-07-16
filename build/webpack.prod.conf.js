@@ -1,5 +1,6 @@
 'use strict'
 const path = require('path')
+const chalk = require('chalk')
 const utils = require('./utils')
 const webpack = require('webpack')
 const config = require('../config')
@@ -12,6 +13,8 @@ const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const env = require('../config/prod.env')
+
+const { analyzOption } = require("./vue-loader.conf")
 
 const PrerenderSPAPlugin = require("prerender-spa-plugin");
 const Renderer = PrerenderSPAPlugin.PuppeteerRenderer;
@@ -201,8 +204,18 @@ if (config.build.productionGzip) {
 }
 
 if (config.build.bundleAnalyzerReport) {
+  console.log(
+    chalk.magenta(
+      "Open Analyzer",
+      process.env.npm_config_report,
+      "\n you can use [yarn analyz] commands check details."
+    )
+  );
   const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-  webpackConfig.plugins.push(new BundleAnalyzerPlugin())
+  webpackConfig.plugins.push(new BundleAnalyzerPlugin(Object.assign(analyzOption, {
+    analyzerPort: 8899,
+    openAnalyzer: false
+  })))
 }
 
 module.exports = webpackConfig
