@@ -168,7 +168,7 @@ export async function getOnSaleDomains(chainId) {
   }
 
   console.log('******logThread', logThread)
-  
+
   //filter valid log
   try {
     logThread = logThread.reduceRight((sum, cur) => {
@@ -210,7 +210,7 @@ export async function getSoldDomains(chainId) {
 
   let soldList = await market.getPastEvents("SoldBySell", {fromBlock:0, toBlock:"latest"})
   console.log('##########soldList', soldList)
-  
+
   var soldDomains = []
   for (let log of soldList) {
     let domainInfo = await view.methods.queryDomainInfo(log.returnValues.nameHash).call()
@@ -236,7 +236,7 @@ export async function buyFromMarket(nameHash, owner, price, chainId, wallet) {
   //查余额
   const costwei = price.toString()
   const walletwei = await token.methods.balanceOf(wallet).call()
-  if (compareWei2Wei(walletwei, costwei) < 0) throw ApiErrors.LACK_OF_TOKEN
+  if (compareWei2Wei(walletwei, costwei) < 0) throw apiErrors.LACK_OF_TOKEN
 
   return market.methods.BuyFromSells(nameHash, owner).send({ from: wallet })
 }
