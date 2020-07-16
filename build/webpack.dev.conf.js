@@ -74,7 +74,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         ignore: [".*"]
       }
     ]),
-    new BundleAnalyzerPlugin({ analyzerPort :8989})
+    //new BundleAnalyzerPlugin({ analyzerPort :8989})
   ]
 });
 

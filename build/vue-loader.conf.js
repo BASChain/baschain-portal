@@ -1,10 +1,13 @@
 'use strict'
 const utils = require('./utils')
 const config = require('../config')
+const path = require('path')
 const isProduction = process.env.NODE_ENV === 'production'
 const sourceMapEnabled = isProduction
   ? config.build.productionSourceMap
   : config.dev.cssSourceMap
+
+const statsPath = path.resolve(__dirname, '../build/', "stats.json")
 
 module.exports = {
   loaders: utils.cssLoaders({
@@ -18,5 +21,12 @@ module.exports = {
     source: 'src',
     img: 'src',
     image: 'xlink:href'
+  },
+  analyzOption: {
+    analyzerMode: 'json',
+    analyzerPort: 8899,
+    openAnalyzer: true,
+    statsFilename: statsPath,
+    generateStatsFile: true
   }
 }
