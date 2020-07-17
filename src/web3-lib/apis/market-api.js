@@ -168,7 +168,7 @@ export async function getOnSaleDomains(chainId) {
   }
 
   console.log('******logThread', logThread)
-  
+
   //filter valid log
   try {
     logThread = logThread.reduceRight((sum, cur) => {
@@ -210,7 +210,7 @@ export async function getSoldDomains(chainId) {
 
   let soldList = await market.getPastEvents("SoldBySell", {fromBlock:0, toBlock:"latest"})
   console.log('##########soldList', soldList)
-  
+
   var soldDomains = []
   for (let log of soldList) {
     let domainInfo = await view.methods.queryDomainInfo(log.returnValues.nameHash).call()

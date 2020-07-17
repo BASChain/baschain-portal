@@ -30,6 +30,7 @@
   "Cancel": "Cancel",
   "Clear": "Clear Data",
   "Confirm": "Confirm",
+  "Refresh": "Refresh",
   "NetworkTimeout":"Network Request Timeout,please check your Network.",
   "4001":"User cancel permission",
   "UpdateSuccess":"Update Success.",

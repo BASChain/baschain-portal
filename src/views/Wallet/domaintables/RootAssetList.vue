@@ -466,6 +466,7 @@ export default {
     },
     translateType(row){
       let domainType = getDomainType(row.domaintext)
+      console.log('domainType',domainType)
       return this.$t(`g.${domainType}`)
     },
     gotoDetail(row, column, cell){

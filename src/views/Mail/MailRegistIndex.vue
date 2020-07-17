@@ -63,7 +63,7 @@
                         :disabled="mailPoper.loading"
                         @click="reloadMailAssets"
                         type="default" class="border-right">
-                        刷新
+                        {{$t('g.Refresh')}}
                       </el-button>
                       <div></div>
                       <el-button
