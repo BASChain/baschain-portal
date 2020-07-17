@@ -12,8 +12,8 @@ import {
   basTokenInstance
 } from "./index";
 import { getInfuraWeb3 } from "../infura";
-import { compare } from "semver";
-import { cat } from "shelljs";
+// import { compare } from "semver";
+// import { cat } from "shelljs";
 
 /**
  *
@@ -235,6 +235,12 @@ export function buyFromMarket(nameHash, owner, price, chainId, wallet) {
   return market.methods.BuyFromSells(nameHash, owner).send({ from: wallet })
 }
 
+/**
+ * check balance enough
+ * @param {*} price 
+ * @param {*} chainId 
+ * @param {*} wallet 
+ */
 export async function checkBalance(price, chainId, wallet) {
   const web3js = getInfuraWeb3(chainId)
   const costwei = price.toString()
@@ -247,7 +253,10 @@ export async function checkBalance(price, chainId, wallet) {
   return true
 }
 
-
+/**
+ * get contract address
+ * @param {*} chainId 
+ */
 export function getMarketAddress(chainId) {
   return ContractJson.BasMarket(chainId).address
 }
