@@ -36,7 +36,7 @@
           <div class="w-100 bas-btn-group text-center">
             <button @click="gotoUpdateDNS" :disabled="btnDisabled"
               class="w-25 mx-2 btn bas-btn-green-border">
-              <i v-if="btnDisabled" class="fa fa-ban"></i>
+              <i v-if="btnDisabled && this.buyingState" class="fa fa-ban"></i>
               {{$t('p.MarketBoughtConfigurationBtn')}}
             </button>
             <button @click="gotoWallet" :disabled="btnDisabled"
