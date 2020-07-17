@@ -3,7 +3,7 @@
   "MetaMaskPopExplorerUnSupportTip": "現在のブラウザはMetaMaskプラグインをサポートしていません。ChromeまたはFirefoxを使用してください。",
   "MetaMaskPopNoMetaMaskTip": "MetaMaskプラグインをインストールしてください",
   "MetaMaskPopLoginTips": "MetaMaskにログインしてください",
-  "MetaMaskPopSelectNetworkPrefix": "MetaMaskプラグインを介してRopestenまたはMainnetに切り替えてください",
+  "MetaMaskPopSelectNetworkPrefix": "MetaMaskプラグインを介して {networks} に切り替えてください",
   "HomeTransactionCarouselCaption": "販売したドメイン名",
   "HomeGetFreeTitle": "無料のBASテストコインを取得",
   "HomeGetFreeNetworksTips": "ropstenテストネットワークにのみ適用",

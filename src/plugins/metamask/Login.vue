@@ -43,7 +43,7 @@
 
 <script>
 import { isMetaMask, getMetamaskExtensionHref } from '@/bizlib/metamask'
-import { checkSupport } from '@/web3-lib/networks'
+import { checkSupport, getSupportNames} from '@/web3-lib/networks'
 
 import {enableMetaMask} from '@/web3-lib'
 
@@ -75,7 +75,9 @@ export default {
       if(!extensionStoreHref) return this.$t('p.MetaMaskPopExplorerUnSupportTip')
       if(!isMetaMask())return this.$t('p.MetaMaskPopNoMetaMaskTip')
       if(this.chainId !=='' && !checkSupport(this.chainId)){
-        return this.$t('p.MetaMaskPopSelectNetworkPrefix')
+        const nwNames = getSupportNames()
+        //console.log(nwNames.join(","))
+        return this.$t('p.MetaMaskPopSelectNetworkPrefix',{networks:nwNames.join(",")})
       }
       return ''
     },

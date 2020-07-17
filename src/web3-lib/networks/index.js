@@ -24,6 +24,8 @@ export function getNetwork(chainId) {
   return Networks.find(nw => nw.chainId === parseInt(chainId))
 }
 
+
+
 /**
  *
  * @param {*} chainId
@@ -33,6 +35,26 @@ export function getNetworkName(chainId){
   const nw = Networks.find(network => network.chainId === parseInt(chainId))
   return nw ? nw.name : ''
 }
+
+/**
+ * return
+ */
+export function getSupports(){
+  return Networks.filter( nw => nw.state && nw.chainId !==1337)
+}
+
+/**
+ *
+ */
+export function getSupportNames() {
+  const supports = Networks.filter(nw => nw.state && nw.chainId !== 1337)
+
+  return supports.map(n => n.name.replace(/(^|\s)[a-z]/g,function(s) {
+    return s.toUpperCase()
+  }))
+}
+
+
 
 /**
  *
@@ -49,5 +71,6 @@ export function checkSupport(chainId){
 export default {
   getNetwork,
   getDefaultNetwork,
-  checkSupport
+  checkSupport,
+  getSupports
 }

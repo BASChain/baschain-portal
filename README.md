@@ -24,9 +24,6 @@ npm run build --report
 
 ## Version history
 
-
-
-
 > 2.x
 
 |  Version  |  Update Date  |  Comments  |

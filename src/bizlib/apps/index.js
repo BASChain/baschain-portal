@@ -4,8 +4,16 @@ export const RelaDownloadBasePath = '/apps'
 export const ExtFansBase ="https://www.extfans.com/search/extensions"
 
 export const MacBrowserApp = 'Uranium.app.zip'
-export const ExtChromeOffline = 'bas-1.0.1-chromium.zip'
-export const ExtFirefoxOffline = 'bas-1.0.2-fx.xpi'
+/**
+ * prev: bas-1.0.1-chromium.zip
+ */
+export const ExtChromeOffline = 'bas-1.0.2-chromium.zip'
+/**
+ * prev
+ * bas-1.0.2-fx.xpi
+ * cur
+ */
+export const ExtFirefoxOffline = 'bas-1.0.3-fx.xpi'
 export const RELA_DOWNLOAD_BASE="/prod";
 export const APPS_BASE="apps";
 export const EXTS_BASE="exts";
