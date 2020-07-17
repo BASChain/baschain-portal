@@ -147,18 +147,31 @@ export default {
       let that = this;
       try {
         buyFromMarket(data.nameHash, data.owner, data.costWei, chainId, wallet)
-        .then(function(receipt) {
-          console.log('buyFromMarket>>>>receipt', receipt)
-          if (receipt.status) {
-            that.buyingState = 'success'
-            that.addTxHashItem(receipt.transactionHash, 'success')
-          } else {
-            that.buyingState = 'fail'
-            that.addTxHashItem(receipt.transactionHash, 'fail')
-          }
-          console.log('that.transactions>>>>>', that.transactions)
+        .on('transactionHash', txhash => {
+          that.buyingState = 'confirming'
+          that.addTxHashItem(txhash, 'loading')
+        }).on('receipt', (receipt) => {
+          that.updateTxHashItem(receipt.transactionHash, 'success')
+          that.buyingState = 'success'
           that.ctrl.completed = true
+        }).on('error', (err, receipt) => {
+          that.buyingState = 'fail'
+          if (receipt.status) {
+            that.updateTxHashItem(receipt.transactionHash, 'fail')
+          }
         })
+        // .then(function(receipt) {
+        //   console.log('buyFromMarket>>>>receipt', receipt)
+        //   if (receipt.status) {
+        //     that.buyingState = 'success'
+        //     that.addTxHashItem(receipt.transactionHash, 'success')
+        //   } else {
+        //     that.buyingState = 'fail'
+        //     that.addTxHashItem(receipt.transactionHash, 'fail')
+        //   }
+        //   console.log('that.transactions>>>>>', that.transactions)
+        //   that.ctrl.completed = true
+        // })
       } catch (error) {
         console.error(error)
       }

@@ -77,7 +77,8 @@ import {
   CheckSearchLegal,getDomainTopType,
   CheckLegalRoot
 } from '@/utils/Validator.js'
-
+import { checkBalance } from '@/web3-lib/apis/market-api'
+import { transBAS2Wei } from '@/utils'
 export default {
   name: 'SearchInput',
   data() {
@@ -181,7 +182,7 @@ export default {
       }
       // this.$router.push({ path: '/apply' })
     },
-    goBuySell() {
+    async goBuySell() {
       if(this.$store.getters['metaMaskDisabled']){
         this.$metamask()
         return;
@@ -192,6 +193,14 @@ export default {
         this.$message(this.$basTip.error('当前域名已在您账户下,不需要购买.'))
         return;
       }
+
+      let checkb = await checkBalance(transBAS2Wei(this.order.salePrice), web3State.chainId, web3State.wallet)
+
+      if (!checkb) {
+        this.$message(this.$basTip.error('余额不足'))
+        return
+      }
+
       this.$router.push({ name: `market.buying`, params: { order: this.order, domaintext: this.inputInfo } })
     }
   },

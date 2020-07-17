@@ -53,13 +53,13 @@
 <script>
 import {
   toUnicodeDomain,compressAddr,isOwner,
-  TS_DATEFORMAT,dateFormat,wei2Float
+  TS_DATEFORMAT,dateFormat,wei2Float,transBAS2Wei
 } from '@/utils'
 
 import {getWeb3State} from '@/bizlib/web3'
 // import {MarketProxy} from '@/proxies/MarketProxy.js'
 import {parseHexDomain} from  '@/web3-lib/utils/index.js'
-
+import { checkBalance } from '@/web3-lib/apis/market-api'
 
 export default {
   name:"OnSaleMain",
@@ -98,7 +98,7 @@ export default {
         })
       }
     },
-    gotoBuying(data) {
+    async gotoBuying(data) {
       if(this.$store.getters['metaMaskDisabled']){
         this.$metamask()
         return;
@@ -112,7 +112,12 @@ export default {
       console.log(data)
       let domaintext = parseHexDomain(data.name)
       let pricevol = data.salePrice
-
+      let checkb = await checkBalance(transBAS2Wei(pricevol), web3State.chainId, web3State.wallet)
+      console.log('checkBalance', checkb, pricevol)
+      if (!checkb) {
+        this.$message(this.$basTip.error('余额不足'))
+        return
+      }
       console.log(domaintext, pricevol)
       if(domaintext && typeof pricevol !== 'undefined'){
         this.$router.push({
