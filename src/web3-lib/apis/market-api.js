@@ -228,17 +228,23 @@ export async function getSoldDomains(chainId) {
  * @param {*} owner
  * @param {*} wallet
  */
-export async function buyFromMarket(nameHash, owner, price, chainId, wallet) {
+export function buyFromMarket(nameHash, owner, price, chainId, wallet) {
   const web3js = winWeb3()
   const market = basMarketInstance(web3js, chainId, { from: wallet })
-  const token = basTokenInstance(web3js, chainId, { from: wallet })
-
-  //查余额
-  const costwei = price.toString()
-  const walletwei = await token.methods.balanceOf(wallet).call()
-  if (compareWei2Wei(walletwei, costwei) < 0) throw apiErrors.LACK_OF_TOKEN
 
   return market.methods.BuyFromSells(nameHash, owner).send({ from: wallet })
+}
+
+export async function checkBalance(price, chainId, wallet) {
+  const web3js = getInfuraWeb3(chainId)
+  const costwei = price.toString()
+  const token = basTokenInstance(web3js, chainId, { from: wallet })
+  const walletwei = await token.methods.balanceOf(wallet).call()
+  console.log('walletwei',walletwei)
+  if (compareWei2Wei(walletwei, costwei) < 0) {
+    return false
+  }
+  return true
 }
 
 
@@ -255,5 +261,6 @@ export default {
   getOnSaleDomains,
   getSoldDomains,
   buyFromMarket,
-  getMarketAddress
+  getMarketAddress,
+  checkBalance
 }
