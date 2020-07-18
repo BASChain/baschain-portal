@@ -5,6 +5,7 @@ import { winWeb3 } from '@/web3-lib'
 
 import { basTokenInstance } from "@/web3-lib/apis";
 import { checkSupport} from '@/web3-lib/networks'
+import { getWithdrawable } from '@/web3-lib/apis/account-api'
 
 const BN = Web3.utils.BN
 
@@ -44,6 +45,15 @@ export function startDappListener() {
           store.commit(`dapp/${DappStoreTypes.UPDATE_BASWEI}`, basweiBN);
 
           // withdrawwei update TODO
+          try{
+            const withDraw = await getWithdrawable(chainId,wallet)
+            console.log(withDraw);
+            if (withDraw !== undefined) {
+              store.commit('dapp/updateWithdrawable', withDraw.withdrawWei);
+            }
+          }catch(ex){
+            console.warn('get withdraw fail',ex)
+          }
 
           //loadMyAssets
           //store.dispatch('ewallet/loadRootAssets', {chainId,wallet:accouts[0]})
