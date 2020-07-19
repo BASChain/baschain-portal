@@ -122,14 +122,14 @@ export default {
     },
     async loginMetaMaskHandle(){
       let vm = this;
-      console.log('Connetct')
+      //console.log('Connetct')
       if(!isMetaMask() || !this.canLoginState) {
         vm.visited = false;
         return
       };
 
       enableMetaMask().then(resp=>{
-        console.log('Metamask Login>>>>>>>>>>>>>',resp)
+        //console.log('Metamask Login>>>>>>>>>>>>>',resp)
         if(checkSupport(resp.chainId)){
           this.$store.commit('dapp/setMetaMaskLogin',resp)
         }
