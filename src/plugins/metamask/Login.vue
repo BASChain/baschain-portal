@@ -60,7 +60,6 @@ export default {
       authorizeTip:'',
       chainId:'',
       network:'',
-      next:'',
       zIndex:999
     }
   },
@@ -133,12 +132,13 @@ export default {
         console.log('Metamask Login>>>>>>>>>>>>>',resp)
         if(checkSupport(resp.chainId)){
           this.$store.commit('dapp/setMetaMaskLogin',resp)
-
         }
 
-        console.log(vm.next)
+        console.log("vm.next",vm.next)
         vm.visited = false;
-        if(vm.next)vm.next();
+        if(vm.next){
+          this.$router.push(vm.next)
+        };
         return resp
       }).then(resp=>{
         console.log('>>>>>>>Login>>>then>>>',resp)

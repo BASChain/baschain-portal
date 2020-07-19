@@ -86,15 +86,18 @@ export default {
   methods:{
     loginAndGotoWalletPage(){
       if(this.$store.getters['metaMaskDisabled']){
-        console.log('OK')
-        this.$metamask()
+       // console.log('OK')
+        const data = {next : {
+          name:"wallet.index",
+        }};
+        this.$metamask(data)
         return
       }
       // //TODO checkSupport
 
       // //TODO login
       enableMetaMask().then(resp=>{
-        console.log(resp)
+        console.log("Login EWallet",resp)
         this.$store.commit('dapp/setMetaMaskLogin',res)
       }).catch(ex=>{
         if(ex.code === 4001){
@@ -103,10 +106,10 @@ export default {
           this.$message(this.$basTip.error($t('g.NetworkTimeout')))
         }
       })
-
       this.$router.push({
         name:"wallet.index",
       })
+
     }
   },
   mounted(){

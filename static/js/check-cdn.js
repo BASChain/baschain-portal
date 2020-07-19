@@ -17,6 +17,7 @@
     { name: "idb", src: "/static/vendor/idb.js", version: "3.0.2" },
     { name: "BasViewJson", src: "/static/js/abis/all.js", version: "0.0.3" },
     { name: "Web3", src: "/static/js/web3.min.js", version: "1.2.7" },
+    // { name: "Web3", src: "/static/vendor/web3/web3-1.2.10.min.js", version: "1.2.10" },
     {
       name: "numeral",
       src: [
