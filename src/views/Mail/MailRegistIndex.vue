@@ -398,11 +398,12 @@ import {
   PARAM_ILLEGAL,USER_REJECTED_REQUEST,UNSUPPORT_NETWORK ,
   DOMAIN_NOT_EXIST,MAILSERVICE_INACTIVED,MAIL_REGIST_BY_OWNER,
   MAIL_HASH_EXIST,MAIL_YEAR_OVER_MAX,LACK_OF_TOKEN,NetworkRequestFail,
-  MAIL_HASH_ABANDONED
+  MAIL_HASH_ABANDONED,MAIL_NAME_ILLEGAL
 }from '@/web3-lib/api-errors'
 
 import {findMailInfo} from '@/web3-lib/apis/view-api'
 import CircleLoading from '@/components/CircleLoading.vue'
+import { BMailAccountIllegal } from '@/web3-lib/utils/biz-validator'
 
 export default {
   name:"MailRegistIndex",
@@ -511,6 +512,13 @@ export default {
         return;
       }
 
+      if(BMailAccountIllegal(mailName)){
+        const validMsg = this.$t(`code.${MAIL_NAME_ILLEGAL}`,{mailname:mailName})
+        //this.inputctrl.message = validMsg
+        this.$message(this.$basTip.error(validMsg))
+        return
+      }
+
       const years = this.years
 
       console.log(domaintext,domainhash,mailName,years)
@@ -599,14 +607,16 @@ export default {
   },
   watch: {
     mailName:function(val,old){
+      const that = this;
       if(val !=='' && val !== old){
         const fulltext = `${val.trim()}@${this.mailDomainText}`
         const chainId = this.$store.getters["web3State"].chainId
+
         console.log(fulltext)
         if(this.ctrl.timeoutId){
           clearTimeout(this.ctrl.timeoutId)
         }
-        const that = this;
+
         this.ctrl.timeoutId = setTimeout(async () => {
           console.log("TimeoutId:",that.ctrl.timeoutId,fulltext)
           try{

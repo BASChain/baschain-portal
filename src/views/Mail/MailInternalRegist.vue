@@ -131,11 +131,13 @@ import {
   PARAM_ILLEGAL,USER_REJECTED_REQUEST,UNSUPPORT_NETWORK ,
   DOMAIN_NOT_EXIST,MAILSERVICE_INACTIVED,MAIL_REGIST_BY_OWNER,
   MAIL_HASH_EXIST,MAIL_YEAR_OVER_MAX,LACK_OF_TOKEN,NetworkRequestFail,
-  MAIL_HASH_ABANDONED
+  MAIL_HASH_ABANDONED,MAIL_NAME_ILLEGAL
 }from '@/web3-lib/api-errors'
 
 import {findMailInfo} from '@/web3-lib/apis/view-api'
 import {validPrevRegistMail} from '@/web3-lib/apis/mail-manager-api'
+import { BMailAccountIllegal } from '@/web3-lib/utils/biz-validator'
+
 import CircleLoading from '@/components/CircleLoading.vue'
 
 export default {
@@ -203,6 +205,13 @@ export default {
         msg = this.$t('code.888888',{text:this.$t('l.ApplyMailNameLabel')})
         this.$message(this.$basTip.error(msg))
         return;
+      }
+
+      if(BMailAccountIllegal(mailName)){
+        const validMsg = this.$t(`code.${MAIL_NAME_ILLEGAL}`,{mailname:mailName})
+        //this.inputctrl.message = validMsg
+        this.$message(this.$basTip.error(validMsg))
+        return
       }
 
       const years = this.years
@@ -286,10 +295,10 @@ export default {
       const owner = this.owner
       if(val !== '' && val !== old){
         console.log(val)
-        if(!validMailAccount(val)){
-          this.inputctrl.message = this.$t('p.ValidMailAccountNameWarn')
-          return;
-        }
+        // if(!validMailAccount(val)){
+        //   this.inputctrl.message = this.$t('p.ValidMailAccountNameWarn')
+        //   return;
+        // }
         this.inputctrl.message = ''
         if(this.ctrl.timeoutId){
           clearTimeout(this.ctrl.timeoutId)
