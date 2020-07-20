@@ -308,7 +308,7 @@ export default {
         proxy.getFreeEth(wallet).then(resp=>{
           console.log(resp)
           msg = that.$t("g.GetTokenOrETHSuccess")
-          that.$message(that.$basTip.error(msg))
+          that.$message(that.$basTip.warn(msg))
 
           setTimeout(() => {
             that.ctrl.ethLoading = false
