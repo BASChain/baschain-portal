@@ -197,7 +197,7 @@ export async function findMailInfo(fulltext,chainId){
     expiration:ret.expiration,
     owner:ret.owner,
     aliasName: ret.aliasName ? Web3.utils.hexToString(ret.aliasName) : '',
-    abandoned:Boolean(ret.isValid),
+    abandoned:!Boolean(ret.isValid),
     bca:ret.bcAddress,
     domaintext: parseHexDomain(domainRet.name)
   }

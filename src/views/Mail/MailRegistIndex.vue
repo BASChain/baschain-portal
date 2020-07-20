@@ -397,7 +397,8 @@ import {validPrevRegistMail} from '@/web3-lib/apis/mail-manager-api'
 import {
   PARAM_ILLEGAL,USER_REJECTED_REQUEST,UNSUPPORT_NETWORK ,
   DOMAIN_NOT_EXIST,MAILSERVICE_INACTIVED,MAIL_REGIST_BY_OWNER,
-  MAIL_HASH_EXIST,MAIL_YEAR_OVER_MAX,LACK_OF_TOKEN,NetworkRequestFail
+  MAIL_HASH_EXIST,MAIL_YEAR_OVER_MAX,LACK_OF_TOKEN,NetworkRequestFail,
+  MAIL_HASH_ABANDONED
 }from '@/web3-lib/api-errors'
 
 import {findMailInfo} from '@/web3-lib/apis/view-api'
@@ -610,9 +611,15 @@ export default {
           console.log("TimeoutId:",that.ctrl.timeoutId,fulltext)
           try{
             const resp = await findMailInfo(fulltext,chainId)
+            console.log(resp)
             if(resp.state){
               console.log(resp.mail)
-              that.inputctrl.message = that.$t(`code.${MAIL_HASH_EXIST}`,{mailname:fulltext})
+              if(resp.mail.abandoned){
+                //MAIL_HASH_INVALID
+                that.inputctrl.message = that.$t(`code.${MAIL_HASH_ABANDONED}`,{text:fulltext})
+              }else{
+                that.inputctrl.message = that.$t(`code.${MAIL_HASH_EXIST}`,{text:fulltext})
+              }
             }else{
               that.inputctrl.message = ''
             }

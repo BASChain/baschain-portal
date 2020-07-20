@@ -32,6 +32,7 @@
   "410002": "BMail account {text} has been abandoned or does not exist",
   "410003": "BMail account {text} is occupied, please try another one",
   "410004": "BMail account {text} has expired",
+  "410005": "BMail account {text} has been deprecated",
   "119119": "The current account {wallet} does not have permission to modify {asset} data",
   "700001": "The recharge period exceeds the maximum allowable period {max}",
   "700002": "You have already applied once, each account is only allowed to claim once",
