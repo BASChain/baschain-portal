@@ -48,5 +48,9 @@
   "GetTokenOrETHFail":"アプリケーションが失敗しました。もう一度やり直してください。",
   "GetTokenOrETHSuccess":"アプリケーションは成功しました。私のウォレットにアクセスしてください。",
   "PaymentOngoing":"お支払い",
-  "MetaMaskNoPopTips":"ページが長時間読み込まれる場合は、MateMaskが承認されているかどうかを確認してください"
+  "MetaMaskNoPopTips":"ページが長時間読み込まれる場合は、MateMaskが承認されているかどうかを確認してください",
+  "ValidateOnBlockChain": "チェック中",
+  "RequestTimeoutOverTip": "（ts）秒を超えました。メタマスクネットワークを確認するか、オフにしてから再試行してください。",
+  "RefreshPageNotCommitAgain": "このページを更新してもデータは再送信されません。前のステップに戻って再送信してください",
+  "MetaMaskTxSlowTimeoutTip": "トランザクションが（ts）秒を超えました。メタマスクのアクティビティステータスを確認するか、トランザクションを再度閉じてください"
 }
