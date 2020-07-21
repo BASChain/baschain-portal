@@ -13,15 +13,18 @@ const dateFormat = new DateFormat('YYMMDD_HHmm')
 
 updateAppInfo(infoFile)
 
-
 async function updateAppInfo(infoFilePath){
+
+  console.log(process.env.PRE_REL)
+  const PRE_REL = process.env.PRE_REL || false
+
   fs.ensureFileSync(infoFilePath)
 
   const ver = pkgJson.version||'2.1.0';
   const name = pkgJson.name || 'bas-exchange'
   const author = pkgJson.author || "bas-team"
   const tagts = dateFormat.format(new Date())
-  const buildTag = `${ver}_${tagts}`;
+  const buildTag = Boolean(PRE_REL) ? `Pre-${ver}_${tagts}` : `${ver}_${tagts}`;
 
 
   let info = {
