@@ -275,6 +275,7 @@ export async function findDomain4Search(text, chainId) {
   const hash = Web3.utils.keccak256(sname)
 
   const viewInst = basViewInstance(web3js, chainId)
+  console.log(viewInst._address)
   const res = await viewInst.methods.queryDomainInfo(hash).call();
   //console.log('00000000', res)
   const resp = {
