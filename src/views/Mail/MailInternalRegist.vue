@@ -307,11 +307,11 @@ export default {
         const fulltext = `${val}@${that.domaintext}`
         this.ctrl.timeoutId = setTimeout(async () => {
           try{
-
             const resp = await findMailInfo(fulltext,chainId)
             console.log(">>>>>>>.",resp)
             if(resp.state){
-              console.log(resp.mail)
+
+              //console.log(resp.mail)
               if(resp.mail.abandoned){
                 //MAIL_HASH_INVALID
                 that.inputctrl.message = that.$t(`code.${MAIL_HASH_ABANDONED}`,{text:fulltext})
