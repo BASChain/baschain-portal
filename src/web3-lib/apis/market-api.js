@@ -148,11 +148,17 @@ export async function getOnSaleDomains(chainId) {
   const view = basViewInstance(web3js, chainId)
 
   let sellAdded = await market.getPastEvents("SellAdded", {fromBlock:0, toBlock:"latest"})
+
+  if (sellAdded.length === 0) {
+    return []
+  }
+
   let sellChanged = await market.getPastEvents("SellChanged", {fromBlock:0, toBlock:"latest"})
   let soldBySell = await market.getPastEvents("SoldBySell", {fromBlock:0, toBlock:"latest"})
   let sellRemoved = await market.getPastEvents("SellRemoved", {fromBlock:0, toBlock:"latest"})
+  
   let logThread = []
-  logThread = (sellAdded || []).concat(sellChanged || [], soldBySell || [], sellRemoved || [])
+  logThread = sellAdded.concat(sellChanged || [], soldBySell || [], sellRemoved || [])
 
   if (!logThread || logThread.length === 0) {
     return []
@@ -167,12 +173,9 @@ export async function getOnSaleDomains(chainId) {
     console.error('Inverse logs error', e)
   }
 
-  // console.log('******logThread', logThread)
   //filter valid log
   try {
     logThread = logThread.reduceRight((sum, cur) => {
-      // console.log('sum',sum)
-      // console.log('cur', cur)
       sum = Array.isArray(sum) ? sum : [sum]
       if (((sum).find((el) => Object.is(el.returnValues.nameHash, cur.returnValues.nameHash)))!==undefined) {
         return sum
@@ -182,19 +185,20 @@ export async function getOnSaleDomains(chainId) {
   } catch(e) {
     console.error('Filter vaild log error', e)
   }
+
+  logThread = Array.isArray(logThread) ? logThread : [logThread]
   console.log('filter logs', logThread)
+
   logThread = logThread.filter(item => {
     return (item.event !== "SellRemoved" && item.event !== "SoldBySell")
   })
-
-  // console.log('******logThread', logThread)
 
   var domainOrders = []
   for (let log of logThread) {
     let singleOrder = await view.methods.queryDomainInfo(log.returnValues.nameHash).call()
     domainOrders.push(Object.assign(singleOrder, { salePrice: log.returnValues.price, nameHash: log.returnValues.nameHash }))
   }
-  // console.log('******domainOrders', domainOrders)
+  console.log('******domainOrders', domainOrders)
   return domainOrders
 }
 
