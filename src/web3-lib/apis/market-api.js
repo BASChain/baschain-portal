@@ -148,14 +148,20 @@ export async function getOnSaleDomains(chainId) {
   const view = basViewInstance(web3js, chainId)
 
   let sellAdded = await market.getPastEvents("SellAdded", {fromBlock:0, toBlock:"latest"})
+
+  if (sellAdded.length === 0) {
+    return []
+  }
+
   let sellChanged = await market.getPastEvents("SellChanged", {fromBlock:0, toBlock:"latest"})
   let soldBySell = await market.getPastEvents("SoldBySell", {fromBlock:0, toBlock:"latest"})
   let sellRemoved = await market.getPastEvents("SellRemoved", {fromBlock:0, toBlock:"latest"})
+  
+  let logThread = []
+  logThread = sellAdded.concat(sellChanged || [], soldBySell || [], sellRemoved || [])
 
-  var logThread = sellAdded.concat(sellChanged, soldBySell, sellRemoved)
-
-  if (!logThread) {
-    return logThread
+  if (!logThread || logThread.length === 0) {
+    return []
   }
 
   //Inverse Priority
@@ -167,13 +173,9 @@ export async function getOnSaleDomains(chainId) {
     console.error('Inverse logs error', e)
   }
 
-  console.log('******logThread', logThread)
-
   //filter valid log
   try {
     logThread = logThread.reduceRight((sum, cur) => {
-      // console.log('sum',sum)
-      // console.log('cur', cur)
       sum = Array.isArray(sum) ? sum : [sum]
       if (((sum).find((el) => Object.is(el.returnValues.nameHash, cur.returnValues.nameHash)))!==undefined) {
         return sum
@@ -184,11 +186,12 @@ export async function getOnSaleDomains(chainId) {
     console.error('Filter vaild log error', e)
   }
 
+  logThread = Array.isArray(logThread) ? logThread : [logThread]
+  console.log('filter logs', logThread)
+
   logThread = logThread.filter(item => {
     return (item.event !== "SellRemoved" && item.event !== "SoldBySell")
   })
-
-  console.log('******logThread', logThread)
 
   var domainOrders = []
   for (let log of logThread) {
@@ -209,14 +212,14 @@ export async function getSoldDomains(chainId) {
   const view = basViewInstance(web3js, chainId)
 
   let soldList = await market.getPastEvents("SoldBySell", {fromBlock:0, toBlock:"latest"})
-  console.log('##########soldList', soldList)
+  // console.log('##########soldList', soldList)
 
   var soldDomains = []
   for (let log of soldList) {
     let domainInfo = await view.methods.queryDomainInfo(log.returnValues.nameHash).call()
     soldDomains.push(Object.assign(log.returnValues, { expire: domainInfo.expiration, name: domainInfo.name }))
   }
-  console.log('##########soldDomains', soldDomains)
+  // console.log('##########soldDomains', soldDomains)
   return soldDomains
 }
 
