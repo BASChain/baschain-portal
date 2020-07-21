@@ -85,19 +85,27 @@
     </div>
     <div class="row justify-content-center mb-5">
       <div v-if="showRegistBtn"
-        class="col-7 bas-card__body bas-card__body--top-canregist bas-gray-bg">
-          <div class="row justify-content-center">
+        class="col-7 bas-card__body bas-card__body--footer bas-gray-bg">
+          <div class="left-unit">
+            <label>{{$t('p.DomainDetailRegistSubTips')}}</label>
+            <h1 class="bas-text-green d-inline">{{subUnitPrice}}</h1>
+            <span class="bas-text-green">BAS/{{$t('g.EnumTSYear')}}</span>
+          </div>
+          <div class="right-operate">
+            <button class="btn bas-btn-primary " @click="gotoRegistSub">
+              {{$t('l.gotoRegistBtn')}}
+            </button>
+          </div>
+          <!-- <div class="row justify-content-center">
             <div class="col-12 text-center bas-sub-price">
                 <label>{{$t('p.DomainDetailRegistSubTips')}}</label>
                 <h1 class="bas-text-green d-inline">{{subUnitPrice}}</h1>
                 <span class="bas-text-green">BAS/{{$t('g.EnumTSYear')}}</span>
             </div>
             <div class="col-12 text-center pt-2">
-              <button class="btn bas-btn-primary w-25" @click="gotoRegistSub">
-                {{$t('l.gotoRegistBtn')}}
-              </button>
+
             </div>
-          </div>
+          </div> -->
       </div>
     </div>
   </div>
@@ -106,6 +114,28 @@
 </template>
 
 <style scoped>
+.left-unit> label {
+  font: 16px;
+  font-weight:400;
+  color:rgba(150,150,166,1);
+}
+.left-unit> h1 {
+  color:rgba(0,202,155,1);
+  font-weight:bold;
+  font-size: 36px;
+}
+
+.left-unit> span {
+  font-size: 14px;
+}
+
+
+/* .left-unit> h1::after {
+  margin-left: .5rem;
+  content: 'BAS';
+  font-size: 14px;
+} */
+
 .bas-place-bottom {
   padding-bottom: 98px;
 }
@@ -159,9 +189,7 @@
   margin: 12px 0px 11px 0px;
   line-height: 25px;
 }
-.bas-card-header {
-  /* height: 62px; */
-}
+
 .bas-card-header--title > span {
   font-size: 22px;
   font-weight: Semibold;
@@ -203,6 +231,13 @@
   clear: both;
   width: 100%;
   height: 118px;
+}
+
+.bas-card__body--footer {
+  display: inline-flex;
+  height: 72px;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .detail-bg-wrapper {
