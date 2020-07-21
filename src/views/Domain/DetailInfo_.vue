@@ -2,6 +2,11 @@
 <div class="detail-bg-wrapper">
   <div class="container bas-place-bottom">
     <div class="row justify-content-center">
+      <div class="col-7">
+        <goback-nav />
+      </div>
+    </div>
+    <div class="row justify-content-center">
       <div class="col-7 bas-card">
         <div class="bas-card-header bas-green-bg text-white">
           <div class="bas-card-header--title">
@@ -231,8 +236,13 @@ import {
   wei2Bas
 } from '@/utils'
 
+import GobackNav from "@/components/GobackNav.vue"
+
 export default {
   name:"DomainDetail",
+  components:{
+    GobackNav,
+  },
   data(){
     return {
       domain:'',

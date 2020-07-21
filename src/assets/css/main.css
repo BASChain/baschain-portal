@@ -983,8 +983,8 @@ img.bas-bingo {
   transition-property:all;
   transition-duration: 0.2s;
   transition-timing-function: ease-in-out;
-  /* transition-delay: 0s;
-  box-shadow: 0 1px 1px 0 rgba(196,196,196,0.5); */
+  transition-delay: 0s;
+  box-shadow: 0 1px 1px 0 rgba(225,229,229,1);
 }
 
 .active .top-menu {

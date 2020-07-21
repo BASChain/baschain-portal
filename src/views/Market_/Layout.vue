@@ -21,7 +21,7 @@
 }
 .market-search-warp {
   background: #fff;
-  border-top: 1px solid rgba(225,229,229,1);
+  /* border-top: 1px solid rgba(225,229,229,1); */
   align-items: center;
 }
 .market-search--outer {
