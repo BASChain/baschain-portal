@@ -273,5 +273,6 @@
   "BMailServerIntroContent2":"iPadやMacの鮮やかなRetinaディスプレイを使用して、没頭してください。 中央の仕切りをタップしてからドラッグすると、コードまたはライブプロジェクトが全画面で表示されます。 また、BattleshipやBrick Breakerなどの組み込みゲームをカスタマイズして、画面全体に表示することで没頭できます。",
   "AppStoreExtensionAuto":"Google play / firefoxストアにアクセスして、ボタンを直接クリックしてインストールできます",
   "AppStoreExtensionSelf":"Google拡張ストアからインストールできない場合は、圧縮パッケージを手動でダウンロードしてインストールできます。このチュートリアルはChromeとFireFoxに適用されます。",
-  "MarketConfirmRevoke": "ドメイン名を撤回してもよろしいですか："
+  "MarketConfirmRevoke": "ドメイン名を撤回してもよろしいですか：",
+  "DomainDetailOpenShowMore": "展開して詳細を表示します"
 }

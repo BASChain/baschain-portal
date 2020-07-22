@@ -275,5 +275,6 @@
   "AppStoreExtensionAuto":"You can visit Google play /firefox store to directly click the button to install",
   "AppStoreExtensionSelf":"If you can’t install through the Google extension store, you can choose to download the compressed package manually to install. This tutorial is applicable to Chrome and FireFox.",
 
-  "MarketConfirmRevoke": "Are you sure you want to withdraw the domain name:"
+  "MarketConfirmRevoke": "Are you sure you want to withdraw the domain name:",
+  "DomainDetailOpenShowMore": "Expand to view more information"
 }
