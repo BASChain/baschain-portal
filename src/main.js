@@ -15,10 +15,11 @@ import './plugins/font-awesome'
 
 import { i18n } from './plugins/vue-i18n';
 
-
 import './plugins/bootstrap'
 import './plugins/elementui'
 
+import idbkvs from './bascore/indexDBService'
+global.idbkvs = idbkvs
 
 
 //bizjs
@@ -26,6 +27,7 @@ import { DAppInfo } from './bascore'
 import { CheckRuntime } from '@/bizlib/check-runtime'
 const runtime = new CheckRuntime(window.navigator.userAgent)
 const browser = runtime.info.name;
+
 global.BasRuntime = Object.assign({}, runtime.info, DAppInfo, { browser })
 
 //Binding Infura
@@ -42,7 +44,7 @@ import { router } from './plugins/vue-router';
 //import './plugins/vuex-router-sync'
 
 //build need recomment
-global.punycode = require('punycode')
+//global.punycode = require('punycode')
 
 
 /**
@@ -71,6 +73,6 @@ global.basvue = new Vue({
 
 
 document.addEventListener('DOMContentLoaded', function () {
-  console.log(">>>>DOMCLoaded",new Date().getTime())
+  console.log(">>>>DOMCLoaded",new Date().getTime() )
   basvue.$mount('#app')
 })

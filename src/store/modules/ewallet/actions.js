@@ -13,6 +13,9 @@ import {
   MARKET_ASSETS,
   checkStorage,
   saveToStorage,
+  saveToKeyStorage,
+  checkKeyStorage,
+  comboKey,
 } from '@/bascore/indexDBService'
 
 
@@ -31,11 +34,13 @@ export async function syncEWalletAssets({ commit, rootState }, payload = { chain
  *
  * @param {*} param0
  */
-export async function updateEWalletAssetsIndexedDB({ commit, state }, payload){
+export async function updateEWalletAssetsIndexedDB({ commit, state,rootState }, payload){
   commit(types.UPDATE_ASSET_PROPS, payload)
   const assets = state.assets ||[]
   console.log("updateEWalletAssetsIndexedDB>>>>",assets)
   try{
+
+    //await saveToStorage(WALLET_ASSETS, assets)
     await saveToStorage(WALLET_ASSETS, assets)
   }catch(ex){
   }
@@ -97,8 +102,11 @@ async function saveMyAssets({commit,rootState},{chainId,wallet} = payload){
       commit(types.LOAD_EWALLET_HASHES, pager.hashes)
       commit(types.SET_EWALLET_TOTAL, pager.total)
       commit(types.LOAD_EWALLET_ASSETS, assets)
+
+      const key = comboKey(wallet, chainId)
+      await saveToKeyStorage(WALLET_ASSETS, assets, key)
       //console.log("Wallet Assets:",assets)
-      await saveToStorage(WALLET_ASSETS, assets)
+      //await saveToStorage(WALLET_ASSETS, assets)
     } catch (ex) {
       console.error("Synchronize data on the baschain store to indexedDB", ex)
     }
@@ -179,7 +187,14 @@ export async function syncEWalletMails({ commit, rootState }, payload = { chainI
  */
 export async function fillEWalletMails({ commit, rootState }) {
   try{
-    const mails = await checkStorage(WALLET_MAILS)
+    //const mails = await checkStorage(WALLET_MAILS)
+
+    const chainId = rootState.dapp.chainId
+    const wallet = rootState.dapp.wallet
+
+    const key = comboKey(wallet, chainId)
+    const mails = await checkKeyStorage(WALLET_MAILS,key)
+
     if(mails && mails.length){
       commit(types.LOAD_EWALLET_MAILS, mails)
     }
@@ -197,6 +212,7 @@ export async function fillEWalletMails({ commit, rootState }) {
 export async function loadEWalletMails({ commit, rootState},payload={chainId,wallet}){
   const chainId = payload.chainId;
   const wallet = payload.wallet;
+
   //console.log(payload, chainId, wallet)
   if (!chainId || !wallet) {
     console.error('chainId or wallet required.')
@@ -212,12 +228,18 @@ export async function loadEWalletMails({ commit, rootState},payload={chainId,wal
         return m
       });
       commit(types.LOAD_EWALLET_MAILS,mails)
-      await saveToStorage(WALLET_MAILS, mails)
+      // const chainId = rootState.dapp.chainId
+      // const wallet = rootState.dapp.wallet
+      const key = comboKey(wallet, chainId)
+      console.log("key", chainId, wallet, key)
+      await saveToKeyStorage(WALLET_MAILS,mails,key)
+      //await saveToStorage(WALLET_MAILS, mails)
     }catch(ex){
       console.error('load wallet mails',ex)
     }
   }
 }
+
 //load personal orders
 export async function loadEWalletOrders({ commit }, payload={chainId, wallet}) {
   const chainId = payload.chainId
@@ -294,7 +316,10 @@ export async function updateMailInfo({ commit, rootState},payload={hash,chainId}
 export async function updateMyAsset({commit,rootState},payload = {hash}){
   const hash = payload.hash
   const chainId = rootState.dapp.chainId
+  const wallet = rootState.dapp.wallet
+
   if(!checkSupport(chainId) || !hash)return
+
   try{
     const resp = await getDomainInfo(hash,chainId)
     if(resp.state){
@@ -303,7 +328,11 @@ export async function updateMyAsset({commit,rootState},payload = {hash}){
       commit(types.UPDATE_ASSET_PROPS, Object.assign({}, asset, { canRechargeYear: canRechargeYear}))
 
       const assets = rootState.ewallet.assets
-      await saveToStorage(WALLET_ASSETS, assets)
+
+      const key = comboKey(wallet,chainId)
+      await saveToKeyStorage(WALLET_ASSETS, assets, key)
+
+      //await saveToStorage(WALLET_ASSETS, assets)
     }
   }catch(ex){
     console.error('update asset error',hash)

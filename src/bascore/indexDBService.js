@@ -114,9 +114,24 @@ export const checkKeyStorage = async (storeName,key) => {
     })
 }
 
+/**
+ *
+ * @param {*} chainId
+ * @param {*} wallet
+ */
+export const comboKey = (wallet, chainId) => {
+  wallet = (wallet || '').toUpperCase()
+  if (typeof chainId !== 'string' && typeof chainId !== 'number'){
+    return `${wallet}`
+  }else {
+    return `${wallet}_${chainId + ''}`
+  }
+}
+
 export default {
   LATEST_ROOT_DOMAINS,
   LATEST_SUB_DOMAINS,
+  comboKey,
   checkStorage,
   saveToStorage,
   saveToKeyStorage,
