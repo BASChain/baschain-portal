@@ -1,7 +1,8 @@
 //import Vue from 'vue'
 import metamask from './Login.vue'
 import store from '@/store'
-import { i18n } from '../vue-i18n';
+import { router } from '@/plugins/vue-router';
+import { i18n } from '@/plugins/vue-i18n';
 
 const PopupBox = Vue.extend(metamask)
 
@@ -14,6 +15,7 @@ metamask.install = function(data){
   let instance = new PopupBox({
     store,
     i18n,
+    router,
     data
   }).$mount()
 

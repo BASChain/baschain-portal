@@ -143,7 +143,7 @@
     <!-- RechargeDialog -->
     <el-dialog width="846px"
       :close-on-click-modal="false"
-      :show-close="!recharge.loading"
+      :show-close="recharge.closeable"
       :before-close="hiddenRechargeDialog"
       :visible.sync="recharge.visible"
       top="20vh"
@@ -382,6 +382,7 @@ export default {
   },
   data() {
     return {
+      txTimeout:30,
       transout:{
         visible:false,
         loading:false,
@@ -393,6 +394,7 @@ export default {
       recharge:{
         visible:false,
         loading:false,
+        closeable:true,
         moreshow:false,
         chargeYears:0,
         maxchargeYears:0,
@@ -473,6 +475,7 @@ export default {
         {
           visible:false,
           loading:false,
+          closeable:true,
           moreshow:false,
           chargeYears:0,
           maxchargeYears:0,
@@ -537,6 +540,7 @@ export default {
       this.recharge = Object.assign({},this.recharge,{
         visible:true,
         loading:false,
+        closeable:true,
         moreshow:false,
         chargeYears:canRegMaxYear,
         maxchargeYears:canRegMaxYear,
@@ -584,8 +588,15 @@ export default {
 
         const approveAddress = validResp.spender
         const costwei = validResp.costwei
+
         approveTokenEmitter(approveAddress,costwei,chainId,wallet).on('transactionHash',txhash =>{
           that.recharge.loading = true
+          that.recharge.closeable=false
+          const timeout = that.txTimeout
+          setTimeout(async () => {
+            that.$message(that.$basTip.error(that.$t('g.MetaMaskTxSlowTimeoutTip',{ts:timeout})))
+            that.recharge.closeable=true
+          }, timeout * 1000);
         }).on('receipt',async (receipt)=> {
           try{
             console.log("Approve",receipt)
@@ -595,6 +606,7 @@ export default {
             that.hiddenRechargeDialog()
           }catch(ex){
             that.recharge.loading = false
+            that.recharge.closeable=true
             if(ex.code === USER_REJECTED_REQUEST){
               msg = that.$t(`code.${USER_REJECTED_REQUEST}`)
               that.$message(that.$basTip.error(msg))
@@ -605,6 +617,7 @@ export default {
           }
         }).on('error',(err,receipt)=> {
           that.recharge.loading = false
+          that.recharge.closeable=true
           if(err.code === USER_REJECTED_REQUEST){
             msg = that.$t(`code.${USER_REJECTED_REQUEST}`)
             that.$message(that.$basTip.error(msg))
@@ -654,11 +667,16 @@ export default {
 
       try{
         const validRet = await validRecharge4Domain(domainhash,year,chainId,wallet)
-
         const approveAddress = validRet.spender
         const costwei = validRet.costwei
         approveTokenEmitter(approveAddress,costwei,chainId,wallet).on('transactionHash',txhash =>{
           that.recharge.loading = true
+          that.recharge.closeable=false
+          const timeout = that.txTimeout
+          setTimeout(async () => {
+            that.$message(that.$basTip.error(that.$t('g.MetaMaskTxSlowTimeoutTip',{ts:timeout})))
+            that.recharge.closeable=true
+          }, timeout * 1000);
         }).on('receipt',async (receipt)=> {
           try{
             console.log("Approve Root",receipt)
@@ -667,6 +685,7 @@ export default {
             that.hiddenRechargeDialog()
           }catch(ex){
             that.recharge.loading = false
+            that.recharge.closeable=true
             if(ex.code === USER_REJECTED_REQUEST){
               msg = that.$t(`code.${USER_REJECTED_REQUEST}`)
               that.$message(that.$basTip.error(msg))
@@ -677,6 +696,7 @@ export default {
           }
         }).on('error',(err,receipt)=> {
           that.recharge.loading = false
+          that.recharge.closeable=true
           if(err.code === USER_REJECTED_REQUEST){
             msg = that.$t(`code.${USER_REJECTED_REQUEST}`)
             that.$message(that.$basTip.error(msg))

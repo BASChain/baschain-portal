@@ -5,6 +5,7 @@ import { winWeb3 } from '@/web3-lib'
 
 import { basTokenInstance } from "@/web3-lib/apis";
 import { checkSupport} from '@/web3-lib/networks'
+import { getWithdrawable } from '@/web3-lib/apis/account-api'
 
 const BN = Web3.utils.BN
 
@@ -21,6 +22,8 @@ export function startDappListener() {
   if (!web3js || !ethereum) {
     return Promise.reject('MetaMask env not injected. listener unloaded.')
   }
+
+  const zeroBN = new BN("0")
 
   /**
    * listener account changed
@@ -43,7 +46,16 @@ export function startDappListener() {
           const basweiBN = new BN(await inst.methods.balanceOf(wallet).call(), 16)
           store.commit(`dapp/${DappStoreTypes.UPDATE_BASWEI}`, basweiBN);
 
-          // withdrawwei update TODO
+          // withdrawwei update
+          try{
+            const withDraw = await getWithdrawable(chainId,wallet)
+            console.log(withDraw);
+            if (withDraw !== undefined) {
+              store.commit('dapp/updateWithdrawable', withDraw.withdrawWei);
+            }
+          }catch(ex){
+            console.warn('get withdraw fail',ex)
+          }
 
           //loadMyAssets
           //store.dispatch('ewallet/loadRootAssets', {chainId,wallet:accouts[0]})
@@ -56,8 +68,12 @@ export function startDappListener() {
     })
   }
 
-  if (!ethereum.eventNames().find(n => n === 'networkChanged')) {
-    ethereum.on("networkChanged", async function (chainId) {
+
+  //chainChanged
+  //networkChanged
+  if (!ethereum.eventNames().find(n => n === 'chainChanged')) {
+    ethereum.on("chainChanged", async function (chainIdHex) {
+      const chainId = parseInt(chainIdHex)
       console.log("Current network changed", chainId)
       store.commit(`dapp/${DappStoreTypes.UPDATE_CHAINID}`, chainId);
 
@@ -76,13 +92,30 @@ export function startDappListener() {
           );
           store.commit(`dapp/${DappStoreTypes.UPDATE_BASWEI}`, basweiBN);
 
+          try {
+            const withDraw = await getWithdrawable(chainId, wallet)
+            console.log(withDraw);
+            if (withDraw !== undefined) {
+              store.commit('dapp/updateWithdrawable', withDraw.withdrawWei);
+            }
+          } catch (ex) {
+            console.warn('get withdraw fail', ex)
+          }
+
           //loadRootAssets
           store.dispatch('dapp/loadRootAssets')
           try{
             store.dispatch('ewallet/syncEWalletAssets', { chainId: chainId, wallet })
           }catch(ex){}
 
+        }else{
+          store.commit(`dapp/${DappStoreTypes.UPDATE_BASWEI}`, zeroBN);
+          store.commit('dapp/updateWithdrawable', zeroBN);
         }
+      }else{
+        store.commit(`dapp/${DappStoreTypes.UPDATE_ETHWEI}`, zeroBN);
+        store.commit(`dapp/${DappStoreTypes.UPDATE_BASWEI}`, zeroBN);
+        store.commit('dapp/updateWithdrawable', zeroBN);
       }
 
     });

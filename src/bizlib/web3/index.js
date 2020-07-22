@@ -125,7 +125,6 @@ export function getBasTokenInstance(chainId){
   const BasTokenContract = ContractManager.BasToken(chainId)
   let abi = BasTokenContract.abi;
   let web3js = window.web3
-  //new Web3(window.web3.currentProvider)
   return new web3js.eth.Contract(abi,BasTokenContract.address)
 }
 

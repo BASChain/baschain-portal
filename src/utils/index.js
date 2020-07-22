@@ -502,7 +502,7 @@ export function getYearItems(maxYear,unitbas){
   const items = []
 
   for(let i = max; i>0;i--){
-    items.push({y:i,total:i*parseFloat(unitbas)})
+    items.push({ y: i, total: parseFloat(i*unitbas).toFixed(2)})
   }
 
   return items

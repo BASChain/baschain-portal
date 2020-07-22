@@ -76,9 +76,10 @@ export async function fillMyAssets({ commit, rootState }, payload = { chainId, w
  * @param {*} param0
  * @param {*} payload
  */
-async function saveMyAssets({commit,rootState},payload={chainId,wallet}){
-  const chainId = payload.chainId || rootState.dapp.chainId
-  const wallet = payload.wallet || rootState.dapp.wallet
+async function saveMyAssets({commit,rootState},{chainId,wallet} = payload){
+  //console.log("syncEWalletAssets",wallet,chainId,rootState)
+  chainId = chainId || rootState.dapp.chainId
+  wallet = wallet || rootState.dapp.wallet
 
   if (checkSupport(chainId) && wallet) {
     try {
@@ -96,7 +97,7 @@ async function saveMyAssets({commit,rootState},payload={chainId,wallet}){
       commit(types.LOAD_EWALLET_HASHES, pager.hashes)
       commit(types.SET_EWALLET_TOTAL, pager.total)
       commit(types.LOAD_EWALLET_ASSETS, assets)
-
+      //console.log("Wallet Assets:",assets)
       await saveToStorage(WALLET_ASSETS, assets)
     } catch (ex) {
       console.error("Synchronize data on the baschain store to indexedDB", ex)

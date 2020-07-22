@@ -42,7 +42,7 @@ import { router } from './plugins/vue-router';
 //import './plugins/vuex-router-sync'
 
 //build need recomment
-//global.punycode = require('punycode')
+global.punycode = require('punycode')
 
 
 /**

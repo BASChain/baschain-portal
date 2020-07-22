@@ -43,7 +43,7 @@
 
 <script>
 import { isMetaMask, getMetamaskExtensionHref } from '@/bizlib/metamask'
-import { checkSupport } from '@/web3-lib/networks'
+import { checkSupport, getSupportNames} from '@/web3-lib/networks'
 
 import {enableMetaMask} from '@/web3-lib'
 
@@ -60,7 +60,6 @@ export default {
       authorizeTip:'',
       chainId:'',
       network:'',
-      next:'',
       zIndex:999
     }
   },
@@ -75,7 +74,9 @@ export default {
       if(!extensionStoreHref) return this.$t('p.MetaMaskPopExplorerUnSupportTip')
       if(!isMetaMask())return this.$t('p.MetaMaskPopNoMetaMaskTip')
       if(this.chainId !=='' && !checkSupport(this.chainId)){
-        return this.$t('p.MetaMaskPopSelectNetworkPrefix')
+        const nwNames = getSupportNames()
+        //console.log(nwNames.join(","))
+        return this.$t('p.MetaMaskPopSelectNetworkPrefix',{networks:nwNames.join(",")})
       }
       return ''
     },
@@ -121,22 +122,23 @@ export default {
     },
     async loginMetaMaskHandle(){
       let vm = this;
-      console.log('Connetct')
+      //console.log('Connetct')
       if(!isMetaMask() || !this.canLoginState) {
         vm.visited = false;
         return
       };
 
       enableMetaMask().then(resp=>{
-        console.log('Metamask Login>>>>>>>>>>>>>',resp)
+        //console.log('Metamask Login>>>>>>>>>>>>>',resp)
         if(checkSupport(resp.chainId)){
           this.$store.commit('dapp/setMetaMaskLogin',resp)
-
         }
 
-        console.log(vm.next)
+        console.log("vm.next",vm.next)
         vm.visited = false;
-        if(vm.next)vm.next();
+        if(vm.next){
+          this.$router.push(vm.next)
+        };
         return resp
       }).then(resp=>{
         console.log('>>>>>>>Login>>>then>>>',resp)

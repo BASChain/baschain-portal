@@ -56,5 +56,7 @@
   "PaymentOngoing":"payment ongoing",
   "MetaMaskNoPopTips":"If the page is loading for a long time, please check whether MateMask is authorized",
   "ValidateOnBlockChain":"Verifying BMail ",
-  "RequestTimeoutOverTip": "It has exceeded (ts) seconds, please check the MetaMask network or refresh and try again."
+  "RequestTimeoutOverTip": "It has exceeded (ts) seconds, please check the MetaMask network or refresh and try again.",
+  "RefreshPageNotCommitAgain": "Refreshing this page will not resubmit the data, please return to the previous step to resubmit",
+  "MetaMaskTxSlowTimeoutTip": "The transaction has exceeded (ts) seconds, please check the MetaMask activity status or close the transaction again"
 }

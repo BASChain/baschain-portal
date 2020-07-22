@@ -46,23 +46,23 @@
     mounted() {
       //refresh 如果MetaMask unLocked 就尝试自动登录
       let injected = this.$store.state.dapp.injected;
-      if(injected && window.ethereum && ethereum._metamask.isUnlocked){
-        //auto login MetaMask
-        //console.log('DappLoginInit>>>',unlocked)
-        try{
-          //this.$store.dispatch('dapp/autoLoginMetaMask');
+      // if(injected && window.ethereum && ethereum._metamask.isUnlocked){
+      //   //auto login MetaMask
+      //   //console.log('DappLoginInit>>>',unlocked)
+      //   try{
+      //     //this.$store.dispatch('dapp/autoLoginMetaMask');
 
 
 
-          let that = this;
+      //     let that = this;
 
-          // startDappListener().then(msg=>{
-          //   console.log(msg)
-          // })
-        }catch(ex){
-          console.log('LoadDapp',ex)
-        }
-      }
+      //     // startDappListener().then(msg=>{
+      //     //   console.log(msg)
+      //     // })
+      //   }catch(ex){
+      //     console.log('LoadDapp',ex)
+      //   }
+      // }
     },
     beforeUpdate() {
 

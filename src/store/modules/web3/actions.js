@@ -16,6 +16,7 @@ import { refreshAccount } from '@/bizlib/web3/token-api'
 export const check = ({ commit }) => {
 
   checkMetaMask.then(result => {
+    console.log("Web3>checked")
     commit(types.CHECK_INJECTED, result)
     return result.isInjected
   }).catch(err => {
