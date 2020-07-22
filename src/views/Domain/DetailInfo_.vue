@@ -42,6 +42,16 @@
       </div>
     </div>
     <div class="row justify-content-center">
+      <div class="col-7 ref-splitor-bar">
+        <div class="detail-splitor">
+          <span @click="refToggler">
+            {{ctrl.refStatus ? $t('l.ChevronUp') : $t('p.DomainDetailOpenShowMore') }}
+            <i class="fa" :class="refStatusCls"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center" v-if="ctrl.refStatus">
       <div class="col-7 bas-card">
         <div class="bas-card-header">
           <div class="bas-domain-data">
@@ -114,6 +124,10 @@
 </template>
 
 <style scoped>
+.detail-splitor span {
+  cursor: pointer;
+}
+
 .left-unit> label {
   font: 16px;
   font-weight:400;
@@ -278,53 +292,13 @@ export default {
   components:{
     GobackNav,
   },
-  data(){
-    return {
-      domain:'',
-      unitPrice:4,
-      contact:{
-        tel:'',
-        email:'',
-        website:'',
-        address:'',
-      },
-      asset:{
-        name:'',
-        owner:'',
-        openApplied:false,
-        isCustomed:false,
-        expire:null,
-        customPrice:0
-      },
-      info:{
-        owner:'',
-        openApplied:false,
-        isCustomed:false,
-        isPureA:false,
-        customedPrice:'',
-        expire:'',
-      },
-      dns:{
-        owner:'',
-        ipv4:'',
-        ipv6:'',
-        wallet:'',
-        alias:'',
-        extrainfo:''
-      },
-      refdata:{
-        A:"",
-
-      },
-      configs:{
-        subGas:4,
-      }
-    }
-  },
   computed:{
     ...Vuex.mapGetters({
       loginState:'dapp/loginState'
     }),
+    refStatusCls(){
+      return this.ctrl.refStatus ? 'fa-chevron-down' : 'fa-chevron-up'
+    },
     handleDomain(){
       return toUnicodeDomain(this.domain)
     },
@@ -368,6 +342,53 @@ export default {
       return isTop(this.domain) && this.asset.openApplied
     }
   },
+  data(){
+    return {
+      domain:'',
+      unitPrice:4,
+      contact:{
+        tel:'',
+        email:'',
+        website:'',
+        address:'',
+      },
+      asset:{
+        name:'',
+        owner:'',
+        openApplied:false,
+        isCustomed:false,
+        expire:null,
+        customPrice:0
+      },
+      info:{
+        owner:'',
+        openApplied:false,
+        isCustomed:false,
+        isPureA:false,
+        customedPrice:'',
+        expire:'',
+      },
+      dns:{
+        owner:'',
+        ipv4:'',
+        ipv6:'',
+        wallet:'',
+        alias:'',
+        extrainfo:''
+      },
+      refdata:{
+        A:"",
+
+      },
+      ctrl: {
+        refStatus: false
+      },
+      configs:{
+        subGas:4,
+      }
+    }
+  },
+
   methods:{
     loadDomainDetail(text){
       if(!text)return;
@@ -423,6 +444,10 @@ export default {
       //     domain:this.domain
       //   }
       // })
+    },
+
+    refToggler(){
+      this.ctrl.refStatus = !this.ctrl.refStatus
     }
   },
   mounted(){
@@ -434,7 +459,6 @@ export default {
   },
   watch: {
     loginState(val,old){
-
       if(val && old == false){
         console.log('DetailInfo>>>>loginState',val)
         //this.loadDomainDetail(this.domain)
@@ -444,6 +468,17 @@ export default {
 }
 </script>
 <style>
+.ref-splitor-bar {
+  height: 24px;
+  border-left:1px solid rgba(235,237,237,1);
+  border-right:1px solid rgba(235,237,237,1);
+  border-bottom: 1px solid rgba(235,237,237,1);
+  background:rgba(249,250,250,1);
+  font-size: 14px;
+  font-weight: 200;
+  text-align: center;
+  align-items: center;
+}
 
 .bas-whois--second {
   width: 100%;
