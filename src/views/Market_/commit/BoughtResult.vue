@@ -5,10 +5,10 @@
         <el-card shadow="never" style="padding:10px 20px;"
           class="col-md-8 col-sm-10 box-card">
             <h3 class="text-center market-domain-title">
-              {{data.domaintext}}
+              {{ this.data.domaintext }}
             </h3>
             <p class="market-tips text-center bas-text-green">
-              {{getTips}}
+              {{ getTips }}
             </p>
         </el-card>
       </div>
@@ -133,7 +133,7 @@ export default {
         that.updateTxHashItem(receipt.transactionHash, 'success')
       }).on('error', (err, receipt) => {
         that.buyingState = 'fail'
-        if (receipt.status) {
+        if (receipt) {
           that.updateTxHashItem(receipt.transactionHash, 'fail')
         }
       })
@@ -156,22 +156,10 @@ export default {
           that.ctrl.completed = true
         }).on('error', (err, receipt) => {
           that.buyingState = 'fail'
-          if (receipt.status) {
+          if (receipt) {
             that.updateTxHashItem(receipt.transactionHash, 'fail')
           }
         })
-        // .then(function(receipt) {
-        //   console.log('buyFromMarket>>>>receipt', receipt)
-        //   if (receipt.status) {
-        //     that.buyingState = 'success'
-        //     that.addTxHashItem(receipt.transactionHash, 'success')
-        //   } else {
-        //     that.buyingState = 'fail'
-        //     that.addTxHashItem(receipt.transactionHash, 'fail')
-        //   }
-        //   console.log('that.transactions>>>>>', that.transactions)
-        //   that.ctrl.completed = true
-        // })
       } catch (error) {
         console.error(error)
       }

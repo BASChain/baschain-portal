@@ -349,7 +349,7 @@ export default {
       try{
         this.revokeDialog.loading = true
         const res = await deleteSellOrder(hash, chainId, wallet)
-        this.$store.dispatch('ewallet/updateEWalletOrders', {hash: hash})
+        this.$store.dispatch('ewallet/loadEWalletOrders',web3State)
         this.revokeDialog = Object.assign(this.revokeDialog,{
           loading:false,
           visible:false,
@@ -359,27 +359,6 @@ export default {
       } catch(e) {
         console.error('DELETE_ORDER', e)
       }
-      // try {
-      //   let that = this
-      //   revokeOwnerShipEmitter(hash, chainId, wallet).on('transactionHash', txhash=>{
-      //     that.revokeDialog.loading = true
-      //   }).on('receipt', async receipt=>{
-      //     try{
-      //       const res = await deleteSellOrder(hash, chainId, wallet)
-      //       that.$store.dispatch('ewallet/updateEWalletOrders', {hash: hash})
-      //       that.revokeDialog = Object.assign(this.revokeDialog,{
-      //         loading:false,
-      //         visible:false,
-      //         domaintext:'',
-      //         hash:''
-      //       })
-      //     } catch(e) {
-      //       console.error('DELETE_ORDER', e)
-      //     }
-      //   })
-      // } catch(e) {
-      //   console.error('REVOKE_ORDER', e)
-      // }
     },
     handleEditPrice(index,row){
       console.log('scope row', row, index)
