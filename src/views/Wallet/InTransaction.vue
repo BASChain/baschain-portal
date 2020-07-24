@@ -511,13 +511,6 @@ export default {
     if (web3State.chainId && web3State.wallet) {
       this.$store.dispatch('ewallet/loadEWalletOrders', web3State)
     }
-    // let ruleState = this.$store.getters['web3/ruleState']
-    // this.ruleState = Object.assign({},ruleState)
-    // const params = {
-    //   pagenumber:this.pager.pagenumber||1,
-    //   pagesize:this.pager.pagesize||100,
-    // }
-    //this.loadSellItems(params)
   }
 }
 </script>
