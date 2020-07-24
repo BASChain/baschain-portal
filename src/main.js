@@ -18,8 +18,8 @@ import { i18n } from './plugins/vue-i18n';
 import './plugins/bootstrap'
 import './plugins/elementui'
 
-import idbkvs from './bascore/indexDBService'
-global.idbkvs = idbkvs
+//import idbkvs from './bascore/indexDBService'
+//global.idbkvs = idbkvs
 
 
 //bizjs

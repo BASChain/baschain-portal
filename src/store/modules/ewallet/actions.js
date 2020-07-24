@@ -26,6 +26,16 @@ import {
  * @param {*} payload
  */
 export async function syncEWalletAssets({ commit, rootState }, payload = { chainId, wallet }) {
+  const chainId = payload.chainId || rootState.dapp.chainId
+  const wallet = payload.wallet || rootState.dapp.wallet
+  if (checkSupport(chainId) && wallet){
+    const key = comboKey(wallet, chainId)
+    //const assets = await checkStorage(WALLET_ASSETS)
+
+    const assets = await checkKeyStorage(WALLET_ASSETS, key)
+    commit(types.LOAD_EWALLET_ASSETS, assets||[])
+  }
+
   await saveMyAssets({ commit, rootState }, payload)
 }
 
@@ -66,14 +76,24 @@ export async function removeEWalletAssetsIndexedDB({ commit, state }, hash) {
  * @param {*} param0
  * @param {*} payload
  */
-export async function fillMyAssets({ commit, rootState }, payload = { chainId, wallet }){
-  const assets = await checkStorage(WALLET_ASSETS)
-  console.log("load MyAssets from Indexed DB.")
-  if (assets && assets.length){
-    commit(types.LOAD_EWALLET_ASSETS, assets)
-  } else {
-    console.log('Not find My Assets in IndexedDB')
+export async function fillMyAssets({ commit, rootState }, { chainId, wallet }=payload){
+
+  try{
+    chainId = chainId || rootState.dapp.chainId
+    wallet = wallet || rootState.dapp.wallet
+    const key = comboKey(wallet, chainId)
+    //const assets = await checkStorage(WALLET_ASSETS)
+    const assets = await saveToKeyStorage(WALLET_ASSETS,key)
+    console.log("load MyAssets from Indexed DB.")
+    if (assets && assets.length) {
+      commit(types.LOAD_EWALLET_ASSETS, assets)
+    } else {
+      console.log('Not find My Assets in IndexedDB')
+    }
+  }catch(ex){
+    console.log('indexedDB error:',ex)
   }
+
 }
 
 /**
