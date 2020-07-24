@@ -108,8 +108,8 @@ export function startDappListener() {
           }
 
           //loadRootAssets
-          store.dispatch('dapp/loadRootAssets')
           try{
+            store.dispatch('dapp/loadRootAssets', { chainId: chainId, wallet })
             store.dispatch('ewallet/syncEWalletAssets', { chainId: chainId, wallet })
           }catch(ex){}
 
