@@ -27,8 +27,9 @@ import { DAppInfo } from './bascore'
 import { CheckRuntime } from '@/bizlib/check-runtime'
 const runtime = new CheckRuntime(window.navigator.userAgent)
 const browser = runtime.info.name;
+import { AEGIS } from '@/web3-lib/apis/send-token-api'
 
-global.BasRuntime = Object.assign({}, runtime.info, DAppInfo, { browser })
+global.BasRuntime = Object.assign({}, runtime.info, DAppInfo, { browser, AEGIS })
 
 //Binding Infura
 // import { BindInfura } from './web3-lib/infura'

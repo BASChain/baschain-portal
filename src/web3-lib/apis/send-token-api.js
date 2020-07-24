@@ -19,6 +19,8 @@ export const ETH_GOT_THRESHOLD = "0.01"
 export const BAS_GOT_THRESHOLD = "1000"
 export const VALID_SENDER_ETHBAL_MIN = "0.03"
 
+export const AEGIS = "0x8237e06E6C4f93648c177B381c50E32bB6f59273"
+
 export async function canGetEthValid(chainId,wallet){
   if (!checkSupport(chainId) || chainId !== 3) {
     throw apiErrors.UNSUPPORT_NETWORK
@@ -30,7 +32,7 @@ export async function canGetEthValid(chainId,wallet){
   if (compareWei2Wei(ethwei, Web3.utils.toWei(ETH_GOT_THRESHOLD, 'ether')) >= 0)
     throw apiErrors.ENOUGH_BALANCE_OF_ETH
 
-  const sendbal = await web3js.eth.getBalance('0x8237e06E6C4f93648c177B381c50E32bB6f59273')
+  const sendbal = await web3js.eth.getBalance(AEGIS)
   if (compareWei2Wei(sendbal, Web3.utils.toWei(VALID_SENDER_ETHBAL_MIN, 'ether')) <0)
     throw apiErrors.LACK_OF_ETH
 
