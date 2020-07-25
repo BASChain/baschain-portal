@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-row :gutter="20" class="bas-white-bg" >
+    <!-- <el-row :gutter="20" class="bas-white-bg" >
       <el-col :span="24">
         <el-tabs v-model="activeTab" @tab-click="handleTabClick">
           <el-tab-pane label="全部" name="all">
@@ -73,7 +73,7 @@
           </el-tab-pane>
         </el-tabs>
       </el-col>
-    </el-row>
+    </el-row> -->
   </div>
 </template>
 

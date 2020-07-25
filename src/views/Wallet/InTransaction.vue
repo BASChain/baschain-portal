@@ -345,26 +345,19 @@ export default {
       const wallet = web3State.wallet
       let hash = this.revokeDialog.hash;
       console.log('delete order',hash,chainId,wallet)
-      try {
-        let that = this
-        revokeOwnerShipEmitter(hash, chainId, wallet).on('transactionHash', txhash=>{
-          that.revokeDialog.loading = true
-        }).on('receipt', async receipt=>{
-          try{
-            const res = await deleteSellOrder(hash, chainId, wallet)
-            that.$store.dispatch('ewallet/updateEWalletOrders', {hash: hash})
-            that.revokeDialog = Object.assign(this.revokeDialog,{
-              loading:false,
-              visible:false,
-              domaintext:'',
-              hash:''
-            })
-          } catch(e) {
-            console.error('DELETE_ORDER', e)
-          }
+
+      try{
+        this.revokeDialog.loading = true
+        const res = await deleteSellOrder(hash, chainId, wallet)
+        this.$store.dispatch('ewallet/loadEWalletOrders',web3State)
+        this.revokeDialog = Object.assign(this.revokeDialog,{
+          loading:false,
+          visible:false,
+          domaintext:'',
+          hash:''
         })
       } catch(e) {
-        console.error('REVOKE_ORDER', e)
+        console.error('DELETE_ORDER', e)
       }
     },
     handleEditPrice(index,row){
@@ -518,13 +511,6 @@ export default {
     if (web3State.chainId && web3State.wallet) {
       this.$store.dispatch('ewallet/loadEWalletOrders', web3State)
     }
-    // let ruleState = this.$store.getters['web3/ruleState']
-    // this.ruleState = Object.assign({},ruleState)
-    // const params = {
-    //   pagenumber:this.pager.pagenumber||1,
-    //   pagesize:this.pager.pagesize||100,
-    // }
-    //this.loadSellItems(params)
   }
 }
 </script>

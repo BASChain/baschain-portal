@@ -3,7 +3,7 @@
  */
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 //import Vue from 'vue'
-Vue.config.productionTip = true
+Vue.config.productionTip = true;
 /* =====================
  * Plugins Import
  * =====================
@@ -40,12 +40,20 @@ global.BasRuntime = Object.assign({}, runtime.info, DAppInfo, { browser, AEGIS }
 //Seria WorkFlow
 import App from './App'
 import store from './store'
-import { router } from './plugins/vue-router';
+import router from './routes';
+import './plugins/vue-router';
 
 //import './plugins/vuex-router-sync'
 
 //build need recomment
 //global.punycode = require('punycode')
+
+//fix reload error
+// const originalPush = router.prototype.push;
+// //location 点击的路由
+// router.prototype.push = function push(location) {
+//   return originalPush.call(this, location).catch(err => err)
+// }
 
 
 /**

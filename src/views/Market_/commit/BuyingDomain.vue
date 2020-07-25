@@ -124,7 +124,8 @@ export default {
         nameHash: this.order.nameHash,
         costWei: transBAS2Wei(this.price),
         price: this.price,
-        owner: this.order.owner
+        owner: this.order.owner,
+        domaintext: this.domaintext
       }
       console.log(commitData)
       this.ctrl.loading = true
