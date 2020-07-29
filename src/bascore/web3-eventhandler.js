@@ -30,15 +30,23 @@ export function startDappListener() {
    */
   if (!ethereum.eventNames().find(n => n === 'accountsChanged')) {
     ethereum.on('accountsChanged', async function (accounts) {
-      const chainId = await web3js.eth.getChainId()
+      const chainId =  parseInt(ethereum.chainId)
       // update ethwei baswei withdraw
       if (accounts.length) {
         const wallet = accounts[0]
         console.log("Current account changed:", wallet)
         store.commit(`dapp/${DappStoreTypes.UPDATE_WALLET}`, wallet);
 
-        const ethweiBN = new BN(await web3js.eth.getBalance(wallet), 16);
-        store.commit(`dapp/${DappStoreTypes.UPDATE_ETHWEI}`, ethweiBN);
+        //const ethweiBN = new BN(await web3js.eth.getBalance(wallet), 16);
+
+        web3js.eth.getBalance(wallet).then(bal =>{
+          const ethweiBN = new BN(bal, 16);
+          console.log("ether",bal)
+          store.commit(`dapp/${DappStoreTypes.UPDATE_ETHWEI}`, ethweiBN);
+        }).catch(ex=>{
+          console.warn("Get ether balance error",ex)
+        })
+
 
         if (checkSupport(chainId)) {
           // baswei update
@@ -49,7 +57,6 @@ export function startDappListener() {
           // withdrawwei update
           try{
             const withDraw = await getWithdrawable(chainId,wallet)
-            console.log(withDraw);
             if (withDraw !== undefined) {
               store.commit('dapp/updateWithdrawable', withDraw.withdrawWei);
             }
