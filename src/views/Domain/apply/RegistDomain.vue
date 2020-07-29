@@ -1,6 +1,9 @@
 <template>
   <div class="container">
     <div class="row justify-content-center">
+      <div class="col-7 pb-2">
+        <goback-nav clsName="sub-goback-nav"/>
+      </div>
       <div class="col-7 bas-card">
         <div class="bas-card__header">
           <div class="bas-card__header-title">
@@ -141,8 +144,13 @@ import {
 import { findDomainInfo,hasTaken } from '@/web3-lib/apis/domain-api.js'
 import {preCheck4Root,preCheck4Sub} from '@/web3-lib/apis/domains-apply.js'
 
+import GobackNav from '@/components/GobackNav.vue'
+
 export default {
   name:"RegistDomain",
+  components:{
+    GobackNav
+  },
   computed: {
     showDomainAppend(){
       return this.domain !== undefined && this.domain !== ''
@@ -541,5 +549,7 @@ export default {
 }
 </script>
 <style>
-
+div.bas-goback-nav.sub-goback-nav{
+  background: rgba(255,255,250,1);
+}
 </style>

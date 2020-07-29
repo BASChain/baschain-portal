@@ -19,7 +19,7 @@
         </div>
         <div class="text item bas-inline-between"
           v-for="(item,index) in transactions" :key="index">
-          <div class="">{{item.hash}}</div>
+          <div class="" @click="goEtherscan(item.hash)">{{item.hash}}</div>
           <div v-if="item.state === 'loading'">
             <loading-dot />
           </div>
@@ -95,6 +95,8 @@ import {
   registSubEmitter
 } from '@/web3-lib/apis/oann-api.js'
 
+import { etherscanUrl } from '@/web3-lib/networks/ether-scan'
+
 export default {
   name:"RegistResult",
   components:{
@@ -161,6 +163,17 @@ export default {
     },
     goback(){
       this.$router.go(-1)
+    },
+    goEtherscan(hash){
+      const web3State = this.$store.getters["web3State"]
+      const chainId = web3State.chainId
+
+      const url = etherscanUrl(chainId,hash)
+      console.log("hash",chainId,hash,url)
+
+      if(url){
+        window.open(url,`bas_${hash}`)
+      }
     },
     commitApprove(){
       //
