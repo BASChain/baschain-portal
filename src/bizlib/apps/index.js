@@ -3,7 +3,7 @@
  * bcoibbecpnakojfbbpilgmmmlgnfklea 1.0.3
  */
 export const ChromeExtensionStore =
-         "https://chrome.google.com/webstore/detail/bas/bcoibbecpnakojfbbpilgmmmlgnfklea?hl=zh-CN&authuser=1";
+         "https://chrome.google.com/webstore/detail/bas/bcoibbecpnakojfbbpilgmmmlgnfklea";
 export const FirefoxExtensionStore = 'https://addons.mozilla.org/zh-CN/firefox/addon/bas/?src=search'
 export const RelaDownloadBasePath = '/apps'
 export const ExtFansBase ="https://www.extfans.com/search/extensions"
