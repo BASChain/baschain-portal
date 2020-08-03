@@ -82,6 +82,9 @@ export async function fillRootAssets({commit}){
  */
 export function checkInjected({commit}){
   const injected = window.web3 && window.ethereum && window.ethereum.isMetaMask;
+  if(window.ethereum) {
+    window.ethereum.autoRefreshOnNetworkChange = false;
+  }
   commit(types.SET_INJECTED, injected);
 }
 
