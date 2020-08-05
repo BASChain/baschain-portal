@@ -1,8 +1,8 @@
  <template>
-  <nav class="navbar navbar-expand-md fixed-top header-wrap"
+  <nav class="navbar navbar-expand-sm fixed-top header-wrap"
     :class="topbarBgClass"
     >
-    <div class="container" id="TopBar">
+    <div class="container-fluid" id="TopBar">
       <router-link
         :to="{ name: 'home.index' }"
         class="navbar-brand">
@@ -103,6 +103,10 @@
   </nav>
 </template>
 <style>
+/* #navContainer {
+  display: inline;
+  overflow-x: auto;
+} */
 .mine-wrap {
   margin: auto .5rem auto 0;
   line-height: 38px;
@@ -288,8 +292,12 @@ export default {
 </script>
 <style>
 .header-wrap {
-  height: 68px;
-  width: 100vw;
+  height: 76px;
+  width: 100%;
+  min-width: 1200px;
+  /* overflow-inline: auto;
+  overflow-x: auto;
+  overflow-y: hidden; */
 }
 .header-logo {
   margin: 0 !important;

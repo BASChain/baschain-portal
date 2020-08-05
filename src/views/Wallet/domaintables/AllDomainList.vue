@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-table type="index"
-      v-loading="tableLoading"
+      v-loading="false"
       :data="items" @cell-click="gotoDetail"
       style="width: 100%">
       <el-table-column
@@ -323,6 +323,7 @@
 <script>
 
 import LoadingDot from '@/components/LoadingDot.vue'
+import ElTabLoading from '@/views/widget/ElTabLoading.vue'
 import dayjs from 'dayjs'
 
 import {
@@ -367,7 +368,8 @@ import { validAdd2Market,addHashToMarket } from '@/web3-lib/apis/market-api'
 export default {
   name:"AllDomainList",
   components:{
-    LoadingDot
+    LoadingDot,
+    ElTabLoading,
   },
   computed: {
     ...Vuex.mapState({

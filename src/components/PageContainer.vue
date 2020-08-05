@@ -60,7 +60,7 @@ export default {
 
 .main-t100 {
   position: relative;
-  top:70px;
+  top:76px;
 }
 
 .footer-warp {

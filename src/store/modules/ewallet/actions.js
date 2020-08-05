@@ -241,6 +241,9 @@ export async function loadEWalletMails({ commit, rootState},payload={chainId,wal
   } else {
     try{
       console.log('load My mail list...')
+
+      commit(types.SET_MAILSLOADING_STATE,true)
+
       let mails = await getWalletMails(chainId,wallet)
       const max = rootState.dapp.maxMailRegYears||5
       mails = mails.map(m =>{
@@ -248,6 +251,8 @@ export async function loadEWalletMails({ commit, rootState},payload={chainId,wal
         return m
       });
       commit(types.LOAD_EWALLET_MAILS,mails)
+      commit(types.SET_MAILSLOADING_STATE,false)
+
       // const chainId = rootState.dapp.chainId
       // const wallet = rootState.dapp.wallet
       const key = comboKey(wallet, chainId)

@@ -52,5 +52,6 @@
   "ValidateOnBlockChain": "チェック中",
   "RequestTimeoutOverTip": "（ts）秒を超えました。メタマスクネットワークを確認するか、オフにしてから再試行してください。",
   "RefreshPageNotCommitAgain": "このページを更新してもデータは再送信されません。前のステップに戻って再送信してください",
-  "MetaMaskTxSlowTimeoutTip": "トランザクションが（ts）秒を超えました。メタマスクのアクティビティステータスを確認するか、トランザクションを再度閉じてください"
+  "MetaMaskTxSlowTimeoutTip": "トランザクションが（ts）秒を超えました。メタマスクのアクティビティステータスを確認するか、トランザクションを再度閉じてください",
+  "SyncBlockDataTips":"BASChainデータを同期しています..."
 }

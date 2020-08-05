@@ -11,6 +11,8 @@ export const REMOVE_ASSET_BY_HASH = "removeAssetByHash"
 export const LOAD_EWALLET_ORDERS = "loadEWalletOrders"
 export const UPDATE_EWALLET_ORDERS = "updateEWalletOrders"
 
+export const SET_MAILSLOADING_STATE = "setMailsLoadingState"
+
 
 /** Set */
 export const UPDATE_EWMAIL_PROPS ="updateEWMailPros"
@@ -27,5 +29,6 @@ export default {
   UPDATE_EWMAIL_PROPS,
   REMOVE_ASSET_BY_HASH,
   LOAD_EWALLET_ORDERS,
-  UPDATE_EWALLET_ORDERS
+  UPDATE_EWALLET_ORDERS,
+  SET_MAILSLOADING_STATE,
 };

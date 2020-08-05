@@ -101,5 +101,8 @@ export default {
         state.assets.splice(idx,1)
       }
     }
+  },
+  [types.SET_MAILSLOADING_STATE](state,loading) {
+    state.mailsLoading = Boolean(loading)
   }
 }

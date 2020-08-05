@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-table type="index"
-      v-loading="loading"
+      v-loading="false"
       :data="items" @cell-click="gotoDetail"
       style="width: 100%">
       <el-table-column
@@ -74,6 +74,8 @@
           </el-button>
         </template>
       </el-table-column>
+      <el-tab-loading :loading="loading" slot="empty" />
+
     </el-table>
     <el-row :gutter="20" class="bg-white" style="margin:0px;">
       <div class="bg-white" style="height:25px;"></div>
@@ -367,15 +369,21 @@ import {
 
 
 import LoadingDot from '@/components/LoadingDot.vue'
+import ElTabLoading from '@/views/widget/ElTabLoading.vue'
+
 export default {
   name:"EWalletMailList",
   components:{
-    LoadingDot
+    LoadingDot,
+    ElTabLoading,
   },
   computed: {
     ...Vuex.mapState({
       items:state => state.ewallet.mails.filter(m => !m.abandoned),
       unitBas:state => wei2Bas(state.dapp.mailRegGas)
+    }),
+    ...Vuex.mapGetters({
+      loading: 'ewallet/mailsLoading'
     }),
     itemTotal(){
       return this.items.length
