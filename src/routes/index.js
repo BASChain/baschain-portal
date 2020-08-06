@@ -161,7 +161,7 @@ export default [
       {
         path: "cybersquattingres",
         name: "domain.cybersquattingres",
-        component: () => import("@/views/Domain/CybersquattingResult.vue"),
+        component: () => import("@/views/Domain/CyberSquattingResult.vue"),
         meta: {
           guest: true
         }
@@ -491,7 +491,7 @@ export default [
       {
         path: "transaction",
         name: "wallet.transaction",
-        component: () => import("@/views/Wallet/Intransaction.vue"),
+        component: () => import("@/views/Wallet/InTransaction.vue"),
         meta: {
           guest: true
         }
