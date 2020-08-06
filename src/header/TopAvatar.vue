@@ -106,10 +106,12 @@ export default {
           this.$message(this.$basTip.error($t('g.NetworkTimeout')))
         }
       })
-      this.$router.push({
-        name:"wallet.index",
-      })
-
+      const curFullPath = this.$route.fullPath
+      if(!curFullPath.startsWith('/wallet')) {
+        this.$router.push({
+          name:"wallet.index",
+        })
+      }
     }
   },
   mounted(){

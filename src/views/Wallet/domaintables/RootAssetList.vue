@@ -82,6 +82,8 @@
       </el-table-column>
 
       <el-tab-loading :loading="syncState" slot="empty" v-if="syncState"/>
+
+      <el-tab-loading :loading="syncState" slot="append" v-if="syncState && items.length>0 "/>
     </el-table>
 
     <!-- mail dialog begin -->
