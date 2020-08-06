@@ -41,7 +41,7 @@
     {
       name: "BootstrapVue",
       src: "/static/vendor/bootstrap-vue/bootstrap-vue.min.js",
-      version: "2.4.0"
+      version: "2.16.0"
     },
     {
       name: "BootstrapVueIcons",

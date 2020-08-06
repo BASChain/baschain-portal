@@ -1,36 +1,5 @@
 <template>
   <div>
-    <!-- <div v-if="!connected" @click="login"
-      class="bas-avatar-btn">
-      <span>Login</span>
-    </div>
-    <div v-if="connected">
-      <el-dropdown trigger="click"
-        placement="bottom-start"
-        @command="handleCommand"
-        size="medium">
-        <div class="bas-avatar-btn">
-          <span >{{  showNetworkShort }}</span>
-        </div>
-        <el-dropdown-menu slot="dropdown" >
-          <el-dropdown-item command="connectMetaMask">
-            <span v-if="connected" class="bas-avatar-btn-hash">
-              {{$t('menu.TopbarCurrent')}}:{{ getNetWorkName }}
-            </span>
-            <span v-if="!connected">
-              <i class="fa fa-chain"></i>
-              Connect MetaMask
-            </span>
-          </el-dropdown-item>
-          <el-dropdown-item command="myWallet"
-            :disabled="checkSupported"
-            divided>
-            {{$t('menu.TopbarMyWallet')}}
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-    </div> -->
-
     <div class="bas-mine-wallet">
       <button class="bas-avatar-btn" @click="loginAndGotoWalletPage">
         {{$t('g.MineWallet')}}
