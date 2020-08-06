@@ -3,14 +3,14 @@
     :class="isBlack ? 'header-warp-black' : 'header-warp-white'"> -->
 
  <b-navbar toggleable="lg" fixed="top"
-  :class="isBlack ? 'header-warp-black' : 'header-warp-white'">
+  :type="isBlack ? 'dark' : 'light'">
     <nav-logo :isDark="isBlack" class="nav-brand"/>
     <b-collapse id="nav-collapse" is-nav >
       <b-navbar-nav class="mx-auto">
         <b-nav-item v-for="(m,idx) in topMenus"
           :to="{name: m.name, path: m.to}"
           class="bsnav-li"
-          active="is-active"
+          linkClasses="banav-a"
           :key="idx">
             {{ $t(m.i18n) }}
         </b-nav-item>
@@ -73,12 +73,13 @@ export default {
 }
 </script>
 <style>
-.header-warp-black {
-  min-height: 76px;
+.navbar {
+  padding: auto 1rem;
+}
+.navbar-dark {
   background-color: rgba(4,6,46,.5);
 }
-.header-warp-white {
-  min-height: 76px;
+.navbar-light {
   background-color: rgba(255,255,255,.9);
   -webkit-transition-property:all;
   transition-property:all;
@@ -90,5 +91,44 @@ export default {
           transition-delay: 0s;
   -webkit-box-shadow: 0 1px 1px 0 rgba(225,229,229,1);
           box-shadow: 0 1px 1px 0 rgba(225,229,229,1);
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color:rgba(4,6,46,1);
+  font-size: 16px;
+  font-weight: 300;
+}
+
+a.banav-a {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color:rgb(255, 255, 255);
+  font-size: 18px;
+  font-weight: 300;
+}
+
+.bsnav-li>a.nav-link:hover {
+  color: #00ca9b !important;
+}
+
+a.router-link-active {
+  color: #00ca9b !important;
+  border-bottom: 2px solid #00ca9b;
+}
+
+li.bsnav-li {
+  padding: auto 1.5rem;
+}
+
+.nav-brand.router-link-active {
+  border-bottom: none;
+}
+
+.navbar-dark input.el-input__inner {
+  color: rgb(255, 255, 255);
 }
 </style>

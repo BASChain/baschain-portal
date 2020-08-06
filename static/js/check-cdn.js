@@ -52,6 +52,21 @@
       name: "ELEMENT",
       src: "/static/vendor/elemnet-ui/index.js",
       version: "2.13.2"
+    },
+    {
+      name: "ELEMENT.lang.zh",
+      src: "/static/vendor/elemnet-ui/umd/locale/zh-CN.js",
+      version: "2.13.2"
+    },
+    {
+      name: "ELEMENT.lang.en",
+      src: "/static/vendor/elemnet-ui/umd/locale/en.js",
+      version: "2.13.2"
+    },
+    {
+      name: "ELEMENT.lang.ja",
+      src: "/static/vendor/elemnet-ui/umd/locale/ja.js",
+      version: "2.13.2"
     }
   ];
   //ELEMENT always at last

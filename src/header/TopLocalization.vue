@@ -17,7 +17,6 @@
 export default {
   name: "TopLocalization",
   computed: {
-
   },
   data() {
     return {
@@ -32,11 +31,17 @@ export default {
   },
   methods: {
     langChanged() {
-
+      const selLang = this.lang
+      console.log("selLang>>>>",selLang)
+      if(this.$i18n.locale !== selLang) {
+        this.$store.dispatch('changedLang',selLang)
+        this.$i18n.locale = selLang
+      }
     }
   },
   mounted() {
-    console.log(">>>>>>>>>>>>",this.$i18n.locale)
+    //console.log(">>>>>>>>>>>>",this.$i18n.locale)
+    this.lang = this.$i18n.locale
   },
 
 }

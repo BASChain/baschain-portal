@@ -36,8 +36,43 @@ const mutations = {
   }
 }
 
+const actions = {
+  changedLang({commit},lang){
+    switch (lang) {
+      case "zh-CN":
+        if (ELEMENT.locale && ELEMENT.lang.zhCN){
+          ELEMENT.locale(ELEMENT.lang.zhCN);
+        }
+        Cookies.set("BasLang", lang);
+        commit("setLang", lang);
+        break;
+      case "en":
+        if (ELEMENT.locale && ELEMENT.lang.en){
+          ELEMENT.locale(ELEMENT.lang.en);
+        }
+        Cookies.set("BasLang", lang);
+        commit("setLang", lang);
+        break;
+      case "jp":
+        if (ELEMENT.locale && ELEMENT.lang.ja) {
+          ELEMENT.locale(ELEMENT.lang.ja);
+        }
+        Cookies.set("BasLang", lang);
+        commit("setLang",lang);
+      default:
+        if (ELEMENT.locale && ELEMENT.lang.zhCN) {
+          ELEMENT.locale(ELEMENT.lang.zhCN);
+        }
+        commit("setLang", "zh-CN");
+        Cookies.set("BasLang", "zh-CN");
+        break;
+    }
+  }
+}
+
 
 export default new Vuex.Store({
+  actions,
   modules: {
     assets,
     dapp,
