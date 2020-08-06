@@ -107,6 +107,7 @@ async function saveMyAssets({commit,rootState},{chainId,wallet} = payload){
   wallet = wallet || rootState.dapp.wallet
 
   if (checkSupport(chainId) && wallet) {
+    commit(types.SET_ASSETSLOADING_STATE,true)
     try {
       const max = rootState.dapp.maxRegYears || 5
       const pager = await getAssetHashPager(chainId, wallet);
@@ -125,10 +126,12 @@ async function saveMyAssets({commit,rootState},{chainId,wallet} = payload){
 
       const key = comboKey(wallet, chainId)
       await saveToKeyStorage(WALLET_ASSETS, assets, key)
+      commit(types.SET_ASSETSLOADING_STATE, false);
       //console.log("Wallet Assets:",assets)
       //await saveToStorage(WALLET_ASSETS, assets)
     } catch (ex) {
       console.error("Synchronize data on the baschain store to indexedDB", ex)
+      commit(types.SET_ASSETSLOADING_STATE, false);
     }
   } else {
     console.error('Synchronize data on the baschain parameter illegal:', chiainId, wallet)
@@ -275,6 +278,7 @@ export async function loadEWalletOrders({ commit }, payload={chainId, wallet}) {
     console.error(`Network ${chainId} unsupport.`)
   } else {
     try {
+      commit(types.SET_ORDERSLOADING_STATE,true)
       console.log('load My order list...')
       let orders = await getEWalletOrders(chainId, wallet)
       orders = orders.map(m => {
@@ -284,7 +288,9 @@ export async function loadEWalletOrders({ commit }, payload={chainId, wallet}) {
       })
       commit(types.LOAD_EWALLET_ORDERS, orders)
       await saveToStorage(MARKET_ASSETS, orders)
+      commit(types.SET_ORDERSLOADING_STATE, false);
     } catch(e) {
+      commit(types.SET_ORDERSLOADING_STATE, false);
       console.error('load wallet orders', e)
     }
   }

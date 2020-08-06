@@ -12,6 +12,8 @@ export const LOAD_EWALLET_ORDERS = "loadEWalletOrders"
 export const UPDATE_EWALLET_ORDERS = "updateEWalletOrders"
 
 export const SET_MAILSLOADING_STATE = "setMailsLoadingState"
+export const SET_ASSETSLOADING_STATE = "setAssetsLoadingState"
+export const SET_ORDERSLOADING_STATE = "setOrderLoadingState"
 
 
 /** Set */
@@ -31,4 +33,6 @@ export default {
   LOAD_EWALLET_ORDERS,
   UPDATE_EWALLET_ORDERS,
   SET_MAILSLOADING_STATE,
+  SET_ASSETSLOADING_STATE,
+  SET_ORDERSLOADING_STATE,
 };

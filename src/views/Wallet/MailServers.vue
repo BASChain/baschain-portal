@@ -73,6 +73,7 @@
           </el-button>
         </template>
       </el-table-column>
+      <el-tab-loading :loading="syncState" slot="empty" v-if="syncState"/>
     </el-table>
 
      <!-- mask dialog begin -->
@@ -130,14 +131,18 @@ import {
 import { checkSupport } from '@/web3-lib/networks'
 
 import LoadingDot from '@/components/LoadingDot.vue'
+import ElTabLoading from '@/views/widget/ElTabLoading.vue'
+
 export default {
   name:"MailServers",
   components:{
-    LoadingDot
+    LoadingDot,
+    ElTabLoading,
   },
   computed: {
     ...Vuex.mapState({
-      items:state => state.ewallet.assets.filter( it=> it.mailActived)
+      items:state => state.ewallet.assets.filter( it=> it.mailActived),
+      syncState: state => state.ewallet.assetsLoading
     })
   },
   data() {

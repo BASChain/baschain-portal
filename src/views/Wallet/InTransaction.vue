@@ -38,6 +38,7 @@
                   </el-button>
                 </template>
               </el-table-column>
+              <el-tab-loading :loading="syncState" slot="empty" v-if="syncState" />
             </el-table>
 
             <el-row :gutter="20" class="bas-white-bg">
@@ -65,8 +66,6 @@
           <!-- </el-tab-pane> -->
         </el-tabs>
       </el-col>
-
-
     </el-row>
 
     <!-- revokeSale -->
@@ -105,7 +104,7 @@
           <span>修改域名</span>
           <span class="title-domain">{{ cpd.domaintext }}</span>
           <span>价格</span>
-        </div> 
+        </div>
       </div>
       <div class="bas-dg-body">
         <!-- <el-form :inline="false"> -->
@@ -187,8 +186,12 @@
 </style>
 <script>
 import LoadingDot from '@/components/LoadingDot.vue'
-import { getEWalletOrders, changeSellPrice, validAdd2Market, deleteSellOrder } from '@/web3-lib/apis/market-api.js'
+import ElTabLoading from '@/views/widget/ElTabLoading.vue'
 import SellingTable from './trans/SellingTable'
+
+import { getEWalletOrders, changeSellPrice, validAdd2Market, deleteSellOrder } from '@/web3-lib/apis/market-api.js'
+
+
 import { validBetweenZero2Billion, MAX_BILLON_VOL } from '@/utils/Validator.js'
 import {
   toUnicodeDomain,compressAddr,isOwner,
@@ -210,10 +213,12 @@ export default {
   components:{
     LoadingDot,
     SellingTable,
+    ElTabLoading,
   },
   computed: {
     ...Vuex.mapState({
       sellItems:state => state.ewallet.orders,
+      syncState: state => state.ewallet.ordersLoading,
     }),
     OnSaleTabName(){
       return this.$t('l.Selling')
@@ -418,7 +423,7 @@ export default {
       const web3State = this.$store.getters['web3State']
       const chainId = web3State.chainId
       const wallet = web3State.wallet
-      
+
       let hash = this.cpd.hash;
       console.log('hash',this.cpd)
       try {

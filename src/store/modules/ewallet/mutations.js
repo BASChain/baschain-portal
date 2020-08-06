@@ -104,5 +104,11 @@ export default {
   },
   [types.SET_MAILSLOADING_STATE](state,loading) {
     state.mailsLoading = Boolean(loading)
+  },
+  [types.SET_ASSETSLOADING_STATE](state,loading) {
+    state.assetsLoading = Boolean(loading)
+  },
+  [types.SET_ORDERSLOADING_STATE](state,loading) {
+    state.ordersLoading = Boolean(loading)
   }
 }

@@ -82,6 +82,8 @@
           </el-button>
         </template>
       </el-table-column>
+
+      <el-tab-loading :loading="syncState" slot="empty" v-if="syncState"/>
     </el-table>
 
     <!-- Dialog Begin -->
@@ -377,6 +379,7 @@ export default {
         it.hadExpired = isDateExpired(it.expire)
         return it
       }),
+      syncState: state => state.ewallet.assetsLoading
     }),
     transoutTitle(){
       return this.$t('p.WalletHomeTransoutDialogTitle',{text:this.transout.domaintext||''})

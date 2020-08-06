@@ -62,6 +62,7 @@ export function startDappListener() {
             store.dispatch('ewallet/loadRootAssets', { chainId, wallet: wallet })
             store.dispatch('ewallet/syncEWalletAssets', { chainId: chainId, wallet: wallet })
             store.dispatch('ewallet/loadEWalletMails', { chainId: chainId, wallet: wallet })
+            store.dispatch("ewallet/loadEWalletOrders", {chainId: chainId,wallet: wallet});
           }catch(ex){
             console.warn(ex)
           }
@@ -111,6 +112,7 @@ export function startDappListener() {
           try{
             store.dispatch('dapp/loadRootAssets', { chainId: chainId, wallet })
             store.dispatch('ewallet/syncEWalletAssets', { chainId: chainId, wallet })
+            store.dispatch("ewallet/loadEWalletOrders", {chainId: chainId,wallet: wallet});
           }catch(ex){}
 
         }else{

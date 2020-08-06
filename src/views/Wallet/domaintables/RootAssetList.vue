@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-table type="index"
-      v-loading="tableLoading"
+      v-loading="false"
       :data="items" @cell-click="gotoDetail"
       style="width: 100%">
       <el-table-column
@@ -80,6 +80,8 @@
           </el-button>
         </template>
       </el-table-column>
+
+      <el-tab-loading :loading="syncState" slot="empty" v-if="syncState"/>
     </el-table>
 
     <!-- mail dialog begin -->
@@ -388,11 +390,14 @@ import {
 
 
 import LoadingDot from '@/components/LoadingDot.vue'
+import ElTabLoading from '@/views/widget/ElTabLoading.vue'
+
 import dayjs from 'dayjs'
 export default {
   name:"EWalletRootAssetList",
   components:{
-    LoadingDot
+    LoadingDot,
+    ElTabLoading,
   },
   computed: {
     showDialogOpenConfirmBtn(){
@@ -408,6 +413,7 @@ export default {
       }),
       mailServiceBas:state => wei2Bas(state.dapp.mailSeviceGas),
       domainYearItems: state => state.dapp.domainYearItems,
+      syncState: state => state.ewallet.assetsLoading,
     })
   },
   data() {

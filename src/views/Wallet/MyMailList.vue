@@ -74,7 +74,7 @@
           </el-button>
         </template>
       </el-table-column>
-      <el-tab-loading :loading="loading" slot="empty" />
+      <el-tab-loading :loading="loading" slot="empty" v-if="loading"/>
 
     </el-table>
     <el-row :gutter="20" class="bg-white" style="margin:0px;">

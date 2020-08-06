@@ -2,12 +2,14 @@
  * asset keys[hash]
  */
 export default {
-  loadAssetState:-1,
-  total:0,
-  hashes:[],
-  assets:[],
-  mails:[],
+  loadAssetState: -1,
+  total: 0,
+  hashes: [],
+  assets: [],
+  mails: [],
+  onsales: [],
+  orders: [],
   mailsLoading: false,
-  onsales:[],
-  orders:[]
-}
+  assetsLoading: false,
+  ordersLoading: false,
+};

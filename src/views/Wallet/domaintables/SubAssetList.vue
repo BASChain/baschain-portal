@@ -66,6 +66,7 @@
         </template>
       </el-table-column>
 
+      <el-tab-loading :loading="syncState" slot="empty" v-if="syncState"/>
     </el-table>
 
     <el-dialog  width="25%"
@@ -340,6 +341,7 @@ import {MAX_BILLON_VOL,validBetweenZero2Billion} from '@/utils/Validator.js'
 
 
 import LoadingDot from '@/components/LoadingDot.vue'
+import ElTabLoading from '@/views/widget/ElTabLoading.vue'
 
 import {
   PARAM_ILLEGAL,USER_REJECTED_REQUEST,UNSUPPORT_NETWORK,
@@ -360,12 +362,14 @@ import {approveTokenEmitter} from '@/web3-lib/apis/token-api'
 export default {
   name:"EWalletSubAssetList",
   components:{
-    LoadingDot
+    LoadingDot,
+    ElTabLoading,
   },
   computed: {
     ...Vuex.mapState({
       items:state => state.ewallet.assets.filter( it => it.isRoot == false),
       mailServiceBas:state => wei2Bas(state.dapp.mailSeviceGas),
+      syncState: state => state.ewallet.assetsLoading
     })
   },
   data() {
