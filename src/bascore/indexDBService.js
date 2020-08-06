@@ -91,7 +91,7 @@ export const saveToKeyStorage = async (storeName, data,key) => {
   key = key || storeName
   return dbPromise()
     .then(db => {
-      console.log('Store:', storeName)
+      console.log('Store:', storeName,key)
       const tx = db.transaction(storeName, 'readwrite')
       const store = tx.objectStore(storeName)
       store.put(data, key)
@@ -106,6 +106,7 @@ export const checkKeyStorage = async (storeName,key) => {
   return dbPromise()
     .then(db => {
       const tx = db.transaction(storeName, 'readonly')
+      console.log('get Store data:', storeName, key)
       const store = tx.objectStore(storeName)
       return store.get(key)
     })

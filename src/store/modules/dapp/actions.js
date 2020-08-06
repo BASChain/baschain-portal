@@ -82,6 +82,9 @@ export async function fillRootAssets({commit}){
  */
 export function checkInjected({commit}){
   const injected = window.web3 && window.ethereum && window.ethereum.isMetaMask;
+  if(window.ethereum) {
+    window.ethereum.autoRefreshOnNetworkChange = false;
+  }
   commit(types.SET_INJECTED, injected);
 }
 
@@ -93,13 +96,16 @@ export async function autoLoginMetaMask({commit}){
   const web3js = window.web3
   const ethereum = window.ethereum;
 
-  if (web3js && ethereum && ethereum._metamask && ethereum._metamask.isUnlocked()){
-    const chainId = await web3js.eth.getChainId();
-    const accounts = await web3js.eth.getAccounts();
+  if (web3js && ethereum && ethereum.isMetaMask && ethereum.selectedAddress){
+    //const chainId = await web3js.eth.getChainId();
+    //const accounts = await web3js.eth.getAccounts();
 
-    if(checkSupport(chainId) && accounts && accounts.length){
-      commit(types.SET_METAMASK_LOGIN,{chainId,wallet:accounts[0]})
-      console.log('auto login metamask', chainId, accounts[0])
+    const wallet = ethereum.selectedAddress
+    const chainId = parseInt(ethereum.chainId);
+
+    if(checkSupport(chainId)){
+      commit(types.SET_METAMASK_LOGIN, { chainId, wallet: wallet})
+      console.log('auto login metamask', chainId, wallet)
     }
   }else {
     commit(types.CLEAN_WEB3_STATE)

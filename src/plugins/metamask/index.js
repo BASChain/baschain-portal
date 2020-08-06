@@ -1,7 +1,9 @@
 //import Vue from 'vue'
 import metamask from './Login.vue'
 import store from '@/store'
-import { router } from '@/plugins/vue-router';
+// import { router } from '@/plugins/vue-router';
+import router from '@/routes';
+
 import { i18n } from '@/plugins/vue-i18n';
 
 const PopupBox = Vue.extend(metamask)

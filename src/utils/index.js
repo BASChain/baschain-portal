@@ -391,13 +391,6 @@ export function regTest(r,v){
   return UtilRules[r].test(v)
 }
 
-/**
- *
- */
-export async function metaMaskUnLock() {
-  if (!ethereum) return Promise.resolve(false)
-  return await ethereum._metamask.isUnLock()
-}
 
 /**
  *

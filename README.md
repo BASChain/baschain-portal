@@ -28,6 +28,8 @@ npm run build --report
 
 |  Version  |  Update Date  |  Comments  |
 |  ----  |  ----  |  ----  |
+|  2.8.2  |  2020-07-31  |  更新BAS Extension for chrome 1.0.3 <br> |
+|  2.8.0  |  2020-07-24 | 发布 fixed.baschain.org  | 1. MetaMask v8 升级 + web3js <br> 2.更换新合约,初始化数据,eth,bas<br>  |
 | v2.7.2 | 2020-7-17  | fixed bugs:<br> 1. 更新 MetaMask 处于不支持网络时提示 <br> 2. 优化域名不存在判断条件,去除expiration > 0 <br> 3.更新插件离线下载版本 <br> 4.更新市场查询结果显示优化#2 <br> 5.更新购买市场域名BAS余额不足提示 <br> 6.更新国际化语言日语支持(邮箱注册模块,市场模块) |
 | v2.7.1 | 2020-7-14  | fixed bugs |
 | v2.7.0 | 2020-7-13  | feature market |

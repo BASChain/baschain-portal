@@ -20,13 +20,14 @@ export function winWeb3(){
 export async function enableMetaMask() {
   try{
     const ethereum = window.ethereum;
-    const accounts = await ethereum.enable();
+    let accounts = await ethereum.request({ method: "eth_requestAccounts" });
     if (!accounts.length) throw ApiErrors.NO_ACCOUNT
 
     const wallet = accounts[0]
     const web3js = winWeb3();
     const chainId = await web3js.eth.getChainId();
 
+    console.log(">>>>>>",chainId,wallet)
     return {
       chainId,
       wallet
@@ -44,6 +45,9 @@ export async function enableMetaMask() {
   }
 }
 
+export async function loginMetaMask(){
+
+}
 
 /**
  * Temp sultion

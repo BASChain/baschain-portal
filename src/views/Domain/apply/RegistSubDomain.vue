@@ -1,6 +1,9 @@
 <template>
   <div class="container">
     <div class="row justify-content-center pt-3">
+      <div class="col-7 pb-2">
+        <goback-nav clsName="sub-goback-nav"/>
+      </div>
       <div class="col-md-7 col-sm-10 bas-card" v-loading="ctrl.loading">
         <div class="bas-card__header">
           <div class="bas-card__header-title">
@@ -122,9 +125,14 @@ import {globalWebState} from '@/web3-lib'
 import { findDomainInfo,hasTaken } from '@/web3-lib/apis/domain-api.js'
 import {preCheck4Sub} from '@/web3-lib/apis/domains-apply.js'
 
+import GobackNav from '@/components/GobackNav.vue'
+
 
 export default {
   name:"DomainRegistSub",
+  components:{
+    GobackNav
+  },
   computed: {
     getTotal(){
       const total = parseFloat(this.unitPrice * this.years)
@@ -408,5 +416,9 @@ export default {
 .topinfo-whois {
   font-size: 18px;
   font-weight: 400;
+}
+
+div.bas-goback-nav.sub-goback-nav{
+  background: rgba(255,255,250,1);
 }
 </style>
