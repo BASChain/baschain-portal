@@ -42,6 +42,7 @@ export default {
     let curLang = this.$store.getters['currentLang']
     this.$i18n.locale = curLang;
     this.lang = curLang
+    this.$store.dispatch('changedLang',curLang)
   },
 
 }

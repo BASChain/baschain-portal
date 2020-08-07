@@ -27,6 +27,7 @@ import { getWithdrawable } from '@/web3-lib/apis/account-api'
  */
 export async function loadPublicMailDomains({commit,state}){
   const chainId = state.chainId
+  console.log("Load Public Mails Assets",chainId)
   const assets = await publicMailDomains(chainId)
 
   commit(types.LOAD_PUBLIC_MAIL_ASSETS,assets)
@@ -128,7 +129,7 @@ export async function loadDappBalances({commit,state}){
     try{
       const drawRet = await getWithdrawable(chainId,wallet)
       if( drawRet !== undefined){
-        //console.log(drawRet);
+
         commit(types.UPDATE_WITHDRAWABLE_WEI, drawRet.withdrawWei);
       }
     }catch(ex){
@@ -137,6 +138,7 @@ export async function loadDappBalances({commit,state}){
   }else {
     commit(types.UPDATE_WITHDRAWABLE_WEI, "0");
   }
+  return resp
 }
 
 /**
@@ -179,6 +181,7 @@ const AccountsChangedHandler = ({commit,state}) =>{
 
   function handler(accounts) {
     const chainId = parseInt(window.ethereum.chainId)
+    commit(types.UPDATE_CHAINID,chainId)
     console.log(state.injected, accounts, chainId)
 
     if(accounts && accounts.length) {
@@ -187,21 +190,23 @@ const AccountsChangedHandler = ({commit,state}) =>{
 
       // Balance reload
       loadDappBalances({ commit, state })
-        .then(() => {
-          console.info(`reload ${wallet} balance`)
+        .then( ret => {
+          console.info(`reload ${wallet} balance`,ret)
         })
         .catch(ex => {});
 
       // reload assets,move in show page watch
-      // try {
-
-      // }catch(ex){}
+      try {
+        if(checkSupport(chainId)){
+          dispatch("dapp/loadPublicMailDomains");
+        }
+      }catch(ex){}
 
     }
   }
 }
 
-const ChainChangedHandler = ({commit,state}) => {
+const ChainChangedHandler = ({commit,state,dispatch}) => {
   if (
     window.ethereum &&
     window.ethereum.isMetaMask &&
@@ -211,17 +216,32 @@ const ChainChangedHandler = ({commit,state}) => {
     window.ethereum.on("chainChanged", handler);
   }
 
-  function handler(chainHex) {
+  async function handler(chainHex) {
     const chainId = parseInt(chainHex)
     commit(types.UPDATE_CHAINID,chainId)
-    console.log("ChainId",chainId,state.wallet)
+    console.log("ChainId>>",chainId,state.wallet)
     if(state.wallet){
       // Balance reload
       loadDappBalances({ commit, state })
         .then(() => {
-          console.info(`reload ${chainId} balance`);
+          console.info(`Reload ${chainId} balance complete`);
         })
         .catch(ex => {});
+    }
+
+    if(checkSupport(chainId)){
+      const accounts = await ethereum.request({method:'eth_accounts'})
+      //console.log("state.dapp.wallet", state);
+      if(accounts && accounts.length && !state.wallet) {
+        commit(types.UPDATE_WALLET,accounts[0])
+      }
+      loadPublicMailDomains({commit,state}).then(()=>{
+        console.info("Reload Open public mails complete at ",chainId)
+      }).catch(ex=>{})
+
+      loadRootAssets({commit,state}).then(() =>{
+        console.info("Reload Open public domains complete at",chainId)
+      }).catch(ex=>{})
     }
 
   }

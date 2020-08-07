@@ -71,7 +71,8 @@ export default {
   },
   computed: {
     ...Vuex.mapState({
-      currentWallet:state =>state.dapp.wallet
+      currentWallet:state =>state.dapp.wallet,
+      chainId: state => state.dapp.chainId
     })
   },
   data() {
@@ -118,9 +119,22 @@ export default {
     if(activeName)this.tabs.activeName = activeName
   },
   update:(params)=>{
-    let web3State = this.$store.getters['dapp/web3State']
-    console.log('WalletTabs >>>',web3State)
-  }
+
+  },
+  watch: {
+    currentWallet(val,old) {
+      console.info("Account Changed,Reload Domains Assets...",val,this.chainId)
+      if(checkSupport(this.chainId) && val){
+        this.$store.dispatch("ewallet/syncEWalletAssets",{chainId:this.chainId,wallet:val})
+      }
+    },
+    chainId(val,old) {
+      console.info("ChainId Changed,Reload Domains Assets...")
+      if(checkSupport(val) && this.currentWallet){
+        this.$store.dispatch("ewallet/syncEWalletAssets",{chainId:val,wallet:this.currentWallet})
+      }
+    }
+  },
 }
 </script>
 <style>
