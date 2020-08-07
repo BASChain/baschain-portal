@@ -6,6 +6,21 @@
 
 Vue.use(ELEMENT)
 //Vue.use(ElementUI);
+Vue.config.lang = 'en'
+if(ELEMENT.locale && ELEMENT.lang && ELEMENT.lang.zhCN) {
+  ELEMENT.locale(ELEMENT.lang.zhCN);
+}
+
+if (Vue.locale && ELEMENT.lang && ELEMENT.lang.zhCN) {
+  Vue.locale("zh-CN", ELEMENT.lang.zhCN);
+}
+if (Vue.locale && ELEMENT.lang && ELEMENT.lang.en) {
+  Vue.locale("en", ELEMENT.lang.en);
+}
+if (Vue.locale && ELEMENT.lang && ELEMENT.lang.ja) {
+  Vue.locale("ja", ELEMENT.lang.ja);
+}
+
 const offset =260,center = false;
 Vue.prototype.$basTip = {
   warn(text){

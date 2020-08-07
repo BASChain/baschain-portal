@@ -1,12 +1,12 @@
  <template>
-  <nav class="navbar navbar-expand-sm fixed-top header-wrap"
+  <nav class="navbar navbar-expand-lg fixed-top header-wrap"
     :class="topbarBgClass"
     >
     <div class="container-fluid" id="TopBar">
       <router-link
         :to="{ name: 'home.index' }"
-        class="navbar-brand">
-        <img :src="isBlack ? colorfulLogo : blackLogo " alt="BAS Exchange" class="header-logo">
+        class="navbar-brand ">
+        <img :src="isBlack ? colorfulLogo : blackLogo " alt="BAS Exchange" class="header-logo d-md-inline-block">
       </router-link>
       <button
         class="navbar-toggler"
@@ -238,8 +238,11 @@ export default {
     logout() {
       //alert('logout')
     },
-    langChanged( lg ) {
+    langChanged() {
       const i18nLang = this.$i18n.locale;
+      const lg = this.lang
+
+      console.log(">>>>",lg,i18nLang)
       if(i18nLang !== lg){
         this.$i18n.locale = lg;
         this.$store.commit('setLang',lg)
@@ -294,8 +297,8 @@ export default {
 .header-wrap {
   height: 76px;
   width: 100%;
-  min-width: 1200px;
-  /* overflow-inline: auto;
+  /* min-width:992px;
+  overflow-inline: auto;
   overflow-x: auto;
   overflow-y: hidden; */
 }

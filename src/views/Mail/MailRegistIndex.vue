@@ -657,8 +657,12 @@ export default {
           try{
             const resp = await findMailInfo(fulltext,chainId)
             if(resp.state){
-              console.log(resp.mail)
-              that.inputctrl.message = that.$t(`code.${MAIL_HASH_EXIST}`,{mailname:fulltext})
+              if(resp.mail.abandoned){
+                //MAIL_HASH_INVALID
+                that.inputctrl.message = that.$t(`code.${MAIL_HASH_ABANDONED}`,{text:fulltext})
+              }else{
+                that.inputctrl.message = that.$t(`code.${MAIL_HASH_EXIST}`,{text:fulltext})
+              }
             }else{
               that.inputctrl.message = ''
             }

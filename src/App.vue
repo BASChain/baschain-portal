@@ -19,7 +19,7 @@
       ...Vuex.mapState({
         latestRootDomainsChanged:state => {return state.domains.latestRootDomainsChanged },
         latestSubDomainsChanged:state => {return state.domains.latestSubDomainsChanged },
-        currentChainId:state =>{return state.dapp.chainId}
+        currentChainId:state => state.dapp.chainId
       })
     },
     data() {
@@ -63,6 +63,9 @@
       //     console.log('LoadDapp',ex)
       //   }
       // }
+      this.$store.dispatch('dapp/AccountsChangedHandler')
+      //ChainChangedHandler
+       this.$store.dispatch('dapp/ChainChangedHandler')
     },
     beforeUpdate() {
 
@@ -188,5 +191,7 @@
 </script>
 
 <style>
-
+/* body {
+  min-width: 800px;
+} */
 </style>

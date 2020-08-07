@@ -1,18 +1,24 @@
 <template>
   <div>
-    <top-bar v-bind:isBlack="isBlackTheme"/>
-    <!-- <div>{{topbarTheme}}</div> -->
+    <!-- <top-bar v-bind:isBlack="isBlackTheme"/> -->
+    <!-- <top-el-bar v-bind:isBlack="isBlackTheme" /> -->
+    <top-bs-bar v-bind:isBlack="isBlackTheme" />
     <slot />
   </div>
 </template>
 
 <script>
 import TopBar from '@/header/TopBar.vue'
-//import TopBar from '@/header/TopEleNav.vue'
-//import TopBar from '@/header/TopBSBar.vue'
+import TopElBar from '@/header/TopElNav.vue'
+import TopBsBar from '@/header/TopBSBar.vue'
 
 export default {
   name:'DefaultLayout',
+  components: {
+    TopBar,
+    TopElBar,
+    TopBsBar,
+  },
   data() {
     return {
       menuCollapsed:false,
@@ -25,10 +31,6 @@ export default {
       required:false
     }
   },
-  components: {
-    TopBar,
-  },
-
   methods:{
 
   },

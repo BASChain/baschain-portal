@@ -27,6 +27,7 @@ import { getWithdrawable } from '@/web3-lib/apis/account-api'
  */
 export async function loadPublicMailDomains({commit,state}){
   const chainId = state.chainId
+  console.log("Load Public Mails Assets",chainId)
   const assets = await publicMailDomains(chainId)
 
   commit(types.LOAD_PUBLIC_MAIL_ASSETS,assets)
@@ -113,28 +114,31 @@ export async function autoLoginMetaMask({commit}){
 }
 
 /**
- * load Balances :eth bas
+ * load Balances :eth bas withdraw
  * @param {*} param0
  */
 export async function loadDappBalances({commit,state}){
   const chainId = state.chainId
   const wallet = state.wallet
   console.log('load Balance on ',chainId)
-  if (checkSupport(chainId) && wallet) {
-    const resp = await getBalances(chainId, wallet);
-    console.log("load balances dispatch", resp);
-    commit(types.SET_BALANCES, resp);
+  const resp = await getBalances(chainId, wallet);
+  console.log("load balances dispatch", resp);
+  commit(types.SET_BALANCES, resp);
 
+  if (checkSupport(chainId) && wallet) {
     try{
       const drawRet = await getWithdrawable(chainId,wallet)
       if( drawRet !== undefined){
-        //console.log(drawRet);
+
         commit(types.UPDATE_WITHDRAWABLE_WEI, drawRet.withdrawWei);
       }
     }catch(ex){
       console.log(ex)
     }
+  }else {
+    commit(types.UPDATE_WITHDRAWABLE_WEI, "0");
   }
+  return resp
 }
 
 /**
@@ -159,6 +163,90 @@ export async function loadDAppConfiguration({commit,state}){
   }
 }
 
+/**
+ *
+ * @param {*} param0
+ * commit,getters,state,dispatch
+ */
+const AccountsChangedHandler = ({commit,state}) =>{
+
+  if (
+    window.ethereum &&
+    window.ethereum.isMetaMask &&
+    !window.ethereum.eventNames().find(n => n === "accountsChanged")
+  ) {
+    console.info("Start AccountChanged listener...")
+    window.ethereum.on("accountsChanged", handler);
+  }
+
+  function handler(accounts) {
+    const chainId = parseInt(window.ethereum.chainId)
+    commit(types.UPDATE_CHAINID,chainId)
+    console.log(state.injected, accounts, chainId)
+
+    if(accounts && accounts.length) {
+      const wallet = accounts[0]
+      commit(types.UPDATE_WALLET, wallet)
+
+      // Balance reload
+      loadDappBalances({ commit, state })
+        .then( ret => {
+          console.info(`reload ${wallet} balance`,ret)
+        })
+        .catch(ex => {});
+
+      // reload assets,move in show page watch
+      try {
+        if(checkSupport(chainId)){
+          dispatch("dapp/loadPublicMailDomains");
+        }
+      }catch(ex){}
+
+    }
+  }
+}
+
+const ChainChangedHandler = ({commit,state,dispatch}) => {
+  if (
+    window.ethereum &&
+    window.ethereum.isMetaMask &&
+    !window.ethereum.eventNames().find(n => n === "chainChanged")
+  ) {
+    console.info("Start chainChanged listener...");
+    window.ethereum.on("chainChanged", handler);
+  }
+
+  async function handler(chainHex) {
+    const chainId = parseInt(chainHex)
+    commit(types.UPDATE_CHAINID,chainId)
+    console.log("ChainId>>",chainId,state.wallet)
+    if(state.wallet){
+      // Balance reload
+      loadDappBalances({ commit, state })
+        .then(() => {
+          console.info(`Reload ${chainId} balance complete`);
+        })
+        .catch(ex => {});
+    }
+
+    if(checkSupport(chainId)){
+      const accounts = await ethereum.request({method:'eth_accounts'})
+      //console.log("state.dapp.wallet", state);
+      if(accounts && accounts.length && !state.wallet) {
+        commit(types.UPDATE_WALLET,accounts[0])
+      }
+      loadPublicMailDomains({commit,state}).then(()=>{
+        console.info("Reload Open public mails complete at ",chainId)
+      }).catch(ex=>{})
+
+      loadRootAssets({commit,state}).then(() =>{
+        console.info("Reload Open public domains complete at",chainId)
+      }).catch(ex=>{})
+    }
+
+  }
+}
+
 
 export default {
   checkInjected,
@@ -169,4 +257,6 @@ export default {
   loadPublicMailDomains,
   fillRootAssets,
   fillPublicMailDomains,
+  AccountsChangedHandler,
+  ChainChangedHandler
 };

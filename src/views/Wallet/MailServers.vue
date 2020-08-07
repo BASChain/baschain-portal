@@ -143,8 +143,12 @@ export default {
   computed: {
     ...Vuex.mapState({
       items:state => state.ewallet.assets.filter( it=> it.mailActived),
-      syncState: state => state.ewallet.assetsLoading
-    })
+      syncState: state => state.ewallet.assetsLoading,
+      chainId: state => state.dapp.chainId
+    }),
+    curWallet() {
+      return this.$store.state.dapp.wallet
+    },
   },
   data() {
     return {
@@ -345,6 +349,21 @@ export default {
   mounted() {
 
   },
+  watch:{
+    curWallet(val,old) {
+      console.info("Account Changed,Reload BMail Domains")
+      if(checkSupport(this.chainId)){
+        this.$store.dispatch("ewallet/syncEWalletAssets",{chainId:this.chainId,wallet:val})
+      }
+    },
+    chainId(val,old){
+      const wallet = this.$store.state.dapp.wallet
+      console.info("ChainId Changed,Reload BMail Domains")
+      if(checkSupport(val) && wallet){
+        this.$store.dispatch("ewallet/syncEWalletAssets",{chainId:val,wallet})
+      }
+    }
+  }
 }
 </script>
 <style>

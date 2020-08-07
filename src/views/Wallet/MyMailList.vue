@@ -366,6 +366,7 @@ import {approveTokenEmitter} from '@/web3-lib/apis/token-api'
 import {
   abandonedMail,valid4Recharge,rechargeMail
 } from '@/web3-lib/apis/mail-manager-api'
+import { checkSupport } from '@/web3-lib/networks'
 
 
 import LoadingDot from '@/components/LoadingDot.vue'
@@ -380,7 +381,9 @@ export default {
   computed: {
     ...Vuex.mapState({
       items:state => state.ewallet.mails.filter(m => !m.abandoned),
-      unitBas:state => wei2Bas(state.dapp.mailRegGas)
+      unitBas:state => wei2Bas(state.dapp.mailRegGas),
+      wallet: state => state.dapp.wallet,
+      chainId: state => state.dapp.chainId,
     }),
     ...Vuex.mapGetters({
       loading: 'ewallet/mailsLoading'
@@ -680,6 +683,20 @@ export default {
     console.log("ewallet/loadEWalletMails",web3State)
     if(web3State.chainId && web3State.wallet){
       this.$store.dispatch('ewallet/loadEWalletMails',web3State)
+    }
+  },
+  watch: {
+    wallet(val,old) {
+      console.info("Wallet Changed and Reload BMail list...",val,this.chainId)
+      if(checkSupport(this.chainId) && val) {
+        this.$store.dispatch('ewallet/loadEWalletMails',{chainId:this.chainId,wallet:val})
+      }
+    },
+    chainId(val,old){
+      console.info("ChainId Changed and Reload BMail list...")
+      if(checkSupport(val) && this.wallet) {
+        this.$store.dispatch('ewallet/loadEWalletMails',{chainId:val,wallet:this.wallet})
+      }
     }
   },
 }
