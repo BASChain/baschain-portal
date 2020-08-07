@@ -19,6 +19,7 @@ const debug = process.env.NODE_ENV !== 'production'
 
 const mutations = {
   setLang (state,lg) {
+    console.log("Commit lang:",lg)
     state.lang = lg;
     Cookies.set('BasLang', lg, { expires: 7 })
   },
@@ -38,6 +39,7 @@ const mutations = {
 
 const actions = {
   changedLang({commit},lang){
+
     switch (lang) {
       case "zh-CN":
         if (ELEMENT.locale && ELEMENT.lang.zhCN){
@@ -59,6 +61,7 @@ const actions = {
         }
         Cookies.set("BasLang", lang);
         commit("setLang",lang);
+        break;
       default:
         if (ELEMENT.locale && ELEMENT.lang.zhCN) {
           ELEMENT.locale(ELEMENT.lang.zhCN);

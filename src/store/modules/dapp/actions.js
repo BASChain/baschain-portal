@@ -113,18 +113,18 @@ export async function autoLoginMetaMask({commit}){
 }
 
 /**
- * load Balances :eth bas
+ * load Balances :eth bas withdraw
  * @param {*} param0
  */
 export async function loadDappBalances({commit,state}){
   const chainId = state.chainId
   const wallet = state.wallet
   console.log('load Balance on ',chainId)
-  if (checkSupport(chainId) && wallet) {
-    const resp = await getBalances(chainId, wallet);
-    console.log("load balances dispatch", resp);
-    commit(types.SET_BALANCES, resp);
+  const resp = await getBalances(chainId, wallet);
+  console.log("load balances dispatch", resp);
+  commit(types.SET_BALANCES, resp);
 
+  if (checkSupport(chainId) && wallet) {
     try{
       const drawRet = await getWithdrawable(chainId,wallet)
       if( drawRet !== undefined){
@@ -134,6 +134,8 @@ export async function loadDappBalances({commit,state}){
     }catch(ex){
       console.log(ex)
     }
+  }else {
+    commit(types.UPDATE_WITHDRAWABLE_WEI, "0");
   }
 }
 
@@ -159,6 +161,72 @@ export async function loadDAppConfiguration({commit,state}){
   }
 }
 
+/**
+ *
+ * @param {*} param0
+ * commit,getters,state,dispatch
+ */
+const AccountsChangedHandler = ({commit,state}) =>{
+
+  if (
+    window.ethereum &&
+    window.ethereum.isMetaMask &&
+    !window.ethereum.eventNames().find(n => n === "accountsChanged")
+  ) {
+    console.info("Start AccountChanged listener...")
+    window.ethereum.on("accountsChanged", handler);
+  }
+
+  function handler(accounts) {
+    const chainId = parseInt(window.ethereum.chainId)
+    console.log(state.injected, accounts, chainId)
+
+    if(accounts && accounts.length) {
+      const wallet = accounts[0]
+      commit(types.UPDATE_WALLET, wallet)
+
+      // Balance reload
+      loadDappBalances({ commit, state })
+        .then(() => {
+          console.info(`reload ${wallet} balance`)
+        })
+        .catch(ex => {});
+
+      // reload assets,move in show page watch
+      // try {
+
+      // }catch(ex){}
+
+    }
+  }
+}
+
+const ChainChangedHandler = ({commit,state}) => {
+  if (
+    window.ethereum &&
+    window.ethereum.isMetaMask &&
+    !window.ethereum.eventNames().find(n => n === "chainChanged")
+  ) {
+    console.info("Start chainChanged listener...");
+    window.ethereum.on("chainChanged", handler);
+  }
+
+  function handler(chainHex) {
+    const chainId = parseInt(chainHex)
+    commit(types.UPDATE_CHAINID,chainId)
+    console.log("ChainId",chainId,state.wallet)
+    if(state.wallet){
+      // Balance reload
+      loadDappBalances({ commit, state })
+        .then(() => {
+          console.info(`reload ${chainId} balance`);
+        })
+        .catch(ex => {});
+    }
+
+  }
+}
+
 
 export default {
   checkInjected,
@@ -169,4 +237,6 @@ export default {
   loadPublicMailDomains,
   fillRootAssets,
   fillPublicMailDomains,
+  AccountsChangedHandler,
+  ChainChangedHandler
 };

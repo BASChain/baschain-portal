@@ -238,8 +238,11 @@ export default {
     logout() {
       //alert('logout')
     },
-    langChanged( lg ) {
+    langChanged() {
       const i18nLang = this.$i18n.locale;
+      const lg = this.lang
+
+      console.log(">>>>",lg,i18nLang)
       if(i18nLang !== lg){
         this.$i18n.locale = lg;
         this.$store.commit('setLang',lg)

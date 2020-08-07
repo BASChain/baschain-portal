@@ -20,7 +20,7 @@ export default {
   },
   data() {
     return {
-      lang:'zh-CN',
+      lang:'',
       options:[
         {id:"zh-CN",text:"中文"},
         {id:"en",text:"English"},
@@ -32,7 +32,6 @@ export default {
   methods: {
     langChanged() {
       const selLang = this.lang
-      console.log("selLang>>>>",selLang)
       if(this.$i18n.locale !== selLang) {
         this.$store.dispatch('changedLang',selLang)
         this.$i18n.locale = selLang
@@ -40,8 +39,9 @@ export default {
     }
   },
   mounted() {
-    //console.log(">>>>>>>>>>>>",this.$i18n.locale)
-    this.lang = this.$i18n.locale
+    let curLang = this.$store.getters['currentLang']
+    this.$i18n.locale = curLang;
+    this.lang = curLang
   },
 
 }

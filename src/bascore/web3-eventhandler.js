@@ -137,3 +137,8 @@ export function startDappListener() {
 
   return Promise.resolve('load listener completed.')
 }
+
+
+async function chainHandler(chainHex) {
+  console.log(chainHex);
+}

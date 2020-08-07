@@ -3,7 +3,7 @@ import ContractHelper from '../abi-manager'
 import { getWeb3 } from './index'
 import * as ErrCodes from './error-codes'
 import { checkSupport } from '../networks'
-import store from '@/store'
+
 
 
 export async function refreshAccount(){
@@ -140,12 +140,9 @@ export  function tokenInstance(chainId,wallet) {
  *  E9997 web3 not injected
  *  E9998 no ethereum
  */
-export async function getBalances(){
+export async function getBalances(chainId,wallet){
   let web3js = getWeb3()
-  let chainId = await web3js.eth.getChainId();
-  let accounts = await web3js.eth.getAccounts();
-  if(!accounts || !accounts.length)throw ErrCodes.E4999
-  let wallet = accounts[0]
+  if (!chainId || !wallet) throw ErrCodes.E4999;
 
   const ret = {
     chainId,
@@ -153,6 +150,8 @@ export async function getBalances(){
     ethBal:0,
     basBal:0
   }
+
+  console.log(chainId,wallet)
 
   ret.ethBal = await web3js.eth.getBalance(wallet)
   if (checkSupport(chainId)) {
@@ -162,7 +161,6 @@ export async function getBalances(){
   } else {
     ret.basBal = 0
   }
-  store.commit('web3/refreshAccBase',ret)
   return ret;
 }
 
