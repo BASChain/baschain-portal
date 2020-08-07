@@ -28,8 +28,11 @@ npm run build --report
 
 |  Version  |  Update Date  |  Comments  |
 |  ----  |  ----  |  ----  |
-|  2.8.2  |  2020-07-31  |  更新BAS Extension for chrome 1.0.3 <br> |
-|  2.8.0  |  2020-07-24 | 发布 fixed.baschain.org  | 1. MetaMask v8 升级 + web3js <br> 2.更换新合约,初始化数据,eth,bas<br>  |
+|  v2.8.2  |  2020-07-31  |  更新BAS Extension for chrome 1.0.3 <br> |
+|  v2.8.0  |  2020-07-24 | 发布 fixed.baschain.org  | 1. MetaMask v8 升级 + web3js <br> 2.更换新合约,初始化数据,eth,bas<br>  |
+|  v2.7.7  |  2020-08-07  |1. 优化顶部菜单自适应( width< 992px[break-end-point])时,变为折叠,纵向展开方式<br> 2.优化ELement UI i18n 国际化组件 <br> 3.优化 BlockChain 网络变化 & 钱包地址变化时envent 处理,钱包列表刷新只有当前在展示时响应event,钱包余额所有状态时响应event <br> 4.修复邮箱弃用提示Bug |
+|  v2.7.4  | 2020-7-22 | 更换新合约,初始化数据,eth,bas | 访问地址:https://www.ppn.one <br> https://fixed.baschain.org <br> github 代码为旧合约 |
+|  v2.7.3  |  2020-7-21 |  域名资产优化(未开始)  | 更新Indexed 钱包账号域名,按钱包地址 + eth 网络区分存储 |
 | v2.7.2 | 2020-7-17  | fixed bugs:<br> 1. 更新 MetaMask 处于不支持网络时提示 <br> 2. 优化域名不存在判断条件,去除expiration > 0 <br> 3.更新插件离线下载版本 <br> 4.更新市场查询结果显示优化#2 <br> 5.更新购买市场域名BAS余额不足提示 <br> 6.更新国际化语言日语支持(邮箱注册模块,市场模块) |
 | v2.7.1 | 2020-7-14  | fixed bugs |
 | v2.7.0 | 2020-7-13  | feature market |
