@@ -475,12 +475,14 @@ export function maxRechageYears(expire) {
  * @param {*} format
  */
 export function hexBN2Ether(bn,format){
-  const _format = format || "0[.]00";
-  if(!bn)return numeral("0").format(_format);
+  //const _format = format || "0[.]00";
+  if(!bn) return 0
+  // return numeral("0").format(_format);
 
   const val = Web3.utils.fromWei(bn.toString(16),'ether')
 
-  return numeral(val).format(_format);
+  return parseFloat(val)
+  //numeral(val).format(_format);
 }
 
 /**

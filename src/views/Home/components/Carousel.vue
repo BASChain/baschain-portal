@@ -353,8 +353,10 @@ export default {
       }
     },
     async getBASFree(){
+      let tipmsg = ""
       if(this.ctrl.basLoading){
-        this.$message(this.$basTip.warn('正在申请中...,请勿重复点击'))
+        tipmsg = this.$t("p.HomeGetFreeHandlingWarn")
+        this.$message(this.$basTip.warn(tipmsg))
         return
       }
       if(this.$store.getters['metaMaskDisabled']){
@@ -367,7 +369,7 @@ export default {
 
       let msg = ""
       if(parseInt(chainId) !== 3){
-        msg = "只能在Ropsten测试网申请BAS"
+        msg = this.$t("p.HomeGetFreeNetworksTips")
         this.$message(this.$basTip.error(msg))
         return;
       }

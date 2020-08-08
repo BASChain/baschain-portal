@@ -364,6 +364,7 @@ export default {
           hash:''
         })
       } catch(e) {
+        this.revokeDialog.loading = false
         console.error('DELETE_ORDER', e)
       }
     },

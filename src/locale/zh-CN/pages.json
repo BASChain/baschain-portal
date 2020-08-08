@@ -4,6 +4,7 @@
   "MetaMaskPopNoMetaMaskTip": "请先安装MetaMask插件",
   "MetaMaskPopLoginTips": "请先登陆MetaMask",
   "MetaMaskPopSelectNetworkPrefix": "请通过MetaMask插件切换到 {networks} 网络.",
+  "HomeGetFreeHandlingWarn":"正在申请中...,请勿重复点击",
   "HomeTransactionCarouselCaption": "已成交域名",
   "HomeGetFreeTitle": "免费领取BAS测试币",
   "HomeGetFreeNetworksTips": "仅限在Ropsten测试网络使用",

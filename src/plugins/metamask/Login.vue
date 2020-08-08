@@ -1,5 +1,5 @@
 <template>
-  <div v-if="visited"  style="z-index:99;">
+  <div v-if="visited"  style="z-index:99;" class="metamask-box">
     <div class="bas-dialog__wrapper" >
       <div class="bas-dialog__metamask" :style="containerStyle"
         aria-modal="true" aria-lable="tips">
