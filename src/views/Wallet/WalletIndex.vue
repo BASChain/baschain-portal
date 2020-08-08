@@ -26,9 +26,16 @@
       <el-col :span="8">
         <div class="bas-balance--wrapper">
           <div class="d-block">
-            <h4>
+            <!-- <h4>
               {{drawBalance}}
-            </h4>
+            </h4> -->
+            <div class="bas-balance--block">
+              <count-to ref="DrawBalVol"
+                :startVal="countTo.startVal"
+                :endVal="drawBalance"
+                :duration="countTo.duration"
+                decimals="2" />
+            </div>
             <p>
               {{$t('l.canRecover')}}
             </p>
@@ -43,7 +50,16 @@
       <el-col :span="8">
         <div class="bas-balance--wrapper">
           <div class="d-block">
-            <h4>{{ ethBalance }}</h4>
+            <!-- <h4>{{ ethBalance }}</h4> -->
+            <div class="bas-balance--block">
+              <count-to ref="EthBalVol"
+                :startVal="countTo.startVal"
+                :endVal="ethBalance"
+                :duration="countTo.duration"
+                decimals="4" class="balance-vol"/>
+            </div>
+
+
             <p>{{$t('p.WalletIndexEthBalance')}}</p>
             <div>
               <el-popover v-if="Boolean(wallet)"
@@ -68,7 +84,14 @@
       <el-col :span="8" >
         <div class="bas-balance--wrapper">
           <div class="d-block">
-            <h4>{{basBalance}}</h4>
+            <!-- <h4>{{basBalance}}</h4> -->
+            <div class="bas-balance--block">
+              <count-to ref="BasBalVol"
+                :startVal="countTo.startVal"
+                :endVal="basBalance"
+                :duration="countTo.duration"
+                decimals="2" class="balance-vol"/>
+            </div>
             <p>{{$t('p.WallletIndexBASBalance')}}</p>
             <div>
               <el-popover v-if="Boolean(wallet)"
@@ -167,6 +190,17 @@
 </template>
 
 <style>
+.bas-balance--block {
+  margin-bottom: .75rem;
+}
+.bas-balance--block span{
+  margin: auto .5rem;
+  font-size: 1.5rem;
+  font-family: Lato-Bold,Lato;
+  font-weight: 500;
+  letter-spacing:1px;
+}
+
 .bas-balance--wrapper {
   width: 100%;
   min-height: 116px;
@@ -194,6 +228,7 @@ import MineDomainTabs from './MineDomainTabs.vue'
 import WalletQrCode from '@/components/WalletQrCode.vue'
 import CircleLoading from '@/components/CircleLoading.vue'
 import CircleIconState from '@/components/CircleIconState.vue'
+import CountTo from 'vue-count-to'
 
 import {
   PARAM_ILLEGAL,USER_REJECTED_REQUEST,UNSUPPORT_NETWORK,
@@ -211,6 +246,7 @@ export default {
     WalletQrCode,
     CircleLoading,
     CircleIconState,
+    CountTo,
   },
   computed:{
     ...Vuex.mapState({
@@ -228,6 +264,10 @@ export default {
   },
   data() {
     return {
+      countTo:{
+        startVal:0,
+        duration:2000,
+      },
       withdraw:{
         visible:false,
         loading:false,
@@ -253,9 +293,12 @@ export default {
     }
   },
   methods:{
-    refreshWalletBalances(){
+    async refreshWalletBalances(){
       //load eth,bas,withdraw
-      this.$store.dispatch('dapp/loadDappBalances')
+      await this.$store.dispatch('dapp/loadDappBalances')
+      this.$refs.DrawBalVol.start()
+      this.$refs.EthBalVol.start()
+      this.$refs.BasBalVol.start()
     },
     withdrawHandle(){
       let msg = ''
