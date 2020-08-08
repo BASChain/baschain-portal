@@ -31,7 +31,6 @@ routes.beforeEach(async (to,from,next) => {
       name: "home.index"
     });
   } else {
-
     next();
   }
 })
