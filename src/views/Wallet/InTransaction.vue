@@ -201,11 +201,11 @@ import {
 import {
   transoutOwnershipCi,approveTraOspEmitter,revokeOwnerShipEmitter
 } from '@/web3-lib/apis/ownership-api'
-import {getWeb3State} from '@/bizlib/web3'
 import {
 removeSellOrderEmitter,
 changeOnSellPriceEmitter,
 } from '@/bizlib/web3/market-api'
+import { checkSupport } from '@/web3-lib/networks'
 
 import {MarketProxy} from '@/proxies/MarketProxy.js'
 export default {
@@ -219,6 +219,8 @@ export default {
     ...Vuex.mapState({
       sellItems:state => state.ewallet.orders,
       syncState: state => state.ewallet.ordersLoading,
+      chainId:state => state.dapp.chainId,
+      wallet:state => state.dapp.wallet,
     }),
     OnSaleTabName(){
       return this.$t('l.Selling')
@@ -314,7 +316,7 @@ export default {
         this.$metamask()
         return;
       }
-      let web3State = getWeb3State()
+      let web3State = this.$store.getters.web3State
       let wallet = web3State.wallet
 
       if(isOwner(row.owner,web3State.wallet)){
@@ -371,7 +373,7 @@ export default {
         this.$metamask()
         return;
       }
-      let web3State = getWeb3State()
+      let web3State = this.$store.getters.web3State
       let wallet = web3State.wallet
 
       if(isOwner(row.owner,wallet)){
@@ -443,12 +445,9 @@ export default {
       }
     },
     reloadSellItems(){
-      // const params = {
-      //   pagenumber:this.pager.pagenumber,
-      //   pagesize:this.pager.pagesize
-      // }
+
       const web3State = this.$store.getters['web3State']
-      console.log('>>>>>wallet orders', this.sellItems)
+      console.log('>>>>> wallet orders', this.sellItems ,web3State)
       if (web3State.chainId && web3State.wallet) {
         this.$store.dispatch('ewallet/loadEWalletOrders', web3State)
       }
@@ -470,8 +469,9 @@ export default {
       }
       this.loadSellItems(params)
     },
+    // Depared
     loadSellItems({pagenumber=1,pagesize=10}) {
-      let web3State = getWeb3State()
+      let web3State = this.$store.getters.web3State
       let wallet = web3State.wallet;
       if(!wallet){
         this.$metamask({name:"wallet.transaction"})
@@ -516,7 +516,25 @@ export default {
     if (web3State.chainId && web3State.wallet) {
       this.$store.dispatch('ewallet/loadEWalletOrders', web3State)
     }
-  }
+  },
+  watch: {
+    syncState(val,old) {
+      console.log("syncState=============",old,val)
+
+    },
+    wallet(val) {
+      console.log("syncState=============",val,this.chainId)
+      if (checkSupport(this.chainId) && val) {
+        this.$store.dispatch('ewallet/loadEWalletOrders', {chainId:this.chainId,wallet:val})
+      }
+    },
+    chainId(val) {
+      console.log(val,"<======>",this.wallet)
+      if (checkSupport(val) && this.wallet) {
+        this.$store.dispatch('ewallet/loadEWalletOrders', {chainId:val,wallet:this.wallet})
+      }
+    }
+  },
 }
 </script>
 <style>

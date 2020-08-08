@@ -76,7 +76,17 @@
       <el-tab-loading :loading="syncState" slot="empty" v-if="syncState"/>
       <el-tab-loading :loading="syncState" slot="append" v-if="syncState && items.length > 0 "/>
     </el-table>
-
+    <el-row :gutter="20" class="bg-white" style="margin:0px;">
+      <div class="bg-white" style="height:25px;"></div>
+      <div class="float-table-total">
+        <span >
+          {{$t('l.TableTotal')}} {{items ? items.length : 0}} {{$t('l.TableRecord')}}
+        </span>
+        <span @click="reloadRecords">
+          <i class="fa fa-refresh"></i>
+        </span>
+      </div>
+    </el-row>
      <!-- mask dialog begin -->
     <el-dialog  width="25%"
       :close-on-click-modal="false"
@@ -336,6 +346,13 @@ export default {
           msg = this.$t(`code.${ex.code}`)
           this.$message(this.$basTip.error(msg))
         }
+      }
+    },
+    reloadRecords(){
+      const web3State = this.$store.getters['web3State']
+      if(web3State.chainId &&
+        checkSupport(web3State.chainId) && web3State.wallet){
+        this.$store.dispatch('ewallet/syncEWalletAssets',web3State)
       }
     }
   },
