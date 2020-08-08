@@ -116,7 +116,7 @@
     </el-row>
   </div>
   <!-- withdraw dialog -->
-  <el-dialog  width="380px"
+  <el-dialog  width="400px"
     :close-on-click-modal="false"
     :show-close="withdraw.closeable"
     :before-close="withDrawCloseHandle"
@@ -126,13 +126,13 @@
       <div v-if="withdraw.loading">
         <circle-icon-state className="bascc-icon--loading"/>
       </div>
-      <div>
-        <span class="bas-tip-text">
+      <div class="bas-flex-nowrap">
+        <div class="bas-tip-text">
           {{$t('p.WithdrawValuePretext')}}
-        </span>
-        <span class="bas-text-green bas-currency">
+        </div>
+        <div class="bas-text-green bas-currency">
           {{ drawBalance }}
-        </span>
+        </div>
       </div>
       <div v-if="withdraw.timeover">
         <div class="small text-danger">
@@ -190,6 +190,15 @@
 </template>
 
 <style>
+.bas-flex-nowrap {
+  width: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+.bas-flex-nowrap * {
+  white-space: nowrap;
+}
 .bas-balance--block {
   margin-bottom: .75rem;
 }
