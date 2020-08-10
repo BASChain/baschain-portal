@@ -28,11 +28,12 @@ npm run build --report
 
 |  Version  |  Update Date  |  Comments  |
 |  ----  |  ----  |  ----  |
-|  v2.8.5  |  2020-08-10  |  优化钱包余额动态效果<br>  |
+|  v2.8.5  |  2020-08-10  |  1.优化钱包余额动态效果<br> 2. 优化AppStore 页面样式自适应<br>  |
 |  v2.8.4  |  2020-08-08  |  1.优化市场在售列表区块同步装太显示 <br> 2.增加邮箱域名列表数据条目显示,与其他页面展示形式保持一致<br> 3. fixed 市场列表刷新无效BUG <br> 部署在 https://fixed.baschain.org/home <br> |
 |  v2.8.3  |  2020-08-07  |  1. 优化顶部菜单自适应( width< 992px[break-end-point])时,变为折叠,纵向展开方式<br> 2.优化ELement UI i18n 国际化组件 <br> 3.优化 BlockChain 网络变化 & 钱包地址变化时envent 处理,钱包列表刷新只有当前在展示时响应event,钱包余额所有状态时响应event <br> 4.修复邮箱弃用提示Bug   |
 |  v2.8.2  |  2020-07-31  |  更新BAS Extension for chrome 1.0.3 <br> |
 |  v2.8.0  |  2020-07-24 | 发布 fixed.baschain.org  | 1. MetaMask v8 升级 + web3js <br> 2.更换新合约,初始化数据,eth,bas<br>  |
+|  v2.7.9  |  ----  |  优化AppStore 页面样式自适应<br>  |
 |  v2.7.8  |  2020-08-08  |  1.优化市场在售列表区块同步装太显示 <br> 2.增加邮箱域名列表数据条目显示,与其他页面展示形式保持一致<br> 3. fixed 市场列表刷新无效BUG <br> 部署在 https://www.ppn.one/home <br> |
 |  v2.7.7  |  2020-08-07  |1. 优化顶部菜单自适应( width< 992px[break-end-point])时,变为折叠,纵向展开方式<br> 2.优化ELement UI i18n 国际化组件 <br> 3.优化 BlockChain 网络变化 & 钱包地址变化时envent 处理,钱包列表刷新只有当前在展示时响应event,钱包余额所有状态时响应event <br> 4.修复邮箱弃用提示Bug |
 |  v2.7.4  | 2020-7-22 | 更换新合约,初始化数据,eth,bas | 访问地址:https://www.ppn.one <br> https://fixed.baschain.org <br> github 代码为旧合约 |
