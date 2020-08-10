@@ -20,6 +20,7 @@
     // { name: "Web3", src: "/static/vendor/web3/web3-1.2.10.min.js", version: "1.2.10" },
     {
       name: "numeral",
+      ignore:false ,
       src: [
         "/static/vendor/numeral/numeral.min.js",
         "/static/vendor/numeral/locales.min.js"
@@ -54,17 +55,20 @@
       version: "2.13.2"
     },
     {
-      name: "ELEMENT.lang.zh",
+      name: "ELEMENT.lang.zhCN",
+      subkey: "lang.zhCN",
       src: "/static/vendor/elemnet-ui/umd/locale/zh-CN.js",
       version: "2.13.2"
     },
     {
       name: "ELEMENT.lang.en",
+      subkey: "lang.en",
       src: "/static/vendor/elemnet-ui/umd/locale/en.js",
       version: "2.13.2"
     },
     {
       name: "ELEMENT.lang.ja",
+      subkey: "lang.ja",
       src: "/static/vendor/elemnet-ui/umd/locale/ja.js",
       version: "2.13.2"
     }
@@ -77,28 +81,60 @@
     for (let j = 0; j < Vendors.length; j++) {
       const v = Vendors[j];
 
-      if (typeof window[v.name] === "undefined") {
-        console.log("load local js:", v.src);
-        if (typeof v.src === "string") {
+      const len = v.name.split(/\./g).length
+      const singleSrc = typeof v.src === 'string'
+
+      const ignore = v.ignore
+      if(ignore) continue;
+
+      if (len === 1) {
+        if (typeof window[v.name] === 'undefined' && singleSrc) {
+          writeTag(v.src);
+        }else if (typeof v.src === "object" && v.src.length ) {
+          writeTags(v.src);
+        }
+      } else if(len === 2 ){
+        const names = v.name.split(/\./g)
+        if (
+          typeof window[names[0]] === "undefined" ||
+          typeof window[names[0]][names[1]] === "undefined"
+        ) {
+          writeTag(v.src);
+        }
+      }else if (len === 3) {
+         const namesc = v.name.split(/\./g);
+
+        if (
+          typeof window[namesc[0]] === "undefined" ||
+          typeof window[namesc[0]][namesc[1]] === "undefined" ||
+          typeof window[namesc[0]][namesc[1]][namesc[2]] === "undefined"
+        ) {
+          writeTag(v.src);
+        }
+      } else {
+        // > 3
+      }
+
+      function writeTag(src) {
+        doc.write(
+          unescape(
+            "%3Cscript src='" +
+              src +
+              "' type='text/javascript'%3E%3C/script%3E"
+          )
+        );
+      }
+
+      function writeTags(srcs) {
+        for(let k = 0 ;k<srcs.length;k++){
+          const _src = srcs[k]
           doc.write(
             unescape(
               "%3Cscript src='" +
-                v.src +
+                srcs[k] +
                 "' type='text/javascript'%3E%3C/script%3E"
             )
           );
-        } else {
-          const srcs = v.src;
-          for(let k = 0 ;k<srcs.length;k++){
-            const _src = srcs[k]
-            doc.write(
-              unescape(
-                "%3Cscript src='" +
-                  srcs[k] +
-                  "' type='text/javascript'%3E%3C/script%3E"
-              )
-            );
-          }
         }
       }
     }
