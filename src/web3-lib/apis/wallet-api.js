@@ -20,6 +20,7 @@ export async function getAssetHashPager(chainId, wallet){
   if (!wallet) throw ApiErrors.PARAM_ILLEGAL
   const web3js = winWeb3()
 
+  console.log('>>>>>>>>>',chainId,wallet)
   const inst = basTraOwnershipInstance(web3js, chainId, { from: wallet })
 
   const total = await inst.methods.assetsCountsOf().call({ from: wallet })

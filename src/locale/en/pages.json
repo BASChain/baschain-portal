@@ -4,6 +4,7 @@
   "MetaMaskPopNoMetaMaskTip": "Please install MetaMask plugin",
   "MetaMaskPopLoginTips": "Please Login MetaMask",
   "MetaMaskPopSelectNetworkPrefix": "Please switch to {networks} via MetaMask plugin",
+  "HomeGetFreeHandlingWarn": "Applying..., please do not click repeatedly",
   "HomeTransactionCarouselCaption": "Completed Orders",
   "HomeGetFreeTitle": "Get free test network BAS",
   "HomeGetFreeNetworksTips": "Only apply on ropsten test network",

@@ -1,6 +1,7 @@
 {
   "1001": "Lack of ETH balance",
   "1002": "Lack of BAS balance",
+  "1009": "The current account balance is more than {minbas} and cannot be applied for.",
   "10000": "Illegal domain name",
   "10001": "Exceed the length limit, up to {max} bytes",
   "10002": "Contains special characters",
