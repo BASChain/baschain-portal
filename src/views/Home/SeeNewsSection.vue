@@ -56,6 +56,12 @@ export default {
       isCN:state => state.lang === 'zh-CN'
     })
   },
+  created() {
+    window.addEventListener('resize',this.handleResize)
+  },
+  destroyed() {
+    window.removeEventListener('resize',this.handleResize)
+  },
   data(){
     return {
       captionTitle:"全新协议，新世界入口",
@@ -128,6 +134,15 @@ export default {
         name = "Firefox Extension"
         url = getExtensionStoreUrl('firefox')
         window.open(url,name)
+      }
+    },
+    handleResize(){
+      const currW = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
+      console.log(">>>",currW)
+      if(currW<1000){
+        this.colSize = 24
+      }else{
+        this.colSize = 12
       }
     }
   }

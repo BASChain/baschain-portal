@@ -2,10 +2,10 @@
   <div class="home-crit-container mt-5">
     <div class="container">
       <div class="row justify-content-center align-items-center">
-        <div class="col-8">
+        <div class="col-md-8 col-sm-10">
           <img src="/static/img/crit_bg.png" class="img-fluid">
         </div>
-        <div class="col-md-4 col-sm-8">
+        <div class="col-md-4 col-sm-10">
           <div class="crit-tipbox">
             <ul class="home-crit-ul">
               <li class="home-crit-li-red">

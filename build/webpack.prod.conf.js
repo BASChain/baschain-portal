@@ -35,7 +35,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     filename: utils.assetsPath("js/[name].[chunkhash].js"),
     chunkFilename: utils.assetsPath("js/[id].[chunkhash].js")
   },
-  externals: {
+  externals: {// only >= webpack4
     vue: "Vue",
     "vue-router": "VueRouter",
     "vue-i18n": "VueI18n",
