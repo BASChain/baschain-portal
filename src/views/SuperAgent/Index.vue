@@ -44,7 +44,7 @@
      <div slot="body" class="agent-body-wrapper">
        <div class="container obil-wrapper">
          <div class="row align-items-center">
-           <div class="col-6 inner-container">
+           <div class="col-md-6 col-sm-10 inner-container">
              <div class="obil-left" id="obliSection">
                <h2>
                  {{$t('p.SuperNodeRAndOAnchorTitle')}}
@@ -63,7 +63,7 @@
                </p>
              </div>
            </div>
-           <div class="col-6">
+           <div class="col-md-6 col-sm-10">
             <div class="img-wrapper">
               <img src="/static/icons/supnodes_img.png" alt="">
             </div>
@@ -71,7 +71,7 @@
          </div>
 
          <div class="row justify-content-start align-items-center">
-          <div class="col-6 d-block inner-container" id="domainServiceSection">
+          <div class="col-md-6 col-sm-12 d-block inner-container" id="domainServiceSection">
             <div>
               <h2>
                 {{$t('p.SuperNodeDoaminServiceTitle')}}
@@ -81,7 +81,7 @@
                <img src="/static/img/d_serv_img.png" alt="domain service">
              </div>
            </div>
-           <div class="col-6">
+           <div class="col-md-6 col-sm-10">
              <div class="inner-container">
                <h4>
                  {{$t('p.SuperNodeDSRootSubTitle')}}
@@ -287,6 +287,12 @@ a.super-header-link {
 
 a.super-header-link:focus ,a.super-header-link:hover{
   opacity: 1;
+}
+
+.super-header-link span{
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
 }
 
 .agent-body-wrapper {
