@@ -35,7 +35,8 @@ const webpackConfig = merge(baseWebpackConfig, {
     filename: utils.assetsPath("js/[name].[chunkhash].js"),
     chunkFilename: utils.assetsPath("js/[id].[chunkhash].js")
   },
-  externals: {// only >= webpack4
+  externals: {
+    // only >= webpack4
     vue: "Vue",
     "vue-router": "VueRouter",
     "vue-i18n": "VueI18n",
@@ -117,9 +118,9 @@ const webpackConfig = merge(baseWebpackConfig, {
         // more options:
         // https://github.com/kangax/html-minifier#options-quick-reference
       },
-      chunks:["manifest",'vendor','app'],
+      chunks: ["manifest", "vendor", "app"],
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-      chunksSortMode: "dependency"
+      chunksSortMode: "dependency" //dependency
     }),
     // keep module.id stable when vendor modules does not change
     new webpack.HashedModuleIdsPlugin(),
@@ -168,18 +169,28 @@ const webpackConfig = merge(baseWebpackConfig, {
         from: path.resolve(__dirname, "../static"),
         to: config.build.assetsSubDirectory,
         ignore: [".*"]
-      },
+      }
     ]),
     //https://github.com/chrisvfritz/prerender-spa-plugin
     new PrerenderSPAPlugin({
       // Required - The path to the webpack-outputted app to prerender.
       staticDir: path.join(__dirname, "../dist"),
       // Required - Routes to render.
-      routes: ["/", "/home","/apply","/market","/mail","/agent","/help/issue","/appstore","/wallet"],
+      routes: [
+        "/",
+        "/home",
+        "/apply",
+        "/market",
+        "/mail",
+        "/agent",
+        "/help/issue",
+        "/appstore",
+        "/wallet"
+      ],
       renderer: new Renderer({
         headless: false,
         // 在 main.js 中 document.dispatchEvent(new Event('render-event'))，两者的事件名称要对应上。
-        renderAfterDocumentEvent: 'render-event'
+        renderAfterDocumentEvent: "render-event"
       })
     })
   ]

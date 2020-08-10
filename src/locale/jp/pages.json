@@ -79,7 +79,7 @@
   "DomainDetailRefiPv4Label": "IPV4",
   "DomainDetailRefIPv6Label": "IPV6",
   "DomainDetailRefWalletLabel": "ブロックチェーンアドレス",
-  "DomainDetailRefAliasLabel": "別名",
+  "DomainDetailRefAliasLabel": "エイリアス",
   "DomainDetailRefExtensionLabel": "追加情報",
   "DnsUpdateOpenAppliedConfirmMsg": "サブドメインレジストリを有効にしますか？",
   "DnsUpdateCloseAppliedConfirmMsg": "サブドメインレジストリを無効にしますか？",
