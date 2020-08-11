@@ -4,7 +4,7 @@
     <el-col :span="24" class="bas-wallet-info">
       <div class="bas-wallet-info--inner">
         <img src="/static/icons/pay.png"
-          @click="refreshWalletBalances"
+          @click="addTokenSymbol"
           class="bas-wallet-icon">
         <div>
           <p style="margin-bottom:.85rem;">PaymentWallet</p>
@@ -308,6 +308,9 @@ export default {
       this.$refs.DrawBalVol.start()
       this.$refs.EthBalVol.start()
       this.$refs.BasBalVol.start()
+    },
+    async addTokenSymbol(){
+      await this.$store.dispatch('dapp/AddTokenAsset')
     },
     withdrawHandle(){
       let msg = ''

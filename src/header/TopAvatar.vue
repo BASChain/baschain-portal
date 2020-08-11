@@ -68,6 +68,7 @@ export default {
       enableMetaMask().then(resp=>{
         console.log("Login EWallet",resp)
         this.$store.commit('dapp/setMetaMaskLogin',res)
+        
       }).catch(ex=>{
         if(ex.code === 4001){
           this.$message(this.$basTip.error($t('code.4001')))

@@ -1,8 +1,9 @@
 import * as types from './mutation-types'
 import { checkSupport } from '@/web3-lib/networks'
 import {
-  getBalances
-} from '@/web3-lib/apis/token-api'
+  getBalances,
+  getWalletWatchAssetOpts
+} from "@/web3-lib/apis/token-api";
 
 import { loadDappConfProps } from "@/web3-lib/apis/dapp-conf-api";
 import { getRootDomains } from '@/web3-lib/apis/view-api'
@@ -247,6 +248,37 @@ const ChainChangedHandler = ({commit,state,dispatch}) => {
   }
 }
 
+const AddTokenAsset = async ({commit,state}) => {
+    if (
+      window.ethereum &&
+      window.ethereum.isMetaMask &&
+      parseInt(ethereum.chainId) &&
+      checkSupport(parseInt(ethereum.chainId))
+    ) {
+      try {
+        const requestObj = getWalletWatchAssetOpts(parseInt(ethereum.chainId));
+        console.log(">>>>", parseInt(ethereum.chainId), requestObj);
+        const added = await window.ethereum.request(requestObj);
+
+        if (added) {
+          console.info(
+            "Added BAS token success,",
+            requestObj.params.options.address
+          );
+        } else {
+          console.info(
+            "Added BAS token fail,",
+            requestObj.params.options.address
+          );
+        }
+      } catch (err) {
+        console.log("Added BAS token error", err);
+      }
+    } else {
+      console.info("no chainId or unsupport !", parseInt(ethereum.chainId));
+    }
+}
+
 
 export default {
   checkInjected,
@@ -258,5 +290,6 @@ export default {
   fillRootAssets,
   fillPublicMailDomains,
   AccountsChangedHandler,
-  ChainChangedHandler
+  ChainChangedHandler,
+  AddTokenAsset
 };
