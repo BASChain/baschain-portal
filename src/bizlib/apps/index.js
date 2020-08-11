@@ -11,8 +11,10 @@ export const ExtFansBase ="https://www.extfans.com/search/extensions"
 export const MacBrowserApp = 'Uranium.app.zip'
 /**
  * prev: bas-1.0.1-chromium.zip
+ * bas-1.0.3-chromium.zip
+ * bas_1.0.3-chrome.crx
  */
-export const ExtChromeOffline = 'bas-1.0.2-chromium.zip'
+export const ExtChromeOffline = "bas_1.0.3-chrome.crx";
 /**
  * prev
  * bas-1.0.2-fx.xpi
