@@ -3,6 +3,7 @@ import { checkSupport } from '../networks'
 
 import { basTokenInstance } from "./index.js";
 import apiErrors from '../api-errors';
+import AddrMgr from '../abi-manager'
 
 
 /**
@@ -61,9 +62,35 @@ export function approveTokenEmitter(spender,costwei,chainId,wallet) {
 
 //export async get
 
+/**
+ * get
+ * @param {*} chainId
+ */
+export function getWalletWatchAssetOpts(chainId){
+  if(checkSupport(chainId)){
+    const tokenABI = AddrMgr.BasToken(chainId)
+
+    return {
+      method: "wallet_watchAsset",
+      params: {
+        type: "ERC20",
+        options: {
+          address: tokenABI.address,
+          symbol: "BAS",
+          decimals: 18,
+          image: "https://avatars1.githubusercontent.com/u/55933627"
+        }
+      }
+    };
+  }else {
+    return null
+  }
+}
+
 export default {
   getTokenInst,
   getTokenBalance,
   getBalances,
   approveTokenEmitter,
-}
+  getWalletWatchAssetOpts,
+};
