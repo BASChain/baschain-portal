@@ -1,5 +1,5 @@
 <template>
-  <el-aside width="476px">
+  <el-aside :width="lw">
     <div class="bas-help--leftnav">
       <div class="bas-help-navlogo">
         <img src="/static/icons/logo_green.png">
@@ -33,6 +33,7 @@ export default {
   },
   data(){
     return {
+      lw:'476px',
       activeName:'',
       menus:[
         {
@@ -73,6 +74,14 @@ export default {
       this.$router.push({
         name:`${menu.to}`
       })
+    },
+    handleResize(){
+      const currW = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
+      if(currW<1000){
+        this.lw = '260px'
+      }else{
+        this.lw = '476px'
+      }
     }
   },
   beforeCreate(){
@@ -87,6 +96,7 @@ export default {
     let rname = this.$route.name
     console.log("Before Updata",rname)
     this.activeName = rname ||'help.issue'
+    this.handleResize()
   },
   watch: {
     $route(to, from) {
@@ -94,7 +104,13 @@ export default {
       this.activeName = to.name
       // this.$forceUpdate()
     }
-  }
+  },
+  created() {
+    window.addEventListener('resize',this.handleResize)
+  },
+  destroyed() {
+    window.removeEventListener('resize',this.handleResize)
+  },
 }
 </script>
 <style>
