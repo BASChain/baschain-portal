@@ -41,7 +41,8 @@ async function updateAppInfo(infoFilePath){
     "author":author,
     "version":ver,
     "buildTag": buildTag,
-    "description":"BAS Chain Exchange"
+    "description":"BAS Chain Exchange",
+    "browserUrl":process.env.BROWSER_URL ||""
   })
 
   fs.outputJsonSync(

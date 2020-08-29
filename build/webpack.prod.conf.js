@@ -184,8 +184,16 @@ const webpackConfig = merge(baseWebpackConfig, {
         "/mail",
         "/agent",
         "/help/issue",
+        "/help/bmail",
+        "/help/seller",
         "/appstore",
-        "/wallet"
+        "/appstore/extension?id=1",
+        "/appstore/extension?id=2",
+        "/appstore/extension?id=3",
+        "/wallet",
+        "/wallet/transaction",
+        "/wallet/mailservers",
+        "/wallet/maillist",
       ],
       renderer: new Renderer({
         headless: false,

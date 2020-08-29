@@ -1,3 +1,4 @@
+import info from '@/bascore/info.json'
 /**
  * jidkphhcnfbacegfgniknpgedbppmeoc 1.0.1
  * bcoibbecpnakojfbbpilgmmmlgnfklea 1.0.3
@@ -7,6 +8,7 @@ export const ChromeExtensionStore =
 export const FirefoxExtensionStore = 'https://addons.mozilla.org/zh-CN/firefox/addon/bas/?src=search'
 export const RelaDownloadBasePath = '/apps'
 export const ExtFansBase ="https://www.extfans.com/search/extensions"
+
 
 export const MacBrowserApp = 'Uranium.app.zip'
 /**
@@ -30,7 +32,11 @@ export function getExtensionStoreUrl(browser){
 }
 
 export function getDownloadAppsPath(subPath){
-  return `${RELA_DOWNLOAD_BASE}/${APPS_BASE}/${subPath}`
+  // const domain = ""
+  const gitBrowerUrl = info['browserUrl']||""
+  const url = `${RELA_DOWNLOAD_BASE}/${APPS_BASE}/${subPath}` ;
+  return gitBrowerUrl || url
+  //return `${RELA_DOWNLOAD_BASE}/${APPS_BASE}/${subPath}`
 }
 
 /**
