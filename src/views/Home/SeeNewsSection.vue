@@ -138,7 +138,7 @@ export default {
     },
     handleResize(){
       const currW = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
-      console.log(">>>",currW)
+      //console.log(">>>",currW)
       if(currW<1000){
         this.colSize = 24
       }else{
