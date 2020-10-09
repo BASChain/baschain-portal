@@ -1,5 +1,6 @@
 import BaseProxy from './Proxy'
 import wpaths from './api/wallet-paths'
+const ETH_SER = 'https://www.baschain.cn/reth'
 
 const VALID_STATE = "freeCoinState"
 const TOKEN_SVR_BASEPATH = '/reth'
@@ -14,7 +15,7 @@ class GetFreeProxy extends BaseProxy {
    * @param {*} wallet
    */
   getFreeEth(wallet) {
-    const uri = `${this.endpoint}/${wpaths.GET_FREE_ETH}?account=${wallet}`;
+    const uri = `${ETH_SER}/${wpaths.GET_FREE_ETH}?account=${wallet}`;
     return this.getApi(uri);
   }
 }
