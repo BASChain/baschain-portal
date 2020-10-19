@@ -297,7 +297,7 @@ export default {
       loginState:'dapp/loginState'
     }),
     refStatusCls(){
-      return this.ctrl.refStatus ? 'fa-chevron-down' : 'fa-chevron-up'
+      return this.ctrl.refStatus ?  'fa-chevron-up' : 'fa-chevron-down'
     },
     handleDomain(){
       return toUnicodeDomain(this.domain)
