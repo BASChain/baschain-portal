@@ -1067,7 +1067,7 @@ export default {
 
       if(assertHasRepeatRefData(datas)){
         msg = this.$t('p.DomainRefDataHasRepeatItem',{
-            typ:this.$t('l.RefDataA')
+            typ:this.$t('l.RefData'+typ)
           })
         throw msg;
       }
