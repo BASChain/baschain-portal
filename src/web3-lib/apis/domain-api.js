@@ -149,7 +149,9 @@ export async function getDomainDetail(name,chainId){
 
   //console.log(">>>>>>>",DomainConfTypes.extrainfo)
   const extraRet = await confInst.methods.domainConfData(hash, DomainConfTypes.extrainfo).call()
-  //console.log(">>>>", refRet, hex2confDataStr(refRet.A))
+
+  const ifpsRet = await confInst.methods.domainConfData(hash, DomainConfTypes.ipfs).call()
+  // console.log(">ifpsRet>>>", ifpsRet, hex2confDataStr(ifpsRet))
   resp.refdata = {
     A: hex2confDataStr(refRet.A),
     AAAA: hex2confDataStr(refRet.AAAA),
@@ -158,7 +160,8 @@ export async function getDomainDetail(name,chainId){
     IOTA: hex2confDataStr(refRet.IOTA ),
     CName: hex2confDataStr(refRet.CName ),
     MXBCA: hex2confDataStr(refRet.MXBCA ),
-    Optional: hex2confDataStr(extraRet ? extraRet+'' :'0x')
+    Optional: hex2confDataStr(extraRet ? extraRet+'' :'0x'),
+    IPFS: hex2confDataStr(ifpsRet)
   }
 
 

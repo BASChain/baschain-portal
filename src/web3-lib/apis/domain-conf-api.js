@@ -19,7 +19,8 @@ export const DomainConfTypes = {
   iota: "IOTA",
   canonicalName: "CName",
   mxbca: "MXBCA",
-  extrainfo: "Optional"
+  extrainfo: "Optional",
+  ipfs:"IPFS"
 }
 
 export function findTypName(type){

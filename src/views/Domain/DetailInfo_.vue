@@ -82,6 +82,10 @@
               <span>{{refdata.MXBCA}}</span>
             </div>
             <div class="bas-inline">
+              <label class="bas-form-label">{{$t('p.DomainDetailRefIPFSLabel')}}</label>
+              <span>{{refdata.IPFS}}</span>
+            </div>
+            <div class="bas-inline">
               <label class="bas-form-label">{{$t('p.DomainDetailRefAliasLabel')}}</label>
               <span>{{refdata.CName}}</span>
             </div>

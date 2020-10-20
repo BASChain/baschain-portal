@@ -373,6 +373,37 @@
           </div>
         </el-form-item>
 
+        <el-form-item :label="$t('p.DomainDetailRefIPFSLabel')">
+          <div class="refdata-container">
+            <el-input v-model="refdata.IPFS"
+              :placeholder="$t('l.RefNoDataPlaceholder')"
+              :disabled="true"
+              autosize
+              type="textarea"
+            />
+            <div class="refdata-btns">
+              <el-button v-if="!Boolean(refdata.IPFS)"
+                :disabled="commDisabled"
+                @click="updateRefData('IPFS')"
+                type="primary" size="mini" class="bas-btn-primary">
+                {{$t('l.RefAddDataBtn')}}
+              </el-button>
+              <el-button v-if="Boolean(refdata.IPFS)"
+                :disabled="commDisabled"
+                @click="updateRefData('IPFS')"
+                type="primary" size="mini" class="bas-btn-primary">
+                {{$t('l.RefUpdateDataBtn')}}
+              </el-button>
+              <el-button v-if="Boolean(refdata.IPFS)"
+                :disabled="commDisabled"
+                @click="clearRefData('IPFS')"
+                size="mini" plain>
+                {{$t('l.RefClearDataBtn')}}
+              </el-button>
+            </div>
+          </div>
+        </el-form-item>
+
         <el-form-item :label="$t('l.RefDataOptional')">
           <div class="refdata-container">
             <el-input v-model="refdata.Optional"
@@ -940,7 +971,7 @@ export default {
       try{
         this.cleanDialog.loading = true
         const receipt = await cleanConfData(type,hash,chainId,wallet);
-        console.log(receipt)
+        // console.log(receipt)
         this.cleanDialog.loading = false
         if(receipt){
           this.refdata[type] = ''
@@ -970,6 +1001,7 @@ export default {
         case 'CName':
         case 'MXBCA':
         case 'Optional':
+        case 'IPFS':
           this.openMulDialog(type)
           break;
         default:
@@ -1086,6 +1118,7 @@ export default {
           break;
         case 'CName':
         case 'Optional':
+        case 'IPFS':
           // valid notnull
           const strItem = datas.find(it => assertEmpty(it.val))
           if(strItem){

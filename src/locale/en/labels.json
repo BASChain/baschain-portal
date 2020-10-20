@@ -116,6 +116,7 @@
   "RefDataMX": "BMail Server IP",
   "RefDataBlockChain": "Blockchain Address",
   "RefDataIOTA": "IOT Address",
+  "RefDataIPFS": "IPFS Address",
   "RefDataOptional": "Extra Information",
   "RefDataCName": "Alias",
   "RefDataMXBCA": "BMail Server Public Key",

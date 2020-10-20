@@ -81,6 +81,7 @@
   "DomainDetailRefWalletLabel": "Blockchain account",
   "DomainDetailRefAliasLabel": "Alias",
   "DomainDetailRefExtensionLabel": "Extra Info",
+  "DomainDetailRefIPFSLabel":"IPFS Address",
   "DnsUpdateOpenAppliedConfirmMsg": "Do you want to enable subdomain Registry?",
   "DnsUpdateCloseAppliedConfirmMsg": "Do you want to disable subdomain Registry?",
   "DnsUpdateApproveSuccess": "Approved",

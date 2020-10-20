@@ -116,6 +116,7 @@
   "RefDataMX": "邮箱服务器IP地址",
   "RefDataBlockChain": "区块链地址",
   "RefDataIOTA": "物联网地址",
+  "RefDataIPFS":"IPFS地址",
   "RefDataOptional": "附加信息",
   "RefDataCName": "别名",
   "RefDataMXBCA": "邮箱服务器加密公钥",
