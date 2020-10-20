@@ -22,11 +22,12 @@
 													placement="bottom"
 													width="150"
 													trigger="click">
-													<div class="bas-qr-con">
+													<div class="bas-qr-con" v-if="Boolean(butt.url)">
 														<WalletQrCode width="120" id="ethbal"
 														tipPlacement="left"
 														:content="butt.url" />
 													</div>
+                          <div v-if="!Boolean(butt.url)">Coming soon.</div>
 													<button slot="reference" class="bas-download-button--item">
 													{{butt.buttInfo}}
 													</button>

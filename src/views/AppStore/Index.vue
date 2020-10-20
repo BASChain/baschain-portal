@@ -438,7 +438,7 @@ export default {
       // this.os = 'windows'
       this.menuVisible = false
 
-      this.$message(this.$basTip.warn('come soon...'))
+      this.$message(this.$basTip.warn('coming soon...'))
       //alert("产品开发中")
     },
     DownloadExplorerHanle(){
