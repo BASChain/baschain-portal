@@ -23,7 +23,7 @@ export const ExtChromeOffline = "bas_1.0.3-chrome.crx";
  * cur
  */
 export const ExtFirefoxOffline = 'bas-1.0.3-fx.xpi'
-export const RELA_DOWNLOAD_BASE="/prod";
+export const RELA_DOWNLOAD_BASE ="https://baschain.cn/prod";
 export const APPS_BASE="apps";
 export const EXTS_BASE="exts";
 
