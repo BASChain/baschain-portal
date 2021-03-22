@@ -3,9 +3,12 @@ const toWei = Web3.utils.toWei
 /**
  * DApp State
  * typeDiction DNS data type diction
+ * 2021-03-19 add state [multiShit]
+ * 由于狗屎TRON 完全抄袭Metamask代码导致 @see https://github.com/MetaMask/metamask-extension/issues/10377
  */
 export default {
   injected:false,
+  multiShit:false,//https://github.com/MetaMask/metamask-extension/issues/10377
   chainId:null,
   wallet:null,
   ethwei:null,

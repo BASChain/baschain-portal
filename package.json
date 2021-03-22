@@ -1,6 +1,6 @@
 {
   "name": "baschain-web",
-  "version": "2.7.15",
+  "version": "2.7.17",
   "description": "Bas Chain",
   "author": "bas-team",
   "private": true,
@@ -9,7 +9,7 @@
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js ",
     "start": "npm run dev",
     "build": "run-s upinfo build:prod",
-    "build:github":"cross-env BROWSER_URL='https://github.com/BASChain/baschain.github.io/releases/download/2.7.10/Uranium.app.zip' run-s upinfo build:prod",
+    "build:github": "cross-env BROWSER_URL='https://github.com/BASChain/baschain.github.io/releases/download/2.7.10/Uranium.app.zip' run-s upinfo build:prod",
     "serve": "lite-server -c bin/bs-config.json",
     "upinfo": "node ci/update_appinfo.js",
     "build:prod": "cross-env npm_config_report=true node build/build.js",
@@ -18,6 +18,7 @@
   },
   "sideEffects": false,
   "dependencies": {
+    "@metamask/detect-provider": "^1.2.0",
     "dayjs": "^1.8.28",
     "element-ui": "^2.13.2",
     "fast-date-format": "^2.2.4",

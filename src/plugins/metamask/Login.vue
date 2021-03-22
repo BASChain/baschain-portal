@@ -1,39 +1,51 @@
 <template>
-  <div v-if="visited"  style="z-index:99;" class="metamask-box">
-    <div class="bas-dialog__wrapper" >
-      <div class="bas-dialog__metamask" :style="containerStyle"
-        aria-modal="true" aria-lable="tips">
+  <div v-if="visited" style="z-index: 99" class="metamask-box">
+    <div class="bas-dialog__wrapper">
+      <div
+        class="bas-dialog__metamask"
+        :style="containerStyle"
+        aria-modal="true"
+        aria-lable="tips"
+      >
         <div class="bas-dialog__metamask-header">
           <span style="margin: 8px">
             <i class="fa fa-warning"></i>
           </span>
-          <a class="bas-dialog__close" @click="cancel" style="margin:8px">
-            <i class="el-dialog__close el-icon el-icon-close" ></i>
+          <a class="bas-dialog__close" @click="cancel" style="margin: 8px">
+            <i class="el-dialog__close el-icon el-icon-close"></i>
           </a>
         </div>
         <div class="bas-dialog__metamask-body">
           <div class="bas-dialog__metamask-left">
             <h4 class="bas-dialog__metamask-warn">
-              {{$t('p.MetaMaskPopTitle')}}
+              {{ $t("p.MetaMaskPopTitle") }}
             </h4>
             <p class="bas-dialog__metamask-tips text-danger">
               <span>{{ showBasWarnDesc }}</span>
               <span>
-                {{authorizeTip ? `,${authorizeTip}.` : ''}}
+                {{ authorizeTip ? `${authorizeTip}.` : "" }}
               </span>
             </p>
           </div>
-          <div class="metamask-header-icon" :title="downloadTitle"
-           @click="openExtensionStore">
-            <img src="/static/icons/metamask_square.png" class="metamask-icon">
-            <a class="metamask-download-btn">
-              MetaMask
-            </a>
+          <div
+            class="metamask-header-icon"
+            :title="downloadTitle"
+            @click="openExtensionStore"
+          >
+            <img
+              src="/static/icons/metamask_square.png"
+              class="metamask-icon"
+            />
+            <a class="metamask-download-btn"> MetaMask </a>
           </div>
         </div>
         <div class="bas-dialog__metamask-footer">
-          <a class="metamask-login-btn" @click="loginMetaMaskHandle" style="margin-bottom:15px">
-            {{ canLoginState ? 'Login MetaMask' : "Close" }}
+          <a
+            class="metamask-login-btn"
+            @click="loginMetaMaskHandle"
+            style="margin-bottom: 15px"
+          >
+            {{ canLoginState ? "Login MetaMask" : "Close" }}
           </a>
         </div>
       </div>
@@ -42,123 +54,165 @@
 </template>
 
 <script>
-import { isMetaMask, getMetamaskExtensionHref } from '@/bizlib/metamask'
-import { checkSupport, getSupportNames} from '@/web3-lib/networks'
+import { isMetaMask, getMetamaskExtensionHref } from "@/bizlib/metamask";
+import { checkSupport, getSupportNames } from "@/web3-lib/networks";
 
-import {enableMetaMask} from '@/web3-lib'
+import { enableMetaMask } from "@/web3-lib";
 
 export default {
-  name:"MetamaskLoginPopup",
-  data(){
+  name: "MetamaskLoginPopup",
+  data() {
     return {
-      containerStyle:'margin-top:15vh;width:35%;',
+      multiLikeMetamask: false,
+      containerStyle: "margin-top:15vh;width:35%;",
       visited: false,
-      basWarnCaption:"BAS Exchange 部分功能需要第三方插件",
-      basWarnDesc:"您當前瀏覽器不支持Metamask插件,請使用chrome 或firefox",
-      browser:'',
-      supportNWNames:'ropsten',
-      authorizeTip:'',
-      chainId:'',
-      network:'',
-      zIndex:999
-    }
+      basWarnCaption: "BAS Exchange 部分功能需要第三方插件",
+      basWarnDesc: "您當前瀏覽器不支持Metamask插件,請使用chrome 或firefox",
+      browser: "",
+      supportNWNames: "ropsten",
+      authorizeTip: "",
+      chainId: "",
+      network: "",
+      zIndex: 999,
+    };
   },
-  computed:{
-    canLoginState(){
-      if(!isMetaMask())return false;
-      if(this.chainId !== '' && !checkSupport(this.chainId))return false
+  computed: {
+    canLoginState() {
+      if (!isMetaMask()) return false;
+      const shits = [];
+      if (window.tron) {
+        shits.push("TronMask");
+      }
+
+      if (shits.length > 0) return false;
+
+      if (this.chainId !== "" && !checkSupport(this.chainId)) return false;
       return true;
     },
-    showBasWarnDesc(){
+    showBasWarnDesc() {
       let extensionStoreHref = getMetamaskExtensionHref(this.browser);
-      if(!extensionStoreHref) return this.$t('p.MetaMaskPopExplorerUnSupportTip')
-      if(!isMetaMask())return this.$t('p.MetaMaskPopNoMetaMaskTip')
-      if(this.chainId !=='' && !checkSupport(this.chainId)){
-        const nwNames = getSupportNames()
+      if (!extensionStoreHref)
+        return this.$t("p.MetaMaskPopExplorerUnSupportTip");
+      if (!isMetaMask()) return this.$t("p.MetaMaskPopNoMetaMaskTip");
+      if (
+        this.chainId !== "" &&
+        !checkSupport(this.chainId) &&
+        !this.multiLikeMetamask
+      ) {
+        const nwNames = getSupportNames();
         //console.log(nwNames.join(","))
-        return this.$t('p.MetaMaskPopSelectNetworkPrefix',{networks:nwNames.join(",")})
+        return this.$t("p.MetaMaskPopSelectNetworkPrefix", {
+          networks: nwNames.join(","),
+        });
       }
-      return ''
+      return "";
     },
-    footerBtnText(){
-      let btnText = 'Login MetaMask';
+    footerBtnText() {
+      let btnText = "Login MetaMask";
       let chainId = this.$store.state.dapp.chainId;
-      if(chainId!=null && !checkSupport(chainId)){
-        btnText = "Close"
+      if (chainId != null && !checkSupport(chainId)) {
+        btnText = "Close";
       }
       return btnText;
     },
-    downloadTitle(){
+    downloadTitle() {
       const extensionStoreHref = getMetamaskExtensionHref(this.browserName);
-      switch(this.browserName){
-        case 'chrome':
-          return 'Go To Chrome Web Store';
-        case 'firefox':
-          return 'Go To Firefox Extension'
+      switch (this.browserName) {
+        case "chrome":
+          return "Go To Chrome Web Store";
+        case "firefox":
+          return "Go To Firefox Extension";
         default:
-          return'Go To Firefox Extension'
+          return "Go To Firefox Extension";
       }
     },
-    showFooterBtn(){
-      if(!isMetaMask())return false;
-      if(this.chainId !== '' && !checkSupport(this.chainId))return false
+    showFooterBtn() {
+      if (!isMetaMask()) return false;
+      if (this.chainId !== "" && !checkSupport(this.chainId)) return false;
       return true;
     },
   },
-  mounted(){
-    this.authorizeTip = '';
-    this.browser = window.BasRuntime ? window.BasRuntime.browser : '';
+  mounted() {
+    this.authorizeTip = "";
+    this.browser = window.BasRuntime ? window.BasRuntime.browser : "";
     const w = document.body.clientWidth;
-    this.containerStyle = (w <=768 ? 'margin-top:15vh;width:90%;' : 'margin-top:15vh;width:35%;')
+    this.containerStyle =
+      w <= 768 ? "margin-top:15vh;width:90%;" : "margin-top:15vh;width:35%;";
 
-    if(window.ethereum && window.ethereum.chainId){
-      this.chainId = parseInt(window.ethereum.chainId)
+    if (window.ethereum && window.ethereum.chainId) {
+      this.chainId = parseInt(window.ethereum.chainId);
     }
 
+    const hasMulti = this.checkMultiLikeMetaMask();
   },
-  methods:{
-    show(){
+  methods: {
+    checkMultiLikeMetaMask() {
+      const shits = [];
+      if (window.tron && window.tron.isMetaMask) {
+        shits.push("TronMask");
+      }
+
+      if (shits.length > 0) {
+        this.multiLikeMetamask = true;
+        this.authorizeTip = `其他钱包插件与MetaMask冲突,请禁用[${shits.join(
+          ","
+        )}]后刷新页面`;
+      }
+      return shits.length > 0;
+    },
+    show() {
       this.visited = true;
     },
-    async loginMetaMaskHandle(){
+    async loginMetaMaskHandle() {
       let vm = this;
+
       //console.log('Connetct')
-      if(!isMetaMask() || !this.canLoginState) {
+      if (!isMetaMask() || !this.canLoginState) {
         vm.visited = false;
-        return
-      };
-
-      enableMetaMask().then(resp=>{
-        //console.log('Metamask Login>>>>>>>>>>>>>',resp)
-        if(checkSupport(resp.chainId)){
-          this.$store.commit('dapp/setMetaMaskLogin',resp)
-        }
-
-        console.log("vm.next",vm.next)
-        vm.visited = false;
-        if(vm.next){
-          this.$router.push(vm.next)
-        };
-        return resp
-      }).then(resp=>{
-        console.log('>>>>>>>Login>>>then>>>',resp)
-      }).catch(ex=>{
-        console.log(ex)
-        if(ex.code ==4001){
-          this.authorizeTip = '你终止了连接MetaMask'
-        }
-      })
-    },
-    cancel(){
-      this.visited = false
-    },
-    openExtensionStore(){
-      const extensionStoreHref = getMetamaskExtensionHref(this.browser);
-      if(extensionStoreHref){
-        window.open(extensionStoreHref,'MetaMask Extension')
+        return;
       }
-    }
-  }
-}
+
+      enableMetaMask()
+        .then((resp) => {
+          //console.log('Metamask Login>>>>>>>>>>>>>',resp)
+          if (checkSupport(resp.chainId)) {
+            this.$store.commit("dapp/setMetaMaskLogin", resp);
+          }
+
+          console.log("vm.next", vm.next);
+          vm.visited = false;
+          if (vm.next) {
+            this.$router.push(vm.next);
+          }
+          return resp;
+        })
+        .then((resp) => {
+          console.log(">>>>>>>Login>>>then>>>", resp);
+        })
+        .catch((ex) => {
+          console.log(ex);
+          if (ex.code == 4001) {
+            this.authorizeTip = "你终止了连接MetaMask";
+          } else if (ex.code === 79527) {
+            this.authorizeTip = ex.message;
+          } else {
+            this.authorizeTip = ex.message || "未知错误";
+          }
+        });
+    },
+    cancel() {
+      this.visited = false;
+    },
+    openExtensionStore() {
+      const extensionStoreHref = getMetamaskExtensionHref(this.browser);
+      if (extensionStoreHref) {
+        window.open(extensionStoreHref, "MetaMask Extension");
+      }
+    },
+    OpenExtensionHangle() {
+      window.open(this.chromeExtensionSchame, "Extension");
+    },
+  },
+};
 </script>
 

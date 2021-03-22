@@ -1,23 +1,25 @@
 /**
  * load
  */
-export const LOAD_DAPP_CONFIG = "loadDappConfig"
-export const LOAD_TYPE_DICTION = "loadDappTypeDiction"
-export const SET_INJECTED = "setInjected"
-export const SET_BALANCES= "setBalances"
-export const SET_METAMASK_LOGIN="setMetaMaskLogin"
-export const CLEAN_WEB3_STATE = "cleanWeb3State"
-export const UPDATE_ETHWEI="updateEthwei"
-export const UPDATE_BASWEI="updateBaswei"
-export const UPDATE_WALLET = 'updateWallet'
-export const UPDATE_CHAINID = "updateChainId"
-export const LOAD_ROOT_ASSETS = "loadRootAssets"
-export const LOAD_PUBLIC_MAIL_ASSETS = "loadPublicMailAssets"
-export const LOAD_DOMAIN_YEAR_ITEMS = "loadDomainYearItems"
+export const LOAD_DAPP_CONFIG = "loadDappConfig";
+export const LOAD_TYPE_DICTION = "loadDappTypeDiction";
+export const SET_INJECTED = "setInjected";
+export const SET_BALANCES = "setBalances";
+export const SET_METAMASK_LOGIN = "setMetaMaskLogin";
+export const CLEAN_WEB3_STATE = "cleanWeb3State";
+export const UPDATE_ETHWEI = "updateEthwei";
+export const UPDATE_BASWEI = "updateBaswei";
+export const UPDATE_WALLET = "updateWallet";
+export const UPDATE_CHAINID = "updateChainId";
+export const LOAD_ROOT_ASSETS = "loadRootAssets";
+export const LOAD_PUBLIC_MAIL_ASSETS = "loadPublicMailAssets";
+export const LOAD_DOMAIN_YEAR_ITEMS = "loadDomainYearItems";
 export const UPDATE_WITHDRAWABLE_WEI = "updateWithdrawable";
-export const UPDATE_WITHDRAWN_WEI ="updateWithdrawnWei"
+export const UPDATE_WITHDRAWN_WEI = "updateWithdrawnWei";
 
-export const LAST_CHAINID_KEY = "lastChainId"
+export const LAST_CHAINID_KEY = "lastChainId";
+
+export const UPD_MULTI_SHIT = "updHasMultiShitLikeTronEd";
 
 /**
  * update
@@ -40,4 +42,5 @@ export default {
   LOAD_DOMAIN_YEAR_ITEMS,
   UPDATE_WITHDRAWABLE_WEI,
   UPDATE_WITHDRAWN_WEI,
+  UPD_MULTI_SHIT
 };
