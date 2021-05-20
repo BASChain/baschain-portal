@@ -143,51 +143,46 @@ import {
 import WalletQrCode from "@/components/WalletQrCode.vue";
 
 const imgUrls = [
-  "/static/img/appstore/bpassword/Account@2x.png",
-  "/static/img/appstore/bpassword/encrypt.png",
-  "/static/img/appstore/bpassword/home@2x.png",
-  "/static/img/appstore/bpassword/setting@2x.png",
-  "/static/img/appstore/bpassword/sync_data@2x.png",
-  "/static/img/appstore/bpassword/bp_ext_sync_data@2x.png",
-  "/static/img/appstore/bpassword/bp_ext_sync_data2.png",
+  "/static/img/appstore/ninja/addressBook.png",
+  "/static/img/appstore/ninja/nj_User.png",
+  "/static/img/appstore/ninja/nj-home.png",
+  "/static/img/appstore/ninja/user-_ID.png",
 ];
 
 const intros = {
   en: null,
   "zh-CN": [
     {
-      introTitle: "通过区块链技术保管用户的互联网账号密码的工具",
-      introInfo:
-        "BPassword 通过区块链技术，管理您的互联网账号和密码。您只需要输入账号提示，账号，密码三个元素，本APP就会通过区块链私钥对您的账号和密码进行加密，账号提示是明文的，不加密的，以便您区分不同的账号信息",
+      introTitle: "",
+      introInfo: "",
     },
     {
-      introTitle: "BPassword 浏览器插件",
-      introInfo:
-        "BPassword 浏览器插件版除了管理您的个人账号之外,还可以自动回填登录页",
+      introTitle: "",
+      introInfo: "",
     },
   ],
 };
 
 const mobileApps = {
-  preIntro: "download BPassword for",
+  preIntro: "download NinJa for",
   show: true,
   buttons: [
     {
       id: "ios",
       text: "Iphone",
-      url: "https://apps.apple.com/app/id1504992275",
+      url: "",
     },
     {
       id: "android",
       text: "Android",
-      url: "http://d.7short.com/n5b7",
+      url: "http://d.6boat.com/9ap5",
     },
   ],
 };
 
 const extensions = {
   preIntro: "Browser Extension for",
-  show: true,
+  show: false,
   buttons: [
     {
       id: "chromecrx",
@@ -232,16 +227,16 @@ const desktopApps = {
 };
 
 export default {
-  name: "BPasswordDetail",
+  name: "NinJaDetail",
   components: {
     WalletQrCode,
   },
   data() {
     return {
       appid: 1,
-      appName: "BPassword",
-      appIntro: "Safe AS Bitcoin,Everything Encrypted",
-      iconUrl: "/static/icons/bas_bp.png",
+      appName: "NinJa",
+      appIntro: "An encrypted chat client based on blockchain",
+      iconUrl: "/static/icons/nj_logo.png",
       intros: intros,
       imgUrls,
       mobile: mobileApps,
@@ -251,7 +246,7 @@ export default {
         {
           title: "p.AppDetailDownTitle",
           styleType: "done",
-          labels: ["p.AppDetailFunc1", "p.AppDetailFunc2", "p.AppDetailFunc3"],
+          labels: ["点对点加密聊天"],
         },
         {
           title: "p.AppDetailToDoTitle",

@@ -6,25 +6,26 @@
           <div class="bas-app-detail">
             <div class="row bas-app-header">
               <div class="bas-app-header--left">
-                <img :src="apps[componentid].iconUrl" />
+                <img :src="iconUrl" />
               </div>
               <div class="bas-app-header--right">
                 <div class="bas-head-top">
                   <div class="bas-head-top--left">
-                    <h1>{{ apps[componentid].appName }}</h1>
+                    <h1>{{ appName }}</h1>
                     <div class="bas-min-p">
-                      {{ $t(apps[componentid].appIntro) }}
+                      {{ $t(appIntro) }}
                     </div>
                   </div>
                   <div class="bas-head-top--right">
                     <div
-                      v-if="componentid != 2"
+                      v-if="mobile.show"
                       class="bas-download-button"
                       styble="background-position:bottom right;"
                     >
-                      {{ apps[componentid].info }}
+                      {{ mobile.preIntro }}
                       <div
-                        v-for="butt in apps[componentid].downloadButtons"
+                        v-if="mobile.buttons && mobile.buttons.length > 0"
+                        v-for="butt in mobile.buttons"
                         :key="butt.hash"
                       >
                         <el-popover
@@ -45,57 +46,64 @@
                             slot="reference"
                             class="bas-download-button--item"
                           >
-                            {{ butt.buttInfo }}
+                            {{ butt.text }}
                           </button>
                         </el-popover>
                       </div>
                     </div>
-                    <div
-                      v-if="componentid != 0"
-                      class="bas-download-button--serve"
-                    >
-                      {{ apps[componentid].serveInfo }}
+
+                    <!-- -->
+                    <div v-if="desktop.show" class="bas-download-button--serve">
+                      {{ desktop.preIntro }}
                       <button
-                        v-for="butt in apps[componentid].serveButts"
+                        v-for="butt in desktop.buttons"
                         :key="butt.hash"
                         class="bas-download-button--blue"
+                        :class="
+                          !butt.url ? 'bas-download-button--disabled' : ''
+                        "
+                        @click="openDownloadTab(butt.url, butt.text)"
                       >
-                        {{ butt.buttInfo }}
+                        {{ butt.text }}
                       </button>
                     </div>
                   </div>
                 </div>
                 <div class="bas-head-line"></div>
+
                 <div
-                  v-for="item in apps[componentid].details"
+                  v-for="item in feats"
                   :key="item.hash"
                   class="bas-head-fun"
                 >
-                  {{ $t(item.osTitle) }}
+                  {{ $t(item.title) }}
                   <div
-                    v-for="min in item.osLabels"
+                    v-for="min in item.labels"
                     :key="min.hash"
                     :class="item.styleType === 'done' ? 'bas-done' : ''"
                   >
-                    {{ $t(min) }}
+                    <span
+                      class="feat-label"
+                      style="margin-left: 0.5rem; font-size: 0.95rem"
+                    >
+                      {{ $t(min) }}
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
             <div class="row bas-app-img">
-              <img
-                v-for="img in apps[componentid].imgUrls"
-                :key="img.hash"
-                :src="img"
-              />
+              <img v-for="img in imgUrls" :key="img.hash" :src="img" />
             </div>
             <div
-              v-for="appintro in apps[componentid].intros"
+              v-for="appintro in localeIntros"
               :key="appintro.hash"
               class="row bas-app-intro"
             >
-              <h1>{{ $t(appintro.introTitle) }}</h1>
-              <p>{{ $t(appintro.introInfo) }}</p>
+              <h1 v-if="Boolean(appintro.introTitle)">
+                {{ appintro.introTitle }}
+              </h1>
+              <p>{{ appintro.introInfo }}</p>
             </div>
           </div>
         </div>
@@ -111,16 +119,137 @@ import {
   ExtChromeOffline,
 } from "@/bizlib/apps";
 import WalletQrCode from "@/components/WalletQrCode.vue";
-const initSate = {};
+
+const imgUrls = [
+  "/static/img/appstore/bmail/bamilside.png",
+  "/static/img/appstore/bmail/contact@2x.png",
+  "/static/img/appstore/bmail/Inbox@2x.png",
+  "/static/img/appstore/bmail/New@2x.png",
+];
+
+const intros = {
+  en: null,
+  "zh-CN": [
+    {
+      introTitle: "基于区块链的邮箱系统",
+      introInfo:
+        "Bmail系统是基于区块链域名和点对点加密算法的邮件收发系统，该系统通过区块链账号来管理自己的域名以及邮箱。同时开放给第三方注册邮箱服务器和邮箱存储服务。所有经过本邮件系统分发的邮件内容，均属于点对点加密之后的邮件。任何网络黑客或者服务器黑客都无法破解改邮箱系统的数据。即使中间人攻击也无法得知邮件的具体内容，邮箱服务器也无法得知邮件的具体内容，只有邮件的收件人和发件人彼此可以查看邮件的具体内容。",
+    },
+    {
+      introTitle: "",
+      introInfo:
+        "本服务还在持续升级中，目前仅仅只是1对1的邮件收发服务。后续会支持附件的收发以及1对多的加密邮件服务。",
+    },
+  ],
+};
+
+const mobileApps = {
+  preIntro: "download BMail for",
+  show: true,
+  buttons: [
+    {
+      id: "ios",
+      text: "Iphone",
+      url:
+        "https://apps.apple.com/cn/app/bmail-%E5%8C%BA%E5%9D%97%E9%93%BE%E9%82%AE%E7%AE%B1/id1508489983",
+    },
+    {
+      id: "android",
+      text: "Android",
+      url: "",
+    },
+  ],
+};
+
+const extensions = {
+  preIntro: "Browser Extension for",
+  show: false,
+  buttons: [
+    {
+      id: "chromecrx",
+      text: "Chrome",
+      url: "",
+    },
+    {
+      id: "firefox",
+      text: "Firefox",
+      url: "",
+    },
+    {
+      id: "edge",
+      text: "Edge",
+      url: "",
+    },
+  ],
+};
+
+const desktopApps = {
+  preIntro: "BMail server for",
+  show: true,
+  buttons: [
+    {
+      id: "macOs",
+      text: "Mac",
+      url: "https://github.com/BASChain",
+    },
+    {
+      id: "window",
+      text: "Windows",
+      url: "",
+    },
+    {
+      id: "linux",
+      text: "Linux",
+      url: "https://github.com/BASChain",
+    },
+  ],
+};
 
 export default {
   name: "BMailDetail",
-  components: {},
-  data() {
-    return {};
+  components: {
+    WalletQrCode,
   },
-  computed: {},
-  methods: {},
+  data() {
+    return {
+      appid: 1,
+      appName: "BMail",
+      appIntro: "p.BMailIntro",
+      iconUrl: "/static/icons/bas_bmail.png",
+      intros: intros,
+      imgUrls,
+      mobile: mobileApps,
+      extensions: extensions,
+      desktop: desktopApps,
+      feats: [
+        {
+          title: "p.AppDetailDownTitle",
+          styleType: "done",
+          labels: ["p.AppDetailFunc1", "p.AppDetailFunc2", "p.AppDetailFunc3"],
+        },
+        {
+          title: "p.AppDetailToDoTitle",
+          styleType: "undo",
+          labels: ["# 发送附件"],
+        },
+      ],
+    };
+  },
+  computed: {
+    ...Vuex.mapState(["lang"]),
+    localeIntros() {
+      let localeKey = this.lang;
+      if (!!this.intros[localeKey]) return this.intros[localeKey];
+      return this.intros["zh-CN"];
+    },
+  },
+  methods: {
+    openDownloadTab(url, name) {
+      if (url) {
+        window.open(url, name || "_blank");
+      }
+    },
+  },
 };
 </script>
 <style scoped>
@@ -202,6 +331,11 @@ export default {
   text-overflow: ellipsis;
   overflow: hidden;
 }
+
+.bas-download-button--disabled {
+  cursor: not-allowed;
+  background: rgba(91, 92, 117, 0.3);
+}
 .bas-min-p {
   margin: 0px 0px 0px 24px;
   font-size: 16px;
@@ -212,17 +346,17 @@ export default {
   letter-spacing: 1px;
 }
 /* .bas-head-top--left > .bas-min-p {
-	width:39px;
-	height:22px;
-	font-size:16px;
-	font-family:PingFangSC-Regular,PingFang SC;
-	font-weight:400;
-	color:rgba(91,92,117,1);
-	line-height:22px;
-	letter-spacing:1px;
-	padding-top: 30px;
-	padding-left: 24px;
-} */
+    width:39px;
+    height:22px;
+    font-size:16px;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    color:rgba(91,92,117,1);
+    line-height:22px;
+    letter-spacing:1px;
+    padding-top: 30px;
+    padding-left: 24px;
+  } */
 .bas-head-top--left > h1 {
   /* width:70px; */
   height: 30px;

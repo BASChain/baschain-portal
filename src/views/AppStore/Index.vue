@@ -74,7 +74,41 @@
               </div>
             </div>
             <div class="bas-app-detail--right">
-              <div class="bas-btn-get" @click="toDetail(item.id)">Get</div>
+              <div class="bas-btn-get" @click="gotoAppDetail(item)">Get</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Line Two -->
+      <div class="row-detail justify-content-start">
+        <div
+          v-for="item in line2Apps"
+          :key="item.hash"
+          class="col-xl-4 col-md-6 col-12 pt-3"
+        >
+          <div class="bas-app-detail">
+            <div class="bas-app-detail--left pt-1">
+              <img :src="item.icon" />
+            </div>
+            <div class="bas-app-detail--center">
+              <div class="bas-inner-title">
+                <p>{{ item.title }}</p>
+              </div>
+              <div class="bas-inner-intro">
+                <p>{{ $t(item.intro) }}</p>
+              </div>
+              <div class="bas-inner-lable">
+                <div
+                  v-for="min in item.labels"
+                  :key="min.hash"
+                  class="bas-inner-lable--min"
+                >
+                  {{ min }}
+                </div>
+              </div>
+            </div>
+            <div class="bas-app-detail--right">
+              <div class="bas-btn-get" @click="gotoAppDetail(item)">Get</div>
             </div>
           </div>
         </div>
@@ -379,6 +413,85 @@ import {
   MacBrowserApp,
   ExtChromeOffline,
 } from "@/bizlib/apps";
+
+const products = [
+  {
+    icon: "/static/icons/bas_bmail.png",
+    title: "BMail",
+    name: "bmail",
+    intro: "p.AppStoreBMailIntro",
+    labels: ["ios", "android", "other"],
+    type: "app",
+    id: 1,
+    sort: 1,
+  },
+  {
+    icon: "/static/icons/bas_bp.png",
+    title: "BPassword",
+    name: "bpassword",
+    intro: "Everything Encrypted Decentralized Storage",
+    labels: ["ios", "android", "chrome", "firefox"],
+    type: "app",
+    id: 5,
+    sort: 2,
+  },
+  {
+    icon: "/static/icons/bas-mail-server.png",
+    title: "BMail server",
+    name: "bmail_svr",
+    hidden: true,
+    intro: "p.AppStoreBMailServerIntro",
+    labels: ["mac", "linux", "windows"],
+    type: "app",
+    id: 2,
+    sort: 3,
+  },
+  {
+    icon: "/static/icons/app_eid_logo.png",
+    title: "易ID",
+    name: "eid",
+    hidden: false,
+    intro: "",
+    labels: ["ios", "android", "miniprogram"],
+    type: "app",
+    id: 6,
+    sort: 4,
+  },
+
+  {
+    icon: "/static/icons/bas-browser.png",
+    title: "BAS Extension",
+    intro: "p.AppStoreExtensionIntro",
+    labels: ["chrome", "firefox"],
+    type: "browser",
+    id: 3,
+    sort: 1,
+  },
+  {
+    icon: "/static/icons/meta.png",
+    title: "MetaMask",
+    intro: "p.AppStoreMetaMaskIntro",
+    labels: ["chrome", "firefox"],
+    type: "browser",
+    id: 4,
+    sort: 2,
+  },
+];
+
+const line2Apps = [
+  {
+    icon: "/static/icons/nj_logo.png",
+    title: "NinJa",
+    name: "ninja",
+    hidden: false,
+    intro: "",
+    labels: ["ios", "android"],
+    type: "app",
+    id: 6,
+    sort: 5,
+  },
+];
+
 export default {
   name: "AppStoreIndex",
 
@@ -400,53 +513,38 @@ export default {
           os: "windows",
         },
       ],
-      osApps: [
-        {
-          icon: "/static/icons/bas_bmail.png",
-          title: "BMail",
-          name: "bmail",
-          intro: "p.AppStoreBMailIntro",
-          labels: ["ios", "android", "other"],
-          type: "app",
-          id: 1,
-        },
-        {
-          icon: "/static/icons/bas-mail-server.png",
-          title: "BMail server",
-          name: "bmail_svr",
-          intro: "p.AppStoreBMailServerIntro",
-          labels: ["mac", "linux", "windows"],
-          type: "app",
-          id: 2,
-        },
-
-        {
-          icon: "/static/icons/bas-browser.png",
-          title: "BAS Extension",
-          intro: "p.AppStoreExtensionIntro",
-          labels: ["chrome", "firefox"],
-          type: "browser",
-          id: 3,
-        },
-        {
-          icon: "/static/icons/meta.png",
-          title: "MetaMask",
-          intro: "p.AppStoreMetaMaskIntro",
-          labels: ["chrome", "firefox"],
-          type: "browser",
-          id: 4,
-        },
-        {
-          icon: "/static/icons/bas_bp.png",
-          title: "BPassword",
-          name: "bpassword",
-          intro: "p.AppStoreMetaMaskIntro",
-          labels: ["chrome", "firefox"],
-          type: "app",
-          id: 5,
-        },
-      ],
+      osApps: products,
+      os2Apps: line2Apps,
     };
+  },
+  computed: {
+    ...Vuex.mapState({
+      isCN: (state) => state.lang === "zh-CN",
+    }),
+    apps: function () {
+      return this.osApps
+        .filter((item) => item.type === "app" && !item.hidden)
+        .sort((a, b) => {
+          if (!b.sort || !b.sort) return 1;
+          return a.sort >= b.sort ? 1 : -1;
+        });
+    },
+    line2Apps: function () {
+      return this.os2Apps
+        .filter((item) => item.type === "app" && !item.hidden)
+        .sort((a, b) => {
+          if (!b.sort || !b.sort) return 1;
+          return a.sort >= b.sort ? 1 : -1;
+        });
+    },
+    browsers: function () {
+      return this.osApps
+        .filter((item) => item.type === "browser" && !item.hidden)
+        .sort((a, b) => {
+          if (!b.sort || !b.sort) return 1;
+          return a.sort >= b.sort ? 1 : -1;
+        });
+    },
   },
   methods: {
     clickMenu() {
@@ -480,26 +578,15 @@ export default {
           "https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?utm_source=chrome-ntp-icon";
       }
     },
-    gotoAppDetail() {},
-  },
-  computed: {
-    apps: function () {
-      return this.osApps.filter(function (item) {
-        if (item.type === "app") {
-          return item;
-        }
-      });
+    gotoAppDetail(item) {
+      const { name, id } = item || {};
+      if (!!name) {
+        this.$router.push({
+          path: `/appstore/appdetail_${name}`,
+          query: { id: id },
+        });
+      }
     },
-    browsers: function () {
-      return this.osApps.filter(function (item) {
-        if (item.type === "browser") {
-          return item;
-        }
-      });
-    },
-    ...Vuex.mapState({
-      isCN: (state) => state.lang === "zh-CN",
-    }),
   },
 };
 </script>

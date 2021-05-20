@@ -400,6 +400,22 @@ export default [
         }
       },
       {
+        path: "appdetail_eid",
+        name: "appdetail.eid",
+        component: () => import("@/views/AppStore/details/EidDetail.vue"),
+        meta: {
+          guest: true
+        }
+      },
+      {
+        path: "appdetail_ninja",
+        name: "appdetail.ninja",
+        component: () => import("@/views/AppStore/details/NinjaDetail.vue"),
+        meta: {
+          guest: true
+        }
+      },
+      {
         path: "extension",
         name: "extension.index",
         component: () => import("@/views/AppStore/Extension.vue"),
