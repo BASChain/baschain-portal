@@ -176,11 +176,11 @@ const mobileApps = {
       text: "Android",
       url: "http://d.6boat.com/n1qw",
     },
-    // {
-    //   id: "miniprogram",
-    //   text: "MiniProgram",
-    //   url: "",
-    // },
+    {
+      id: "miniprogram",
+      text: "MiniProgram",
+      url: "https://mp.weixin.qq.com/a/~w1ku59kBg3hFxoPPTErrnQ~~",
+    },
   ],
 };
 
