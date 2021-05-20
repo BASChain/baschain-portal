@@ -376,6 +376,30 @@ export default [
         }
       },
       {
+        path: "appdetail_bmail",
+        name: "appdetail.bmail",
+        component: () => import("@/views/AppStore/details/BMailDetail.vue"),
+        meta: {
+          guest: true
+        }
+      },
+      {
+        path: "appdetail_bmail_svr",
+        name: "appdetail.bmailsvr",
+        component: () => import("@/views/AppStore/details/BMailSvrDetail.vue"),
+        meta: {
+          guest: true
+        }
+      },
+      {
+        path: "appdetail_bpassword",
+        name: "appdetail.bpassword",
+        component: () => import("@/views/AppStore/details/BPasswordDetail.vue"),
+        meta: {
+          guest: true
+        }
+      },
+      {
         path: "extension",
         name: "extension.index",
         component: () => import("@/views/AppStore/Extension.vue"),
@@ -470,6 +494,14 @@ export default [
         }
       }
     ]
+  },
+  {
+    path: "/about",
+    name: "about.layout",
+    component: () => import("@/views/About/Index.vue"),
+    meta: {
+      guest: true
+    }
   },
   {
     path: "/wallet",

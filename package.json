@@ -7,7 +7,7 @@
   "lincense": "MIT",
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js ",
-    "start": "npm run dev",
+    "start": "cross-env NODE_ENV=development npm run dev",
     "build": "run-s upinfo build:prod",
     "build:github": "cross-env BROWSER_URL='https://github.com/BASChain/baschain.github.io/releases/download/2.7.10/Uranium.app.zip' run-s upinfo build:prod",
     "serve": "lite-server -c bin/bs-config.json",

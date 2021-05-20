@@ -4,23 +4,40 @@
       <div class="app-exporer-zh-cn">
         <div class="app-explorer--left">
           <div class="inner-center">
-            <h1 class="text-left mb-4">
-              BAS Explorer
-            </h1>
+            <h1 class="text-left mb-4">BAS Explorer</h1>
             <div class="dropdown abs-btn-group" role="group">
-              <button type="button" class="bas-btn-group--left" @click="DownloadExplorerHanle">{{osText + os}}</button>
-              <button id="bas-btn-group--right" @click="clickMenu" type="button" class="dropdown-toggle"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-              <div class="triangle" :style="{ display: menuVisible ? '':'none' }"></div>
-              <div class="dropdown-menu bas-btn-group--menu" :class="menuVisible?'show':''"
-              aria-labelledby="bas-btn-group--right">
+              <button
+                type="button"
+                class="bas-btn-group--left"
+                @click="DownloadExplorerHanle"
+              >
+                {{ osText + os }}
+              </button>
+              <button
+                id="bas-btn-group--right"
+                @click="clickMenu"
+                type="button"
+                class="dropdown-toggle"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              ></button>
+              <div
+                class="triangle"
+                :style="{ display: menuVisible ? '' : 'none' }"
+              ></div>
+              <div
+                class="dropdown-menu bas-btn-group--menu"
+                :class="menuVisible ? 'show' : ''"
+                aria-labelledby="bas-btn-group--right"
+              >
                 <a class="dropdown-item" href="#" @click="clickMac">Mac</a>
                 <a class="dropdown-item" href="#" @click="clickWin">Windows</a>
               </div>
             </div>
             <div class="bas-explorer-content">
               <p>
-                {{$t(this.aboutExplorer)}}
+                {{ $t(this.aboutExplorer) }}
               </p>
             </div>
           </div>
@@ -30,20 +47,30 @@
         <p>APP</p>
       </div>
       <div class="row-detail justify-content-start">
-        <div v-for="item in apps" :key="item.hash" class="col-xl-4 col-md-6 col-12 pt-3">
+        <div
+          v-for="item in apps"
+          :key="item.hash"
+          class="col-xl-4 col-md-6 col-12 pt-3"
+        >
           <div class="bas-app-detail">
             <div class="bas-app-detail--left pt-1">
-              <img :src="item.icon">
+              <img :src="item.icon" />
             </div>
             <div class="bas-app-detail--center">
               <div class="bas-inner-title">
-                <p>{{item.title}}</p>
+                <p>{{ item.title }}</p>
               </div>
               <div class="bas-inner-intro">
-                <p>{{$t(item.intro)}}</p>
+                <p>{{ $t(item.intro) }}</p>
               </div>
               <div class="bas-inner-lable">
-                <div v-for="min in item.labels" :key="min.hash" class="bas-inner-lable--min">{{min}}</div>
+                <div
+                  v-for="min in item.labels"
+                  :key="min.hash"
+                  class="bas-inner-lable--min"
+                >
+                  {{ min }}
+                </div>
               </div>
             </div>
             <div class="bas-app-detail--right">
@@ -53,23 +80,33 @@
         </div>
       </div>
       <div class="bas-type-title">
-        <p>{{$t('l.BowserExtension')}}</p>
+        <p>{{ $t("l.BowserExtension") }}</p>
       </div>
       <div class="row-detail justify-content-start">
-        <div v-for="item in browsers" :key="item.hash" class="col-xl-4 col-md-6 col-12 pt-3">
+        <div
+          v-for="item in browsers"
+          :key="item.hash"
+          class="col-xl-4 col-md-6 col-12 pt-3"
+        >
           <div class="bas-app-detail">
             <div class="bas-app-detail--left pt-1">
-              <img :src="item.icon">
+              <img :src="item.icon" />
             </div>
             <div class="bas-app-detail--center">
               <div class="bas-inner-title">
-                <p>{{item.title}}</p>
+                <p>{{ item.title }}</p>
               </div>
               <div class="bas-inner-intro">
-                <p>{{$t(item.intro)}}</p>
+                <p>{{ $t(item.intro) }}</p>
               </div>
               <div class="bas-inner-lable">
-                <div v-for="min in item.labels" :key="min.hash" class="bas-inner-lable--min">{{min}}</div>
+                <div
+                  v-for="min in item.labels"
+                  :key="min.hash"
+                  class="bas-inner-lable--min"
+                >
+                  {{ min }}
+                </div>
               </div>
             </div>
             <div class="bas-app-detail--right">
@@ -128,9 +165,9 @@
 .abs-btn-group > .bas-btn-group--left {
   width: 306px;
   height: 48px;
-  color:#fff;
+  color: #fff;
   background: rgba(0, 202, 155, 1);
-  padding: auto .25rem;
+  padding: auto 0.25rem;
   justify-content: space-between;
   align-items: center;
   text-align: center;
@@ -148,30 +185,30 @@
 }
 .bas-btn-get {
   /* width:64px; */
-  height:32px;
-  background:rgba(245,246,246,1);
-  border-radius:17px;
-  font-size:20px;
-  font-family:PingFangSC-Medium,PingFang SC;
-  font-weight:500;
-  color:rgba(0,202,155,1);
-  line-height:30px;
-  letter-spacing:1px;
+  height: 32px;
+  background: rgba(245, 246, 246, 1);
+  border-radius: 17px;
+  font-size: 20px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: rgba(0, 202, 155, 1);
+  line-height: 30px;
+  letter-spacing: 1px;
   border: 0px;
   padding: 0px;
   cursor: pointer;
-  transform: scale(1,1);
-  -ms-transform: scale(1,1); /* IE 9 */
-  -webkit-transform: scale(1,1); /* Safari and Chrome */
+  transform: scale(1, 1);
+  -ms-transform: scale(1, 1); /* IE 9 */
+  -webkit-transform: scale(1, 1); /* Safari and Chrome */
 }
 .bas-inner-intro > p {
   margin-bottom: 0rem !important;
-  font-size:12px;
-  font-family:PingFangSC-Regular,PingFang SC;
-  font-weight:400;
-  color:rgba(91,92,117,1);
-  line-height:22px;
-  letter-spacing:1px;
+  font-size: 12px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(91, 92, 117, 1);
+  line-height: 22px;
+  letter-spacing: 1px;
 }
 .bas-inner-intro {
   width: 100%;
@@ -186,11 +223,11 @@
 .bas-inner-title > p {
   font-size: 20px;
   line-height: 1.4;
-  font-family:PingFangSC-Medium,PingFang SC;
-  font-weight:500;
-  color:rgba(4,6,46,1);
-  line-height:30px;
-  letter-spacing:0.26px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: rgba(4, 6, 46, 1);
+  line-height: 30px;
+  letter-spacing: 0.26px;
 }
 .bas-inner-lable--min {
   width: auto;
@@ -199,11 +236,11 @@
   text-align: center;
   font-weight: 400;
   border-radius: 14px;
-  line-height:20px;
-  font-size:14px;
-  font-family:PingFangSC-Regular,Ping;
-  color:rgba(159,160,175,1);
-  background:rgba(238,240,240,1);
+  line-height: 20px;
+  font-size: 14px;
+  font-family: PingFangSC-Regular, Ping;
+  color: rgba(159, 160, 175, 1);
+  background: rgba(238, 240, 240, 1);
   margin-right: 5px;
   padding: 3px;
   padding-left: 6px;
@@ -242,61 +279,62 @@
 }
 .bas-type-title > p {
   font-size: 1.8rem;
-  font-family:PingFangSC-Medium,PingFang SC;
-  font-weight:500;
-  color:rgba(4,6,46,1);
-  line-height:50px;
-  letter-spacing:2px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: rgba(4, 6, 46, 1);
+  line-height: 50px;
+  letter-spacing: 2px;
 }
 .row {
   align-items: center;
   display: inline-flex;
   justify-content: space-between;
   width: 100%;
-  border-bottom: 1px solid rgba(235,240,240,1);
+  border-bottom: 1px solid rgba(235, 240, 240, 1);
 }
 .bas-app-detail {
   width: 100%;
-  background:rgba(255,255,255,1);
-  border-radius:8px;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 8px;
   justify-content: space-between;
   display: flex;
 }
 .bas-app-detail > p {
   text-align: right;
 }
-.app-exporer-zh-cn, .app-exporer-en {
+.app-exporer-zh-cn,
+.app-exporer-en {
   height: 420px;
   width: 100%;
   background-size: cover;
   background-position: 50%;
 }
 .app-exporer-zh-cn {
-  background-image: url('./assets/app_explorer_bg_cn.png');
+  background-image: url("./assets/app_explorer_bg_cn.png");
 }
 .app-exporer-en {
-  background-image: url('./assets/app_explorer_bg_en.png');
+  background-image: url("./assets/app_explorer_bg_en.png");
 }
 .app-explorer--left {
-  top:0;
+  top: 0;
   left: 20px;
   width: 50%;
   height: 100%;
-  z-index:999;
+  z-index: 999;
   display: inline-flex;
   direction: column;
   justify-content: center;
   align-items: center;
-  color:#fff;
+  color: #fff;
 }
 
 .bas-explorer-download {
   width: 324px;
   height: 48px;
-  color:#fff;
+  color: #fff;
   margin: 1rem auto;
   background: rgba(0, 202, 155, 1);
-  padding: auto .25rem;
+  padding: auto 0.25rem;
   justify-content: space-between;
   align-items: center;
   text-align: center;
@@ -310,14 +348,14 @@
 }
 .bas-explorer-select .el-input__inner {
   background: rgba(0, 202, 155, 1);
-  color:#fff;
+  color: #fff;
   border: 0px;
 }
 
 .inner-center {
   direction: column;
   width: 60%;
-  color:#fff;
+  color: #fff;
 }
 .bas-explorer-content > p {
   position: absolute;
@@ -336,147 +374,134 @@
 }
 </style>
 <script>
-import { getDownloadAppsPath,MacBrowserApp,ExtChromeOffline } from '@/bizlib/apps'
+import {
+  getDownloadAppsPath,
+  MacBrowserApp,
+  ExtChromeOffline,
+} from "@/bizlib/apps";
 export default {
-  name:"AppStoreIndex",
-  computed: {
-    ...Vuex.mapState({
-      isCN:state => state.lang === 'zh-CN'
-    })
-  },
+  name: "AppStoreIndex",
+
   data() {
     return {
       menuVisible: false,
-      os:'mac',
-      osText:"Get BAS Explorer For ",
-      aboutExplorer: 'p.ProductsExplorerAboutContents',
-      osTypes:[
+      os: "mac",
+      osText: "Get BAS Explorer For ",
+      aboutExplorer: "p.ProductsExplorerAboutContents",
+      osTypes: [
         {
-          text:"MAC",
-          i18n:"GetExplorer4Mac",
-          os:'mac'
+          text: "MAC",
+          i18n: "GetExplorer4Mac",
+          os: "mac",
         },
         {
-          text:"Windows",
-          i18n:"GetExplorer4Win",
-          os:'windows'
-        }
+          text: "Windows",
+          i18n: "GetExplorer4Win",
+          os: "windows",
+        },
       ],
-      osApps:[
-        // {
-        //   icon:"/static/icons/bas_bp.png",
-        //   title:"BPasswordPro",
-        //   intro:"Password Management Using Blockchain Tech",
-        //   labels:[
-        //     'chrome',
-        //     'firefox',
-        //     'opera'
-        //   ],
-        //   type:"app",
-        //   id: 0
-        // },
+      osApps: [
         {
-          icon:"/static/icons/bas_bmail.png",
-          title:"BMail",
-          intro:"p.AppStoreBMailIntro",
-          labels:[
-            'ios',
-            'android',
-            'other'
-          ],
-          type:"app",
-          id: 1
+          icon: "/static/icons/bas_bmail.png",
+          title: "BMail",
+          name: "bmail",
+          intro: "p.AppStoreBMailIntro",
+          labels: ["ios", "android", "other"],
+          type: "app",
+          id: 1,
         },
         {
-          icon:"/static/icons/bas-mail-server.png",
-          title:"BMail server",
-          intro:"p.AppStoreBMailServerIntro",
-          labels:[
-            'mac',
-            'linux',
-            'windows'
-          ],
-          type:"app",
-          id: 2
+          icon: "/static/icons/bas-mail-server.png",
+          title: "BMail server",
+          name: "bmail_svr",
+          intro: "p.AppStoreBMailServerIntro",
+          labels: ["mac", "linux", "windows"],
+          type: "app",
+          id: 2,
+        },
+
+        {
+          icon: "/static/icons/bas-browser.png",
+          title: "BAS Extension",
+          intro: "p.AppStoreExtensionIntro",
+          labels: ["chrome", "firefox"],
+          type: "browser",
+          id: 3,
         },
         {
-          icon:"/static/icons/bas-browser.png",
-          title:"BAS Extension",
-          intro:"p.AppStoreExtensionIntro",
-          labels:[
-            'chrome',
-            'firefox',
-            'opera'
-          ],
-          type:"browser",
-          id: 3
+          icon: "/static/icons/meta.png",
+          title: "MetaMask",
+          intro: "p.AppStoreMetaMaskIntro",
+          labels: ["chrome", "firefox"],
+          type: "browser",
+          id: 4,
         },
         {
-          icon:"/static/icons/meta.png",
-          title:"MetaMask",
-          intro:"p.AppStoreMetaMaskIntro",
-          labels:[
-            'chrome',
-            'firefox',
-            'opera'
-          ],
-          type:"browser",
-          id: 4
-        }
-      ]
-    }
+          icon: "/static/icons/bas_bp.png",
+          title: "BPassword",
+          name: "bpassword",
+          intro: "p.AppStoreMetaMaskIntro",
+          labels: ["chrome", "firefox"],
+          type: "app",
+          id: 5,
+        },
+      ],
+    };
   },
   methods: {
     clickMenu() {
-      this.menuVisible = !this.menuVisible
+      this.menuVisible = !this.menuVisible;
     },
     clickMac() {
-      this.os = 'mac'
-      this.menuVisible = false
+      this.os = "mac";
+      this.menuVisible = false;
     },
     clickWin() {
       // this.os = 'windows'
-      this.menuVisible = false
+      this.menuVisible = false;
 
-      this.$message(this.$basTip.warn('coming soon...'))
+      this.$message(this.$basTip.warn("coming soon..."));
       //alert("产品开发中")
     },
-    DownloadExplorerHanle(){
-      let fileType = this.os
-      let url = getDownloadAppsPath(MacBrowserApp)
+    DownloadExplorerHanle() {
+      let fileType = this.os;
+      let url = getDownloadAppsPath(MacBrowserApp);
       // console.log('>>>>>>',url)
-      window.open(url)
+      window.open(url);
     },
     toDetail(id) {
-      if(id < 3) {
-          // console.log('$$$$$$$$$', id)
-        this.$router.push({path: '/appstore/appdetail', query: {id: id}})
-      } else if(id === 3) {
-        this.$router.push({path: '/appstore/extension', query: {id: id}})
-      } else if(id === 4) {
-        window.location.href = 'https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?utm_source=chrome-ntp-icon'
+      if (id < 3) {
+        // console.log('$$$$$$$$$', id)
+        this.$router.push({ path: "/appstore/appdetail", query: { id: id } });
+      } else if (id === 3) {
+        this.$router.push({ path: "/appstore/extension", query: { id: id } });
+      } else if (id === 4) {
+        window.location.href =
+          "https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?utm_source=chrome-ntp-icon";
       }
-    }
+    },
+    gotoAppDetail() {},
   },
   computed: {
-    apps: function() {
-      return this.osApps.filter(function(item) {
-        if(item.type === 'app') {
-          // console.log('$$$$$$$$$', item)
-          return item
+    apps: function () {
+      return this.osApps.filter(function (item) {
+        if (item.type === "app") {
+          return item;
         }
-      })
+      });
     },
-    browsers: function() {
-      return this.osApps.filter(function(item) {
-        if(item.type === 'browser') {
-          return item
+    browsers: function () {
+      return this.osApps.filter(function (item) {
+        if (item.type === "browser") {
+          return item;
         }
-      })
-    }
-  }
-}
+      });
+    },
+    ...Vuex.mapState({
+      isCN: (state) => state.lang === "zh-CN",
+    }),
+  },
+};
 </script>
 <style>
-
 </style>

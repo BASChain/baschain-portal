@@ -1,24 +1,24 @@
-import {translateI18n } from '@/locale/i18n-utils'
+import { translateI18n } from "@/locale/i18n-utils";
 const topMenus = [
   {
     to: "home",
-    name:"home.index",
+    name: "home.index",
     i18n: "HomeIndex"
   },
   {
-    to:"apply",
+    to: "apply",
     name: "apply.index",
-    i18n:"ApplyIndex"
+    i18n: "ApplyIndex"
   },
   {
-    to:"market",
+    to: "market",
     name: "market.index",
-    i18n:"MarketIndex"
+    i18n: "MarketIndex"
   },
   {
-    to:"agent",
+    to: "agent",
     name: "agent.index",
-    i18n:"AgentIndex"
+    i18n: "AgentIndex"
   },
   {
     to: "mail",
@@ -26,10 +26,10 @@ const topMenus = [
     i18n: "MailRegist"
   },
   {
-    to:"products",
-    name:"download.products",
-    i18n:"DownloadIndex",
-    hidden:true
+    to: "products",
+    name: "download.products",
+    i18n: "DownloadIndex",
+    hidden: true
     // hasSub:true,
     // isAnchor:true,
     // children:[
@@ -56,17 +56,22 @@ const topMenus = [
   {
     to: "appstore",
     name: "appstore.layout",
-    i18n: "AppstoreIndex",
+    i18n: "AppstoreIndex"
   },
   {
     to: "help",
-    name:"help.layout",
+    name: "help.layout",
     i18n: "HelpIndex"
+  },
+  {
+    to: "about",
+    name: "about.layout",
+    i18n: "AboutIndex"
   }
-]
+];
 
-export const navMenus = translateI18n(topMenus)
+export const navMenus = translateI18n(topMenus);
 
 export default {
   navMenus
-}
+};
