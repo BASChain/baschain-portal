@@ -169,7 +169,7 @@ const mobileApps = {
     {
       id: "ios",
       text: "Iphone",
-      url: "",
+      url: "https://testflight.apple.com/join/oGdiXolt",
     },
     {
       id: "android",
@@ -191,19 +191,17 @@ const extensions = {
     {
       id: "chromecrx",
       text: "Chrome",
-      url:
-        "https://chrome.google.com/webstore/detail/bpassword/bacldcokcfmemiljlckpeokehiloamcj",
+      url: "",
     },
     {
       id: "firefox",
       text: "Firefox",
-      url: "https://addons.mozilla.org/zh-CN/firefox/addon/bpassword/",
+      url: "",
     },
     {
       id: "edge",
       text: "Edge",
-      url:
-        "https://chrome.google.com/webstore/detail/bpassword/bacldcokcfmemiljlckpeokehiloamcj",
+      url: "",
     },
   ],
 };
@@ -239,7 +237,8 @@ export default {
     return {
       appid: 1,
       appName: "易ID",
-      appIntro: "",
+      appIntro:
+        "Identity authorization Application based on the BAS blockchain",
       iconUrl: "/static/icons/app_eid_logo.png",
       intros: intros,
       imgUrls,
@@ -250,7 +249,7 @@ export default {
         {
           title: "p.AppDetailDownTitle",
           styleType: "done",
-          labels: ["", "", ""],
+          labels: ["身份认证", "授权", "鉴权"],
         },
         {
           title: "p.AppDetailToDoTitle",

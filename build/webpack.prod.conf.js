@@ -1,25 +1,25 @@
-'use strict'
-const path = require('path')
-const chalk = require('chalk')
-const utils = require('./utils')
-const webpack = require('webpack')
-const config = require('../config')
-const merge = require('webpack-merge')
-const baseWebpackConfig = require('./webpack.base.conf')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+"use strict";
+const path = require("path");
+const chalk = require("chalk");
+const utils = require("./utils");
+const webpack = require("webpack");
+const config = require("../config");
+const merge = require("webpack-merge");
+const baseWebpackConfig = require("./webpack.base.conf");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const OptimizeCSSPlugin = require("optimize-css-assets-webpack-plugin");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
-const env = require('../config/prod.env')
+const env = require("../config/prod.env");
 
-const { analyzOption } = require("./vue-loader.conf")
+const { analyzOption } = require("./vue-loader.conf");
 
 const PrerenderSPAPlugin = require("prerender-spa-plugin");
 const Renderer = PrerenderSPAPlugin.PuppeteerRenderer;
 
-const SpritesmithPlugin = require('webpack-spritesmith')
+const SpritesmithPlugin = require("webpack-spritesmith");
 
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -183,6 +183,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         "/market",
         "/mail",
         "/agent",
+        "/about",
         "/help/issue",
         "/help/bmail",
         "/help/seller",
@@ -193,7 +194,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         "/wallet",
         "/wallet/transaction",
         "/wallet/mailservers",
-        "/wallet/maillist",
+        "/wallet/maillist"
       ],
       renderer: new Renderer({
         headless: false,
@@ -205,21 +206,19 @@ const webpackConfig = merge(baseWebpackConfig, {
 });
 
 if (config.build.productionGzip) {
-  const CompressionWebpackPlugin = require('compression-webpack-plugin')
+  const CompressionWebpackPlugin = require("compression-webpack-plugin");
 
   webpackConfig.plugins.push(
     new CompressionWebpackPlugin({
-      asset: '[path].gz[query]',
-      algorithm: 'gzip',
+      asset: "[path].gz[query]",
+      algorithm: "gzip",
       test: new RegExp(
-        '\\.(' +
-        config.build.productionGzipExtensions.join('|') +
-        ')$'
+        "\\.(" + config.build.productionGzipExtensions.join("|") + ")$"
       ),
       threshold: 10240,
       minRatio: 0.8
     })
-  )
+  );
 }
 
 if (config.build.bundleAnalyzerReport) {
@@ -230,11 +229,16 @@ if (config.build.bundleAnalyzerReport) {
       "\n you can use [yarn analyz] commands check details."
     )
   );
-  const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-  webpackConfig.plugins.push(new BundleAnalyzerPlugin(Object.assign(analyzOption, {
-    analyzerPort: 8899,
-    openAnalyzer: false
-  })))
+  const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+    .BundleAnalyzerPlugin;
+  webpackConfig.plugins.push(
+    new BundleAnalyzerPlugin(
+      Object.assign(analyzOption, {
+        analyzerPort: 8899,
+        openAnalyzer: false
+      })
+    )
+  );
 }
 
-module.exports = webpackConfig
+module.exports = webpackConfig;

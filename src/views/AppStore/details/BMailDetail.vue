@@ -190,7 +190,7 @@ const desktopApps = {
     {
       id: "macOs",
       text: "Mac",
-      url: "https://github.com/BASChain",
+      url: "https://github.com/realbmail/go-bas-mail-server",
     },
     {
       id: "window",
@@ -200,7 +200,7 @@ const desktopApps = {
     {
       id: "linux",
       text: "Linux",
-      url: "https://github.com/BASChain",
+      url: "https://github.com/realbmail/go-bas-mail-server",
     },
   ],
 };
