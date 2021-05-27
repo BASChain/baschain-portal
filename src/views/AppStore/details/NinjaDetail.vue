@@ -170,7 +170,7 @@ const mobileApps = {
     {
       id: "ios",
       text: "Iphone",
-      url: "",
+      url: "https://testflight.apple.com/join/2EccEH6p",
     },
     {
       id: "android",
