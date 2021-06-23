@@ -63,11 +63,11 @@ const topMenus = [
     name: "help.layout",
     i18n: "HelpIndex"
   },
-  {
-    to: "about",
-    name: "about.layout",
-    i18n: "AboutIndex"
-  }
+  // {
+  //   to: "about",
+  //   name: "about.layout",
+  //   i18n: "AboutIndex"
+  // }
 ];
 
 export const navMenus = translateI18n(topMenus);

@@ -32,7 +32,7 @@ git add . && git commit -am 'fixed: ....'
 > unzip
 
 ```bash
-yarn build
+yarn build:prod
 yarn serve # test
 node ci/deploy-zip.js
 

@@ -514,7 +514,7 @@ export default [
   {
     path: "/about",
     name: "about.layout",
-    component: () => import("@/views/About/Index.vue"),
+    component: () => import("@/views/Home/Index.vue"), //import("@/views/About/Index.vue"),
     meta: {
       guest: true
     }
