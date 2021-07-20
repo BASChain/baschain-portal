@@ -7,7 +7,7 @@
   "HomeGetFreeHandlingWarn":"正在申请中...,请勿重复点击",
   "HomeTransactionCarouselCaption": "已成交域名",
   "HomeGetFreeTitle": "免费领取BAS测试币",
-  "HomeGetFreeNetworksTips": "仅限在Ropsten测试网络使用",
+  "HomeGetFreeNetworksTips": "仅限在以太坊Ropsten测试网络使用",
   "HomeCarouselGetEth": "免费获取ETH",
   "HomeCarouselGetBAS": "免费获取BAS",
   "HomeDeclaration": "声明：BAS官网发行的Token只应用于BAS系统内部交易，不具有任何金融属性，也不支持任何交易所交易",

@@ -7,7 +7,7 @@
   "HomeGetFreeHandlingWarn": "Applying..., please do not click repeatedly",
   "HomeTransactionCarouselCaption": "Completed Orders",
   "HomeGetFreeTitle": "Get free test network BAS",
-  "HomeGetFreeNetworksTips": "Only apply on ropsten test network",
+  "HomeGetFreeNetworksTips": "Only apply on ethereum ropsten test network",
   "HomeCarouselGetEth": "Get free test network ETH",
   "HomeCarouselGetBAS": "Get free test network BAS",
   "HomeDeclaration": "Notice: BAS is a utility token which does not bear financial features, and can't be found in exchanges",
@@ -250,12 +250,10 @@
   "WithdrawFailTip": "Extract failed, please try again.",
   "CannotWithDrawErrorTip": "The current withdrawal amount is 0",
   "CustomizationRootPlaceholder": "Please enter a custom root domain name.",
-
   "AppStoreBMailIntro": "End-to-End Encrypted Mail System Using Blockchain Tech",
   "AppStoreBMailServerIntro": "intro",
   "AppStoreExtensionIntro": "Domain Service Using Blockchain",
   "AppStoreMetaMaskIntro": "Extension for accessing Ethereum enabled distributed applications",
-
   "AppDetailDownTitle": "Features that have been developed:",
   "AppDetailFunc1": "# Decentralized",
   "AppDetailFunc2": "# Secure Encryption",
@@ -273,10 +271,8 @@
   "BMailServerIntroContent1": "Immerse yourself by using the vivid Retina displays of iPad or Mac. Simply tap the center divider, then drag to view your code or live project on the full screen. You can also customize built-in games like Battleship and Brick Breaker, then immerse yourself by letting them take up the whole screen.",
   "BMailServerIntroTitle2": "Explore your creations in full screen.",
   "BMailServerIntroContent2": "Immerse yourself by using the vivid Retina displays of iPad or Mac. Simply tap the center divider, then drag to view your code or live project on the full screen. You can also customize built-in games like Battleship and Brick Breaker, then immerse yourself by letting them take up the whole screen.",
-
   "AppStoreExtensionAuto": "You can visit Google play /firefox store to directly click the button to install",
   "AppStoreExtensionSelf": "If you can’t install through the Google extension store, you can choose to download the compressed package manually to install. This tutorial is applicable to Chrome and FireFox.",
-
   "MarketConfirmRevoke": "Are you sure you want to withdraw the domain name:",
   "DomainDetailOpenShowMore": "Expand to view more information"
 }
